@@ -1,0 +1,119 @@
+[
+  {
+    "title": "Core PPI m/m",
+    "country": "USD",
+    "impact": "HIGH",
+    "date_time": "2026-09-10T08:30:00-04:00",
+    "forecast": "0.3%",
+    "previous": "0.2%",
+    "actual": null
+  },
+  {
+    "title": "PPI m/m",
+    "country": "USD",
+    "impact": "HIGH",
+    "date_time": "2026-09-10T08:30:00-04:00",
+    "forecast": "0.4%",
+    "previous": "0.0%",
+    "actual": null
+  },
+  {
+    "title": "Unemployment Claims",
+    "country": "USD",
+    "impact": "MEDIUM",
+    "date_time": "2026-09-10T08:30:00-04:00",
+    "forecast": "205K",
+    "previous": "206K",
+    "actual": null
+  },
+  {
+    "title": "Core CPI Inflation Rate (m/m)",
+    "country": "USD",
+    "impact": "HIGH",
+    "date_time": "2026-09-11T08:30:00-04:00",
+    "forecast": "0.2%",
+    "previous": "0.2%",
+    "actual": null
+  },
+  {
+    "title": "Core CPI Inflation Rate (y/y)",
+    "country": "USD",
+    "impact": "HIGH",
+    "date_time": "2026-09-11T08:30:00-04:00",
+    "forecast": "2.4%",
+    "previous": "2.5%",
+    "actual": null
+  },
+  {
+    "title": "CPI Inflation Rate (m/m)",
+    "country": "USD",
+    "impact": "HIGH",
+    "date_time": "2026-09-11T08:30:00-04:00",
+    "forecast": "0.4%",
+    "previous": "0.1%",
+    "actual": null
+  },
+  {
+    "title": "CPI Inflation Rate (y/y)",
+    "country": "USD",
+    "impact": "HIGH",
+    "date_time": "2026-09-11T08:30:00-04:00",
+    "forecast": "3.4%",
+    "previous": "3.4%",
+    "actual": null
+  },
+  {
+    "title": "Prelim UoM Consumer Sentiment",
+    "country": "USD",
+    "impact": "MEDIUM",
+    "date_time": "2026-09-11T10:00:00-04:00",
+    "forecast": "51.0",
+    "previous": "51.0",
+    "actual": null
+  },
+  {
+    "title": "Retail Sales (m/m)",
+    "country": "USD",
+    "impact": "HIGH",
+    "date_time": "2026-09-15T08:30:00-04:00",
+    "forecast": "0.3%",
+    "previous": "0.4%",
+    "actual": null
+  },
+  {
+    "title": "FOMC Federal Funds Rate Decision & Policy Statement",
+    "country": "USD",
+    "impact": "HIGH",
+    "date_time": "2026-09-16T14:00:00-04:00",
+    "forecast": "25bps Cut",
+    "previous": "5.25% - 5.50%",
+    "actual": null
+  },
+  {
+    "title": "FOMC Press Conference",
+    "country": "USD",
+    "impact": "HIGH",
+    "date_time": "2026-09-16T14:30:00-04:00",
+    "forecast": null,
+    "previous": null,
+    "actual": null
+  },
+  {
+    "title": "Final GDP (q/q)",
+    "country": "USD",
+    "impact": "HIGH",
+    "date_time": "2026-09-24T08:30:00-04:00",
+    "forecast": "2.8%",
+    "previous": "3.0%",
+    "actual": null
+  },
+  {
+    "title": "Core PCE Price Index (m/m)",
+    "country": "USD",
+    "impact": "HIGH",
+    "date_time": "2026-09-25T08:30:00-04:00",
+    "forecast": "0.2%",
+    "previous": "0.2%",
+    "actual": null
+  }
+]

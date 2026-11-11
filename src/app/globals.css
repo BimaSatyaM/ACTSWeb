@@ -1,0 +1,179 @@
+@import "tailwindcss";
+
+:root {
+  --bg-base: #070b14;
+  --bg-card: #0d121f;
+  --bg-elevated: #121829;
+  --glass-bg: rgba(13, 18, 31, 0.75);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-blur: 16px;
+  --glass-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.5), inset 0 1px 0 0 rgba(255, 255, 255, 0.06);
+
+  --accent-green: #10b981;
+  --accent-red: #f43f5e;
+  --accent-theme: #ff2e54; /* Clean signature crimson-red */
+  --accent-theme-hover: #e11d48;
+  --accent-cyan: #06b6d4;
+  --accent-amber: #f59e0b;
+
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+
+  --radius-card: 14px;
+  --radius-md: 10px;
+  --radius-sm: 6px;
+  --radius-pill: 9999px;
+}
+
+@theme {
+  --color-accent-green: var(--accent-green);
+  --color-accent-red: var(--accent-red);
+  --color-accent-theme: var(--accent-theme);
+  
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-muted: var(--text-muted);
+}
+
+body {
+  background-color: var(--bg-base);
+  color: var(--text-primary);
+  min-height: 100vh;
+}
+
+/* ─── BESPOKE GLASS CARD SYSTEM ─── */
+.glass-card {
+  background: var(--glass-bg);
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-card);
+  box-shadow: var(--glass-shadow);
+  padding: 20px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.glass-card:hover {
+  border-color: rgba(255, 255, 255, 0.14);
+}
+
+.glass-navbar {
+  background: rgba(7, 11, 20, 0.82);
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+/* ─── INTERACTIVE ACCENT GLOWS ─── */
+.glow-red {
+  box-shadow: 0 0 24px -4px rgba(255, 46, 84, 0.3);
+}
+
+.glow-emerald {
+  box-shadow: 0 0 24px -4px rgba(16, 185, 129, 0.3);
+}
+
+.glow-amber {
+  box-shadow: 0 0 24px -4px rgba(245, 158, 11, 0.3);
+}
+
+.border-glow-red {
+  border-color: rgba(255, 46, 84, 0.4);
+}
+
+.border-glow-emerald {
+  border-color: rgba(16, 185, 129, 0.4);
+}
+
+/* ─── REFINED PILLS & BADGES ─── */
+.glass-badge-watchlist {
+  background: rgba(245, 158, 11, 0.1);
+  color: #fbbf24;
+  border: 1px solid rgba(245, 158, 11, 0.22);
+  border-radius: var(--radius-sm);
+}
+
+.glass-badge-signal {
+  background: rgba(16, 185, 129, 0.1);
+  color: #34d399;
+  border: 1px solid rgba(16, 185, 129, 0.22);
+  border-radius: var(--radius-sm);
+}
+
+.glass-badge-nothit {
+  background: rgba(244, 63, 94, 0.1);
+  color: #f43f5e;
+  border: 1px solid rgba(244, 63, 94, 0.22);
+  border-radius: var(--radius-sm);
+}
+
+.glass-badge-neutral {
+  background: rgba(255, 255, 255, 0.04);
+  color: #94a3b8;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-sm);
+}
+
+/* ─── SLEEK MODERN DARK SCROLLBAR ─── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(7, 11, 20, 0.6);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.16);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Firefox scrollbar support */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.16) rgba(7, 11, 20, 0.6);
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 5px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 9999px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.14);
+  border-radius: 9999px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.28);
+}
+
+/* ─── LIVE TICKER SMOOTH SLIDE MARQUEE ─── */
+@keyframes tickerSlide {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-ticker-slide {
+  display: flex;
+  width: max-content;
+  animation: tickerSlide 28s linear infinite;
+}
+
+.animate-ticker-slide:hover {
+  animation-play-state: paused;
+}

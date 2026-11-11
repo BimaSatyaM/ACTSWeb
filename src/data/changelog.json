@@ -1,0 +1,50 @@
+[
+  {
+    "hash": "7059d62",
+    "author": "Bima Satya",
+    "date": "2026-08-18T16:41:35Z",
+    "message": "fix(web): remove nested rounded boxes from signal cards for clean flat trading layout"
+  },
+  {
+    "hash": "7b811a8",
+    "author": "Bima Satya",
+    "date": "2026-08-18T16:38:17Z",
+    "message": "feat(web): add dynamic AppBackground with vibrant wallpaper on Home/About and dimmed focus on Dashboard"
+  },
+  {
+    "hash": "ba04f10",
+    "author": "Bima Satya",
+    "date": "2026-08-18T16:36:27Z",
+    "message": "feat(web): enhance home hero wallpaper vibrancy and visual contrast"
+  },
+  {
+    "hash": "d1bc769",
+    "author": "Bima Satya",
+    "date": "2026-08-18T16:34:25Z",
+    "message": "fix(web): make sidebar background transparent to reveal background wallpaper"
+  },
+  {
+    "hash": "701cbf7",
+    "author": "Bima Satya",
+    "date": "2026-08-18T16:33:32Z",
+    "message": "feat(web): add animated pop-up hover micro-interactions to sidebar menu icons"
+  },
+  {
+    "hash": "6b345bd",
+    "author": "Bima Satya",
+    "date": "2026-08-18T16:31:50Z",
+    "message": "fix(web): remove static BTCUSDT text from sidebar header for multi-asset expansion readiness"
+  },
+  {
+    "hash": "f5858f2",
+    "author": "Bima Satya",
+    "date": "2026-08-18T16:28:34Z",
+    "message": "feat(web): add sleek custom dark scrollbar and fix double modal scrollbars"
+  },
+  {
+    "hash": "94ae848",
+    "author": "Bima Satya",
+    "date": "2026-08-18T16:26:18Z",
+    "message": "feat(web): fetch 3 latest signals, show 1 active signal with dropdown history switcher"
+  }
+]
