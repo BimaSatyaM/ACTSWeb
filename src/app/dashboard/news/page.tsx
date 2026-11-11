@@ -89,7 +89,6 @@ export default function NewsSentimentPage() {
 
   return (
     <div className="space-y-6 w-full">
-      {/* ── Page Header ── */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/[0.08] pb-5">
         <div>
           <h1 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
@@ -101,7 +100,6 @@ export default function NewsSentimentPage() {
         </div>
 
         <div className="flex items-center gap-4 self-start sm:self-auto">
-          {/* Live Automatic Stream Indicator */}
           <div className="flex items-center gap-2 text-emerald-400 text-xs font-semibold font-mono">
             <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
@@ -120,20 +118,15 @@ export default function NewsSentimentPage() {
         </div>
       </div>
 
-      {/* ── Top Hero: Gemini AI Sentiment Deep Analytics ── */}
       <MarketSentimentCard />
 
-      {/* ── Main Two-Column Symmetric Layout (6 Cols / 6 Cols) ── */}
       <div className="grid lg:grid-cols-2 lg:divide-x lg:divide-white/[0.06] items-start gap-8 lg:gap-0 border-t border-white/[0.06]">
-        {/* Left Column: Breaking News & Rumors Stream */}
         <div className="space-y-4 lg:pr-6 pb-8 lg:pb-0 pt-6 border-b border-white/[0.06] lg:border-b-0">
-          {/* Locked Header Height (h-10) for 100% exact alignment with right side */}
           <div className="h-10 flex items-center justify-between px-1 border-b border-transparent">
             <div className="flex items-center gap-2">
               <h2 className="text-sm font-semibold text-white">Breaking News & Rumors</h2>
             </div>
 
-            {/* Filter Tabs */}
             <div className="flex items-center gap-1.5 p-1 rounded-xl bg-white/[0.02] border border-white/[0.06]">
               {(['all', 'rumor', 'macro', 'crypto'] as const).map((cat) => (
                 <button
@@ -177,10 +170,8 @@ export default function NewsSentimentPage() {
                     rel="noopener noreferrer"
                     className="flex flex-row items-center gap-3.5 p-3.5 rounded-xl bg-white/[0.02] hover:bg-white/[0.05] border border-white/[0.05] hover:border-white/[0.12] transition-all duration-200 group overflow-hidden h-[120px] shadow-sm"
                   >
-                    {/* Article Photo / Thumbnail */}
                     {article.image_url ? (
                       <div className="w-28 h-20 flex-shrink-0 relative overflow-hidden rounded-lg bg-[#141926]">
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img
                           src={article.image_url}
                           alt={article.title}
@@ -199,7 +190,6 @@ export default function NewsSentimentPage() {
                       </div>
                     )}
 
-                    {/* Article Text Content */}
                     <div className="space-y-1 flex-1 min-w-0 flex flex-col justify-between h-full py-0.5">
                       <div className="flex items-center gap-2 flex-wrap text-[10px]">
                         <span className="font-bold text-zinc-300 uppercase tracking-wider font-mono">{article.source}</span>
@@ -232,7 +222,6 @@ export default function NewsSentimentPage() {
                 )
               })}
 
-              {/* ── Pagination Controls ── */}
               {totalPages > 1 && (
                 <div className="flex items-center justify-between pt-3 border-t border-white/[0.06] text-xs">
                   <span className="text-text-muted text-[11px] font-mono">
@@ -276,9 +265,7 @@ export default function NewsSentimentPage() {
           )}
         </div>
 
-        {/* Right Column: High-Impact Macro Schedule */}
         <div className="space-y-4 lg:pl-6 pt-6">
-          {/* Locked Header Height (h-10) matching left header with identical vertical positioning */}
           <div className="h-10 flex items-center justify-between px-1 border-b border-transparent">
             <div className="flex items-center gap-2 flex-wrap">
               <h2 className="text-sm font-semibold text-white">Macroeconomic Calendar</h2>
@@ -304,17 +291,14 @@ export default function NewsSentimentPage() {
                   tabIndex={0}
                   className="flex flex-row items-center gap-3.5 p-3.5 rounded-xl bg-white/[0.02] hover:bg-white/[0.05] border border-white/[0.05] hover:border-cyan-500/30 transition-all duration-200 group overflow-hidden h-[120px] cursor-pointer shadow-sm"
                 >
-                  {/* Left Calendar Visual Photo (Exact matching w-28 h-20 dimensions) */}
                   {ev.image_url ? (
                     <div className="w-28 h-20 flex-shrink-0 relative overflow-hidden rounded-lg bg-black/40">
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img
                         src={ev.image_url}
                         alt={ev.title}
                         className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
                         loading="lazy"
                       />
-                      {/* Dynamic forward-looking Day Badge Overlay */}
                       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-1.5">
                         <span className="text-[8px] font-mono font-bold text-cyan-300 uppercase tracking-wider bg-black/80 px-1.5 py-0.5 rounded border border-white/10">
                           {formatCalendarBadge(ev.date_time)}
@@ -329,7 +313,6 @@ export default function NewsSentimentPage() {
                     </div>
                   )}
 
-                  {/* Right Event Details Content */}
                   <div className="space-y-1 flex-1 min-w-0 flex flex-col justify-between h-full py-0.5">
                     <div className="flex items-center justify-between gap-2">
                       <div className="flex items-center gap-1.5 text-[10px]">
@@ -382,7 +365,6 @@ export default function NewsSentimentPage() {
             })}
           </div>
 
-          {/* Educational Factor 9 Architecture Card (Symmetric bottom container) */}
           <div className="p-3.5 bg-transparent space-y-2">
             <div className="flex items-center justify-between">
               <span className="text-[11px] font-medium text-text-muted uppercase tracking-wider flex items-center gap-1.5">
@@ -399,7 +381,6 @@ export default function NewsSentimentPage() {
         </div>
       </div>
 
-      {/* ── Interactive In-App Federal Event Detail Modal ── */}
       <MacroEventModal
         event={selectedMacroEvent}
         onClose={() => setSelectedMacroEvent(null)}

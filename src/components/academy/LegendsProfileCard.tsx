@@ -24,10 +24,8 @@ interface LegendsProfileCardProps {
   className?: string
 }
 
-/**
- * Legends Profile Card Component
- * Flat data-terminal layout presenting primary-source principles and attributed quotes.
- */
+// Legends Profile Card Component
+// Flat data-terminal layout presenting primary-source principles and attributed quotes.
 export function LegendsProfileCard({ profile, className = '' }: LegendsProfileCardProps) {
   const isInfrastructureBuilder = profile.category === 'INFRASTRUCTURE_BUILDER'
 

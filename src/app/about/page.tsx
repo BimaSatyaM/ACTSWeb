@@ -179,7 +179,6 @@ export default function About() {
 
   return (
     <main className="min-h-full bg-[#070b14] text-[#f8fafc] flex flex-col">
-      {/* Top Specification Header Ribbon */}
       <div className="w-full overflow-hidden border-b border-[#1c2438] bg-[#070b14]/95 backdrop-blur py-2.5 px-6">
         <div className="max-w-7xl mx-auto flex items-center justify-between text-xs font-mono">
           <div className="flex items-center gap-3">
@@ -195,9 +194,7 @@ export default function About() {
         </div>
       </div>
 
-      {/* Hero Section: Institutional Quantitative Identity */}
       <section className="relative overflow-hidden bg-[#070b14] pt-16 pb-20 border-b border-[#1c2438]">
-        {/* Precision coordinate grid background */}
         <div
           className="absolute inset-0 opacity-[0.04] pointer-events-none"
           style={{
@@ -206,7 +203,6 @@ export default function About() {
             backgroundSize: '60px 60px',
           }}
         />
-        {/* Crimson ambient glow */}
         <div className="absolute top-0 right-1/4 w-[500px] h-[500px] bg-[#ff2e54] opacity-[0.05] blur-[140px] pointer-events-none" />
 
         <div className="relative max-w-7xl mx-auto px-6">
@@ -258,7 +254,6 @@ export default function About() {
             </div>
           </div>
 
-          {/* Quick Mathematical Telemetry Metrics */}
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-0 border border-[#1c2438] mt-16 bg-[#090d18]">
             <div className="p-6 border-r border-[#1c2438]">
               <div className="font-mono text-2xl sm:text-3xl font-black text-[#ff2e54] mb-1">
@@ -300,7 +295,6 @@ export default function About() {
         </div>
       </section>
 
-      {/* Section 2: Mathematical Foundation Console */}
       <section className="py-24 bg-[#090d18] border-b border-[#1c2438]">
         <div className="max-w-7xl mx-auto px-6">
           <div className="mb-16">
@@ -315,7 +309,6 @@ export default function About() {
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-0 border border-[#1c2438]">
-            {/* Left selector column */}
             <div className="lg:col-span-5 border-b lg:border-b-0 lg:border-r border-[#1c2438] bg-[#070b14]">
               {MATH_PILLARS.map((p, idx) => (
                 <button
@@ -348,7 +341,6 @@ export default function About() {
               ))}
             </div>
 
-            {/* Right formula inspection terminal */}
             <div className="lg:col-span-7 bg-[#0b101c] p-8 sm:p-12 flex flex-col justify-between">
               <div>
                 <div className="flex items-center justify-between border-b border-[#1c2438] pb-4 mb-6">
@@ -368,7 +360,6 @@ export default function About() {
                   {currentMath.summary}
                 </p>
 
-                {/* Formula display terminal */}
                 <div className="bg-[#05080f] border border-[#1c2438] p-5 font-mono text-sm text-[#f8fafc] mb-8 overflow-x-auto">
                   <div className="text-[#64748b] text-[10px] uppercase tracking-wider mb-2">
                     Mathematical Formulation:
@@ -378,7 +369,6 @@ export default function About() {
                   </div>
                 </div>
 
-                {/* Variable Breakdown */}
                 <div className="space-y-3 mb-8">
                   <div className="font-mono text-[10px] text-[#64748b] uppercase tracking-wider">
                     Variable Specifications:
@@ -397,7 +387,6 @@ export default function About() {
                 </div>
               </div>
 
-              {/* Rationale callout */}
               <div className="pt-6 border-t border-[#1c2438] bg-[#05080f]/50 p-4 border border-[#1c2438]">
                 <div className="font-mono text-[10px] text-[#ff2e54] uppercase tracking-wider mb-1 font-bold">
                   Engineering Rationale:
@@ -411,7 +400,6 @@ export default function About() {
         </div>
       </section>
 
-      {/* Section 3: Why Our System is Strong & Robust */}
       <section className="py-24 bg-[#070b14] border-b border-[#1c2438]">
         <div className="max-w-7xl mx-auto px-6">
           <div className="mb-16">
@@ -463,7 +451,6 @@ export default function About() {
         </div>
       </section>
 
-      {/* Section 4: 4-Regime Classification Breakdown */}
       <section className="py-24 bg-[#090d18] border-b border-[#1c2438]">
         <div className="max-w-7xl mx-auto px-6">
           <div className="mb-16 flex flex-col md:flex-row md:items-end justify-between gap-8">
@@ -530,7 +517,6 @@ export default function About() {
         </div>
       </section>
 
-      {/* Section 5: Multi-Agent Validation Pipeline */}
       <section className="py-24 bg-[#070b14] border-b border-[#1c2438]">
         <div className="max-w-7xl mx-auto px-6">
           <div className="mb-16">
@@ -587,7 +573,6 @@ export default function About() {
         </div>
       </section>
 
-      {/* Section 6: Research Disclosure & Safety Framework */}
       <section className="py-20 bg-[#070b14] border-b border-[#1c2438]">
         <div className="max-w-7xl mx-auto px-6">
           <div className="border border-[#1c2438] bg-[#0b101c] p-8 sm:p-12">
@@ -608,7 +593,6 @@ export default function About() {
         </div>
       </section>
 
-      {/* Section 7: Action CTA Banner */}
       <section className="relative overflow-hidden bg-[#ff2e54] py-20 text-white">
         <div
           className="absolute inset-0 opacity-[0.08] pointer-events-none"
@@ -657,7 +641,6 @@ export default function About() {
         </div>
       </section>
 
-      {/* Institutional Footer */}
       <footer className="bg-[#05080f] border-t border-[#1c2438] py-14">
         <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
           <div>

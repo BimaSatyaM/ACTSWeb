@@ -225,7 +225,6 @@ export function AutoTradingPerformanceCalendar({
 
   return (
     <div className="rounded-2xl border border-white/[0.08] bg-[#10141E]/80 backdrop-blur-xl p-6 shadow-xl space-y-5">
-      {/* ─── HEADER: Title + Month Selector + Minimal Inline Metrics (No Clunky Boxes) ─── */}
       <div className="space-y-2 border-b border-white/[0.05] pb-3.5">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div>
@@ -239,7 +238,6 @@ export function AutoTradingPerformanceCalendar({
             </p>
           </div>
 
-          {/* Month Navigation */}
           <div className="flex items-center gap-2 self-start sm:self-auto">
             <button
               type="button"
@@ -269,7 +267,6 @@ export function AutoTradingPerformanceCalendar({
           </div>
         </div>
 
-        {/* Minimal borderless typography readouts (matching Target Progression Curve) */}
         <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs font-mono pt-0.5">
           <div className="flex items-center gap-1.5">
             <span className="text-zinc-500">Executions:</span>
@@ -320,9 +317,7 @@ export function AutoTradingPerformanceCalendar({
         </div>
       </div>
 
-      {/* ─── CALENDAR GRID ─── */}
       <div className="space-y-1.5">
-        {/* Day-of-week header */}
         <div className="grid grid-cols-7 gap-1.5 text-center">
           {DAY_NAMES.map((d) => (
             <div key={d} className="py-1 text-[11px] font-mono font-semibold text-zinc-500 uppercase">
@@ -331,7 +326,6 @@ export function AutoTradingPerformanceCalendar({
           ))}
         </div>
 
-        {/* Month days cells */}
         <div className="grid grid-cols-7 gap-1.5">
           {calendarCells.map((cell, idx) => {
             if (!cell.dayNum) {
@@ -365,7 +359,6 @@ export function AutoTradingPerformanceCalendar({
                     : 'bg-black/20 border-white/[0.04] cursor-default'
                 } ${cell.isToday ? 'ring-1 ring-[#F0B90B] shadow-[0_0_8px_rgba(240,185,11,0.2)]' : ''}`}
               >
-                {/* Day Number & Status Indicators */}
                 <div className="flex items-center justify-between w-full">
                   <span
                     className={`text-xs font-mono font-semibold ${
@@ -399,7 +392,6 @@ export function AutoTradingPerformanceCalendar({
                   )}
                 </div>
 
-                {/* Day Net P&L or Trade Count */}
                 {hasTrades ? (
                   <div className="mt-1">
                     <span
@@ -424,7 +416,6 @@ export function AutoTradingPerformanceCalendar({
         </div>
       </div>
 
-      {/* ─── BOTTOM CONTROLS & STATUS ─── */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pt-2 border-t border-white/[0.05] text-xs font-mono">
         <div className="flex items-center gap-2 text-zinc-400">
           <span
@@ -452,7 +443,6 @@ export function AutoTradingPerformanceCalendar({
         </span>
       </div>
 
-      {/* ─── DAY DETAILS MODAL ─── */}
       {selectedDayTrades && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-fadeIn">
           <div className="w-full max-w-lg rounded-2xl bg-[#0e121d] border border-white/[0.12] p-6 shadow-2xl space-y-4">
@@ -475,7 +465,6 @@ export function AutoTradingPerformanceCalendar({
               </button>
             </div>
 
-            {/* Trades List */}
             <div className="space-y-3 max-h-[360px] overflow-y-auto pr-1">
               {selectedDayTrades.trades.map((t) => (
                 <div

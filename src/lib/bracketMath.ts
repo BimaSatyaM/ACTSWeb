@@ -1,15 +1,13 @@
-/**
- * ACTS True Weighted R-Multiple Bracket Math Engine
- * Conforms to PROJECT.md § Interface Contracts and ACTS Architectural Rules:
- * - Initial Risk = |Entry - SL|
- * - Full Stop-loss = -1.000R
- * - TP1 (+1.0R) exits 40% (ratchets stop to Breakeven 0.0R)
- * - TP2 (+2.0R) exits 35% (trails stop to TP1 +1.0R)
- * - TP3 (+3.5R) exits 25%
- * - Full TP3 Win = +1.975R (0.40 * 1.0 + 0.35 * 2.0 + 0.25 * 3.5 = 1.975R)
- * - TP1 Breakeven = +0.400R (0.40 * 1.0 + 0.60 * 0.0)
- * - TP2 Trailing TP1 = +1.350R (0.40 * 1.0 + 0.35 * 2.0 + 0.25 * 1.0)
- */
+// ACTS True Weighted R-Multiple Bracket Math Engine
+// Conforms to PROJECT.md § Interface Contracts and ACTS Architectural Rules:
+// - Initial Risk = |Entry - SL|
+// - Full Stop-loss = -1.000R
+// - TP1 (+1.0R) exits 40% (ratchets stop to Breakeven 0.0R)
+// - TP2 (+2.0R) exits 35% (trails stop to TP1 +1.0R)
+// - TP3 (+3.5R) exits 25%
+// - Full TP3 Win = +1.975R (0.40 * 1.0 + 0.35 * 2.0 + 0.25 * 3.5 = 1.975R)
+// - TP1 Breakeven = +0.400R (0.40 * 1.0 + 0.60 * 0.0)
+// - TP2 Trailing TP1 = +1.350R (0.40 * 1.0 + 0.35 * 2.0 + 0.25 * 1.0)
 
 import type {
   TradeDirection,
@@ -25,9 +23,7 @@ export const TP2_WEIGHT = 0.35
 export const TP3_WEIGHT = 0.25
 export const FULL_TP3_R_MULTIPLE = 1.975
 
-/**
- * Validates prices and constructs strict ACTS bracket price targets.
- */
+// Validates prices and constructs strict ACTS bracket price targets.
 export function calculateBrackets(
   direction: TradeDirection,
   entry: number,
@@ -76,10 +72,8 @@ export function calculateBrackets(
   }
 }
 
-/**
- * Evaluates trade state against candle updates with ACTS bracket progression.
- * Prioritizes capital preservation (Stop-Loss takes precedence if touched).
- */
+// Evaluates trade state against candle updates with ACTS bracket progression.
+// Prioritizes capital preservation (Stop-Loss takes precedence if touched).
 export function evaluateBarOutcome(
   bracket: BracketSetup,
   candle: { high: number; low: number },
@@ -243,10 +237,8 @@ export function evaluateBarOutcome(
   }
 }
 
-/**
- * Evaluates trade bracket outcome against high and low bounds.
- * Implements calculateTradeBracketOutcome interface contract from PROJECT.md
- */
+// Evaluates trade bracket outcome against high and low bounds.
+// Implements calculateTradeBracketOutcome interface contract from PROJECT.md
 export function calculateTradeBracketOutcome(
   bracket: TradeBracketInput,
   highPrice: number,
@@ -345,10 +337,8 @@ export function calculateTradeBracketOutcome(
   }
 }
 
-/**
- * Calculates position sizing and risk amount according to ACTS invariant:
- * Size = (AccountBalance * Risk%) / |Entry - SL|
- */
+// Calculates position sizing and risk amount according to ACTS invariant:
+// Size = (AccountBalance * Risk%) / |Entry - SL|
 export function validateRiskPercentage(
   accountBalance: number,
   riskPercent: number,

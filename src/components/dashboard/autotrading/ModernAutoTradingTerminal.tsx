@@ -1292,7 +1292,6 @@ export function ModernAutoTradingTerminal() {
 
   return (
     <div className="space-y-6 max-w-7xl mx-auto">
-      {/* Toast Notification */}
       {statusMsg && (
         <div
           className={`p-3.5 rounded-xl text-xs font-mono flex items-center justify-between shadow-lg transition-all ${
@@ -1314,16 +1313,9 @@ export function ModernAutoTradingTerminal() {
         </div>
       )}
 
-      {/* ─────────────────────────────────────────────────────────────
-          1. TOP MONITORING ROW: HERO TERMINAL + LIVE MARKET PRICE
-          Hero Card on Left (lg:col-span-8), Live Market Price on Right (lg:col-span-4)
-         ───────────────────────────────────────────────────────────── */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-        {/* Master Terminal Hero Card (Binance Futures Connected) */}
         <div className="lg:col-span-8 rounded-2xl bg-[#090d18] border border-white/[0.07] shadow-2xl overflow-hidden flex flex-col justify-between">
-          {/* Top Control Bar */}
           <div className="flex flex-wrap items-center justify-between gap-4 px-6 py-4 border-b border-white/[0.05] bg-white/[0.01]">
-            {/* Status Indicator */}
             <div className="flex items-center gap-3">
               <span className="relative flex h-2.5 w-2.5">
                 {isAutoTrading && isConnected && (
@@ -1354,7 +1346,6 @@ export function ModernAutoTradingTerminal() {
               </div>
             </div>
 
-            {/* Master Switch & Live Refresh */}
             <div className="flex items-center gap-3">
               {isConnected && (
                 <button
@@ -1376,7 +1367,6 @@ export function ModernAutoTradingTerminal() {
                 </button>
               )}
 
-              {/* Tactile Capsule Toggle */}
               <button
                 type="button"
                 onClick={handleToggleBot}
@@ -1398,10 +1388,8 @@ export function ModernAutoTradingTerminal() {
             </div>
           </div>
 
-          {/* Hero Metrics Row (No nested border boxes, just clean confident typography) */}
           <div className="px-6 pt-6 pb-2">
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-              {/* 1. Wallet Equity */}
               <div>
                 <span className="text-[11px] font-mono tracking-wider uppercase text-zinc-400 block mb-1">
                   Wallet Equity
@@ -1417,7 +1405,6 @@ export function ModernAutoTradingTerminal() {
                 </span>
               </div>
 
-              {/* 2. Available Margin */}
               <div>
                 <span className="text-[11px] font-mono tracking-wider uppercase text-zinc-400 block mb-1">
                   Available Margin
@@ -1433,7 +1420,6 @@ export function ModernAutoTradingTerminal() {
                 </span>
               </div>
 
-              {/* 3. Realized P&L (Session P&L with Fee Transparency) */}
               <div>
                 <div className="flex items-center justify-between gap-1 mb-1">
                   <span className="text-[11px] font-mono tracking-wider uppercase text-zinc-400">
@@ -1470,7 +1456,6 @@ export function ModernAutoTradingTerminal() {
                         )}
                       </div>
 
-                      {/* Transparent Breakdown of Gross vs Trading Fees */}
                       <div className="mt-1 flex flex-wrap items-center gap-1.5 text-[10px] font-mono text-zinc-400">
                         {isConnected && displayPnl !== null ? (
                           <>
@@ -1505,7 +1490,6 @@ export function ModernAutoTradingTerminal() {
               </div>
             </div>
 
-            {/* Integrated Ambient Equity Curve (Built from real trade progression) */}
             <div className="relative h-24 sm:h-28 w-full mt-4 -mb-2">
               <svg
                 viewBox="0 0 500 100"
@@ -1519,13 +1503,11 @@ export function ModernAutoTradingTerminal() {
                   </linearGradient>
                 </defs>
 
-                {/* Area Fill */}
                 <path
                   d={ambientCurve.areaPath}
                   fill="url(#modernTerminalGrad)"
                 />
 
-                {/* Line */}
                 <path
                   d={ambientCurve.linePath}
                   fill="none"
@@ -1538,7 +1520,6 @@ export function ModernAutoTradingTerminal() {
             </div>
           </div>
 
-          {/* Telemetry Footer Bar */}
           <div className="px-6 py-3 border-t border-white/[0.05] bg-white/[0.01] flex flex-wrap items-center justify-between gap-3 text-xs font-mono">
             <div className="flex items-center gap-3">
               <div className="flex items-center gap-2 text-[#F0B90B]">
@@ -1569,7 +1550,6 @@ export function ModernAutoTradingTerminal() {
           </div>
         </div>
 
-        {/* Live Market Price Card (Placed Right Beside Binance Futures Connected Box) */}
         <div className="lg:col-span-4">
           <LivePriceCard
             symbol={cardSymbol}
@@ -1582,17 +1562,9 @@ export function ModernAutoTradingTerminal() {
         </div>
       </div>
 
-      {/* ─────────────────────────────────────────────────────────────
-          2. WORKSPACE GRID: 2 CLEAN COLUMNS (No Box Bloat)
-          Left: Connection & Live Positions
-          Right: Risk Management & Position Sizing Engine
-         ───────────────────────────────────────────────────────────── */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-        {/* LEFT COLUMN (7 Cols): Binance Account & Positions + Performance Calendar */}
         <div className="lg:col-span-7 space-y-6">
-          {/* Binance Futures Connection Card */}
           <div className="rounded-2xl bg-[#090d18] border border-white/[0.07] p-6 shadow-xl space-y-5">
-          {/* Header */}
           <div className="flex items-center justify-between border-b border-white/[0.05] pb-4">
             <div className="flex items-center gap-3">
               <BinanceLogo size="sm" variant="badge" />
@@ -1617,10 +1589,8 @@ export function ModernAutoTradingTerminal() {
             )}
           </div>
 
-          {/* Connected State vs Connect Form */}
           {isConnected ? (
             <div className="space-y-4">
-              {/* Account Quick Stats */}
               <div className="grid grid-cols-3 gap-3">
                 <div className="p-3.5 rounded-xl bg-white/[0.02]">
                   <span className="text-[10px] font-mono uppercase text-zinc-500 block mb-1">
@@ -1648,7 +1618,6 @@ export function ModernAutoTradingTerminal() {
                 </div>
               </div>
 
-              {/* Active Positions Table or Clean Idle State */}
               {positions.length > 0 ? (
                 <div className="space-y-2 pt-2">
                   <span className="text-xs font-mono font-bold text-zinc-400 uppercase tracking-wider block">
@@ -1716,7 +1685,6 @@ export function ModernAutoTradingTerminal() {
                 </div>
               )}
 
-              {/* Recent Trade Fills (Both Opening & Closing) from Binance Futures */}
               {userTrades.length > 0 && (
                 <div className="space-y-2 pt-2 border-t border-white/[0.05]">
                   <div className="flex flex-wrap items-center justify-between gap-2">
@@ -1838,9 +1806,6 @@ export function ModernAutoTradingTerminal() {
 
 
 
-              {/* ─────────────────────────────────────────────────────────────
-                  ACTIVE BINANCE OPEN ORDERS TABLE
-                 ───────────────────────────────────────────────────────────── */}
               <div className="space-y-2 pt-2">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
@@ -1943,9 +1908,6 @@ export function ModernAutoTradingTerminal() {
                 )}
               </div>
 
-              {/* ─────────────────────────────────────────────────────────────
-                  EXECUTION LOG AUDIT TRAIL
-                 ───────────────────────────────────────────────────────────── */}
               <div className="space-y-1.5 pt-1">
                 <div className="flex items-center justify-between">
                   <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-zinc-500 block">
@@ -1987,7 +1949,6 @@ export function ModernAutoTradingTerminal() {
                 </div>
               </div>
 
-              {/* Safety note */}
               <div className="p-3 rounded-xl bg-white/[0.02] flex items-start gap-2.5 text-xs text-zinc-400 leading-relaxed">
                 <span className="text-[#F0B90B] font-bold text-sm">✓</span>
                 <span>
@@ -1996,9 +1957,8 @@ export function ModernAutoTradingTerminal() {
               </div>
             </div>
           ) : (
-            /* Disconnected Form (Clean, Modern, Anti-Slop) */
+            // Disconnected Form (Clean, Modern, Anti-Slop)
             <form onSubmit={handleConnect} className="space-y-4">
-              {/* Environment Switcher */}
               <div className="flex items-center justify-between">
                 <label className="text-xs font-semibold text-zinc-300">Account Type</label>
                 <div className="flex items-center p-1 rounded-lg bg-black/40 border border-white/[0.06]">
@@ -2023,7 +1983,6 @@ export function ModernAutoTradingTerminal() {
                 </div>
               </div>
 
-              {/* API Key */}
               <div className="space-y-1.5">
                 <label className="text-xs font-semibold text-zinc-300">API Key</label>
                 <input
@@ -2035,7 +1994,6 @@ export function ModernAutoTradingTerminal() {
                 />
               </div>
 
-              {/* API Secret */}
               <div className="space-y-1.5">
                 <div className="flex items-center justify-between">
                   <label className="text-xs font-semibold text-zinc-300">API Secret</label>
@@ -2062,7 +2020,6 @@ export function ModernAutoTradingTerminal() {
                 </p>
               )}
 
-              {/* Connect Button */}
               <button
                 type="submit"
                 disabled={isConnecting}
@@ -2083,7 +2040,6 @@ export function ModernAutoTradingTerminal() {
                 )}
               </button>
 
-              {/* Safety Bullets */}
               <div className="pt-2 text-xs text-zinc-400 space-y-1.5 border-t border-white/[0.05]">
                 <p className="flex items-center gap-2">
                   <span className="text-[#F0B90B] font-bold">✓</span>
@@ -2098,7 +2054,6 @@ export function ModernAutoTradingTerminal() {
           )}
           </div>
 
-          {/* Dedicated Auto-Trading Performance Calendar (Tracks Bot Executions Only) */}
           <AutoTradingPerformanceCalendar
             isConnected={isConnected}
             isAutoTrading={isAutoTrading}
@@ -2106,11 +2061,8 @@ export function ModernAutoTradingTerminal() {
           />
         </div>
 
-        {/* RIGHT COLUMN (5 Cols): Risk Engine & Sizing Simulator + Target Progression Chart */}
         <div className="lg:col-span-5 space-y-6">
-          {/* Risk Engine & Sizing Card */}
           <div className="rounded-2xl bg-[#090d18] border border-white/[0.07] p-6 shadow-xl space-y-5">
-          {/* Header */}
           <div className="flex items-center justify-between border-b border-white/[0.05] pb-4">
             <div>
               <h2 className="text-sm font-bold text-white tracking-wide">
@@ -2125,7 +2077,6 @@ export function ModernAutoTradingTerminal() {
             </span>
           </div>
 
-          {/* Risk Per Trade Selector */}
           <div className="space-y-2">
             <div className="flex items-center justify-between text-xs">
               <span className="text-zinc-400 font-semibold">Risk Per Trade</span>
@@ -2153,7 +2104,6 @@ export function ModernAutoTradingTerminal() {
             </div>
           </div>
 
-          {/* Max Leverage Cap */}
           <div className="space-y-2">
             <div className="flex items-center justify-between text-xs">
               <span className="text-zinc-400 font-semibold">Max Leverage Safety Cap</span>
@@ -2177,7 +2127,6 @@ export function ModernAutoTradingTerminal() {
             </div>
           </div>
 
-          {/* Take Profit & Trailing Strategy Option */}
           <div className="space-y-2">
             <div className="flex items-center justify-between text-xs">
               <span className="text-zinc-400 font-semibold">Take Profit Strategy</span>
@@ -2228,7 +2177,6 @@ export function ModernAutoTradingTerminal() {
             </div>
           </div>
 
-          {/* Position Size Simulation Output */}
           <div className="p-4 rounded-xl bg-white/[0.02] space-y-2.5 text-xs font-mono">
             <div className="flex items-center justify-between">
               <span className="text-zinc-400">Effective Capital:</span>
@@ -2251,7 +2199,6 @@ export function ModernAutoTradingTerminal() {
             </div>
           </div>
 
-          {/* Capital Preset Buttons (if not connected, allows previewing) */}
           {!isConnected && (
             <div className="space-y-1.5 pt-1">
               <span className="text-[11px] text-zinc-500 font-mono uppercase block">
@@ -2282,14 +2229,12 @@ export function ModernAutoTradingTerminal() {
             </div>
           )}
 
-          {/* Clean Hybrid Execution Rule (Anti-Slop Single Line) */}
           <div className="p-3 rounded-xl bg-white/[0.02] text-xs text-zinc-400 leading-relaxed">
             <span className="text-white font-semibold">Hybrid Execution Framework: </span>
             Setups with <strong>Score ≥ 52.0</strong> are auto-executed 24/7 with zero screen time. Setups between <strong>45.0 – 51.9</strong> are sent live to your Telegram as discretionary manual scalp signals.
           </div>
           </div>
 
-          {/* Dedicated Auto-Trading Target Progression Chart */}
           <AutoTradingProgressionChart
             isConnected={isConnected}
             isAutoTrading={isAutoTrading}

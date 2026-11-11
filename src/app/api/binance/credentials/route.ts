@@ -14,9 +14,7 @@ function getSupabaseConfig() {
 
 const SUPABASE_FALLBACK_IPS = ['104.18.38.10', '172.64.149.246']
 
-/**
- * Robust Supabase REST fetch with automatic DNS bypass for Indonesian ISPs.
- */
+// Robust Supabase REST fetch with automatic DNS bypass for Indonesian ISPs.
 async function supabaseRestRequest(
   path: string,
   options: {
@@ -86,10 +84,8 @@ async function supabaseRestRequest(
   })
 }
 
-/**
- * GET /api/binance/credentials?email=user@example.com
- * Fetches user's saved credentials status, masked key, autopilot switch, and live balances.
- */
+// GET /api/binance/credentials?email=user@example.com
+// Fetches user's saved credentials status, masked key, autopilot switch, and live balances.
 export async function GET(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url)
@@ -202,10 +198,8 @@ export async function GET(req: NextRequest) {
   }
 }
 
-/**
- * POST /api/binance/credentials
- * Verifies with Binance, encrypts credentials via AES-256-GCM, and upserts to Supabase.
- */
+// POST /api/binance/credentials
+// Verifies with Binance, encrypts credentials via AES-256-GCM, and upserts to Supabase.
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json()
@@ -290,10 +284,8 @@ export async function POST(req: NextRequest) {
   }
 }
 
-/**
- * PATCH /api/binance/credentials
- * Toggles autopilot mode or adjusts risk/leverage preferences in Supabase.
- */
+// PATCH /api/binance/credentials
+// Toggles autopilot mode or adjusts risk/leverage preferences in Supabase.
 export async function PATCH(req: NextRequest) {
   try {
     const body = await req.json()
@@ -354,10 +346,8 @@ export async function PATCH(req: NextRequest) {
   }
 }
 
-/**
- * DELETE /api/binance/credentials
- * Disconnects exchange and pauses autopilot in Supabase.
- */
+// DELETE /api/binance/credentials
+// Disconnects exchange and pauses autopilot in Supabase.
 export async function DELETE(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url)

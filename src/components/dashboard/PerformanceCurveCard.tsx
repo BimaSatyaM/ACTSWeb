@@ -364,9 +364,7 @@ export function PerformanceCurveCard({ className = '' }: { className?: string })
 
   return (
     <div className={`grid grid-cols-1 lg:grid-cols-12 gap-6 ${className}`}>
-      {/* ── LEFT COLUMN (8 cols): Full-Height Performance Curve (Recharts Natural) ── */}
       <div className="lg:col-span-8 flex flex-col justify-between space-y-4 border-b lg:border-b-0 border-white/[0.06] pb-6 lg:pb-0">
-        {/* Header: Title & Sharp Timeframe Buttons */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3">
           <div className="flex items-center gap-2.5">
             <div className="text-accent-theme">
@@ -388,7 +386,6 @@ export function PerformanceCurveCard({ className = '' }: { className?: string })
             </div>
           </div>
 
-          {/* Right: Modern Timeframe Buttons */}
           <div className="flex items-center gap-1.5 self-start sm:self-center p-1 rounded-xl bg-white/[0.02] border border-white/[0.06]">
             {(['1D', '1W', '1M', '3M', '1Y'] as const).map((tf) => (
               <button
@@ -407,7 +404,6 @@ export function PerformanceCurveCard({ className = '' }: { className?: string })
           </div>
         </div>
 
-        {/* ── Main Full-Height Natural Curve Area (Recharts) ── */}
         <div className="relative w-full h-[240px] pt-2 select-none overflow-hidden flex-1">
           {isLoading ? (
             <div className="w-full h-full flex flex-col items-center justify-center gap-2 animate-pulse">
@@ -480,9 +476,7 @@ export function PerformanceCurveCard({ className = '' }: { className?: string })
         </div>
       </div>
 
-      {/* ── RIGHT COLUMN (4 cols): Two Separate Standalone Boxes ── */}
       <div className="lg:col-span-4 flex flex-col justify-between space-y-6 lg:border-l border-white/[0.06] lg:pl-6">
-        {/* BOX 1: Crypto Market Price Summary (Standalone Box) */}
         <div className="space-y-3.5 border-b border-white/[0.06] pb-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
@@ -539,7 +533,6 @@ export function PerformanceCurveCard({ className = '' }: { className?: string })
           </div>
         </div>
 
-        {/* BOX 2: Strategy Performance Telemetry (Standalone Box Below) */}
         <div className="flex-1 flex flex-col justify-between space-y-3">
           <div className="flex items-center justify-between pb-2.5">
             <span className="text-xs font-bold uppercase tracking-wider text-white">

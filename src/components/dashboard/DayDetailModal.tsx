@@ -275,7 +275,6 @@ export function DayDetailModal({ date, isOpen, onClose }: DayDetailModalProps) {
 
       <div className="relative z-10 w-full max-w-3xl max-h-[88vh] flex flex-col p-6 sm:p-7 rounded-2xl bg-[#0c0e16]/98 border border-white/10 shadow-[0_25px_70px_rgba(0,0,0,0.85)] my-auto overflow-hidden">
         
-        {/* ─── MODAL HEADER ─── */}
         <div className="flex items-start justify-between border-b border-white/[0.08] pb-4">
           <div className="space-y-1">
             <span className="text-[10px] uppercase font-bold tracking-widest text-text-muted block">
@@ -297,7 +296,6 @@ export function DayDetailModal({ date, isOpen, onClose }: DayDetailModalProps) {
           </button>
         </div>
 
-        {/* ─── MODAL CONTENT ─── */}
         <div className="flex-1 overflow-y-auto pr-1 space-y-6 custom-scrollbar">
           {loading ? (
             <div className="py-16 flex flex-col items-center justify-center space-y-3">
@@ -312,7 +310,6 @@ export function DayDetailModal({ date, isOpen, onClose }: DayDetailModalProps) {
             <p className="text-xs text-text-secondary text-center py-8">No records available for this date.</p>
           ) : (
             <>
-              {/* ─── SUMMARY STATS (Clean Tabular Metrics, No Rounded Boxes) ─── */}
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 py-1 border-b border-white/[0.06]">
                 <div>
                   <span className="text-[10px] uppercase tracking-wider text-text-muted font-bold block">Total Signals</span>
@@ -339,7 +336,6 @@ export function DayDetailModal({ date, isOpen, onClose }: DayDetailModalProps) {
                 </div>
               </div>
 
-              {/* ─── ACTIVE REGIMES SECTION ─── */}
               {data.regimes && data.regimes.length > 0 && (
                 <div className="space-y-2">
                   <h4 className="text-xs font-bold text-text-secondary uppercase tracking-wider">
@@ -369,7 +365,6 @@ export function DayDetailModal({ date, isOpen, onClose }: DayDetailModalProps) {
                 </div>
               )}
 
-              {/* ─── SIGNALS LIST SECTION ─── */}
               <div className="space-y-3">
                 <h4 className="text-xs font-bold text-text-secondary uppercase tracking-wider">
                   Signals Fired ({data.signals.length})
@@ -418,7 +413,6 @@ export function DayDetailModal({ date, isOpen, onClose }: DayDetailModalProps) {
                               </Badge>
                             </div>
 
-                            {/* Outcome Capsule */}
                             <div>
                               {details.isProfit ? (
                                 <span className="inline-flex items-center gap-1.5 text-[11px] font-bold text-emerald-400 font-mono">
@@ -449,7 +443,6 @@ export function DayDetailModal({ date, isOpen, onClose }: DayDetailModalProps) {
                             </div>
                           </div>
 
-                          {/* Setup Targets / Parameters Strip */}
                           <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 pt-1 text-[11px] text-text-secondary border-t border-white/[0.03]">
                             <div>
                               <span className="text-text-muted block text-[10px]">Confluence Score</span>

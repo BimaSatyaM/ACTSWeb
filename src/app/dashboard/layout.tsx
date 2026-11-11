@@ -32,10 +32,8 @@ export default function DashboardLayout({
 
   return (
     <div className="min-h-[calc(100vh-3.5rem)] flex flex-col md:flex-row w-full">
-      {/* ── Persistent Left Sidebar ── */}
       <DashboardSidebar />
 
-      {/* ── Main Content Area ── */}
       <main className="flex-1 min-w-0 p-3 sm:p-4 lg:p-5">
         {isDashboardUnlocked || isAccountPage || (Boolean(user) && isAcademyRoute) ? (
           children

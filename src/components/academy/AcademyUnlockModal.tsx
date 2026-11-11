@@ -10,10 +10,8 @@ interface AcademyUnlockModalProps {
   onClose?: () => void
 }
 
-/**
- * Academy Access Gate Component
- * Flat data-terminal panel for member-gated tracks (Tracks 2–4).
- */
+// Academy Access Gate Component
+// Flat data-terminal panel for member-gated tracks (Tracks 2–4).
 export function AcademyUnlockModal({
   mode = 'inline',
   trackTitle = 'Advanced Curriculum Track',

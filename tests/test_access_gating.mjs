@@ -1,15 +1,13 @@
-/**
- * ACTS Academy Access Gating Unit Test Suite
- * 
- * Verifies the access model and architectural invariants:
- * 1. Unapproved logged-in user can access /dashboard/academy and Track 1 (Foundations).
- * 2. Unapproved logged-in user cannot access non-free tracks (Tracks 2-4) without unlock modal.
- * 3. Every non-Academy dashboard page (/dashboard, /dashboard/signals, /dashboard/auto-trading, /dashboard/news, /dashboard/calendar)
- *    remains 100% locked behind (isApproved && hasAcceptedRules).
- * 4. Static and AST verification of layout.tsx, [trackId]/page.tsx, and [lessonId]/page.tsx defense guards.
- * 
- * Run with: node tests/test_access_gating.mjs or node --test tests/test_access_gating.mjs
- */
+// ACTS Academy Access Gating Unit Test Suite
+//
+// Verifies the access model and architectural invariants:
+// 1. Unapproved logged-in user can access /dashboard/academy and Track 1 (Foundations).
+// 2. Unapproved logged-in user cannot access non-free tracks (Tracks 2-4) without unlock modal.
+// 3. Every non-Academy dashboard page (/dashboard, /dashboard/signals, /dashboard/auto-trading, /dashboard/news, /dashboard/calendar)
+// remains 100% locked behind (isApproved && hasAcceptedRules).
+// 4. Static and AST verification of layout.tsx, [trackId]/page.tsx, and [lessonId]/page.tsx defense guards.
+//
+// Run with: node tests/test_access_gating.mjs or node --test tests/test_access_gating.mjs
 
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
@@ -24,9 +22,7 @@ const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 const ROOT_DIR = path.resolve(__dirname, '..')
 
-/**
- * Pure evaluation function mirroring src/app/dashboard/layout.tsx
- */
+// Pure evaluation function mirroring src/app/dashboard/layout.tsx
 function evaluateDashboardLayoutAccess({ user, profile, pathname }) {
   const isApproved = profile?.approved === true
   const hasAcceptedRules = profile?.rulesAccepted === true
@@ -44,9 +40,7 @@ function evaluateDashboardLayoutAccess({ user, profile, pathname }) {
   }
 }
 
-/**
- * Pure evaluation function mirroring src/app/dashboard/academy/[trackId]/page.tsx
- */
+// Pure evaluation function mirroring src/app/dashboard/academy/[trackId]/page.tsx
 function evaluateTrackOverviewAccess({ profile, track }) {
   const isApproved = profile?.approved === true
   const hasAcceptedRules = profile?.rulesAccepted === true
@@ -62,9 +56,7 @@ function evaluateTrackOverviewAccess({ profile, track }) {
   }
 }
 
-/**
- * Pure evaluation function mirroring src/app/dashboard/academy/[trackId]/[lessonId]/page.tsx
- */
+// Pure evaluation function mirroring src/app/dashboard/academy/[trackId]/[lessonId]/page.tsx
 function evaluateLessonReaderAccess({ profile, track, lesson }) {
   const isApproved = profile?.approved === true
   const hasAcceptedRules = profile?.rulesAccepted === true
@@ -80,9 +72,7 @@ function evaluateLessonReaderAccess({ profile, track, lesson }) {
   }
 }
 
-/**
- * Helper to load Track datasets
- */
+// Helper to load Track datasets
 function loadTrack(relativePath, exportName) {
   const fullPath = path.resolve(ROOT_DIR, relativePath)
   const sourceCode = fs.readFileSync(fullPath, 'utf8')

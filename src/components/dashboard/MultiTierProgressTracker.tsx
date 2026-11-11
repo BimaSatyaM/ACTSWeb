@@ -111,7 +111,6 @@ export function MultiTierProgressTracker({
 
   return (
     <div className={`space-y-3 pt-2 pb-1 font-mono ${className}`}>
-      {/* Sleek Minimal Header */}
       <div className="flex items-center justify-between text-xs">
         <span className="text-[10px] text-zinc-400 font-bold uppercase tracking-widest flex items-center gap-1.5">
           <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse shadow-[0_0_8px_rgba(34,211,238,0.8)]" />
@@ -126,17 +125,13 @@ export function MultiTierProgressTracker({
         </div>
       </div>
 
-      {/* Modern Stepper Track (No nested box borders) */}
       <div className="relative pt-2 pb-1">
-        {/* Continuous background connecting line */}
         <div className="absolute top-[18px] left-[10%] right-[10%] h-[2px] bg-white/[0.08] z-0" />
 
-        {/* SL Loss progress line if stopped out */}
         {isSLHit && (
           <div className="absolute top-[18px] left-[10%] w-[20%] h-[2px] bg-rose-500/70 transition-all duration-500 z-0" />
         )}
 
-        {/* Take Profit progress highlight line */}
         <div
           className="absolute top-[18px] left-[30%] h-[2px] bg-emerald-500/70 transition-all duration-500 z-0"
           style={{
@@ -144,9 +139,7 @@ export function MultiTierProgressTracker({
           }}
         />
 
-        {/* 5 Milestones: SL, Entry, TP1, TP2, TP3 */}
         <div className="grid grid-cols-5 gap-2 relative z-10">
-          {/* Node 0: SL */}
           <div className="flex flex-col items-center text-center space-y-1.5">
             <div
               className={`w-4 h-4 rounded-full bg-[#0d111c] border-2 flex items-center justify-center transition-all ${isSLHit
@@ -170,7 +163,6 @@ export function MultiTierProgressTracker({
             </div>
           </div>
 
-          {/* Node 1: Entry */}
           <div className="flex flex-col items-center text-center space-y-1.5">
             <div className="w-4 h-4 rounded-full bg-[#0d111c] border-2 border-cyan-400 flex items-center justify-center shadow-[0_0_8px_rgba(34,211,238,0.4)]">
               <span className="w-1 h-1 rounded-full bg-cyan-400" />
@@ -186,7 +178,6 @@ export function MultiTierProgressTracker({
             </div>
           </div>
 
-          {/* Node 2: TP1 */}
           <div className="flex flex-col items-center text-center space-y-1.5">
             <div
               className={`w-4 h-4 rounded-full bg-[#0d111c] border-2 flex items-center justify-center transition-all ${isTP1Hit
@@ -210,7 +201,6 @@ export function MultiTierProgressTracker({
             </div>
           </div>
 
-          {/* Node 3: TP2 */}
           <div className="flex flex-col items-center text-center space-y-1.5">
             <div
               className={`w-4 h-4 rounded-full bg-[#0d111c] border-2 flex items-center justify-center transition-all ${isTP2Hit
@@ -236,7 +226,6 @@ export function MultiTierProgressTracker({
             </div>
           </div>
 
-          {/* Node 4: TP3 */}
           <div className="flex flex-col items-center text-center space-y-1.5">
             <div
               className={`w-4 h-4 rounded-full bg-[#0d111c] border-2 flex items-center justify-center transition-all ${isTP3Hit
@@ -264,7 +253,6 @@ export function MultiTierProgressTracker({
         </div>
       </div>
 
-      {/* Trailing SL Single-Line Footer (Clean & Borderless) */}
       <div className="flex flex-wrap items-center justify-between gap-2 pt-2 text-[11px]">
         <div className="inline-flex items-center gap-1.5 text-[11px]">
           <span className={`w-1.5 h-1.5 rounded-full ${isSLHit ? 'bg-rose-500' : isTP1Hit ? 'bg-cyan-400 animate-pulse shadow-[0_0_6px_rgba(34,211,238,0.8)]' : 'bg-rose-400'}`} />

@@ -89,7 +89,6 @@ export default function LessonReaderPage() {
 
   return (
     <div className="max-w-5xl mx-auto space-y-8 pb-20">
-      {/* Breadcrumb */}
       <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-2 text-xs text-[#94a3b8]">
         <Link
           href="/dashboard/academy"
@@ -108,7 +107,6 @@ export default function LessonReaderPage() {
         <span className="text-white font-medium truncate max-w-[280px]">{lesson.title}</span>
       </nav>
 
-      {/* Gating Defense */}
       {isGated ? (
         <div className="space-y-6">
           <AcademyUnlockModal
@@ -119,7 +117,6 @@ export default function LessonReaderPage() {
         </div>
       ) : (
         <article className="space-y-8">
-          {/* Lesson Title Row (no pills above heading) */}
           <header className="space-y-2 border-b border-[#1a2030] pb-5">
             <h1 className="text-2xl font-semibold tracking-tight text-white leading-snug">
               {lesson.title}
@@ -137,7 +134,6 @@ export default function LessonReaderPage() {
             </div>
           </header>
 
-          {/* Learning Objectives (flat panel, no icon in a box) */}
           {lesson.learningObjectives && lesson.learningObjectives.length > 0 && (
             <section
               aria-label="Learning Objectives"
@@ -154,7 +150,6 @@ export default function LessonReaderPage() {
             </section>
           )}
 
-          {/* Interactive Chart Simulator Integration (Prominent Top Workspace) */}
           {lesson.chartExercise && (
             <section
               aria-label="Interactive Chart Simulation Exercise"
@@ -196,12 +191,10 @@ export default function LessonReaderPage() {
             </section>
           )}
 
-          {/* Core Lesson Content & Visual Chart Diagrams */}
           <section className="text-[#cbd5e1] leading-relaxed space-y-4">
             <MarkdownRenderer content={lesson.contentMarkdown} />
           </section>
 
-          {/* Macro Event Integration */}
           {lesson.macroEvent && (
             <section
               aria-label="Macroeconomic Calendar Data"
@@ -214,7 +207,6 @@ export default function LessonReaderPage() {
             </section>
           )}
 
-          {/* Comprehension Quiz */}
           {lesson.quiz && lesson.quiz.length > 0 && (
             <section
               aria-label="Knowledge Verification Quiz"
@@ -231,7 +223,6 @@ export default function LessonReaderPage() {
             </section>
           )}
 
-          {/* Primary Sources */}
           {lesson.primarySources && lesson.primarySources.length > 0 && (
             <section
               aria-label="Verified Primary Sources"
@@ -260,7 +251,6 @@ export default function LessonReaderPage() {
             </section>
           )}
 
-          {/* Bottom Sequential Navigation Bar */}
           <nav
             aria-label="Lesson Navigation"
             className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-6 border-t border-[#1a2030]"
@@ -304,7 +294,6 @@ export default function LessonReaderPage() {
             </div>
           </nav>
 
-          {/* Quiet Footnotes */}
           <div className="space-y-3 pt-2">
             <EsmaLossBanner />
             <EducationalDisclaimer />

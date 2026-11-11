@@ -46,7 +46,6 @@ export function IDXDisclosuresCard({ disclosures }: Props) {
 
   return (
     <div className="rounded-xl bg-[#0d121f] border border-white/[0.08] p-5 sm:p-6 space-y-5">
-      {/* ── Header & Filter Toolbar ── */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-white/[0.08]">
         <div>
           <div className="flex items-center gap-2">
@@ -63,7 +62,6 @@ export function IDXDisclosuresCard({ disclosures }: Props) {
           </p>
         </div>
 
-        {/* Filter Pills */}
         <div className="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0">
           {['ALL', 'UMA', 'AKUISISI', 'BUYBACK', 'UNFREEZE'].map((t) => (
             <button
@@ -81,7 +79,6 @@ export function IDXDisclosuresCard({ disclosures }: Props) {
         </div>
       </div>
 
-      {/* ── Disclosures List ── */}
       <div className="space-y-3">
         {filtered.map((item) => (
           <div

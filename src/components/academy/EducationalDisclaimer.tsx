@@ -4,10 +4,8 @@ interface EducationalDisclaimerProps {
   className?: string
 }
 
-/**
- * Educational & Compliance Disclaimer Component
- * Quiet, flat footnote rendered at the base of every academy lesson.
- */
+// Educational & Compliance Disclaimer Component
+// Quiet, flat footnote rendered at the base of every academy lesson.
 export function EducationalDisclaimer({ className = '' }: EducationalDisclaimerProps) {
   return (
     <footer

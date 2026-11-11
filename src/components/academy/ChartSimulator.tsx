@@ -819,7 +819,6 @@ export function ChartSimulator({
 
   return (
     <div data-ui className="flex flex-col rounded-lg bg-[#070b14] border border-[#1a2030] overflow-hidden">
-      {/* Top Header & HUD */}
       <div className="flex flex-wrap items-center justify-between gap-3 px-4 py-2.5 bg-[#0a0f1a] border-b border-[#1a2030] text-xs">
         <div className="flex items-center gap-3">
           <span className="font-semibold text-white text-sm">{symbol}</span>
@@ -838,7 +837,6 @@ export function ChartSimulator({
           {loading && <span className="text-[#64748b]">Updating...</span>}
         </div>
 
-        {/* Live HUD Oscillators & Active S/R Zone Summary */}
         <div className="flex flex-wrap items-center gap-4 text-xs text-[#94a3b8] [font-variant-numeric:tabular-nums]">
           <span>
             Close <strong className="text-white font-medium">${hudValues.close.toLocaleString()}</strong>
@@ -871,7 +869,6 @@ export function ChartSimulator({
         </div>
       </div>
 
-      {/* Control Bar: Replay Controls & Indicators (1px accent line on active selections) */}
       <div className="flex flex-wrap items-center justify-between gap-3 px-4 py-2 bg-[#070b14] border-b border-[#1a2030] text-xs">
         <div className="flex items-center gap-2">
           <button
@@ -931,7 +928,6 @@ export function ChartSimulator({
           </span>
         </div>
 
-        {/* Indicator Toggles using 1px accent line */}
         <div className="flex flex-wrap items-center gap-3">
           {(
             ['srZones', 'ema20', 'ema50', 'ema200', 'bb', 'rsi', 'macd', 'atr'] as const
@@ -966,11 +962,9 @@ export function ChartSimulator({
         </div>
       </div>
 
-      {/* Main Chart Canvas Container */}
       <div className="relative w-full" style={{ height }}>
         <div ref={containerRef} className="w-full h-full" />
 
-        {/* S/R Touch Badges Overlay (Photo 1 style!) */}
         {indicators.srZones && srZones.length > 0 && (
           <div className="absolute top-3 left-3 z-10 flex flex-wrap items-center gap-1.5 pointer-events-none [font-variant-numeric:tabular-nums]">
             {srZones.map((z, idx) => {
@@ -1030,7 +1024,6 @@ export function ChartSimulator({
         )}
       </div>
 
-      {/* Synchronized Visual RSI (14) Oscillator Sub-Pane (Expanded 75-Bar Pane) */}
       {indicators.rsi && recentRsi.length > 1 && (
         <div className="border-t border-[#1a2030] bg-[#070b14] px-4 py-2.5">
           <div className="flex items-center justify-between text-[11px] text-[#94a3b8] mb-1.5 [font-variant-numeric:tabular-nums]">
@@ -1074,7 +1067,6 @@ export function ChartSimulator({
         </div>
       )}
 
-      {/* Synchronized Visual MACD (12, 26, 9) Sub-Pane (Expanded 75-Bar Pane) */}
       {indicators.macd && recentMacd.length > 1 && (
         <div className="border-t border-[#1a2030] bg-[#070b14] px-4 py-2.5">
           <div className="flex items-center justify-between text-[11px] text-[#94a3b8] mb-1.5 [font-variant-numeric:tabular-nums]">
@@ -1151,7 +1143,6 @@ export function ChartSimulator({
         </div>
       )}
 
-      {/* 4-Column Strategy Setup Box (Clear Entry, Stop-Loss & Target Guide) */}
       {activeBracket && (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 divide-y sm:divide-y-0 sm:divide-x divide-[#1a2030] border-t border-[#1a2030] bg-[#080d18] text-xs [font-variant-numeric:tabular-nums]">
           <div className="px-3.5 py-2.5 space-y-0.5">
@@ -1184,7 +1175,6 @@ export function ChartSimulator({
         </div>
       )}
 
-      {/* Interactive Bracket Configuration Panel */}
       <div className="flex flex-wrap items-center justify-between gap-3 px-4 py-3 bg-[#0a0f1a] border-t border-[#1a2030] text-xs">
         <div className="flex flex-wrap items-center gap-3">
           <div className="flex items-center gap-3 border-r border-[#1a2030] pr-3">

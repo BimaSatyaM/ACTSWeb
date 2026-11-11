@@ -30,11 +30,9 @@ function getProxyAgent(): HttpsProxyAgent<string> | null {
   return null
 }
 
-/**
- * Resolves Binance hostnames using DNS-over-HTTPS (Cloudflare / Google)
- * to bypass local ISP DNS poisoning (e.g., Kominfo / TrustPositif in Indonesia)
- * without requiring the user to install a VPN.
- */
+// Resolves Binance hostnames using DNS-over-HTTPS (Cloudflare / Google)
+// to bypass local ISP DNS poisoning (e.g., Kominfo / TrustPositif in Indonesia)
+// without requiring the user to install a VPN.
 export async function resolveBinanceHost(hostname: string): Promise<string> {
   const cached = DNS_CACHE.get(hostname)
   if (cached && Date.now() < cached.expires) {
@@ -75,12 +73,10 @@ export async function resolveBinanceHost(hostname: string): Promise<string> {
   return FALLBACK_IPS[hostname] || '108.138.141.24'
 }
 
-/**
- * Executes a secure HTTPS request to Binance.
- * Prioritizes the whitelisted Webshare proxy so residential dynamic IPs (e.g. CBN Indonesia)
- * never cause "Invalid API-key, IP, or permissions (-2015)" upon PC reboot.
- * Falls back to direct DoH connection if proxy is unavailable.
- */
+// Executes a secure HTTPS request to Binance.
+// Prioritizes the whitelisted Webshare proxy so residential dynamic IPs (e.g. CBN Indonesia)
+// never cause "Invalid API-key, IP, or permissions (-2015)" upon PC reboot.
+// Falls back to direct DoH connection if proxy is unavailable.
 export async function binanceSecureFetch(
   url: string,
   options: {
@@ -268,9 +264,7 @@ const BINANCE_FUTURES_LIVE_BASE = 'https://fapi.binance.com'
 const BINANCE_FUTURES_TESTNET_BASE = 'https://testnet.binancefuture.com'
 const BINANCE_SPOT_LIVE_BASE = 'https://api.binance.com'
 
-/**
- * Creates HMAC-SHA256 signature for Binance REST API
- */
+// Creates HMAC-SHA256 signature for Binance REST API
 export function generateBinanceSignature(queryString: string, apiSecret: string): string {
   return crypto
     .createHmac('sha256', apiSecret.trim())
@@ -278,9 +272,7 @@ export function generateBinanceSignature(queryString: string, apiSecret: string)
     .digest('hex')
 }
 
-/**
- * Maps Binance API numerical error codes to human-readable explanations & tips.
- */
+// Maps Binance API numerical error codes to human-readable explanations & tips.
 export function formatBinanceErrorMessage(code: number, rawMsg: string): string {
   switch (code) {
     case -2015:
@@ -302,11 +294,9 @@ export function formatBinanceErrorMessage(code: number, rawMsg: string): string 
   }
 }
 
-/**
- * Verifies Binance credentials and retrieves live wallet balance & permission flags.
- * First tests /fapi/v2/account (Futures). If Futures is not enabled on this key,
- * automatically falls back to /api/v3/account (Spot & Margin).
- */
+// Verifies Binance credentials and retrieves live wallet balance & permission flags.
+// First tests /fapi/v2/account (Futures). If Futures is not enabled on this key,
+// automatically falls back to /api/v3/account (Spot & Margin).
 export async function verifyBinanceFuturesCredentials(
   apiKey: string,
   apiSecret: string,
@@ -474,10 +464,8 @@ export interface BinanceAccountFullDetails {
   error?: string
 }
 
-/**
- * Fetches comprehensive Binance account state: balances, margin health, and open positions.
- * Defaults to Futures; falls back to Spot if Futures is not enabled.
- */
+// Fetches comprehensive Binance account state: balances, margin health, and open positions.
+// Defaults to Futures; falls back to Spot if Futures is not enabled.
 export async function fetchBinanceFuturesAccountDetails(
   apiKey: string,
   apiSecret: string,
@@ -672,9 +660,7 @@ export interface BinanceOpenOrder {
   closePosition: boolean
 }
 
-/**
- * Places an individual order on Binance Futures.
- */
+// Places an individual order on Binance Futures.
 export async function placeBinanceFuturesOrder(
   apiKey: string,
   apiSecret: string,
@@ -727,11 +713,9 @@ export async function placeBinanceFuturesOrder(
   }
 }
 
-/**
- * Places a conditional Algo Order (STOP_MARKET, TAKE_PROFIT_MARKET, etc.)
- * on Binance Futures (/fapi/v1/algoOrder).
- * As of late 2025/2026, Binance deprecated conditional orders on standard /fapi/v1/order.
- */
+// Places a conditional Algo Order (STOP_MARKET, TAKE_PROFIT_MARKET, etc.)
+// on Binance Futures (/fapi/v1/algoOrder).
+// As of late 2025/2026, Binance deprecated conditional orders on standard /fapi/v1/order.
 export async function placeBinanceFuturesAlgoOrder(
   apiKey: string,
   apiSecret: string,
@@ -784,10 +768,8 @@ export async function placeBinanceFuturesAlgoOrder(
   }
 }
 
-/**
- * Cancels an individual open order on Binance Futures.
- * Supports both standard orders (/fapi/v1/order) and algo conditional orders (/fapi/v1/algoOrder).
- */
+// Cancels an individual open order on Binance Futures.
+// Supports both standard orders (/fapi/v1/order) and algo conditional orders (/fapi/v1/algoOrder).
 export async function cancelBinanceFuturesOrder(
   apiKey: string,
   apiSecret: string,
@@ -844,9 +826,7 @@ export async function cancelBinanceFuturesOrder(
   }
 }
 
-/**
- * Cancels all open orders on Binance Futures for a given symbol (both standard and algo orders).
- */
+// Cancels all open orders on Binance Futures for a given symbol (both standard and algo orders).
 export async function cancelAllBinanceFuturesOrders(
   apiKey: string,
   apiSecret: string,
@@ -917,11 +897,9 @@ export async function cancelAllBinanceFuturesOrders(
   }
 }
 
-/**
- * Fetches all currently active open orders on Binance Futures,
- * including both standard limit orders (/fapi/v1/openOrders)
- * and conditional algo orders (/fapi/v1/openAlgoOrders).
- */
+// Fetches all currently active open orders on Binance Futures,
+// including both standard limit orders (/fapi/v1/openOrders)
+// and conditional algo orders (/fapi/v1/openAlgoOrders).
 export async function fetchBinanceFuturesOpenOrders(
   apiKey: string,
   apiSecret: string,
@@ -1022,9 +1000,7 @@ export async function fetchBinanceFuturesOpenOrders(
   }
 }
 
-/**
- * Sets leverage for a symbol.
- */
+// Sets leverage for a symbol.
 export async function setBinanceFuturesLeverage(
   apiKey: string,
   apiSecret: string,
@@ -1057,9 +1033,7 @@ export async function setBinanceFuturesLeverage(
   }
 }
 
-/**
- * Sets margin type (ISOLATED or CROSSED) for a symbol.
- */
+// Sets margin type (ISOLATED or CROSSED) for a symbol.
 export async function setBinanceFuturesMarginType(
   apiKey: string,
   apiSecret: string,
@@ -1095,9 +1069,7 @@ export async function setBinanceFuturesMarginType(
     return { success: false, error: String(err) }
   }
 }
-/**
- * Fetches current Binance Futures ticker price for a symbol.
- */
+// Fetches current Binance Futures ticker price for a symbol.
 export async function fetchBinanceFuturesTickerPrice(
   symbol = 'BTCUSDT',
   isTestnet = false
@@ -1116,14 +1088,12 @@ export async function fetchBinanceFuturesTickerPrice(
   return 77300.0
 }
 
-/**
- * Executes an instant 0.001 BTC bracket order on Binance Futures Testnet
- * to verify end-to-end order routing:
- * 1. Sets ISOLATED 3x leverage.
- * 2. Places BUY MARKET for 0.001 BTC (POST /fapi/v1/order).
- * 3. Places STOP_MARKET SL order ($500 below entry) via Algo Order API (POST /fapi/v1/algoOrder).
- * 4. Places TAKE_PROFIT_MARKET TP order ($1000 above entry) via Algo Order API (POST /fapi/v1/algoOrder).
- */
+// Executes an instant 0.001 BTC bracket order on Binance Futures Testnet
+// to verify end-to-end order routing:
+// 1. Sets ISOLATED 3x leverage.
+// 2. Places BUY MARKET for 0.001 BTC (POST /fapi/v1/order).
+// 3. Places STOP_MARKET SL order ($500 below entry) via Algo Order API (POST /fapi/v1/algoOrder).
+// 4. Places TAKE_PROFIT_MARKET TP order ($1000 above entry) via Algo Order API (POST /fapi/v1/algoOrder).
 export async function submitTestBracketOrder(
   apiKey: string,
   apiSecret: string,
@@ -1234,15 +1204,13 @@ export async function submitTestBracketOrder(
 
 export const submitTestnetTestBracketOrder = submitTestBracketOrder
 
-/**
- * Executes a live or testnet bracket order on Binance Futures from a verified trade signal setup:
- * 1. Configures ISOLATED margin mode.
- * 2. Sets leverage up to user's max leverage cap.
- * 3. Dynamically sizes units based on live available USDT balance and risk %.
- * 4. Submits MARKET entry order.
- * 5. Submits primary STOP_MARKET conditional order.
- * 6. Submits multi-tier TAKE_PROFIT_MARKET conditional orders (TP1 40%, TP2 35%, TP3 25%).
- */
+// Executes a live or testnet bracket order on Binance Futures from a verified trade signal setup:
+// 1. Configures ISOLATED margin mode.
+// 2. Sets leverage up to user's max leverage cap.
+// 3. Dynamically sizes units based on live available USDT balance and risk %.
+// 4. Submits MARKET entry order.
+// 5. Submits primary STOP_MARKET conditional order.
+// 6. Submits multi-tier TAKE_PROFIT_MARKET conditional orders (TP1 40%, TP2 35%, TP3 25%).
 export async function submitSignalBracketOrder(
   apiKey: string,
   apiSecret: string,
@@ -1570,10 +1538,8 @@ export interface BinanceUserTradesResult {
   error?: string
 }
 
-/**
- * Fetches executed user trades from Binance Futures (/fapi/v1/userTrades)
- * and calculates true realized profit, fees, and session PnL.
- */
+// Fetches executed user trades from Binance Futures (/fapi/v1/userTrades)
+// and calculates true realized profit, fees, and session PnL.
 export async function fetchBinanceFuturesUserTrades(
   apiKey: string,
   apiSecret: string,
@@ -1762,10 +1728,8 @@ export interface BinanceIncomeResult {
   error?: string
 }
 
-/**
- * Fetches complete Binance Futures cash flow history (/fapi/v1/income)
- * including transfers, funding fees, realized PnL, and commissions.
- */
+// Fetches complete Binance Futures cash flow history (/fapi/v1/income)
+// including transfers, funding fees, realized PnL, and commissions.
 export async function fetchBinanceFuturesIncome(
   apiKey: string,
   apiSecret: string,

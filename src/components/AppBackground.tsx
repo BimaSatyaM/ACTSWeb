@@ -20,7 +20,6 @@ export function AppBackground() {
         }`}
       />
 
-      {/* Dynamic Overlays: Dimmed & locked for dashboard, vibrant for Home and About Us */}
       {isDashboard ? (
         <>
           <div className="absolute inset-0 bg-[#070b14]/85" />

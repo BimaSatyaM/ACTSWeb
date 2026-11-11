@@ -1,18 +1,16 @@
-/**
- * ACTS Academy Adversarial Verification Suite: Access Gating & Persistence
- * 
- * Conducts exhaustive empirical stress-testing:
- * 1. Access Gating Matrix: 10 user states × 20 routes
- * 2. Unapproved user blocking on /dashboard/signals and /dashboard/auto-trading
- * 3. Unapproved user allowance on /dashboard/academy and Track 1 (all lessons)
- * 4. Unapproved user gating on Tracks 2, 3, 4 (overview + all 18 lessons)
- * 5. Approved user full access across all pages and curriculum
- * 6. Adversarial injection & type confusion attacks
- * 7. Path normalization & query parameter bypass attacks
- * 8. Forged progress injection bypass attacks
- * 9. Offline localStorage caching and state persistence
- * 10. Multi-device timestamp reconciliation engine
- */
+// ACTS Academy Adversarial Verification Suite: Access Gating & Persistence
+//
+// Conducts exhaustive empirical stress-testing:
+// 1. Access Gating Matrix: 10 user states × 20 routes
+// 2. Unapproved user blocking on /dashboard/signals and /dashboard/auto-trading
+// 3. Unapproved user allowance on /dashboard/academy and Track 1 (all lessons)
+// 4. Unapproved user gating on Tracks 2, 3, 4 (overview + all 18 lessons)
+// 5. Approved user full access across all pages and curriculum
+// 6. Adversarial injection & type confusion attacks
+// 7. Path normalization & query parameter bypass attacks
+// 8. Forged progress injection bypass attacks
+// 9. Offline localStorage caching and state persistence
+// 10. Multi-device timestamp reconciliation engine
 
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
@@ -398,9 +396,7 @@ class MockLocalStorage {
   }
 }
 
-/**
- * Pure state machine engine replicating useAcademyProgress persistence lifecycle
- */
+// Pure state machine engine replicating useAcademyProgress persistence lifecycle
 class AcademyProgressHarness {
   constructor(uid, mockStorage = new MockLocalStorage()) {
     this.uid = uid || 'guest'

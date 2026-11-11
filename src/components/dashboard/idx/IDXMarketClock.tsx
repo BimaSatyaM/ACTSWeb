@@ -221,7 +221,6 @@ export function IDXMarketClock() {
 
   return (
     <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 px-4 py-3 rounded-xl bg-[#0d121f] border border-white/[0.08] shadow-sm">
-      {/* ── Left: Market Time & Date ── */}
       <div className="flex items-center gap-3">
         <div className="w-7 h-7 flex items-center justify-center flex-shrink-0">
           <Image
@@ -242,7 +241,6 @@ export function IDXMarketClock() {
         </div>
       </div>
 
-      {/* ── Right: Session Status & Countdown ── */}
       <div className="flex flex-col sm:items-end w-full sm:w-auto gap-1">
         <div className="flex flex-wrap items-center gap-2">
           <span className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-bold font-mono border ${session.statusColor}`}>
@@ -260,7 +258,6 @@ export function IDXMarketClock() {
           </div>
         </div>
 
-        {/* Progress Bar for active session */}
         {session.isOpen && (
           <div className="w-full sm:w-44 h-1 bg-white/[0.06] rounded-full overflow-hidden mt-0.5">
             <div

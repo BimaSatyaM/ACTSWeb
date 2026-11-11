@@ -116,7 +116,6 @@ export default function SignalsPage() {
 
   return (
     <div className="space-y-6">
-      {/* ── Page Header ── */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 border-b border-white/[0.06] pb-4">
         <div>
           <h1 className="text-xl sm:text-2xl font-bold text-white tracking-tight">Live Signals & Chart Telemetry</h1>
@@ -131,7 +130,6 @@ export default function SignalsPage() {
         </div>
       </div>
 
-      {/* ── TradingView Chart Widget ── */}
       <div className="space-y-2">
         <div className="flex items-center justify-between px-1">
           <span className="text-xs font-semibold text-white flex items-center gap-2">
@@ -142,7 +140,6 @@ export default function SignalsPage() {
         <TradingViewChart symbol="BINANCE:BTCUSDT.P" interval="15" />
       </div>
 
-      {/* ── Live Signal Feed (1 Active Signal + 3-History Dropdown) ── */}
       <div className="space-y-4 pt-2">
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 px-1">
           <div className="flex items-center gap-3">
@@ -150,7 +147,6 @@ export default function SignalsPage() {
             <span className="text-[11px] text-text-muted hidden sm:inline">Auto-refreshes every 15s</span>
           </div>
 
-          {/* Custom Dropdown Selector for 3 Latest Signals with Real SVG Icons */}
           {signalsList.length > 0 && (
             <div className="relative flex items-center gap-2 w-full sm:w-auto" ref={historyDropdownRef}>
               <span className="text-xs text-text-muted whitespace-nowrap hidden xs:inline">Signal History:</span>
@@ -185,7 +181,6 @@ export default function SignalsPage() {
                 </svg>
               </button>
 
-              {/* Dropdown Menu Items */}
               {isHistoryOpen && (
                 <div className="absolute right-0 top-full mt-1.5 w-full sm:w-80 rounded-xl bg-[#0c101c]/98 border border-white/[0.1] shadow-[0_15px_35px_rgba(0,0,0,0.8)] backdrop-blur-xl z-30 p-1.5 space-y-1 animate-in fade-in zoom-in-95 duration-150">
                   {signalsList.map((sig, idx) => {
@@ -239,7 +234,6 @@ export default function SignalsPage() {
           )}
         </div>
 
-        {/* ── 2-Column Responsive Layout: Live Signal Card + Live Update Price Card ── */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
           <div className="lg:col-span-8 space-y-4">
             {isLoadingSignals ? (
@@ -266,7 +260,6 @@ export default function SignalsPage() {
 
             return (
               <GlassCard key={sig.event_id} className="p-5 sm:p-6 space-y-5 border-white/[0.09]">
-                {/* Signal Header: Symbol → Direction → Confluence Score */}
                 <div className="flex flex-wrap justify-between items-center gap-3 border-b border-white/[0.06] pb-4">
                   <div className="flex items-center gap-2.5">
                     <AssetIcon symbol={activeSymbol} size="md" />
@@ -317,9 +310,7 @@ export default function SignalsPage() {
                   </div>
                 </div>
 
-                {/* Signal Content Grid */}
                 <div className="grid md:grid-cols-2 gap-6">
-                  {/* Left: Target Setup & Risk Parameters */}
                   <div className="space-y-3">
                     <h3 className="text-xs font-bold text-white uppercase tracking-wider text-[11px]">Target Setup</h3>
                     <div className="grid grid-cols-2 gap-3 text-xs">
@@ -372,7 +363,6 @@ export default function SignalsPage() {
                     </div>
                   </div>
 
-                  {/* Right: Confluence Factors Breakdown */}
                   <div className="space-y-3">
                     <h3 className="text-xs font-bold text-white uppercase tracking-wider text-[11px]">Confluence Factors</h3>
                     <div className="space-y-1.5 text-xs">
@@ -388,7 +378,6 @@ export default function SignalsPage() {
                   </div>
                 </div>
 
-                {/* Multi-Tier Take Profit (Scale-Out & Trailing SL) Live Progress Tracker */}
                 <MultiTierProgressTracker
                   entryPrice={setup?.entry_price || 0}
                   stopLoss={setup?.stop_loss || 0}
@@ -401,7 +390,6 @@ export default function SignalsPage() {
                   status={sig.outcome?.status}
                 />
 
-                {/* Invalidation Clause */}
                 {setup?.invalidation_clause && (
                   <div className="border-l-2 border-amber-500/40 pl-3.5 py-1 text-xs text-zinc-400 bg-transparent">
                     <span className="font-semibold text-zinc-200 block text-[11px]">Invalidation Clause</span>
@@ -409,9 +397,7 @@ export default function SignalsPage() {
                   </div>
                 )}
 
-                {/* Signal Outcome Tracking */}
                 <div className="border-t border-white/[0.06] pt-4">
-                  {/* System Target Status */}
                   <div className="space-y-1.5">
                     <span className="text-xs font-semibold text-text-muted block">System Target Status</span>
                     <div>
@@ -467,7 +453,6 @@ export default function SignalsPage() {
         )}
           </div>
 
-          {/* ── Right Column: Live Update Price Card + Other Crypto Pairs Card ── */}
           <div className="lg:col-span-4 sticky top-6 space-y-4">
             <LivePriceCard
               symbol={activeSignal?.payload.confluence_result?.symbol || activeSignal?.payload.setup_context?.symbol || 'BTC'}

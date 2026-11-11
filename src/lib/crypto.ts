@@ -1,9 +1,7 @@
 import crypto from 'crypto'
 
-/**
- * Server-side AES-256-GCM encryption and decryption.
- * Compatible with Python's cryptography.hazmat.primitives.ciphers.aead.AESGCM.
- */
+// Server-side AES-256-GCM encryption and decryption.
+// Compatible with Python's cryptography.hazmat.primitives.ciphers.aead.AESGCM.
 
 function getSecretKey(customSecret?: string): Buffer {
   const secret =
@@ -14,10 +12,8 @@ function getSecretKey(customSecret?: string): Buffer {
   return crypto.createHash('sha256').update(secret.trim()).digest()
 }
 
-/**
- * Encrypts a plaintext string into a self-contained base64 string:
- * base64(12-byte IV + ciphertext + 16-byte auth tag).
- */
+// Encrypts a plaintext string into a self-contained base64 string:
+// base64(12-byte IV + ciphertext + 16-byte auth tag).
 export function encryptCredential(plaintext: string, customSecret?: string): string {
   if (!plaintext) return ''
   const key = getSecretKey(customSecret)
@@ -30,9 +26,7 @@ export function encryptCredential(plaintext: string, customSecret?: string): str
   return Buffer.concat([iv, ciphertext, tag]).toString('base64')
 }
 
-/**
- * Decrypts a self-contained base64 string produced by either Node.js or Python.
- */
+// Decrypts a self-contained base64 string produced by either Node.js or Python.
 export function decryptCredential(payloadBase64: string, customSecret?: string): string {
   if (!payloadBase64) return ''
   const key = getSecretKey(customSecret)
@@ -52,9 +46,7 @@ export function decryptCredential(payloadBase64: string, customSecret?: string):
   return decipher.update(ciphertext, undefined, 'utf8') + decipher.final('utf8')
 }
 
-/**
- * Masks an API key for safe public UI display (e.g. eabc****2dsa).
- */
+// Masks an API key for safe public UI display (e.g. eabc****2dsa).
 export function maskApiKey(apiKey: string): string {
   const cleaned = (apiKey || '').trim()
   if (cleaned.length <= 8) return '****'

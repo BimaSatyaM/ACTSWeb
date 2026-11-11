@@ -103,7 +103,6 @@ export function IDXWatchlistTable({
   if (compact) {
     return (
       <div className="rounded-xl bg-[#0d121f] border border-white/[0.08] overflow-hidden flex flex-col h-[480px]">
-        {/* ── Compact Header: Title & Search ── */}
         <div className="p-3.5 bg-white/[0.01] border-b border-white/[0.08] space-y-2.5">
           <div className="flex items-center justify-between gap-2">
             <div className="flex items-center gap-2">
@@ -130,7 +129,6 @@ export function IDXWatchlistTable({
             </div>
           </div>
 
-          {/* Sector Filters */}
           <div className="flex items-center gap-1 overflow-x-auto custom-scrollbar pb-0.5">
             {SECTOR_FILTERS.map((f) => (
               <button
@@ -148,7 +146,6 @@ export function IDXWatchlistTable({
           </div>
         </div>
 
-        {/* ── Scrollable Stocks List ── */}
         <div
           onScroll={handleScroll}
           className="flex-1 overflow-y-auto custom-scrollbar divide-y divide-white/[0.03]"
@@ -172,7 +169,6 @@ export function IDXWatchlistTable({
                       : 'hover:bg-white/[0.02]'
                   }`}
                 >
-                  {/* Left: Logo, Symbol & Name */}
                   <div className="flex items-center gap-2.5 min-w-0 pr-2">
                     <IDXStockLogo
                       symbol={s.symbol}
@@ -195,7 +191,6 @@ export function IDXWatchlistTable({
                     </div>
                   </div>
 
-                  {/* Right: Price & Change */}
                   <div className="flex items-center gap-3 shrink-0 text-right font-mono">
                     <div>
                       <div className="text-xs font-bold text-white">
@@ -227,7 +222,6 @@ export function IDXWatchlistTable({
           )}
         </div>
 
-        {/* ── Footer Telemetry ── */}
         <div className="px-3 py-1.5 bg-[#070b14] border-t border-white/[0.06] flex items-center justify-between text-[10px] font-mono text-slate-500">
           <span>Showing {displayedStocks.length} of {filteredStocks.length} stocks</span>
           <span>Click ticker to inspect</span>
@@ -238,7 +232,6 @@ export function IDXWatchlistTable({
 
   return (
     <div className="rounded-xl bg-[#0d121f] border border-white/[0.08] overflow-hidden space-y-3.5 p-4 sm:p-5">
-      {/* ── Header: Search & Category Tabs ── */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 pb-3 border-b border-white/[0.08]">
         <div className="flex items-center gap-2">
           <span className={`w-2 h-2 rounded-full ${isLive ? 'bg-emerald-400 animate-pulse' : 'bg-brand-primary'}`} />
@@ -253,7 +246,6 @@ export function IDXWatchlistTable({
           </span>
         </div>
 
-        {/* Search Bar */}
         <div className="relative w-full md:w-64">
           <svg className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -268,7 +260,6 @@ export function IDXWatchlistTable({
         </div>
       </div>
 
-      {/* ── Category Filters Pills ── */}
       <div className="flex items-center gap-1.5 overflow-x-auto custom-scrollbar pb-1">
         {SECTOR_FILTERS.map((f) => (
           <button
@@ -285,7 +276,6 @@ export function IDXWatchlistTable({
         ))}
       </div>
 
-      {/* ── Interactive Stock Table ── */}
       <div className="overflow-x-auto custom-scrollbar">
         <table className="w-full text-left border-collapse text-xs">
           <thead>
@@ -315,7 +305,6 @@ export function IDXWatchlistTable({
                       : 'hover:bg-white/[0.02]'
                   }`}
                 >
-                  {/* Ticker & Name */}
                   <td className="py-2.5 px-3">
                     <div className="flex items-center gap-2.5">
                       <IDXStockLogo
@@ -340,12 +329,10 @@ export function IDXWatchlistTable({
                     </div>
                   </td>
 
-                  {/* Price */}
                   <td className="py-2.5 px-3 text-right font-mono font-bold text-white">
                     Rp {s.currentPrice.toLocaleString()}
                   </td>
 
-                  {/* Change */}
                   <td className="py-2.5 px-3 text-right font-mono">
                     <span className={`font-bold ${isPos ? 'text-emerald-400' : 'text-rose-400'}`}>
                       {isPos ? '+' : ''}{s.changePercent.toFixed(2)}%
@@ -355,7 +342,6 @@ export function IDXWatchlistTable({
                     </span>
                   </td>
 
-                  {/* Foreign Flow */}
                   <td className="py-2.5 px-3 text-center font-mono">
                     <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-bold ${
                       s.foreignFlow === 'BUY'
@@ -371,7 +357,6 @@ export function IDXWatchlistTable({
                     </span>
                   </td>
 
-                  {/* Turnover */}
                   <td className="py-2.5 px-3 text-right font-mono text-slate-400">
                     <span className="font-semibold text-white block">
                       Rp {(s.turnover / 1000000000).toFixed(1)} B
@@ -381,7 +366,6 @@ export function IDXWatchlistTable({
                     </span>
                   </td>
 
-                  {/* Day Range Bar */}
                   <td className="py-2.5 px-3 text-right font-mono">
                     <div className="w-24 ml-auto space-y-1">
                       <div className="relative w-full h-1.5 bg-white/[0.08] rounded-full overflow-hidden">
@@ -407,7 +391,6 @@ export function IDXWatchlistTable({
         </table>
       </div>
 
-      {/* ── Load More / Pagination Footer ── */}
       {!searchQuery.trim() && displayedStocks.length < filteredStocks.length && (
         <div className="pt-3 border-t border-white/[0.08] text-center">
           <button

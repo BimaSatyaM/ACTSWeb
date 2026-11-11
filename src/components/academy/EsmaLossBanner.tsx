@@ -4,11 +4,9 @@ interface EsmaLossBannerProps {
   className?: string
 }
 
-/**
- * ESMA Statutory Risk Warning Component
- * Quiet, flat regulatory footnote adhering to taste-skill data-terminal rules:
- * no warning box, no icon in a tinted square, no uppercase pills.
- */
+// ESMA Statutory Risk Warning Component
+// Quiet, flat regulatory footnote adhering to taste-skill data-terminal rules:
+// no warning box, no icon in a tinted square, no uppercase pills.
 export function EsmaLossBanner({ className = '' }: EsmaLossBannerProps) {
   return (
     <aside

@@ -96,7 +96,6 @@ export const Navbar: React.FC = () => {
   return (
     <header className="sticky top-0 z-50 w-full h-14 glass-navbar border-b border-white/[0.08] flex items-center">
       <div className="w-full max-w-[1600px] mx-auto px-4 lg:px-8 flex items-center justify-between">
-        {/* ─── LEFT: Brand Logo & Main Navigation ─── */}
         <div className="flex items-center gap-6">
           <Link 
             href="/" 
@@ -107,7 +106,6 @@ export const Navbar: React.FC = () => {
             </span>
           </Link>
 
-          {/* Desktop Nav Links */}
           <nav className="hidden md:flex items-center gap-1">
             {navLinks.map((link) => {
               const isActive = pathname === link.path || (link.path !== '/' && pathname.startsWith(link.path))
@@ -128,9 +126,7 @@ export const Navbar: React.FC = () => {
           </nav>
         </div>
 
-        {/* ─── RIGHT: Notification, Status Telemetry & User Controls ─── */}
         <div className="hidden md:flex items-center gap-3.5">
-          {/* Notification Updates from Git Commits */}
           <div className="flex items-center justify-center">
             <NotificationPopover />
           </div>
@@ -169,7 +165,6 @@ export const Navbar: React.FC = () => {
           )}
         </div>
 
-        {/* ─── MOBILE: Hamburger Button ─── */}
         <div className="flex md:hidden items-center gap-2">
           <NotificationPopover />
           <StatusPill isOnline={isOnline} isLoading={isLoading} label={statusText} className="scale-90" />
@@ -191,17 +186,14 @@ export const Navbar: React.FC = () => {
         </div>
       </div>
 
-      {/* ─── MOBILE Drawer via React Portal to document.body ─── */}
       {mounted && isOpen && createPortal(
         <div className="fixed inset-0 z-[99999] md:hidden">
-          {/* Dark Translucent Backdrop (Click outside to close) */}
           <div 
             className="fixed inset-0 bg-black/40 transition-opacity duration-200"
             onClick={() => setIsOpen(false)}
             aria-hidden="true"
           />
 
-          {/* Frosted Glass Slide-over Drawer */}
           <div 
             style={{ backdropFilter: 'blur(24px)', WebkitBackdropFilter: 'blur(24px)' }}
             className="fixed inset-y-0 right-0 w-80 max-w-[82vw] bg-[rgba(11,15,26,0.65)] border-l border-white/[0.12] p-6 flex flex-col justify-between shadow-[-10px_0_30px_rgba(0,0,0,0.5)] z-10 animate-in slide-in-from-right duration-200 overflow-y-auto"
@@ -221,7 +213,6 @@ export const Navbar: React.FC = () => {
                 </button>
               </div>
 
-              {/* Main Links */}
               <nav className="flex flex-col gap-1.5">
                 {navLinks.map((link) => {
                   const isActive = pathname === link.path || (link.path !== '/' && pathname.startsWith(link.path))
@@ -242,7 +233,6 @@ export const Navbar: React.FC = () => {
                 })}
               </nav>
 
-              {/* Dashboard Sub-links if user is on dashboard */}
               {pathname.startsWith('/dashboard') && (
                 <div className="space-y-2 pt-2 border-t border-white/[0.06]">
                   <span className="text-[10px] font-bold text-text-muted uppercase tracking-wider block px-1">
@@ -292,7 +282,6 @@ export const Navbar: React.FC = () => {
               )}
             </div>
 
-            {/* Bottom User Area */}
             <div className="border-t border-white/[0.08] pt-6 space-y-4">
               {user ? (
                 <div className="space-y-3">

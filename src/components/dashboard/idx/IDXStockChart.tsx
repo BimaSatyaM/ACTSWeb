@@ -315,9 +315,7 @@ export function IDXStockChart({
 
   return (
     <div className="flex flex-col rounded-xl bg-[#0d121f] border border-white/[0.08] overflow-hidden">
-      {/* ── Top Bar: Ticker Telemetry HUD & Timeframe Switcher ── */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3.5 sm:px-4 sm:py-3 bg-white/[0.01] border-b border-white/[0.08]">
-        {/* Left: Stock Identity & Live Price */}
         <div className="flex items-center gap-3">
           <IDXStockLogo symbol={meta.symbol} name={meta.name} logoUrl={meta.logoUrl} size="md" />
           <div>
@@ -341,7 +339,6 @@ export function IDXStockChart({
 
           <div className="h-6 w-px bg-white/[0.08] hidden sm:block" />
 
-          {/* Price */}
           <div className="flex items-baseline gap-2">
             <span className="text-lg sm:text-xl font-black text-white font-mono tracking-tight">
               Rp {livePrice.toLocaleString()}
@@ -353,7 +350,6 @@ export function IDXStockChart({
           </div>
         </div>
 
-        {/* Right: Timeframe Selector */}
         <div className="flex items-center gap-1 bg-[#070b14] p-1 rounded-lg border border-white/[0.08] self-start sm:self-auto">
           {TIMEFRAMES.map((tf) => (
             <button
@@ -371,7 +367,6 @@ export function IDXStockChart({
         </div>
       </div>
 
-      {/* ── Compact Key Stats Telemetry Strip (Optional) ── */}
       {showStatsStrip && (
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 px-4 py-2 bg-[#070b14]/70 border-b border-white/[0.06] text-xs font-mono">
           <div className="flex items-center justify-between sm:justify-start gap-2">
@@ -406,7 +401,6 @@ export function IDXStockChart({
         </div>
       )}
 
-      {/* ── Floating Hover OHLC Data Strip ── */}
       <div className="flex items-center gap-3.5 px-4 py-1.5 bg-[#070b14] text-[11px] font-mono text-slate-400 border-b border-white/[0.06] overflow-x-auto custom-scrollbar">
         {hoverData ? (
           <>
@@ -424,7 +418,6 @@ export function IDXStockChart({
         )}
       </div>
 
-      {/* ── Canvas Chart Container ── */}
       <div className="relative w-full" style={{ height: height || 360 }}>
         {loading && (
           <div className="absolute inset-0 z-20 flex items-center justify-center bg-[#090b13]/80 backdrop-blur-xs">

@@ -156,19 +156,15 @@ export function MarketTickerBar({ className = '' }: { className?: string }) {
 
   return (
     <div className={`flex items-center bg-[#090d18]/90 border border-white/[0.08] rounded-xl h-8 overflow-hidden select-none shadow-sm ${className}`}>
-      {/* ── Left Badge (MARKET LIVE) ── */}
       <div className="bg-accent-theme text-white font-black text-[10px] tracking-wider uppercase px-3 h-full flex items-center justify-center flex-shrink-0 z-10 shadow-md whitespace-nowrap gap-1.5">
         <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
         <span>MARKET LIVE</span>
       </div>
 
-      {/* ── Auto Sliding Ticker Marquee Strip ── */}
       <div className="overflow-hidden relative flex-1 h-full flex items-center">
-        {/* Left & right edge gradient fades */}
         <div className="absolute left-0 top-0 bottom-0 w-6 bg-gradient-to-r from-[#090d18] to-transparent z-10 pointer-events-none" />
         <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-[#090d18] to-transparent z-10 pointer-events-none" />
 
-        {/* Duplicated list for infinite seamless marquee */}
         <div className="animate-ticker-slide flex items-center whitespace-nowrap pl-4">
           {[...tickers, ...tickers].map((item, idx) => {
             const isPositive = item.change24h >= 0

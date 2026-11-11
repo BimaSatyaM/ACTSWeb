@@ -51,7 +51,6 @@ export function IDXRunningTradeTape({
   return (
     <div className="flex flex-col h-full rounded-xl bg-[#0d121f] border border-white/[0.08] overflow-hidden">
       
-      {/* ── Top Header Bar ── */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between px-4 py-3 bg-white/[0.01] border-b border-white/[0.08] gap-2">
         <div className="flex items-center gap-2">
           <span className={`w-2 h-2 rounded-full ${tradeVelocity > 0 ? 'bg-cyan-400 animate-pulse' : 'bg-zinc-500'}`} />
@@ -65,7 +64,6 @@ export function IDXRunningTradeTape({
           </span>
         </div>
 
-        {/* Filter Toggle: All Market | Active Stock Only | Block ≥500 */}
         <div className="flex items-center gap-1 bg-[#070b14] p-0.5 rounded-lg border border-white/[0.08] text-[11px] font-mono">
           <button
             onClick={() => setFilterMode('all')}
@@ -96,7 +94,6 @@ export function IDXRunningTradeTape({
         </div>
       </div>
 
-      {/* ── Session Summary Ribbon ── */}
       <div className="grid grid-cols-2 gap-2 px-4 py-2 bg-[#070b14] border-b border-white/[0.06] text-[11px] font-mono">
         <div>
           <span className="text-slate-500 text-[10px] block">Streamed Lots</span>
@@ -108,7 +105,6 @@ export function IDXRunningTradeTape({
         </div>
       </div>
 
-      {/* ── Column Headers ── */}
       <div className="grid grid-cols-5 text-[10px] uppercase font-mono font-semibold tracking-wider text-slate-400 px-4 py-2 bg-[#070b14]/50 border-b border-white/[0.06]">
         <span>Time</span>
         <span>Stock</span>
@@ -117,7 +113,6 @@ export function IDXRunningTradeTape({
         <span className="text-right">Action</span>
       </div>
 
-      {/* ── Live Tape Stream ── */}
       <div className="flex-1 overflow-y-auto max-h-[480px] divide-y divide-white/[0.02] text-xs font-mono">
         {displayTrades.length === 0 ? (
           <div className="p-8 text-center text-text-muted space-y-3">
@@ -149,10 +144,8 @@ export function IDXRunningTradeTape({
                   isFirst ? 'bg-white/[0.04] border-l-2 border-cyan-400' : ''
                 }`}
               >
-                {/* Time */}
                 <span className="text-text-muted text-[11px]">{t.time}</span>
 
-                {/* Stock Symbol */}
                 <span className="font-bold text-white flex items-center gap-1">
                   {t.symbol}
                   {t.lots >= 500 && (
@@ -162,17 +155,14 @@ export function IDXRunningTradeTape({
                   )}
                 </span>
 
-                {/* Match Price */}
                 <span className={`text-right font-bold ${isBuy ? 'text-emerald-400' : 'text-rose-400'}`}>
                   Rp {t.price.toLocaleString()}
                 </span>
 
-                {/* Lots */}
                 <span className="text-right text-text-secondary font-medium">
                   {t.lots.toLocaleString()}
                 </span>
 
-                {/* Match Type Badge */}
                 <div className="text-right">
                   <span
                     className={`inline-block text-[9px] font-bold px-1.5 py-0.5 rounded font-mono ${

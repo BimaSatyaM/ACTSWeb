@@ -306,12 +306,10 @@ export function MacroEventModal({ event, onClose, articles = [] }: MacroEventMod
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/85 backdrop-blur-md animate-fadeIn">
-      {/* Modal Container */}
       <div
         className="relative w-full max-w-3xl bg-[#0d111c] border border-white/[0.12] shadow-2xl shadow-black/90 overflow-hidden flex flex-col max-h-[92vh] text-left"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* ── Top Header Bar ── */}
         <div className="flex items-center justify-between p-4 sm:p-5 border-b border-white/[0.08] bg-white/[0.02]">
           <div className="flex items-center gap-2.5 min-w-0 pr-4">
             <span className="text-xl flex-shrink-0">🏛️</span>
@@ -339,12 +337,9 @@ export function MacroEventModal({ event, onClose, articles = [] }: MacroEventMod
           </button>
         </div>
 
-        {/* ── Modal Scrollable Body ── */}
         <div className="p-4 sm:p-6 space-y-5 overflow-y-auto custom-scrollbar">
-          {/* Visual Hero Banner */}
           {event.image_url && (
             <div className="w-full h-36 sm:h-44 relative overflow-hidden bg-black/60 border border-white/[0.08]">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={event.image_url}
                 alt={event.title}
@@ -370,7 +365,6 @@ export function MacroEventModal({ event, onClose, articles = [] }: MacroEventMod
             </div>
           )}
 
-          {/* ── Metric Comparison Grid (Forecast vs Previous vs Actual) ── */}
           <div className="grid grid-cols-3 gap-2.5 sm:gap-3">
             <div className="p-3 bg-white/[0.03] border border-white/[0.08] space-y-0.5">
               <span className="text-[9px] font-mono font-medium text-text-muted uppercase block">
@@ -415,9 +409,7 @@ export function MacroEventModal({ event, onClose, articles = [] }: MacroEventMod
             </div>
           </div>
 
-          {/* ── Tabbed Intelligence Dossier ── */}
           <div className="border border-white/[0.08] bg-white/[0.01] overflow-hidden">
-            {/* Tabs Navigation */}
             <div className="flex border-b border-white/[0.08] bg-black/40">
               <button
                 onClick={() => setActiveTab('narrative')}
@@ -451,7 +443,6 @@ export function MacroEventModal({ event, onClose, articles = [] }: MacroEventMod
               </button>
             </div>
 
-            {/* Tab 1: Detailed Official Release Intelligence */}
             {activeTab === 'narrative' && (
               <div className="p-4 sm:p-5 space-y-4">
                 <div className="space-y-1">
@@ -477,7 +468,6 @@ export function MacroEventModal({ event, onClose, articles = [] }: MacroEventMod
                   </div>
                 </div>
 
-                {/* Official Source Link Card */}
                 <div className="p-3 bg-white/[0.02] border border-white/[0.06] flex items-center justify-between">
                   <div className="space-y-0.5">
                     <span className="text-[9px] font-mono uppercase text-text-muted block">
@@ -500,7 +490,6 @@ export function MacroEventModal({ event, onClose, articles = [] }: MacroEventMod
               </div>
             )}
 
-            {/* Tab 2: Live Wires & Official Coverage (100% Real Live Articles) */}
             {activeTab === 'wires' && (
               <div className="p-4 sm:p-5 space-y-3.5">
                 <div className="flex items-center justify-between">
@@ -515,7 +504,6 @@ export function MacroEventModal({ event, onClose, articles = [] }: MacroEventMod
                   </span>
                 </div>
 
-                {/* Real Live News Wire Articles */}
                 <div className="space-y-2">
                   {macroArticles.map((art, idx) => (
                     <a
@@ -552,7 +540,6 @@ export function MacroEventModal({ event, onClose, articles = [] }: MacroEventMod
                   ))}
                 </div>
 
-                {/* Official Source Reference Link */}
                 <div className="p-3 bg-cyan-500/[0.04] border border-cyan-500/20 space-y-1">
                   <div className="flex items-center justify-between">
                     <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-cyan-300">
@@ -574,12 +561,9 @@ export function MacroEventModal({ event, onClose, articles = [] }: MacroEventMod
               </div>
             )}
 
-            {/* Tab 3: Transmission Mechanisms & Multi-Asset Flow */}
             {activeTab === 'impact' && (
               <div className="p-4 sm:p-5 space-y-3.5">
-                {/* 2-Column Asset Impact Card Grid */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  {/* BTC / Crypto Impact */}
                   <div className="p-3 bg-cyan-500/[0.05] border border-cyan-500/20 space-y-1">
                     <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-cyan-300 flex items-center gap-1.5">
                       <span>₿</span>
@@ -590,7 +574,6 @@ export function MacroEventModal({ event, onClose, articles = [] }: MacroEventMod
                     </p>
                   </div>
 
-                  {/* Gold / Commodities Impact */}
                   <div className="p-3 bg-amber-500/[0.05] border border-amber-500/20 space-y-1">
                     <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-amber-300 flex items-center gap-1.5">
                       <span>🥇</span>
@@ -604,7 +587,6 @@ export function MacroEventModal({ event, onClose, articles = [] }: MacroEventMod
                   </div>
                 </div>
 
-                {/* Macro Market Implication */}
                 <div className="p-3 bg-white/[0.02] border border-white/[0.06] space-y-1">
                   <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-text-muted flex items-center gap-1.5">
                     <span>💵</span>
@@ -635,7 +617,6 @@ export function MacroEventModal({ event, onClose, articles = [] }: MacroEventMod
             )}
           </div>
 
-          {/* ── Factor 9 Confluence Impact Analysis ── */}
           <div className="p-3.5 sm:p-4 bg-white/[0.02] border border-white/[0.06] space-y-2">
             <div className="flex items-center justify-between">
               <span className="text-xs font-semibold text-white flex items-center gap-1.5 font-mono">
@@ -656,7 +637,6 @@ export function MacroEventModal({ event, onClose, articles = [] }: MacroEventMod
           </div>
         </div>
 
-        {/* ── Bottom Action Bar ── */}
         <div className="p-3.5 sm:p-4 border-t border-white/[0.08] bg-white/[0.02] flex items-center justify-between">
           <span className="text-[11px] font-mono text-text-muted">
             Press <kbd className="px-1.5 py-0.5 bg-white/[0.08] text-white text-[10px]">Esc</kbd> to return

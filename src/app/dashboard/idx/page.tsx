@@ -97,13 +97,10 @@ export default function IDXOverviewPage() {
 
   return (
     <div className="space-y-6">
-      {/* ── 1. IHSG Composite Index Hero Banner ── */}
       <IDXCompositeBanner data={ihsgData || undefined} />
 
-      {/* ── 2. Four Feature Modules Grid ── */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
         
-        {/* ── Module A: Core Watchlist Preview ── */}
         <div className="p-5 sm:p-6 rounded-2xl bg-[#0d121f] border border-white/[0.08] space-y-4 shadow-sm flex flex-col justify-between">
           <div>
             <div className="flex items-center justify-between pb-3 border-b border-white/[0.08]">
@@ -183,7 +180,6 @@ export default function IDXOverviewPage() {
           </div>
         </div>
 
-        {/* ── Module B: Live 10-Level Order Book (DOM) Teaser ── */}
         <div className="p-5 sm:p-6 rounded-2xl bg-[#0d121f] border border-white/[0.08] space-y-4 shadow-sm flex flex-col justify-between">
           <div>
             <div className="flex items-center justify-between pb-3 border-b border-white/[0.08]">
@@ -205,7 +201,6 @@ export default function IDXOverviewPage() {
               </Link>
             </div>
 
-            {/* DOM Table Container */}
             <div className="mt-3 space-y-2.5">
               <div className="grid grid-cols-2 gap-3 text-[10px] uppercase tracking-wider font-bold text-slate-400 px-1">
                 <div className="flex justify-between">
@@ -219,7 +214,6 @@ export default function IDXOverviewPage() {
               </div>
 
               <div className="grid grid-cols-2 gap-3 text-xs font-mono">
-                {/* Bids Column */}
                 <div className="space-y-1.5">
                   {domBids.map((b) => (
                     <div key={b.price} className="relative flex justify-between items-center px-2.5 py-1.5 rounded-lg overflow-hidden bg-white/[0.02]">
@@ -233,7 +227,6 @@ export default function IDXOverviewPage() {
                   ))}
                 </div>
 
-                {/* Offers Column */}
                 <div className="space-y-1.5">
                   {domAsks.map((a) => (
                     <div key={a.price} className="relative flex justify-between items-center px-2.5 py-1.5 rounded-lg overflow-hidden bg-white/[0.02]">
@@ -248,7 +241,6 @@ export default function IDXOverviewPage() {
                 </div>
               </div>
 
-              {/* ARA & ARB Price Limits for BBCA */}
               <div className="flex justify-between items-center p-3 rounded-xl bg-[#121829]/60 border border-white/[0.06] text-xs font-mono mt-3">
                 <div className="flex items-center gap-1.5 text-emerald-400">
                   <span className="font-bold">ARA (+20%):</span>
@@ -272,7 +264,6 @@ export default function IDXOverviewPage() {
           </div>
         </div>
 
-        {/* ── Module C: Upcoming e-IPO & Corporate Actions ── */}
         <div className="p-5 sm:p-6 rounded-2xl bg-[#0d121f] border border-white/[0.08] space-y-4 shadow-sm flex flex-col justify-between">
           <div>
             <div className="flex items-center justify-between pb-3 border-b border-white/[0.08]">
@@ -322,7 +313,6 @@ export default function IDXOverviewPage() {
           </div>
         </div>
 
-        {/* ── Module D: BEI Disclosures & AI Rumor Radar ── */}
         <div className="p-5 sm:p-6 rounded-2xl bg-[#0d121f] border border-white/[0.08] space-y-4 shadow-sm flex flex-col justify-between">
           <div>
             <div className="flex items-center justify-between pb-3 border-b border-white/[0.08]">

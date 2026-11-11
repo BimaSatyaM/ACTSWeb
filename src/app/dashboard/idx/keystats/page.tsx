@@ -77,9 +77,7 @@ function IDXKeyStatsPageContent() {
 
   return (
     <div className="space-y-6 pb-12">
-      {/* ── Search & Conglomerate Quick-Pills ── */}
       <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 p-4 rounded-xl bg-[#0d121f] border border-white/[0.08]">
-        {/* Symbol Search Form */}
         <form onSubmit={handleSearchSubmit} className="flex items-center gap-2 max-w-md w-full">
           <div className="relative flex-1">
             <input
@@ -111,7 +109,6 @@ function IDXKeyStatsPageContent() {
           </button>
         </form>
 
-        {/* Quick Conglomerate Pills */}
         <div className="flex items-center gap-1.5 overflow-x-auto pb-1 lg:pb-0 scrollbar-none">
           <span className="text-[10px] font-mono text-slate-500 uppercase tracking-wider mr-1 hidden sm:inline">
             Quick:
@@ -135,7 +132,6 @@ function IDXKeyStatsPageContent() {
         </div>
       </div>
 
-      {/* ── Content View ── */}
       {loading ? (
         <div className="rounded-2xl bg-white/[0.02] border border-white/[0.08] p-12 text-center space-y-4">
           <div className="inline-block w-8 h-8 rounded-full border-2 border-brand-primary border-t-transparent animate-spin" />

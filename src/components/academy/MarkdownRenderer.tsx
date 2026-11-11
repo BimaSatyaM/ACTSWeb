@@ -6,11 +6,9 @@ interface MarkdownRendererProps {
   className?: string
 }
 
-/**
- * Clean Editorial & Technical Markdown Renderer
- * Follows taste-skill house rules: no warning icons, no boxed formula headers,
- * clean typography with tabular numerals and interactive/visual SVG chart embeds.
- */
+// Clean Editorial & Technical Markdown Renderer
+// Follows taste-skill house rules: no warning icons, no boxed formula headers,
+// clean typography with tabular numerals and interactive/visual SVG chart embeds.
 export function MarkdownRenderer({ content, className = '' }: MarkdownRendererProps) {
   if (!content) return null
 

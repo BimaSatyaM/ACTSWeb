@@ -27,7 +27,6 @@ export function IDXIPOCard({ ipos }: Props) {
 
   return (
     <div className="rounded-xl bg-[#0d121f] border border-white/[0.08] p-5 sm:p-6 space-y-5">
-      {/* ── Header & Filter Bar ── */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-white/[0.08]">
         <div>
           <div className="flex items-center gap-2">
@@ -44,7 +43,6 @@ export function IDXIPOCard({ ipos }: Props) {
           </p>
         </div>
 
-        {/* Filter Pills */}
         <div className="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0">
           <button
             onClick={() => setFilter('ACTIVE')}
@@ -95,7 +93,6 @@ export function IDXIPOCard({ ipos }: Props) {
         </div>
       </div>
 
-      {/* ── Empty State: When 0 Active IPOs (Matching Stockbit Reality) ── */}
       {filter === 'ACTIVE' && activeIPOs.length === 0 ? (
         <div className="rounded-xl bg-white/[0.02] border border-white/[0.06] p-8 sm:p-10 text-center space-y-3.5">
           <div className="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center mx-auto text-xl text-amber-400">
@@ -126,7 +123,7 @@ export function IDXIPOCard({ ipos }: Props) {
           </div>
         </div>
       ) : (
-        /* ── Cards Grid ── */
+        // ── Cards Grid ──
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
           {displayedIPOs.map((ipo) => {
             const isCanceled = ipo.stage === 'CANCELED'
@@ -142,7 +139,6 @@ export function IDXIPOCard({ ipos }: Props) {
                 }`}
               >
                 <div className="space-y-3">
-                  {/* Ticker & Stage */}
                   <div className="flex items-center justify-between gap-2">
                     <div className="flex items-center gap-2">
                       <span className={`text-base font-black font-mono px-2.5 py-0.5 rounded-lg border ${
@@ -164,12 +160,10 @@ export function IDXIPOCard({ ipos }: Props) {
                     </span>
                   </div>
 
-                  {/* Company Name */}
                   <h4 className="text-xs font-bold text-white leading-snug">
                     {ipo.name}
                   </h4>
 
-                  {/* Cancellation Reason Callout */}
                   {isCanceled && ipo.cancellationNote && (
                     <div className="p-2.5 rounded-lg bg-rose-500/10 border border-rose-500/20 space-y-1">
                       <div className="text-[10px] uppercase font-bold text-rose-400 font-mono flex items-center gap-1">
@@ -181,7 +175,6 @@ export function IDXIPOCard({ ipos }: Props) {
                     </div>
                   )}
 
-                  {/* Offer Specs */}
                   <div className="grid grid-cols-2 gap-2 p-2.5 rounded-lg bg-[#0d121f] border border-white/[0.06] text-xs font-mono">
                     <div>
                       <span className="text-[10px] text-slate-500 block">Rentang Harga</span>
@@ -212,7 +205,6 @@ export function IDXIPOCard({ ipos }: Props) {
                     </div>
                   </div>
 
-                  {/* Underwriter */}
                   <div className="space-y-1 text-[11px] font-mono">
                     <div className="flex items-start justify-between text-slate-400 gap-2">
                       <span className="text-slate-500 shrink-0 text-[10px]">Penjamin Emisi:</span>
@@ -223,7 +215,6 @@ export function IDXIPOCard({ ipos }: Props) {
                   </div>
                 </div>
 
-                {/* Footer link */}
                 <div className="pt-2 border-t border-white/[0.06]">
                   <a
                     href={ipo.prospectusUrl || 'https://www.e-IPO.co.id'}

@@ -28,7 +28,6 @@ export default function IDXLayout({
 
   return (
     <div className="space-y-6">
-      {/* ── Top Bar: IDX Terminal Header & Real-Time Market Clock ── */}
       <div className="flex flex-col gap-3.5">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
           <div>
@@ -45,7 +44,6 @@ export default function IDXLayout({
             </p>
           </div>
 
-          {/* Quick Info Badges */}
           <div className="flex items-center gap-2 self-start md:self-auto">
             <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-[11px] font-mono font-semibold text-emerald-400">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
@@ -54,11 +52,9 @@ export default function IDXLayout({
           </div>
         </div>
 
-        {/* Real-time Jakarta Market Clock */}
         <IDXMarketClock />
       </div>
 
-      {/* ── Sub-Navigation Tabs ── */}
       <div className="flex items-center gap-1.5 border-b border-white/[0.08] pb-2 overflow-x-auto custom-scrollbar">
         {IDX_TABS.map((tab) => {
           const isActive = pathname === tab.href
@@ -79,7 +75,6 @@ export default function IDXLayout({
         })}
       </div>
 
-      {/* ── Tab Content View ── */}
       <div>{children}</div>
     </div>
   )

@@ -1,20 +1,18 @@
 #!/usr/bin/env node
-/**
- * ACTS Academy Content Integrity & Regulatory Compliance Verifier
- * 
- * Verifies:
- * 1. Schema integrity for all curriculum tracks and lessons:
- *    - learningObjectives (>= 1 item)
- *    - readingTimeMinutes (> 0)
- *    - check-for-understanding: quiz (questions, options/choices, explanations) OR chartExercise (symbol, setupBarIndex, entry, sl, tp1, tp2, tp3, explanation)
- *    - primarySources (>= 1, valid http/https URLs)
- * 2. Prohibited hype words scanner across all curriculum, components, and pages.
- * 3. Regulatory ESMA disclosure (74-89% retail CFD loss rate with official EUR-Lex decision link).
- * 4. Legends check: John D. Rockefeller and Changpeng Zhao (CZ) explicit distinction as business/infrastructure builders, not chart traders.
- * 5. SMC/ICT check: Academic and scientific disclaimer for retail SMC/ICT concepts.
- * 
- * Run with: node scripts/verify_academy_content.mjs
- */
+// ACTS Academy Content Integrity & Regulatory Compliance Verifier
+//
+// Verifies:
+// 1. Schema integrity for all curriculum tracks and lessons:
+// - learningObjectives (>= 1 item)
+// - readingTimeMinutes (> 0)
+// - check-for-understanding: quiz (questions, options/choices, explanations) OR chartExercise (symbol, setupBarIndex, entry, sl, tp1, tp2, tp3, explanation)
+// - primarySources (>= 1, valid http/https URLs)
+// 2. Prohibited hype words scanner across all curriculum, components, and pages.
+// 3. Regulatory ESMA disclosure (74-89% retail CFD loss rate with official EUR-Lex decision link).
+// 4. Legends check: John D. Rockefeller and Changpeng Zhao (CZ) explicit distinction as business/infrastructure builders, not chart traders.
+// 5. SMC/ICT check: Academic and scientific disclaimer for retail SMC/ICT concepts.
+//
+// Run with: node scripts/verify_academy_content.mjs
 
 import fs from 'node:fs'
 import path from 'node:path'
@@ -56,9 +54,7 @@ function logFail(msg, detail = null) {
   }
 }
 
-/**
- * Load and transpile a TypeScript curriculum file in-memory using typescript.transpileModule
- */
+// Load and transpile a TypeScript curriculum file in-memory using typescript.transpileModule
 function loadTsModule(relativePath) {
   const fullPath = path.resolve(ROOT_DIR, relativePath)
   if (!fs.existsSync(fullPath)) {
@@ -80,9 +76,7 @@ function loadTsModule(relativePath) {
   return moduleObj.exports
 }
 
-/**
- * Validate standard URL structure
- */
+// Validate standard URL structure
 function isValidUrl(stringUrl) {
   if (!stringUrl || typeof stringUrl !== 'string') return false
   if (!stringUrl.startsWith('http://') && !stringUrl.startsWith('https://')) return false

@@ -165,7 +165,6 @@ export function IDXOrderBook({ symbol, meta, streamQuote }: IDXOrderBookProps) {
   return (
     <div className="flex flex-col rounded-xl bg-[#0d121f] border border-white/[0.08] overflow-hidden">
       
-      {/* ── Header: Title & Market Spread ── */}
       <div className="flex items-center justify-between px-4 py-3 bg-white/[0.01] border-b border-white/[0.08]">
         <div className="flex items-center gap-2">
           <span className={`w-2 h-2 rounded-full ${isMarketClosed ? 'bg-zinc-500' : 'bg-emerald-400 animate-pulse'}`} />
@@ -184,7 +183,6 @@ export function IDXOrderBook({ symbol, meta, streamQuote }: IDXOrderBookProps) {
         </div>
       </div>
 
-      {/* ── Closed Market Banner ── */}
       {isMarketClosed && (
         <div className="px-4 py-2 bg-amber-500/10 border-b border-amber-500/20 text-[11px] font-mono flex flex-col sm:flex-row sm:items-center justify-between text-amber-300 gap-1">
           <span className="flex items-center gap-1.5">
@@ -195,7 +193,6 @@ export function IDXOrderBook({ symbol, meta, streamQuote }: IDXOrderBookProps) {
         </div>
       )}
 
-      {/* ── Regulatory Limits Strip (ARA / ARB) ── */}
       <div className="grid grid-cols-2 gap-2 px-4 py-2 bg-[#070b14] border-b border-white/[0.06] text-[11px] font-mono">
         <div className="flex items-center justify-between text-emerald-400">
           <span className="font-bold flex items-center gap-1">
@@ -213,7 +210,6 @@ export function IDXOrderBook({ symbol, meta, streamQuote }: IDXOrderBookProps) {
         </div>
       </div>
 
-      {/* ── Table Columns Header ── */}
       <div className="grid grid-cols-2 text-[10px] uppercase font-mono font-semibold tracking-wider text-slate-400 px-4 py-2 bg-[#070b14]/50 border-b border-white/[0.06]">
         <div className="flex justify-between pr-2">
           <span>Bid Lots</span>
@@ -225,7 +221,6 @@ export function IDXOrderBook({ symbol, meta, streamQuote }: IDXOrderBookProps) {
         </div>
       </div>
 
-      {/* ── 10-Level Order Book Rows ── */}
       <div className="divide-y divide-white/[0.02] text-xs font-mono">
         {Array.from({ length: 10 }).map((_, i) => {
           const bid = bids[i]
@@ -234,13 +229,11 @@ export function IDXOrderBook({ symbol, meta, streamQuote }: IDXOrderBookProps) {
           return (
             <div key={i} className="grid grid-cols-2 hover:bg-white/[0.02] transition-colors">
               
-              {/* Bid Side (Green) */}
               <div
                 className={`relative flex items-center justify-between px-4 py-1.5 pr-3 border-r border-white/[0.06] overflow-hidden ${
                   bid?.isBest && flashBid ? 'bg-emerald-500/20 transition-all duration-300' : ''
                 }`}
               >
-                {/* Proportional Depth Bar */}
                 {bid && (
                   <div
                     className="absolute inset-y-0 right-0 bg-emerald-500/15 pointer-events-none transition-all duration-300"
@@ -255,13 +248,11 @@ export function IDXOrderBook({ symbol, meta, streamQuote }: IDXOrderBookProps) {
                 </span>
               </div>
 
-              {/* Ask Side (Red) */}
               <div
                 className={`relative flex items-center justify-between px-4 py-1.5 pl-3 overflow-hidden ${
                   ask?.isBest && flashAsk ? 'bg-rose-500/20 transition-all duration-300' : ''
                 }`}
               >
-                {/* Proportional Depth Bar */}
                 {ask && (
                   <div
                     className="absolute inset-y-0 left-0 bg-rose-500/15 pointer-events-none transition-all duration-300"
@@ -281,7 +272,6 @@ export function IDXOrderBook({ symbol, meta, streamQuote }: IDXOrderBookProps) {
         })}
       </div>
 
-      {/* ── Order Book Totals & Buy/Sell Power Meter ── */}
       <div className="p-4 bg-[#070b14]/50 border-t border-white/[0.08] space-y-2.5">
         <div className="flex justify-between items-center text-xs font-mono">
           <div className="text-left">
@@ -299,7 +289,6 @@ export function IDXOrderBook({ symbol, meta, streamQuote }: IDXOrderBookProps) {
           </div>
         </div>
 
-        {/* Dynamic Dual-Color Power Gauge */}
         <div className="relative w-full h-2 bg-white/[0.08] rounded-full overflow-hidden flex">
           <div
             className="h-full bg-emerald-500 transition-all duration-500"

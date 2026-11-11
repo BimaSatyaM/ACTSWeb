@@ -117,7 +117,6 @@ export function DashboardSidebar() {
 
   return (
     <aside className="w-full md:w-60 flex-shrink-0 flex flex-col justify-between border-b md:border-b-0 md:border-r border-white/[0.08] bg-transparent p-2.5 md:p-5 space-y-0 md:space-y-6 md:sticky md:top-14 md:h-[calc(100vh-3.5rem)] md:overflow-y-auto">
-      {/* ── Top Section: Menu Title & Links ── */}
       <div className="space-y-0 md:space-y-4">
         <div className="px-2 hidden md:flex items-center justify-between">
           <span className="text-[11px] font-semibold text-text-muted uppercase tracking-wider">
@@ -160,7 +159,6 @@ export function DashboardSidebar() {
         </nav>
       </div>
 
-      {/* ── Bottom Section: Access Status / Telegram CTA ── */}
       <div className="hidden md:block pt-3 pb-1">
         {isApproved ? (
           <div className="p-3.5 rounded-xl bg-white/[0.02] border border-white/[0.06] space-y-2 shadow-sm">

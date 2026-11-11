@@ -231,7 +231,6 @@ export function AutoTradingProgressionChart({
 
   return (
     <div className="rounded-2xl border border-white/[0.08] bg-[#10141E]/80 backdrop-blur-xl p-5 sm:p-6 shadow-xl space-y-4">
-      {/* ─── Header: Clean Title + Seamless Inline Metrics (No Clunky Boxes) ─── */}
       <div className="space-y-2 border-b border-white/[0.05] pb-3.5">
         <div className="flex items-center justify-between gap-3">
           <div className="flex items-center gap-2">
@@ -248,7 +247,6 @@ export function AutoTradingProgressionChart({
           </span>
         </div>
 
-        {/* Minimal borderless typography readouts */}
         <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs font-mono pt-0.5">
           <div className="flex items-center gap-1.5">
             <span className="text-zinc-500">Return:</span>
@@ -284,12 +282,11 @@ export function AutoTradingProgressionChart({
         </div>
       </div>
 
-      {/* ─── Progression Chart Canvas (Refined, Zero-Slop) ─── */}
       <div className="relative w-full h-48 sm:h-52 rounded-xl bg-black/25 border border-white/[0.04] p-2 flex items-center justify-center overflow-hidden">
         {!mounted ? (
           <div className="text-xs font-mono text-zinc-600">Initializing canvas...</div>
         ) : !hasData ? (
-          /* Subtle, Minimalist Standby State */
+          // Subtle, Minimalist Standby State
           <div className="flex flex-col items-center justify-center text-center px-4 space-y-2.5">
             <div className="flex items-center gap-2">
               <span
@@ -313,7 +310,7 @@ export function AutoTradingProgressionChart({
             </p>
           </div>
         ) : (
-          /* Real Data Stepped Progression Line */
+          // Real Data Stepped Progression Line
           <div className="relative w-full h-full">
             <svg
               viewBox={`0 0 ${width} ${height}`}
@@ -330,7 +327,6 @@ export function AutoTradingProgressionChart({
                 </filter>
               </defs>
 
-              {/* Zero Guideline */}
               <line
                 x1={padding.left}
                 y1={chartCoords.zeroY}
@@ -340,12 +336,10 @@ export function AutoTradingProgressionChart({
                 strokeDasharray="3 3"
               />
 
-              {/* Area Under Smooth Curve */}
               {chartCoords.areaD && (
                 <path d={chartCoords.areaD} fill="url(#progressionGrad)" />
               )}
 
-              {/* Smooth Progression Spline Path */}
               {chartCoords.pathD && (
                 <path
                   d={chartCoords.pathD}
@@ -358,7 +352,6 @@ export function AutoTradingProgressionChart({
                 />
               )}
 
-              {/* Execution Data Points */}
               {chartCoords.pointCoords.map((pt, i) => {
                 const isTp = pt.point.outcome === 'TP_HIT'
                 const isHovered = hoveredCoord?.point.index === pt.point.index
@@ -369,7 +362,6 @@ export function AutoTradingProgressionChart({
                     onMouseEnter={() => setHoveredCoord(pt)}
                     onMouseLeave={() => setHoveredCoord(null)}
                   >
-                    {/* Generous transparent hit area to prevent cursor jitter/oscillation */}
                     <circle
                       cx={pt.x}
                       cy={pt.y}
@@ -377,7 +369,6 @@ export function AutoTradingProgressionChart({
                       fill="transparent"
                     />
 
-                    {/* Outer glowing halo when hovered */}
                     {isHovered && (
                       <circle
                         cx={pt.x}
@@ -389,7 +380,6 @@ export function AutoTradingProgressionChart({
                       />
                     )}
 
-                    {/* Main data point dot */}
                     <circle
                       cx={pt.x}
                       cy={pt.y}
@@ -403,7 +393,6 @@ export function AutoTradingProgressionChart({
               })}
             </svg>
 
-            {/* Hover Tooltip Overlay (pointer-events-none + dynamically flipped away from the hovered dot) */}
             {hoveredPoint && (
               <div
                 className={`absolute p-2.5 rounded-xl bg-[#090d18]/95 border border-white/[0.12] shadow-2xl text-xs font-mono space-y-1 backdrop-blur-md animate-fadeIn z-20 pointer-events-none select-none ${
@@ -449,7 +438,6 @@ export function AutoTradingProgressionChart({
         )}
       </div>
 
-      {/* ─── Bottom Clean Line ─── */}
       <div className="flex items-center justify-between text-[11px] font-mono text-zinc-500 pt-0.5">
         <span>Monitoring 15m closes</span>
         <span>Non-custodial execution</span>

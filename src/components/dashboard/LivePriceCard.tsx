@@ -306,7 +306,6 @@ export function LivePriceCard({
         compact ? 'p-4 sm:p-5 space-y-3' : 'p-5 sm:p-6 space-y-4'
       } border-white/[0.09] ${className}`}
     >
-      {/* ── TOP ROW: Asset Identity & Daily Change ── */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2.5">
           <AssetIcon symbol={ticker.symbol} size={compact ? 'sm' : 'md'} />
@@ -337,7 +336,6 @@ export function LivePriceCard({
         </div>
       </div>
 
-      {/* ── HERO PRICE DISPLAY ── */}
       <div className={compact ? 'space-y-1' : 'space-y-1.5'}>
         <div
           className={`${
@@ -371,7 +369,6 @@ export function LivePriceCard({
         </div>
       </div>
 
-      {/* ── DAILY HIGH & LOW ── */}
       <div className="grid grid-cols-2 gap-2 pt-1 border-t border-white/[0.06] text-[11px] font-mono">
         <div className="py-1">
           <span className="text-zinc-400 block text-[10px]">Daily High</span>
@@ -387,7 +384,6 @@ export function LivePriceCard({
         </div>
       </div>
 
-      {/* ── SIGNAL CONTEXT / LIVE TRADE PROXIMITY ── */}
       {hasSignalContext && entryPrice && (
         <div className={`border-t border-white/[0.06] ${compact ? 'pt-2.5 space-y-2' : 'pt-3.5 space-y-2.5'}`}>
           <div className="flex items-center justify-between">
@@ -405,7 +401,6 @@ export function LivePriceCard({
           </div>
 
           <div className="grid grid-cols-2 gap-2 text-[10px] font-mono">
-            {/* Entry Distance */}
             <div className="py-0.5">
               <div className="flex items-center gap-1.5 mb-0.5">
                 <span
@@ -430,7 +425,6 @@ export function LivePriceCard({
               </div>
             </div>
 
-            {/* Target Distance (TP1 or SL) */}
             {tp1Price ? (
               <div className="py-0.5">
                 <div className="flex items-center gap-1.5 mb-0.5">

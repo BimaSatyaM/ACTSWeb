@@ -19,7 +19,6 @@ export default function IDXWatchlistPage() {
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
-      {/* ── Left: Compact Chart Engine with Live Telemetry ── */}
       <div className="lg:col-span-7">
         <IDXStockChart
           key={selectedStock.symbol}
@@ -32,7 +31,6 @@ export default function IDXWatchlistPage() {
         />
       </div>
 
-      {/* ── Right: Indonesian Equities List (Beside Chart) ── */}
       <div className="lg:col-span-5">
         <IDXWatchlistTable
           selectedSymbol={selectedStock.symbol}

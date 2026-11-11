@@ -48,7 +48,6 @@ export function IDXCompositeBanner({ data }: IDXCompositeBannerProps) {
 
   return (
     <div className="p-5 sm:p-6 rounded-2xl bg-[#0d121f] border border-white/[0.08] shadow-sm space-y-5">
-      {/* ── Top Row: Index Level, Change & Day Range ── */}
       <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-5">
         <div>
           <div className="flex items-center gap-2">
@@ -94,7 +93,6 @@ export function IDXCompositeBanner({ data }: IDXCompositeBannerProps) {
           </div>
         </div>
 
-        {/* ── Daily Range Slider Bar ── */}
         <div className="w-full lg:w-80 space-y-2 p-3 rounded-xl bg-[#121829]/60 border border-white/[0.06]">
           <div className="flex justify-between text-[11px] font-mono text-slate-400">
             <span>Low: {ihsg.dayLow.toLocaleString(undefined, { minimumFractionDigits: 2 })}</span>
@@ -119,7 +117,6 @@ export function IDXCompositeBanner({ data }: IDXCompositeBannerProps) {
         </div>
       </div>
 
-      {/* ── Bottom Strip: Institutional Market Telemetry ── */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 pt-4 border-t border-white/[0.06]">
         <div className="space-y-0.5">
           <span className="text-[11px] uppercase tracking-wider text-slate-400 font-bold block">

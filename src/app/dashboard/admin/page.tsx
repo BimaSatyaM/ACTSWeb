@@ -151,7 +151,6 @@ export default function AdminPanel() {
 
   return (
     <div className="space-y-6">
-      {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 border-b border-white/[0.06] pb-4">
         <div>
           <div className="inline-flex items-center gap-1.5 text-accent-theme text-xs font-semibold">
@@ -163,10 +162,8 @@ export default function AdminPanel() {
         </div>
       </div>
 
-      {/* Grid: Actions & Token list */}
       <div className="grid lg:grid-cols-3 gap-6">
         
-        {/* Generator panel */}
         <div className="space-y-6">
           <GlassCard className="space-y-4">
             <h3 className="text-xs font-bold text-white">Token Generator</h3>
@@ -195,11 +192,9 @@ export default function AdminPanel() {
           </GlassCard>
         </div>
 
-        {/* Tokens List / Table */}
         <div className="lg:col-span-2 space-y-4">
           <GlassCard className="space-y-5">
             
-            {/* Filter controls */}
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-white/[0.04] pb-4">
               <h3 className="text-xs font-bold text-white">Key Database</h3>
               
@@ -224,7 +219,6 @@ export default function AdminPanel() {
               </div>
             </div>
 
-            {/* List */}
             {loadingTokens ? (
               <div className="text-center py-12 text-xs text-text-muted">Loading tokens from Firestore...</div>
             ) : filteredTokens.length === 0 ? (

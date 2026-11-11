@@ -28,7 +28,6 @@ export function IDXConglomerateRadar({ articles }: Props) {
 
   return (
     <div className="rounded-xl bg-[#0d121f] border border-white/[0.08] p-5 sm:p-6 space-y-5">
-      {/* ── Header & Conglomerate Group Switcher ── */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-white/[0.08]">
         <div>
           <div className="flex items-center gap-2">
@@ -45,7 +44,6 @@ export function IDXConglomerateRadar({ articles }: Props) {
           </p>
         </div>
 
-        {/* Group Filter Buttons */}
         <div className="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0">
           {CONGLOMERATES.map((cg) => {
             const cgMeta = CONGLOMERATE_METADATA[cg]
@@ -73,7 +71,6 @@ export function IDXConglomerateRadar({ articles }: Props) {
         </div>
       </div>
 
-      {/* ── Group Profile Banner ── */}
       <div className="p-3.5 rounded-lg bg-[#070b14] border border-white/[0.06] flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs font-mono">
         <div className="flex items-center gap-2.5">
           <span className="text-2xl">{meta.icon}</span>
@@ -98,7 +95,6 @@ export function IDXConglomerateRadar({ articles }: Props) {
         </div>
       </div>
 
-      {/* ── Articles Grid for Selected Conglomerate ── */}
       {groupArticles.length === 0 ? (
         <div className="rounded-lg bg-[#070b14] border border-white/[0.06] p-8 text-center space-y-2">
           <p className="text-xs font-mono text-slate-500">
@@ -117,7 +113,6 @@ export function IDXConglomerateRadar({ articles }: Props) {
                 className="rounded-xl bg-[#070b14] border border-white/[0.08] hover:border-white/[0.14] transition-all p-4 space-y-3 flex flex-col justify-between group"
               >
                 <div className="space-y-2.5">
-                  {/* Tickers & Time */}
                   <div className="flex items-center justify-between text-[11px] font-mono">
                     <div className="flex flex-wrap items-center gap-1.5">
                       {article.tickers.map((t) => (
@@ -150,19 +145,16 @@ export function IDXConglomerateRadar({ articles }: Props) {
                     </div>
                   </div>
 
-                  {/* Headline Title */}
                   <h4 className="text-xs sm:text-sm font-bold text-white group-hover:text-brand-primary transition-colors leading-snug">
                     {article.title}
                   </h4>
 
-                  {/* AI Impact Summary */}
                   <div className="p-2.5 rounded-lg bg-[#0d121f] border border-white/[0.06] text-[11px] font-mono text-slate-400 leading-relaxed">
                     <span className="text-brand-primary font-bold mr-1.5">⚡ AI Impact:</span>
                     <span>{article.aiImpactSummary}</span>
                   </div>
                 </div>
 
-                {/* Read Link */}
                 <div className="pt-2 border-t border-white/[0.06] flex items-center justify-between text-[11px] font-mono">
                   <span className="text-slate-500">{article.publishedAt.slice(0, 16)}</span>
                   <a

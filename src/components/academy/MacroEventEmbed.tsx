@@ -10,10 +10,8 @@ interface MacroEventEmbedProps {
   className?: string
 }
 
-/**
- * Macro Event Intelligence Embed
- * Flat data-terminal table/strip linking lesson concepts to real economic calendar events.
- */
+// Macro Event Intelligence Embed
+// Flat data-terminal table/strip linking lesson concepts to real economic calendar events.
 export function MacroEventEmbed({ macroEvent, className = '' }: MacroEventEmbedProps) {
   const [isModalOpen, setIsModalOpen] = useState(false)
 
@@ -90,7 +88,6 @@ export function MacroEventEmbed({ macroEvent, className = '' }: MacroEventEmbedP
           </button>
         </div>
 
-        {/* Divided 3-column metrics strip */}
         <div className="grid grid-cols-3 divide-x divide-[#1a2030] border-b border-[#1a2030] bg-[#070b14]">
           <div className="p-3.5 sm:px-5">
             <span className="block text-xs text-[#94a3b8]">Release date</span>

@@ -54,11 +54,9 @@ interface SimCandle {
   c: number
 }
 
-/**
- * Generates N continuous, gap-free candlesticks (open[i] === close[i-1])
- * anchored to exact structural price waypoints so charts have 55-65 dense
- * institutional bars with zero artificial vertical gaps.
- */
+// Generates N continuous, gap-free candlesticks (open[i] === close[i-1])
+// anchored to exact structural price waypoints so charts have 55-65 dense
+// institutional bars with zero artificial vertical gaps.
 function buildContinuousCandles(
   waypoints: { bar: number; price: number }[],
   noiseAmp: number
@@ -116,9 +114,7 @@ function computeSimpleEma(candles: SimCandle[], period: number, initialOffset = 
   })
 }
 
-/* ============================================================================
- * 1. CANDLESTICK ANATOMY & SUPPORT/RESISTANCE LIQUIDITY ZONES (60 Dense Bars)
- * ========================================================================== */
+// 1. CANDLESTICK ANATOMY & SUPPORT/RESISTANCE LIQUIDITY ZONES (60 Dense Bars)
 function CandlestickAndSrZonesVisual() {
   const srCandles = buildContinuousCandles(
     [
@@ -160,7 +156,6 @@ function CandlestickAndSrZonesVisual() {
 
   return (
     <div data-ui className="my-6 space-y-5">
-      {/* Part A: Visual OHLC Candlestick Anatomy */}
       <div className="rounded-lg border border-[#1a2030] bg-[#070b14] p-4 sm:p-5">
         <div className="flex flex-wrap items-center justify-between gap-2 pb-3 mb-3 border-b border-[#1a2030]">
           <span className="text-xs sm:text-sm font-semibold text-white">
@@ -189,7 +184,6 @@ function CandlestickAndSrZonesVisual() {
             />
           ))}
 
-          {/* BULLISH CANDLE (Left) */}
           <text x="180" y="24" textAnchor="middle" fill="#3fc07a" fontSize="12.5" fontWeight="600">
             BULLISH CANDLE (Close &gt; Open)
           </text>
@@ -231,7 +225,6 @@ function CandlestickAndSrZonesVisual() {
 
           <line x1="425" y1="16" x2="425" y2="210" stroke="#1a2030" />
 
-          {/* BEARISH CANDLE (Right) */}
           <text x="545" y="24" textAnchor="middle" fill="#e5566f" fontSize="12.5" fontWeight="600">
             BEARISH CANDLE (Close &lt; Open)
           </text>
@@ -273,7 +266,6 @@ function CandlestickAndSrZonesVisual() {
         </svg>
       </div>
 
-      {/* Part B: 60-Candle Support & Resistance Liquidity Zones + Trade Setup Box */}
       <div className="rounded-lg border border-[#1a2030] bg-[#070b14] p-4 sm:p-5 space-y-3">
         <div className="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-[#1a2030]">
           <div>
@@ -297,7 +289,6 @@ function CandlestickAndSrZonesVisual() {
           role="img"
           aria-label="60-candle chart with Support and Resistance zones and Long Trade Setup Box"
         >
-          {/* Subtle Price Grid */}
           {[79640, 80000, 80451, 80696, 80827].map((p) => (
             <line
               key={p}
@@ -310,7 +301,6 @@ function CandlestickAndSrZonesVisual() {
             />
           ))}
 
-          {/* RESISTANCE ZONE 3: 80,827.13 */}
           <rect
             x="14"
             y={priceToY(80865)}
@@ -325,7 +315,6 @@ function CandlestickAndSrZonesVisual() {
             Resistance 80,827.13 · R 4x
           </text>
 
-          {/* RESISTANCE ZONE 2: 80,696.00 */}
           <rect
             x="14"
             y={priceToY(80725)}
@@ -348,7 +337,6 @@ function CandlestickAndSrZonesVisual() {
             Resistance 80,696.00 · R 5x
           </text>
 
-          {/* RESISTANCE ZONE 1: 80,451.18 */}
           <rect
             x="14"
             y={priceToY(80485)}
@@ -363,7 +351,6 @@ function CandlestickAndSrZonesVisual() {
             Resistance 80,451.18 · R 6x
           </text>
 
-          {/* SUPPORT DEMAND ZONE: 79,640.00 */}
           <rect
             x="14"
             y={priceToY(79690)}
@@ -378,8 +365,6 @@ function CandlestickAndSrZonesVisual() {
             Support 79,640.00 · S 3x
           </text>
 
-          {/* TRADE SETUP POSITION BOX (Right side from Entry Bar 51 to chartW) */}
-          {/* Green Profit Zone Box */}
           <rect
             x={entryX}
             y={priceToY(tp3Price)}
@@ -390,7 +375,6 @@ function CandlestickAndSrZonesVisual() {
             stroke="#3fc07a"
             strokeWidth="1.2"
           />
-          {/* TP1 & TP2 internal lines inside setup box */}
           <line
             x1={entryX}
             y1={priceToY(tp1Price)}
@@ -409,7 +393,6 @@ function CandlestickAndSrZonesVisual() {
             TP3 $80,827 (+3.5R · 25%)
           </text>
 
-          {/* Red Stop-Loss Risk Box */}
           <rect
             x={entryX}
             y={priceToY(entryPrice)}
@@ -424,7 +407,6 @@ function CandlestickAndSrZonesVisual() {
             STOP-LOSS $79,510 (−1.0R Below Support)
           </text>
 
-          {/* Entry Line */}
           <line
             x1={entryX}
             y1={priceToY(entryPrice)}
@@ -434,7 +416,6 @@ function CandlestickAndSrZonesVisual() {
             strokeWidth="2"
           />
 
-          {/* 60 CONTINUOUS CANDLESTICKS */}
           {srCandles.map((c, idx) => {
             const x = barToX(idx)
             const isUp = c.c >= c.o
@@ -453,7 +434,6 @@ function CandlestickAndSrZonesVisual() {
             )
           })}
 
-          {/* Entry Callout Badge */}
           <circle cx={entryX} cy={priceToY(entryPrice)} r="5" fill="#38bdf8" stroke="#070b14" strokeWidth="1.5" />
           <rect
             x={entryX - 185}
@@ -469,7 +449,6 @@ function CandlestickAndSrZonesVisual() {
             LONG ENTRY @ $79,810 →
           </text>
 
-          {/* RIGHT PRICE AXIS TAGS */}
           <line x1={chartW} y1="12" x2={chartW} y2={chartH - 12} stroke="#262f45" strokeWidth="1" />
           {[
             { price: '80,827.13', y: priceToY(80827), bg: '#e5566f', fg: '#ffffff' },
@@ -488,7 +467,6 @@ function CandlestickAndSrZonesVisual() {
           ))}
         </svg>
 
-        {/* Bottom Strategy Setup Guide */}
         <div className="grid grid-cols-1 sm:grid-cols-4 gap-2.5 pt-2 border-t border-[#1a2030] text-xs [font-variant-numeric:tabular-nums]">
           <div className="rounded bg-[#0a0f1a] border border-[#1a2030] p-2.5">
             <div className="text-[#94a3b8] text-[11px]">1. Liquidity Zone</div>
@@ -516,9 +494,7 @@ function CandlestickAndSrZonesVisual() {
   )
 }
 
-/* ============================================================================
- * 2. MARKET STRUCTURE: HH, HL, BOS & CHoCH VISUAL CHART (60 Dense Bars + Setup Box)
- * ========================================================================== */
+// 2. MARKET STRUCTURE: HH, HL, BOS & CHoCH VISUAL CHART (60 Dense Bars + Setup Box)
 function MarketStructureBosVisual() {
   const bars = buildContinuousCandles(
     [
@@ -576,12 +552,10 @@ function MarketStructureBosVisual() {
         role="img"
         aria-label="62-candle Market Structure chart showing HH, HL, BOS, CHoCH, and Short Retest Setup Box"
       >
-        {/* Background Horizontal Grid */}
         {[75200, 75800, 76220, 76850, 77380].map((p) => (
           <line key={p} x1="14" y1={toY(p)} x2={chartW} y2={toY(p)} stroke="#131b2c" strokeWidth="1" />
         ))}
 
-        {/* Shaded HL2 Structural Flip Zone ($76,160 - $76,300) */}
         <rect
           x={toX(28)}
           y={toY(76310)}
@@ -600,7 +574,6 @@ function MarketStructureBosVisual() {
           strokeDasharray="5 3"
         />
 
-        {/* BOS 1 Line at HH1 ($76,120) */}
         <line
           x1={toX(7)}
           y1={toY(76120)}
@@ -614,7 +587,6 @@ function MarketStructureBosVisual() {
           BOS 1 (+Close)
         </text>
 
-        {/* BOS 2 Line at HH2 ($76,850) */}
         <line
           x1={toX(22)}
           y1={toY(76850)}
@@ -628,8 +600,6 @@ function MarketStructureBosVisual() {
           BOS 2 (+Close)
         </text>
 
-        {/* SHORT SETUP POSITION BOX (From Retest Entry Bar 55 to chartW) */}
-        {/* Red Stop-Loss Box (Above Entry 76,240 to 76,640) */}
         <rect
           x={entryX}
           y={toY(slP)}
@@ -644,7 +614,6 @@ function MarketStructureBosVisual() {
           STOP-LOSS $76,640 (−1.0R)
         </text>
 
-        {/* Green Target Profit Box (Below Entry 76,240 down to 75,020) */}
         <rect
           x={entryX}
           y={toY(entryP)}
@@ -667,10 +636,8 @@ function MarketStructureBosVisual() {
           TP3 $75,020 (+3.0R · 25%)
         </text>
 
-        {/* Entry Line */}
         <line x1={entryX} y1={toY(entryP)} x2={chartW} y2={toY(entryP)} stroke="#38bdf8" strokeWidth="2" />
 
-        {/* 62 CONTINUOUS CANDLESTICKS */}
         {bars.map((b, i) => {
           const x = toX(i)
           const up = b.c >= b.o
@@ -685,7 +652,6 @@ function MarketStructureBosVisual() {
           )
         })}
 
-        {/* Collision-Free Structural Swing Badges */}
         <text x={toX(7)} y={toY(76120) - 14} textAnchor="middle" fill="#ffffff" fontSize="10.5" fontWeight="600">
           HH1
         </text>
@@ -714,14 +680,12 @@ function MarketStructureBosVisual() {
           CHoCH Breakdown
         </text>
 
-        {/* Entry Trigger Marker */}
         <circle cx={entryX} cy={toY(entryP)} r="5" fill="#38bdf8" stroke="#070b14" strokeWidth="1.5" />
         <rect x={entryX - 135} y={toY(entryP) - 34} width="150" height="20" rx="3" fill="#0d1829" stroke="#38bdf8" strokeWidth="1.2" />
         <text x={entryX - 60} y={toY(entryP) - 21} textAnchor="middle" fill="#38bdf8" fontSize="10" fontWeight="600">
           SHORT RETEST ENTRY
         </text>
 
-        {/* Right Price Scale */}
         <line x1={chartW} y1="12" x2={chartW} y2={chartH - 12} stroke="#262f45" />
         {[
           { p: '77,380.00', y: toY(77380), bg: '#1e293b', fg: '#cbd5e1' },
@@ -740,7 +704,6 @@ function MarketStructureBosVisual() {
         ))}
       </svg>
 
-      {/* Bottom Strategy Setup Guide */}
       <div className="grid grid-cols-1 sm:grid-cols-4 gap-2.5 pt-2 border-t border-[#1a2030] text-xs [font-variant-numeric:tabular-nums]">
         <div className="rounded bg-[#0a0f1a] border border-[#1a2030] p-2.5">
           <div className="text-[#94a3b8] text-[11px]">1. Structure Shift</div>
@@ -767,9 +730,7 @@ function MarketStructureBosVisual() {
   )
 }
 
-/* ============================================================================
- * 3. EMA 20 / 50 / 200 DYNAMIC RIBBON & PULLBACK SETUP (60 Continuous Bars)
- * ========================================================================== */
+// 3. EMA 20 / 50 / 200 DYNAMIC RIBBON & PULLBACK SETUP (60 Continuous Bars)
 function EmaRibbonVisual() {
   const bars = buildContinuousCandles(
     [
@@ -840,10 +801,8 @@ function EmaRibbonVisual() {
           <line key={p} x1="14" y1={toY(p)} x2={chartW} y2={toY(p)} stroke="#131b2c" />
         ))}
 
-        {/* Shaded 20-50 EMA Value Pocket */}
         <polygon points={ribbonPolygon} fill="#38bdf8" fillOpacity="0.12" />
 
-        {/* EMA Curves */}
         <polyline
           fill="none"
           stroke="#cbd5e1"
@@ -864,7 +823,6 @@ function EmaRibbonVisual() {
           points={ema20.map((v, i) => `${toX(i)},${toY(v)}`).join(' ')}
         />
 
-        {/* LONG SETUP BOX (From Bar 49 to chartW) */}
         <rect
           x={entryX}
           y={toY(tp3P)}
@@ -887,7 +845,6 @@ function EmaRibbonVisual() {
           TP3 (+3.5R)
         </text>
 
-        {/* Stop-Loss Box below 50 EMA */}
         <rect
           x={entryX}
           y={toY(entryP)}
@@ -904,7 +861,6 @@ function EmaRibbonVisual() {
 
         <line x1={entryX} y1={toY(entryP)} x2={chartW} y2={toY(entryP)} stroke="#38bdf8" strokeWidth="2" />
 
-        {/* 60 CONTINUOUS CANDLESTICKS */}
         {bars.map((b, i) => {
           const x = toX(i)
           const up = b.c >= b.o
@@ -919,7 +875,6 @@ function EmaRibbonVisual() {
           )
         })}
 
-        {/* Pullback Markers */}
         <circle cx={toX(18)} cy={toY(76620)} r="5" fill="none" stroke="#38bdf8" strokeWidth="1.8" />
         <text x={toX(18)} y={toY(76620) + 18} textAnchor="middle" fill="#38bdf8" fontSize="10" fontWeight="600">
           Pullback #1 (20/50 Pocket)
@@ -940,7 +895,6 @@ function EmaRibbonVisual() {
           200 EMA Bullish Regime Filter (Price &gt; 200 EMA)
         </text>
 
-        {/* Right Price Scale */}
         <line x1={chartW} y1="12" x2={chartW} y2={chartH - 12} stroke="#262f45" />
         {[
           { p: '78,800.00', y: toY(tp2P), bg: '#247b50', fg: '#ffffff' },
@@ -958,7 +912,6 @@ function EmaRibbonVisual() {
         ))}
       </svg>
 
-      {/* Bottom Strategy Setup Guide */}
       <div className="grid grid-cols-1 sm:grid-cols-4 gap-2.5 pt-2 border-t border-[#1a2030] text-xs [font-variant-numeric:tabular-nums]">
         <div className="rounded bg-[#0a0f1a] border border-[#1a2030] p-2.5">
           <div className="text-[#94a3b8] text-[11px]">1. Regime Filter</div>
@@ -985,9 +938,7 @@ function EmaRibbonVisual() {
   )
 }
 
-/* ============================================================================
- * 4. RSI (14) REGULAR & HIDDEN DIVERGENCE DUAL-PANE VISUAL (58 Continuous Bars)
- * ========================================================================== */
+// 4. RSI (14) REGULAR & HIDDEN DIVERGENCE DUAL-PANE VISUAL (58 Continuous Bars)
 function RsiDivergenceVisual() {
   const bars = buildContinuousCandles(
     [
@@ -1055,7 +1006,6 @@ function RsiDivergenceVisual() {
           <line key={p} x1="14" y1={pToY(p)} x2={chartW} y2={pToY(p)} stroke="#131b2c" />
         ))}
 
-        {/* LONG SETUP BOX (From Bar 29 to Bar 44) */}
         <rect
           x={entryX}
           y={pToY(tp2P)}
@@ -1089,7 +1039,6 @@ function RsiDivergenceVisual() {
         </text>
         <line x1={entryX} y1={pToY(entryP)} x2={toX(44)} y2={pToY(entryP)} stroke="#38bdf8" strokeWidth="2" />
 
-        {/* TOP PANE: 58 CANDLESTICKS */}
         {bars.map((b, i) => {
           const x = toX(i)
           const up = b.c >= b.o
@@ -1104,32 +1053,27 @@ function RsiDivergenceVisual() {
           )
         })}
 
-        {/* Price Lower Low Line */}
         <line x1={toX(9)} y1={pToY(76360)} x2={toX(26)} y2={pToY(76050)} stroke="#e5566f" strokeWidth="2" />
         <text x={toX(17)} y={pToY(76050) + 15} textAnchor="middle" fill="#fda4af" fontSize="10" fontWeight="600">
           Price: Lower Low ($76,420 → $76,110)
         </text>
 
-        {/* Entry Marker */}
         <circle cx={entryX} cy={pToY(entryP)} r="5" fill="#38bdf8" stroke="#070b14" strokeWidth="1.5" />
         <rect x={entryX - 150} y={pToY(entryP) - 24} width="142" height="19" rx="3" fill="#0d1829" stroke="#38bdf8" strokeWidth="1.1" />
         <text x={entryX - 79} y={pToY(entryP) - 11} textAnchor="middle" fill="#38bdf8" fontSize="9.5" fontWeight="600">
           CONFIRMATION ENTRY →
         </text>
 
-        {/* PANE DIVIDER */}
         <line x1="14" y1="248" x2={chartW} y2="248" stroke="#262f45" strokeWidth="1" />
         <text x="20" y="264" fill="#94a3b8" fontSize="10" fontWeight="600">
           RSI (14) SUB-PANE (30 Oversold / 70 Overbought)
         </text>
 
-        {/* RSI 70 / 30 Bands */}
         <rect x="14" y={rToY(70)} width={chartW - 14} height={rToY(30) - rToY(70)} fill="#1e293b" fillOpacity="0.28" />
         <line x1="14" y1={rToY(70)} x2={chartW} y2={rToY(70)} stroke="#e5566f" strokeDasharray="3 3" strokeWidth="0.9" />
         <line x1="14" y1={rToY(50)} x2={chartW} y2={rToY(50)} stroke="#475569" strokeDasharray="2 2" strokeWidth="0.7" />
         <line x1="14" y1={rToY(30)} x2={chartW} y2={rToY(30)} stroke="#3fc07a" strokeDasharray="3 3" strokeWidth="0.9" />
 
-        {/* RSI Polyline */}
         <polyline
           fill="none"
           stroke="#38bdf8"
@@ -1137,7 +1081,6 @@ function RsiDivergenceVisual() {
           points={rsiBars.map((r, i) => `${toX(i)},${rToY(r.c)}`).join(' ')}
         />
 
-        {/* RSI Higher Low Divergence Line */}
         <line x1={toX(9)} y1={rToY(24.2)} x2={toX(26)} y2={rToY(33.8)} stroke="#3fc07a" strokeWidth="2.2" />
         <circle cx={toX(9)} cy={rToY(24.2)} r="4" fill="#3fc07a" />
         <circle cx={toX(26)} cy={rToY(33.8)} r="4" fill="#3fc07a" />
@@ -1145,14 +1088,12 @@ function RsiDivergenceVisual() {
           RSI: Higher Low (24.2 → 33.8 · Seller Exhaustion)
         </text>
 
-        {/* Hidden Bullish Div on RSI */}
         <line x1={toX(26)} y1={rToY(33.8)} x2={toX(46)} y2={rToY(35.0)} stroke="#e2a84b" strokeWidth="1.8" strokeDasharray="4 2" />
         <circle cx={toX(46)} cy={rToY(35.0)} r="4" fill="#e2a84b" />
         <text x={toX(46)} y={rToY(35.0) + 15} textAnchor="middle" fill="#e2a84b" fontSize="10" fontWeight="600">
           Hidden Div Reset (35.0)
         </text>
 
-        {/* Right Axis */}
         <line x1={chartW} y1="12" x2={chartW} y2="390" stroke="#262f45" />
         <text x={chartW + 8} y={rToY(70) + 3} fill="#e5566f" fontSize="10" fontWeight="600">
           RSI 70
@@ -1165,7 +1106,6 @@ function RsiDivergenceVisual() {
         </text>
       </svg>
 
-      {/* Bottom Strategy Setup Guide */}
       <div className="grid grid-cols-1 sm:grid-cols-4 gap-2.5 pt-2 border-t border-[#1a2030] text-xs [font-variant-numeric:tabular-nums]">
         <div className="rounded bg-[#0a0f1a] border border-[#1a2030] p-2.5">
           <div className="text-[#94a3b8] text-[11px]">1. Divergence Signal</div>
@@ -1192,9 +1132,7 @@ function RsiDivergenceVisual() {
   )
 }
 
-/* ============================================================================
- * 5. MACD (12, 26, 9) DUAL-PANE MOMENTUM & HISTOGRAM VISUAL (56 Continuous Bars)
- * ========================================================================== */
+// 5. MACD (12, 26, 9) DUAL-PANE MOMENTUM & HISTOGRAM VISUAL (56 Continuous Bars)
 function MacdMomentumVisual() {
   const bars = buildContinuousCandles(
     [
@@ -1263,7 +1201,6 @@ function MacdMomentumVisual() {
           <line key={p} x1="14" y1={pToY(p)} x2={chartW} y2={pToY(p)} stroke="#131b2c" />
         ))}
 
-        {/* LONG SETUP BOX */}
         <rect
           x={entryX}
           y={pToY(tp3P)}
@@ -1301,7 +1238,6 @@ function MacdMomentumVisual() {
         </text>
         <line x1={entryX} y1={pToY(entryP)} x2={toX(48)} y2={pToY(entryP)} stroke="#38bdf8" strokeWidth="2" />
 
-        {/* TOP PANE: 55 CANDLESTICKS */}
         {bars.map((b, i) => {
           const x = toX(i)
           const up = b.c >= b.o
@@ -1322,16 +1258,13 @@ function MacdMomentumVisual() {
           ZERO-LINE BREAK ENTRY →
         </text>
 
-        {/* PANE DIVIDER */}
         <line x1="14" y1="242" x2={chartW} y2="242" stroke="#262f45" />
         <text x="20" y="258" fill="#94a3b8" fontSize="10" fontWeight="600">
           MACD (12, 26, 9) SUB-PANE
         </text>
 
-        {/* Zero Line */}
         <line x1="14" y1={zeroY} x2={chartW} y2={zeroY} stroke="#475569" strokeDasharray="3 3" />
 
-        {/* Histogram Bars */}
         {hist.map((hVal, i) => {
           const x = toX(i)
           const yVal = mToY(hVal * 1.6)
@@ -1341,7 +1274,6 @@ function MacdMomentumVisual() {
           return <rect key={i} x={x - 3} y={top} width="6" height={bh} fill={col} fillOpacity="0.6" />
         })}
 
-        {/* Signal & MACD Lines */}
         <polyline
           fill="none"
           stroke="#e2a84b"
@@ -1361,7 +1293,6 @@ function MacdMomentumVisual() {
         </text>
       </svg>
 
-      {/* Bottom Strategy Setup Guide */}
       <div className="grid grid-cols-1 sm:grid-cols-4 gap-2.5 pt-2 border-t border-[#1a2030] text-xs [font-variant-numeric:tabular-nums]">
         <div className="rounded bg-[#0a0f1a] border border-[#1a2030] p-2.5">
           <div className="text-[#94a3b8] text-[11px]">1. Momentum Shift</div>
@@ -1388,9 +1319,7 @@ function MacdMomentumVisual() {
   )
 }
 
-/* ============================================================================
- * 6. BOLLINGER BANDS SQUEEZE & 1.5x ATR STOP-LOSS VISUAL (60 Continuous Bars)
- * ========================================================================== */
+// 6. BOLLINGER BANDS SQUEEZE & 1.5x ATR STOP-LOSS VISUAL (60 Continuous Bars)
 function BollingerAtrVisual() {
   const bars = buildContinuousCandles(
     [
@@ -1470,10 +1399,8 @@ function BollingerAtrVisual() {
           <line key={p} x1="14" y1={toY(p)} x2={chartW} y2={toY(p)} stroke="#131b2c" />
         ))}
 
-        {/* Shaded Bollinger Envelope */}
         <polygon points={bandPoly} fill="#38bdf8" fillOpacity="0.10" />
 
-        {/* Squeeze Highlight Box */}
         <rect
           x={toX(16)}
           y={toY(77980)}
@@ -1489,12 +1416,10 @@ function BollingerAtrVisual() {
           Bollinger Band Squeeze (Volatility Compression)
         </text>
 
-        {/* Bollinger Band Lines */}
         <polyline fill="none" stroke="#38bdf8" strokeWidth="1.5" points={upper.map((v, i) => `${toX(i)},${toY(v)}`).join(' ')} />
         <polyline fill="none" stroke="#94a3b8" strokeWidth="1.1" strokeDasharray="3 3" points={mid.map((v, i) => `${toX(i)},${toY(v)}`).join(' ')} />
         <polyline fill="none" stroke="#38bdf8" strokeWidth="1.5" points={lower.map((v, i) => `${toX(i)},${toY(v)}`).join(' ')} />
 
-        {/* LONG SETUP BOX */}
         <rect
           x={entryX}
           y={toY(tp3P)}
@@ -1532,7 +1457,6 @@ function BollingerAtrVisual() {
         </text>
         <line x1={entryX} y1={toY(entryP)} x2={chartW} y2={toY(entryP)} stroke="#38bdf8" strokeWidth="2" />
 
-        {/* 58 CONTINUOUS CANDLESTICKS */}
         {bars.map((b, i) => {
           const x = toX(i)
           const up = b.c >= b.o
@@ -1553,7 +1477,6 @@ function BollingerAtrVisual() {
           SQUEEZE BREAKOUT ENTRY
         </text>
 
-        {/* Right Price Scale */}
         <line x1={chartW} y1="12" x2={chartW} y2={chartH - 12} stroke="#262f45" />
         {[
           { p: '80,100.00', y: toY(tp3P), bg: '#166534', fg: '#86efac' },
@@ -1571,7 +1494,6 @@ function BollingerAtrVisual() {
         ))}
       </svg>
 
-      {/* Bottom Strategy Setup Guide */}
       <div className="grid grid-cols-1 sm:grid-cols-4 gap-2.5 pt-2 border-t border-[#1a2030] text-xs [font-variant-numeric:tabular-nums]">
         <div className="rounded bg-[#0a0f1a] border border-[#1a2030] p-2.5">
           <div className="text-[#e2a84b] text-[11px]">1. Volatility Setup</div>
@@ -1598,9 +1520,7 @@ function BollingerAtrVisual() {
   )
 }
 
-/* ============================================================================
- * 7. UNCORRELATED 4-FACTOR CONFLUENCE STACK VISUAL
- * ========================================================================== */
+// 7. UNCORRELATED 4-FACTOR CONFLUENCE STACK VISUAL
 function ConfluenceStackVisual() {
   const factors = [
     {
@@ -1655,9 +1575,7 @@ function ConfluenceStackVisual() {
   )
 }
 
-/* ============================================================================
- * 8. LIMIT ORDER BOOK (LOB) DEPTH LADDER & SLIPPAGE VISUAL
- * ========================================================================== */
+// 8. LIMIT ORDER BOOK (LOB) DEPTH LADDER & SLIPPAGE VISUAL
 function OrderBookDepthVisual() {
   const asks = [
     { price: 65030, size: 2.5, total: 5.5, pct: 100 },
@@ -1759,9 +1677,7 @@ function OrderBookDepthVisual() {
   )
 }
 
-/* ============================================================================
- * 9. ORDER TYPES EXECUTION MATRIX VISUAL
- * ========================================================================== */
+// 9. ORDER TYPES EXECUTION MATRIX VISUAL
 function OrderTypesMatrixVisual() {
   const rows = [
     {
@@ -1826,9 +1742,7 @@ function OrderTypesMatrixVisual() {
   )
 }
 
-/* ============================================================================
- * 10. INTERACTIVE 1% POSITION SIZING CALCULATOR WIDGET
- * ========================================================================== */
+// 10. INTERACTIVE 1% POSITION SIZING CALCULATOR WIDGET
 function PositionSizerVisual() {
   const [equity, setEquity] = useState<number>(10000)
   const [riskPct, setRiskPct] = useState<number>(1.0)
@@ -1929,9 +1843,7 @@ function PositionSizerVisual() {
   )
 }
 
-/* ============================================================================
- * 11. ACTS TRUE WEIGHTED BRACKET MATH (+1.975R) VISUAL LADDER
- * ========================================================================== */
+// 11. ACTS TRUE WEIGHTED BRACKET MATH (+1.975R) VISUAL LADDER
 function BracketRMathVisual() {
   const levels = [
     {
@@ -2018,9 +1930,7 @@ function BracketRMathVisual() {
   )
 }
 
-/* ============================================================================
- * 12. INTERACTIVE 5-GATE PRE-TRADE INVARIANT CHECKLIST
- * ========================================================================== */
+// 12. INTERACTIVE 5-GATE PRE-TRADE INVARIANT CHECKLIST
 function PreTradeChecklistVisual() {
   const gates = [
     {
@@ -2111,9 +2021,7 @@ function PreTradeChecklistVisual() {
   )
 }
 
-/* ============================================================================
- * 13. MACRO VISUALS (CPI Transmission, FOMC Tools, Yield Curve, DXY, Delta)
- * ========================================================================== */
+// 13. MACRO VISUALS (CPI Transmission, FOMC Tools, Yield Curve, DXY, Delta)
 function MacroCpiTransmissionVisual() {
   const steps = [
     {

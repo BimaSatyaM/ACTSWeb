@@ -1,7 +1,5 @@
-/**
- * ACTS Academy Types & Interface Contracts
- * Matching PROJECT.md § Interface Contracts
- */
+// ACTS Academy Types & Interface Contracts
+// Matching PROJECT.md § Interface Contracts
 
 export type TrackId =
   | 'foundations'

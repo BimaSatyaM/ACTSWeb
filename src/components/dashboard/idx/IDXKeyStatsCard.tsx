@@ -255,10 +255,8 @@ export function IDXKeyStatsCard({ stats }: Props) {
 
   return (
     <div className="space-y-5">
-      {/* ── 1. Hero Snapshot Banner ── */}
       <div className="rounded-xl bg-[#0d121f] border border-white/[0.08] p-5 sm:p-6">
         <div className="flex flex-col xl:flex-row xl:items-center justify-between gap-6">
-          {/* Left: Logo, Symbol, Pills & Subtitles */}
           <div className="flex items-start gap-4 min-w-0">
             <div className="shrink-0">
               <IDXStockLogo
@@ -301,7 +299,6 @@ export function IDXKeyStatsCard({ stats }: Props) {
             </div>
           </div>
 
-          {/* Right: Last Price, Distance from High & Market Capitalization */}
           <div className="flex items-center gap-6 sm:gap-8 shrink-0 lg:text-right border-t xl:border-t-0 pt-4 xl:pt-0 border-white/[0.06]">
             <div>
               <div className="text-[11px] text-slate-400 font-mono">
@@ -340,9 +337,7 @@ export function IDXKeyStatsCard({ stats }: Props) {
         </div>
       </div>
 
-      {/* ── 2. Dedicated Performance & Historical Chart Card ── */}
       <div className="rounded-xl bg-[#0d121f] border border-white/[0.08] p-5 sm:p-6 space-y-4">
-        {/* Performance Header & Timeframe Switcher */}
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div className="flex items-center gap-2">
             <span
@@ -383,9 +378,7 @@ export function IDXKeyStatsCard({ stats }: Props) {
           </div>
         </div>
 
-        {/* Split Grid: 52-Week Channel Slider on Left, Real Historical Chart on Right */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center pt-2">
-          {/* Left: 52-Week Channel & Slider (Macro Context) */}
           <div className="lg:col-span-5 space-y-4 pr-0 lg:pr-4">
             <div className="flex items-baseline justify-between font-mono">
               <div>
@@ -406,7 +399,6 @@ export function IDXKeyStatsCard({ stats }: Props) {
               </div>
             </div>
 
-            {/* Slider Track with Glowing Handle */}
             <div className="relative h-2 w-full rounded-full bg-slate-800">
               <div
                 className="absolute top-0 bottom-0 left-0 bg-slate-600 rounded-full transition-all duration-500"
@@ -423,10 +415,8 @@ export function IDXKeyStatsCard({ stats }: Props) {
             </div>
           </div>
 
-          {/* Right: Live Real Historical Chart */}
           <div className="lg:col-span-7 space-y-1.5 border-t lg:border-t-0 lg:border-l border-white/[0.06] pt-4 lg:pt-0 lg:pl-6">
             <div className="flex items-center gap-2">
-              {/* Y-Axis Reference Ticks */}
               <div className="flex flex-col justify-between text-[10px] font-mono text-slate-500 h-28 sm:h-32 text-right shrink-0 pr-1 select-none">
                 <span>{formatK(yMax)}</span>
                 <span>{formatK(Math.round(yMax - (yMax - yMin) * 0.33))}</span>
@@ -434,7 +424,6 @@ export function IDXKeyStatsCard({ stats }: Props) {
                 <span>{formatK(yMin)}</span>
               </div>
 
-              {/* Area & Line SVG Canvas */}
               <div className="flex-1 h-28 sm:h-32 relative group">
                 {isLoadingChart && (
                   <div className="absolute inset-0 z-10 flex items-center justify-center bg-[#0d121f]/60 backdrop-blur-[1px] rounded">
@@ -464,10 +453,8 @@ export function IDXKeyStatsCard({ stats }: Props) {
                     </linearGradient>
                   </defs>
 
-                  {/* Gradient Area Fill */}
                   <path d={areaPath} fill={`url(#${gradientId})`} />
 
-                  {/* Glowing Stroke Curve */}
                   <path
                     d={linePath}
                     fill="none"
@@ -477,7 +464,6 @@ export function IDXKeyStatsCard({ stats }: Props) {
                     strokeLinejoin="round"
                   />
 
-                  {/* Hover Crosshair and Dot */}
                   {activeHover && (
                     <g>
                       <line
@@ -502,7 +488,6 @@ export function IDXKeyStatsCard({ stats }: Props) {
                   )}
                 </svg>
 
-                {/* Floating Tooltip on Hover */}
                 {activeHover && (
                   <div
                     className="absolute -top-7 pointer-events-none z-20 px-2 py-0.5 rounded bg-slate-900/90 border border-white/15 text-[10px] font-mono text-white shadow-xl -translate-x-1/2 whitespace-nowrap"
@@ -521,7 +506,6 @@ export function IDXKeyStatsCard({ stats }: Props) {
               </div>
             </div>
 
-            {/* X-Axis Dynamic Markers & Timeframe Range */}
             <div className="flex items-center justify-between text-[10px] font-mono text-slate-500 pl-8 pt-1">
               <div className="flex gap-3 sm:gap-6 select-none overflow-hidden">
                 {timeLabels.map((lbl, idx) => (
@@ -542,7 +526,6 @@ export function IDXKeyStatsCard({ stats }: Props) {
         </div>
       </div>
 
-      {/* ── 3. Horizontal 3-Column Catalyst / Intelligence Cards ── */}
       {stats.badges && stats.badges.length > 0 && (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3.5">
           {stats.badges.slice(0, 3).map((badge, idx) => (
@@ -566,9 +549,7 @@ export function IDXKeyStatsCard({ stats }: Props) {
         </div>
       )}
 
-      {/* ── 4. Key Metric Panels Grid (With Real Vector SVG Icons) ── */}
       <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
-        {/* Card 1: Valuation Multiples */}
         <div className="rounded-xl bg-[#0d121f] border border-white/[0.08] p-5 space-y-4 hover:border-white/[0.14] transition-colors">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
@@ -631,7 +612,6 @@ export function IDXKeyStatsCard({ stats }: Props) {
           </div>
         </div>
 
-        {/* Card 2: Profitability & Returns */}
         <div className="rounded-xl bg-[#0d121f] border border-white/[0.08] p-5 space-y-4 hover:border-white/[0.14] transition-colors">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
@@ -683,7 +663,6 @@ export function IDXKeyStatsCard({ stats }: Props) {
           </div>
         </div>
 
-        {/* Card 3: Balance Sheet & Solvency */}
         <div className="rounded-xl bg-[#0d121f] border border-white/[0.08] p-5 space-y-4 hover:border-white/[0.14] transition-colors">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
@@ -739,7 +718,6 @@ export function IDXKeyStatsCard({ stats }: Props) {
           </div>
         </div>
 
-        {/* Card 4: Earnings & Cash Flow */}
         <div className="rounded-xl bg-[#0d121f] border border-white/[0.08] p-5 space-y-4 hover:border-white/[0.14] transition-colors">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
@@ -796,7 +774,6 @@ export function IDXKeyStatsCard({ stats }: Props) {
         </div>
       </div>
 
-      {/* Subtle Toggle for Extended Metrics */}
       <div className="text-center pt-1">
         <button
           onClick={() => setShowExtended((prev) => !prev)}

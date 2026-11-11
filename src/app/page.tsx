@@ -133,9 +133,7 @@ function MiniChart({ points }: { points: number[] }) {
         strokeLinejoin="round"
         strokeLinecap="round"
       />
-      {/* Outer radar pulse */}
       <circle cx={lastX} cy={lastY} r="10" fill="#ff2e54" opacity="0.25" className="animate-ping" />
-      {/* Center solid coordinate ping */}
       <circle cx={lastX} cy={lastY} r="5" fill="#ff2e54" stroke="#ffffff" strokeWidth="1.5" />
     </svg>
   )
@@ -194,7 +192,6 @@ function Hero() {
 
   return (
     <section className="relative min-h-[88vh] flex flex-col justify-center overflow-hidden bg-[#070b14] pt-12 pb-24 border-b border-[#1c2438]">
-      {/* Precision coordinate grid background */}
       <div
         className="absolute inset-0 opacity-[0.04] pointer-events-none"
         style={{
@@ -203,11 +200,9 @@ function Hero() {
           backgroundSize: '60px 60px',
         }}
       />
-      {/* Brand signature crimson ambient glow */}
       <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-[#ff2e54] opacity-[0.06] blur-[140px] pointer-events-none" />
 
       <div className="relative max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center w-full">
-        {/* Left column: Institutional Positioning */}
         <div>
           <div className="flex items-center gap-3 mb-8">
             <span className="w-2.5 h-2.5 rounded-full bg-[#ff2e54] block shadow-[0_0_10px_#ff2e54] animate-pulse" />
@@ -261,7 +256,6 @@ function Hero() {
             </Link>
           </div>
 
-          {/* Institutional Architecture Telemetry */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-6 border-t border-[#1c2438]">
             <div>
               <div className="font-sans font-extrabold text-white text-lg leading-tight">4 Regimes</div>
@@ -290,10 +284,8 @@ function Hero() {
           </div>
         </div>
 
-        {/* Right column: Interactive Terminal & MiniChart */}
         <div className="relative">
           <div className="bg-[#0b101c] border border-[#1c2438] p-6 shadow-2xl relative">
-            {/* Pair Switcher Header */}
             <div className="flex items-center justify-between mb-4 border-b border-[#1c2438] pb-3">
               <div className="flex items-center gap-2">
                 {(['BTC', 'ETH', 'SOL'] as const).map((pair) => (
@@ -316,7 +308,6 @@ function Hero() {
               </div>
             </div>
 
-            {/* Price & Change Banner */}
             <div className="flex items-center justify-between mb-4">
               <div>
                 <div className="font-mono text-xs text-[#64748b] uppercase tracking-wider mb-1">
@@ -338,12 +329,10 @@ function Hero() {
               </div>
             </div>
 
-            {/* Live SVG Chart */}
             <div className="h-[150px] mb-4">
               <MiniChart points={preview.chartPoints} />
             </div>
 
-            {/* Quick Metrics Bar */}
             <div className="grid grid-cols-3 gap-0 border-t border-[#1c2438] pt-4">
               {[
                 { label: '24h Volume', val: preview.volume },
@@ -360,7 +349,6 @@ function Hero() {
             </div>
           </div>
 
-          {/* Confluence Telemetry Card */}
           <div className="mt-4 bg-[#101726] border border-[#1c2438] p-4 shadow-xl">
             <div className="flex items-center justify-between border-b border-[#1c2438] pb-2 mb-3">
               <div className="flex items-center gap-2">
@@ -514,7 +502,6 @@ function Capabilities() {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 border border-[#1c2438]">
-          {/* Navigation selector */}
           <div className="border-b lg:border-b-0 lg:border-r border-[#1c2438]">
             {CAPABILITIES.map((c, i) => (
               <button
@@ -561,7 +548,6 @@ function Capabilities() {
             ))}
           </div>
 
-          {/* Interactive Technical Terminal Pane */}
           <div className="bg-[#090d18] p-8 sm:p-12 flex flex-col justify-between">
             <div>
               <div className="flex items-center justify-between border-b border-[#1c2438] pb-4 mb-6">
@@ -773,7 +759,6 @@ function HowItWorks() {
               key={i}
               className="p-10 border-b md:border-b-0 md:border-r border-[#1c2438] last:border-r-0 relative overflow-hidden group hover:bg-[#0c1322] transition-colors duration-200"
             >
-              {/* Giant watermark number */}
               <div
                 className="absolute top-0 right-3 font-sans font-black text-[#151e33] group-hover:text-[#1c2844] transition-colors pointer-events-none select-none"
                 style={{ fontSize: 'clamp(6rem, 12vw, 9rem)', lineHeight: 0.9 }}
@@ -800,7 +785,6 @@ function CTA() {
 
   return (
     <section className="relative overflow-hidden bg-[#ff2e54] py-24 text-white">
-      {/* Precision coordinate grid texture */}
       <div
         className="absolute inset-0 opacity-[0.08] pointer-events-none"
         style={{

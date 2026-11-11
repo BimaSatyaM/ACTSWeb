@@ -1,15 +1,11 @@
-/**
- * Pure TypeScript Technical Indicators Engine
- * Zero-dependency O(N) calculations for TradingView lightweight-charts
- * Conforms to PROJECT.md § Interface Contracts
- */
+// Pure TypeScript Technical Indicators Engine
+// Zero-dependency O(N) calculations for TradingView lightweight-charts
+// Conforms to PROJECT.md § Interface Contracts
 
 import type { CandleData, IndicatorPoint, BollingerBandsPoint, MACDPoint } from '../types/academy'
 
-/**
- * 1. Exponential Moving Average (EMA)
- * Formula: EMA_t = Close_t * k + EMA_(t-1) * (1 - k), where k = 2 / (period + 1)
- */
+// 1. Exponential Moving Average (EMA)
+// Formula: EMA_t = Close_t * k + EMA_(t-1) * (1 - k), where k = 2 / (period + 1)
 export function calculateEMA(data: CandleData[], period: number): IndicatorPoint[] {
   if (!data || data.length < period || period <= 0) return []
 
@@ -32,9 +28,7 @@ export function calculateEMA(data: CandleData[], period: number): IndicatorPoint
   return result
 }
 
-/**
- * 2. Relative Strength Index (RSI) using Wilder's RMA (14 period default)
- */
+// 2. Relative Strength Index (RSI) using Wilder's RMA (14 period default)
 export function calculateRSI(data: CandleData[], period = 14): IndicatorPoint[] {
   if (!data || data.length <= period || period <= 0) return []
 
@@ -73,9 +67,7 @@ export function calculateRSI(data: CandleData[], period = 14): IndicatorPoint[] 
   return result
 }
 
-/**
- * 3. Moving Average Convergence Divergence (MACD 12, 26, 9)
- */
+// 3. Moving Average Convergence Divergence (MACD 12, 26, 9)
 export function calculateMACD(
   data: CandleData[],
   fastPeriod = 12,
@@ -141,9 +133,7 @@ export function calculateMACD(
   return result
 }
 
-/**
- * 4. Bollinger Bands (20 period, 2 standard deviations)
- */
+// 4. Bollinger Bands (20 period, 2 standard deviations)
 export function calculateBollingerBands(
   data: CandleData[],
   period = 20,
@@ -177,9 +167,7 @@ export function calculateBollingerBands(
   return result
 }
 
-/**
- * 5. Average True Range (ATR 14) with Wilder's RMA
- */
+// 5. Average True Range (ATR 14) with Wilder's RMA
 export function calculateATR(data: CandleData[], period = 14): IndicatorPoint[] {
   if (!data || data.length <= period || period <= 0) return []
 

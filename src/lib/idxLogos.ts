@@ -1,12 +1,10 @@
 import idxLogosMap from './idxLogosMap.json'
 
-/**
- * Verified TradingView logo keys for Indonesian equities (IDX / BEI).
- * Vector assets are hosted on TradingView's public CDN:
- * https://s3-symbol-logo.tradingview.com/{logoid}.svg
- *
- * Preloaded with 884+ Indonesian stock tickers from the official IDX universe.
- */
+// Verified TradingView logo keys for Indonesian equities (IDX / BEI).
+// Vector assets are hosted on TradingView's public CDN:
+// https://s3-symbol-logo.tradingview.com/{logoid}.svg
+//
+// Preloaded with 884+ Indonesian stock tickers from the official IDX universe.
 export const KNOWN_IDX_LOGOS: Record<string, string> = {
   ...(idxLogosMap as Record<string, string>),
   // Priority blue-chip aliases
@@ -22,10 +20,8 @@ export const KNOWN_IDX_LOGOS: Record<string, string> = {
   BNBR: 'pt-bakrie-sumatera-plantations-tbk',
 }
 
-/**
- * Resolves the official vector SVG logo URL for an IDX stock.
- * Returns null if no verified logo is known.
- */
+// Resolves the official vector SVG logo URL for an IDX stock.
+// Returns null if no verified logo is known.
 export function getIDXStockLogoUrl(symbol?: string, customLogoId?: string): string | null {
   if (customLogoId && customLogoId.trim().length > 0) {
     return `https://s3-symbol-logo.tradingview.com/${customLogoId.trim()}.svg`

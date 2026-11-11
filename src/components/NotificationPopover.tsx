@@ -283,14 +283,12 @@ export function NotificationPopover() {
 
   return (
     <div className="relative flex items-center gap-2" ref={popoverRef}>
-      {/* ── Live Latest Notification Bar (Beside bell icon) ── */}
       {latestItem && (
         <div
           onClick={toggleOpen}
           className="hidden sm:flex items-center gap-2 px-2 py-1 rounded-md hover:bg-white/[0.04] transition-all duration-150 cursor-pointer group max-w-[200px] md:max-w-[320px] lg:max-w-[440px] select-none"
           title={`Click to view notifications • Latest: ${latestItem.title}`}
         >
-          {/* Status Dot (On the left) */}
           <span className="relative flex h-2 w-2 shrink-0 items-center justify-center">
             {latestItem.tag.includes('SIGNAL') && (
               <span className={`absolute inline-flex h-full w-full rounded-full opacity-75 animate-ping ${getDotBgColor(latestItem.badgeColor)}`} />
@@ -298,26 +296,22 @@ export function NotificationPopover() {
             <span className={`relative inline-flex rounded-full h-1.5 w-1.5 ${getDotBgColor(latestItem.badgeColor)}`} />
           </span>
 
-          {/* Tag Label */}
           <span className={`text-[10px] font-mono font-bold uppercase tracking-wider shrink-0 hidden md:inline ${getTagColor(latestItem.badgeColor)}`}>
             {latestItem.tag}
           </span>
 
           <span className="text-zinc-600 text-[10px] shrink-0 hidden md:inline">•</span>
 
-          {/* Title Text */}
           <span className="text-[11px] font-mono font-medium text-zinc-300 group-hover:text-white transition-colors truncate">
             {latestItem.title}
           </span>
 
-          {/* Relative Time */}
           <span className="text-[10px] font-mono text-zinc-500 shrink-0 hidden lg:inline">
             {formatRelativeTime(latestItem.timestamp)}
           </span>
         </div>
       )}
 
-      {/* ── Bell Icon Button ── */}
       <button
         onClick={toggleOpen}
         className="relative p-1.5 rounded-lg text-text-secondary hover:text-white hover:bg-white/[0.04] transition-all duration-150 cursor-pointer flex items-center justify-center shrink-0"
@@ -329,16 +323,13 @@ export function NotificationPopover() {
           <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0" />
         </svg>
 
-        {/* Unread Indicator Pulse Dot */}
         {hasUnread && (
           <span className="absolute top-1 right-1 w-2 h-2 rounded-full bg-[#00e676] ring-2 ring-[#070b14] animate-pulse" />
         )}
       </button>
 
-      {/* ── Popover Dropdown ── */}
       {isOpen && (
         <div className="absolute right-0 top-full mt-2 w-[calc(100vw-24px)] sm:w-[410px] max-w-[410px] max-h-[calc(100vh-4.5rem)] rounded-xl bg-[#080d1a]/95 border border-white/[0.12] shadow-[0_25px_60px_rgba(0,0,0,0.95)] backdrop-blur-3xl z-50 overflow-hidden flex flex-col animate-in fade-in zoom-in-95 duration-150">
-          {/* Header Bar */}
           <div className="p-3.5 pb-2.5 border-b border-white/[0.07] bg-white/[0.02] shrink-0">
             <div className="flex items-center justify-between gap-2 mb-2.5">
               <div className="flex items-center gap-2">
@@ -378,7 +369,6 @@ export function NotificationPopover() {
               </div>
             </div>
 
-            {/* Category Filter Tabs: All | News & Signals | System Updates */}
             <div className="grid grid-cols-3 gap-1 p-0.5 rounded-lg bg-black/40 border border-white/[0.06]">
               <button
                 type="button"
@@ -433,7 +423,6 @@ export function NotificationPopover() {
             </div>
           </div>
 
-          {/* Notifications Scrollable List */}
           <div className="flex-1 overflow-y-auto max-h-[380px] custom-scrollbar divide-y divide-white/[0.05] p-1">
             {loading ? (
               <div className="p-8 text-center text-xs font-mono text-zinc-400 flex flex-col items-center justify-center gap-2">
@@ -485,7 +474,6 @@ export function NotificationPopover() {
             )}
           </div>
 
-          {/* Footer Bar with Quick Navigation */}
           <div className="p-2.5 px-3.5 bg-black/40 border-t border-white/[0.07] flex items-center justify-between text-[11px] font-mono text-zinc-400 shrink-0">
             <Link
               href="/dashboard/signals"

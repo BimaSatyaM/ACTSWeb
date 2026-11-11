@@ -80,7 +80,6 @@ export default function AccountPage() {
 
       <div className="grid md:grid-cols-3 gap-6">
         
-        {/* Left Card: Profile Status Card */}
         <div className="md:col-span-1 space-y-6">
           <GlassCard className="text-center space-y-4 hover:border-white/10 transition-all duration-300">
             <div className="flex justify-center">
@@ -137,7 +136,6 @@ export default function AccountPage() {
           </GlassCard>
         </div>
 
-        {/* Right Card: Profile Edit Form */}
         <div className="md:col-span-2">
           <GlassCard className="space-y-6">
             <h3 className="text-sm uppercase font-black tracking-widest text-text-muted border-b border-white/[0.04] pb-4">

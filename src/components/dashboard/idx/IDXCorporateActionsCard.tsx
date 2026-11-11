@@ -69,7 +69,6 @@ export function IDXCorporateActionsCard({ dividends, rupsEvents }: Props) {
 
   return (
     <div className="rounded-xl bg-[#0d121f] border border-white/[0.08] p-5 sm:p-6 space-y-5">
-      {/* ── Header & Tab Switcher ── */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-white/[0.08]">
         <div className="flex items-center gap-2.5">
           <button
@@ -101,7 +100,6 @@ export function IDXCorporateActionsCard({ dividends, rupsEvents }: Props) {
           </button>
         </div>
 
-        {/* Search & Yield Filter */}
         <div className="flex items-center gap-2">
           <input
             type="text"
@@ -125,7 +123,6 @@ export function IDXCorporateActionsCard({ dividends, rupsEvents }: Props) {
         </div>
       </div>
 
-      {/* ── Table View: Cash Dividends ── */}
       {activeTab === 'dividends' ? (
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse text-xs font-mono">
@@ -211,7 +208,7 @@ export function IDXCorporateActionsCard({ dividends, rupsEvents }: Props) {
           </table>
         </div>
       ) : (
-        /* ── Table View: RUPS & Disclosures ── */
+        // ── Table View: RUPS & Disclosures ──
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse text-xs font-mono">
             <thead>

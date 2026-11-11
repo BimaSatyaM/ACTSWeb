@@ -7,9 +7,7 @@ import { phase2Outlines } from './phase2_outlines'
 
 export { track1Foundations, track2Technical, track3Macro, track4Legends, phase2Outlines }
 
-/**
- * Launch Tracks (Milestones 1–4): Fully authored and interactive curriculum tracks.
- */
+// Launch Tracks (Milestones 1–4): Fully authored and interactive curriculum tracks.
 export const ACADEMY_TRACKS: Track[] = [
   track1Foundations,
   track2Technical,
@@ -17,33 +15,23 @@ export const ACADEMY_TRACKS: Track[] = [
   track4Legends
 ]
 
-/**
- * Phase 2 Tracks: Coming Soon syllabus outlines.
- */
+// Phase 2 Tracks: Coming Soon syllabus outlines.
 export const PHASE2_TRACKS: Track[] = phase2Outlines
 
-/**
- * Combined catalog of all launch and preview tracks.
- */
+// Combined catalog of all launch and preview tracks.
 export const ALL_TRACKS: Track[] = [...ACADEMY_TRACKS, ...PHASE2_TRACKS]
 
-/**
- * Retrieve all active launch curriculum tracks.
- */
+// Retrieve all active launch curriculum tracks.
 export function getAllTracks(): Track[] {
   return ACADEMY_TRACKS
 }
 
-/**
- * Retrieve a specific track by its unique ID.
- */
+// Retrieve a specific track by its unique ID.
 export function getTrackById(id: string): Track | undefined {
   return ALL_TRACKS.find((track) => track.id === id)
 }
 
-/**
- * Retrieve a specific lesson by its track ID and lesson ID or slug.
- */
+// Retrieve a specific lesson by its track ID and lesson ID or slug.
 export function getLessonById(trackId: string, lessonId: string): Lesson | undefined {
   const track = getTrackById(trackId)
   if (!track) return undefined
@@ -56,9 +44,7 @@ export function getLessonById(trackId: string, lessonId: string): Lesson | undef
   return undefined
 }
 
-/**
- * Retrieve adjacent (previous and next) lessons within a track for sequential navigation.
- */
+// Retrieve adjacent (previous and next) lessons within a track for sequential navigation.
 export function getAdjacentLessons(
   trackId: string,
   lessonId: string

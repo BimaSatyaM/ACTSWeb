@@ -59,7 +59,6 @@ export function UpcomingFedCard({ className = '' }: { className?: string }) {
   return (
     <>
       <div className={`p-5 sm:p-6 rounded-2xl bg-gradient-to-b from-[#0d121f]/90 to-[#070b14]/90 border border-white/[0.08] backdrop-blur-xl flex flex-col justify-between shadow-xl space-y-4 ${className}`}>
-        {/* ── Event List (Top 3 Upcoming High-Impact Releases) ── */}
         {isLoading && events.length === 0 ? (
           <div className="space-y-3 py-2 animate-pulse flex-1">
             <div className="h-16 bg-white/[0.04] rounded-xl" />
@@ -82,10 +81,8 @@ export function UpcomingFedCard({ className = '' }: { className?: string }) {
                   tabIndex={0}
                   className="flex items-center gap-3.5 p-2.5 rounded-xl hover:bg-white/[0.04] transition-all duration-200 group overflow-hidden cursor-pointer border border-transparent hover:border-white/[0.06]"
                 >
-                  {/* Visual Media Thumbnail or Date Badge */}
                   {ev.image_url ? (
                     <div className="w-16 h-12 flex-shrink-0 relative overflow-hidden rounded-lg bg-black/40 border border-white/[0.08]">
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img
                         src={ev.image_url}
                         alt={ev.title}
@@ -105,7 +102,6 @@ export function UpcomingFedCard({ className = '' }: { className?: string }) {
                     </div>
                   )}
 
-                  {/* Event Text & Impact */}
                   <div className="flex-1 min-w-0 space-y-0.5">
                     <div className="flex items-center justify-between gap-1">
                       <span className="text-[9px] font-mono font-bold text-zinc-400 uppercase tracking-wider">
@@ -154,7 +150,6 @@ export function UpcomingFedCard({ className = '' }: { className?: string }) {
           </div>
         )}
 
-        {/* ── Footer Link to Live News & Sentiment AI ── */}
         <div className="pt-2 border-t border-white/[0.04]">
           <Link
             href="/dashboard/news"
@@ -169,7 +164,6 @@ export function UpcomingFedCard({ className = '' }: { className?: string }) {
         </div>
       </div>
 
-      {/* ── Interactive In-App Federal Event Detail Modal ── */}
       <MacroEventModal
         event={selectedEvent}
         onClose={() => setSelectedEvent(null)}

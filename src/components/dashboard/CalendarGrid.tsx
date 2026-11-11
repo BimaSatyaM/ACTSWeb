@@ -128,13 +128,11 @@ export function CalendarGrid() {
   return (
     <GlassCard className="flex flex-col space-y-4 p-5 sm:p-6 relative overflow-visible">
       
-      {/* ─── CALENDAR HEADER WITH NAVIGATION & PICKER ─── */}
       <div className="flex items-center justify-between relative">
         <div>
           <h3 className="text-lg font-bold text-white tracking-tight">Performance Calendar</h3>
         </div>
 
-        {/* Month Selector with Clickable Quick Picker */}
         <div className="flex items-center gap-2 relative">
           <button
             onClick={handlePrevMonth}
@@ -146,7 +144,6 @@ export function CalendarGrid() {
             </svg>
           </button>
 
-          {/* Clickable Month/Year Button */}
           <button
             onClick={() => setPickerOpen(!pickerOpen)}
             className="group flex items-center justify-center gap-1.5 text-xs font-bold text-white px-3 py-1.5 rounded-lg bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.08] hover:border-white/20 min-w-[130px] transition-all cursor-pointer shadow-sm active:scale-95"
@@ -177,10 +174,8 @@ export function CalendarGrid() {
             </svg>
           </button>
 
-          {/* ─── QUICK MONTH & YEAR SELECTION POPOVER ─── */}
           {pickerOpen && (
             <>
-              {/* Backdrop dismiss */}
               <div 
                 className="fixed inset-0 z-40" 
                 onClick={() => setPickerOpen(false)} 
@@ -189,7 +184,6 @@ export function CalendarGrid() {
 
               <div className="absolute right-0 top-11 z-50 w-64 p-4 rounded-2xl bg-[#0c0e18]/95 border border-white/15 backdrop-blur-2xl shadow-[0_16px_50px_rgba(0,0,0,0.8),inset_0_1px_1px_rgba(255,255,255,0.15)] animate-in fade-in zoom-in-95 duration-150 space-y-3">
                 
-                {/* Year Controller */}
                 <div className="flex items-center justify-between border-b border-white/[0.08] pb-2.5">
                   <button
                     onClick={() => setPickerYear((y) => y - 1)}
@@ -216,7 +210,6 @@ export function CalendarGrid() {
                   </button>
                 </div>
 
-                {/* 12 Months Grid */}
                 <div className="grid grid-cols-3 gap-1.5">
                   {MONTH_NAMES.map((name, idx) => {
                     const isSelected = currentMonth === idx + 1 && currentYear === pickerYear
@@ -236,7 +229,6 @@ export function CalendarGrid() {
                   })}
                 </div>
 
-                {/* Jump to Current Month Button */}
                 <div className="border-t border-white/[0.06] pt-2 text-center">
                   <button
                     onClick={() => {
@@ -255,7 +247,6 @@ export function CalendarGrid() {
         </div>
       </div>
 
-      {/* ─── WEEKDAY COLUMN HEADERS ─── */}
       <div className="grid grid-cols-7 gap-1.5 text-center">
         {WEEKDAY_NAMES.map((day) => (
           <div key={day} className="text-[10px] font-bold text-text-muted/80 tracking-wider py-1">
@@ -264,14 +255,11 @@ export function CalendarGrid() {
         ))}
       </div>
 
-      {/* ─── MONTH GRID CELLS ─── */}
       <div className="grid grid-cols-7 gap-1.5">
-        {/* Leading empty cells for month offset */}
         {Array.from({ length: startDayOfWeek }).map((_, i) => (
           <div key={`empty-${i}`} className="min-h-[64px] rounded-xl bg-transparent opacity-0 pointer-events-none" />
         ))}
 
-        {/* Days of the month */}
         {Array.from({ length: daysInMonth }).map((_, i) => {
           const dayNum = i + 1
           const dateStr = `${currentYear}-${String(currentMonth).padStart(2, '0')}-${String(dayNum).padStart(2, '0')}`
@@ -299,7 +287,6 @@ export function CalendarGrid() {
                   : 'bg-white/[0.02] border-white/[0.05] hover:bg-white/[0.06] hover:border-white/[0.12] hover:-translate-y-0.5'
               }`}
             >
-              {/* Top Row: Date Number & Total Setups */}
               <div className="flex items-center justify-between w-full">
                 <span className={`text-xs font-mono font-bold ${isToday ? 'text-accent-theme' : 'text-white/80 group-hover:text-white'}`}>
                   {dayNum}
@@ -311,7 +298,6 @@ export function CalendarGrid() {
                 )}
               </div>
 
-              {/* Bottom Row: Outcome Capsule Badge */}
               <div className="w-full mt-1">
                 {hasTrades ? (
                   <div className={`inline-flex items-center gap-1 text-[10px] font-bold font-mono ${
@@ -351,7 +337,6 @@ export function CalendarGrid() {
         })}
       </div>
 
-      {/* ─── LEGEND BAR ─── */}
       <div className="flex items-center justify-between border-t border-white/[0.04] pt-3 text-[10px] text-text-muted">
         <div className="flex items-center gap-3">
           <span className="inline-flex items-center gap-1.5 text-text-secondary">
@@ -372,7 +357,6 @@ export function CalendarGrid() {
         <span className="text-[10px] text-text-muted/70">Click day for full drilldown</span>
       </div>
 
-      {/* ─── DAY DETAIL DRILLDOWN MODAL ─── */}
       <DayDetailModal
         date={selectedDate}
         isOpen={modalOpen}

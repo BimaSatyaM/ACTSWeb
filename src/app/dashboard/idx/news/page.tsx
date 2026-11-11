@@ -57,9 +57,7 @@ function IDXNewsPageContent() {
 
   return (
     <div className="space-y-6 pb-12">
-      {/* ── Top KPI Summary Cards ── */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3.5">
-        {/* Card 1: Market Sentiment Posture */}
         <div className="p-4 rounded-xl bg-[#0d121f] border border-white/[0.08] space-y-1">
           <div className="flex items-center justify-between">
             <span className="text-[10px] font-mono text-slate-500 uppercase tracking-wider font-bold">
@@ -77,7 +75,6 @@ function IDXNewsPageContent() {
           </p>
         </div>
 
-        {/* Card 2: Bullish Catalysts */}
         <div className="p-4 rounded-xl bg-[#0d121f] border border-white/[0.08] space-y-1">
           <div className="flex items-center justify-between">
             <span className="text-[10px] font-mono text-slate-500 uppercase tracking-wider font-bold">
@@ -92,7 +89,6 @@ function IDXNewsPageContent() {
           <p className="text-[11px] text-slate-500 font-mono">Acquisitions, buybacks &amp; earnings</p>
         </div>
 
-        {/* Card 3: Bearish Risks */}
         <div className="p-4 rounded-xl bg-[#0d121f] border border-white/[0.08] space-y-1">
           <div className="flex items-center justify-between">
             <span className="text-[10px] font-mono text-slate-500 uppercase tracking-wider font-bold">
@@ -107,7 +103,6 @@ function IDXNewsPageContent() {
           <p className="text-[11px] text-slate-500 font-mono">Corrections &amp; foreign net sells</p>
         </div>
 
-        {/* Card 4: Official Disclosures & UMA */}
         <div className="p-4 rounded-xl bg-[#0d121f] border border-white/[0.08] space-y-1">
           <div className="flex items-center justify-between">
             <span className="text-[10px] font-mono text-slate-500 uppercase tracking-wider font-bold">
@@ -125,7 +120,6 @@ function IDXNewsPageContent() {
         </div>
       </div>
 
-      {/* ── View Switcher Toolbar ── */}
       <div className="flex items-center justify-between gap-3 p-3 rounded-xl bg-[#0d121f] border border-white/[0.08]">
         <div className="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0">
           <button
@@ -183,7 +177,6 @@ function IDXNewsPageContent() {
         </button>
       </div>
 
-      {/* ── Content Body ── */}
       {loading ? (
         <div className="rounded-2xl bg-white/[0.02] border border-white/[0.08] p-12 text-center space-y-3">
           <div className="inline-block w-7 h-7 rounded-full border-2 border-brand-primary border-t-transparent animate-spin" />

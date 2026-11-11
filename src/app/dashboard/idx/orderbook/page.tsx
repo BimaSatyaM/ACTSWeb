@@ -145,10 +145,8 @@ export default function IDXOrderBookPage() {
   return (
     <div className="space-y-5">
       
-      {/* ── Top Bar: Ticker Switcher & Live Connection Status ── */}
       <div className="p-4 sm:p-5 rounded-xl bg-[#0d121f] border border-white/[0.08] space-y-4">
         
-        {/* Connection & Header Bar */}
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3 pb-3 border-b border-white/[0.08]">
           <div className="flex items-center gap-2">
             <span className={`w-2 h-2 rounded-full ${connected ? 'bg-emerald-400 animate-pulse' : 'bg-amber-400'}`} />
@@ -157,7 +155,6 @@ export default function IDXOrderBookPage() {
             </h1>
           </div>
 
-          {/* Search Any IDX Stock Input */}
           <div className="relative">
             <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#070b14] border border-white/[0.08] focus-within:border-[#ff2e54]/50 transition-colors">
               <svg className="w-3.5 h-3.5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -187,7 +184,6 @@ export default function IDXOrderBookPage() {
               )}
             </div>
 
-            {/* Autocomplete Dropdown */}
             {isSearchOpen && searchResults.length > 0 && (
               <div className="absolute top-full left-0 right-0 mt-1.5 py-1 rounded-xl bg-[#0d121f] border border-white/15 shadow-2xl z-50 divide-y divide-white/[0.04] max-h-72 overflow-y-auto">
                 {searchResults.map((stock) => {
@@ -223,9 +219,7 @@ export default function IDXOrderBookPage() {
           </div>
         </div>
 
-        {/* Category Tabs & Quick Tickers Strip */}
         <div className="space-y-3">
-          {/* Category Tabs with Real Vector Icons */}
           <div className="flex items-center gap-1.5 overflow-x-auto custom-scrollbar pb-1 text-xs font-mono">
             {(Object.keys(CATEGORY_MAP) as TickerCategory[]).map((cat) => {
               const item = CATEGORY_MAP[cat]
@@ -250,9 +244,7 @@ export default function IDXOrderBookPage() {
             })}
           </div>
 
-          {/* Quick Ticker Buttons Strip */}
           <div className="flex items-center gap-1.5 overflow-x-auto custom-scrollbar pb-1">
-            {/* Active Stock Indicator Pill if not in current category */}
             {!displayedCategoryTickers.includes(selectedSymbol) && (
               <button
                 onClick={() => setSelectedSymbol(selectedSymbol)}
@@ -267,7 +259,6 @@ export default function IDXOrderBookPage() {
               </button>
             )}
 
-            {/* Category Stock Buttons */}
             {displayedCategoryTickers.map((sym) => {
               const q = quotes[sym]
               const stockObj = stockList.find((s) => s.symbol === sym)
@@ -301,7 +292,6 @@ export default function IDXOrderBookPage() {
           </div>
         </div>
 
-        {/* Active Stock Real-time Telemetry Strip */}
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pt-2 border-t border-white/[0.06]">
           <div className="flex items-center gap-3.5">
             <IDXStockLogo
@@ -330,7 +320,6 @@ export default function IDXOrderBookPage() {
             </div>
           </div>
 
-          {/* Live Price Pill & Key Metrics */}
           <div className="flex flex-wrap items-center gap-4">
             <div className="text-left lg:text-right">
               <span className="text-2xl sm:text-3xl font-black text-white font-mono tracking-tight block">
@@ -363,10 +352,8 @@ export default function IDXOrderBookPage() {
 
       </div>
 
-      {/* ── Main Two-Column Grid: 10-Level Order Book (Left) vs Running Trade Tape (Right) ── */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
         
-        {/* Left Column (7 cols): 10-Level Order Book */}
         <div className="lg:col-span-7">
           <IDXOrderBook
             symbol={selectedSymbol}
@@ -375,7 +362,6 @@ export default function IDXOrderBookPage() {
           />
         </div>
 
-        {/* Right Column (5 cols): High-Velocity Running Trade Tape */}
         <div className="lg:col-span-5">
           <IDXRunningTradeTape
             trades={trades}

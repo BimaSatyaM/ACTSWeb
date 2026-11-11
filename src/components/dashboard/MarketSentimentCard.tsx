@@ -109,7 +109,6 @@ export function MarketSentimentCard() {
 
   return (
     <div className="p-5 sm:p-6 rounded-2xl bg-gradient-to-b from-[#0d121f]/90 via-[#0d121f]/70 to-[#070b14]/90 border border-white/[0.08] backdrop-blur-xl relative overflow-hidden space-y-5 shadow-xl">
-      {/* ── Top Bar: Clean Title & Bias Status ── */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-white/[0.06] pb-3.5">
         <div className="flex items-center gap-2.5">
           <div className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse shadow-[0_0_8px_#06b6d4]" />
@@ -134,7 +133,6 @@ export function MarketSentimentCard() {
         </div>
       </div>
 
-      {/* ── Fundamental Bias Gauge (Sleek Compact Bar) ── */}
       <div className="space-y-2">
         <div className="flex items-center justify-between text-[11px]">
           <span className="text-[11px] font-semibold text-text-muted uppercase tracking-wider font-mono">Fundamental Bias Meter</span>
@@ -144,7 +142,6 @@ export function MarketSentimentCard() {
           </span>
         </div>
 
-        {/* Minimal Progress Track */}
         <div className="relative w-full h-2 rounded-full bg-black/60 overflow-hidden border border-white/[0.08]">
           <div className="absolute top-0 bottom-0 left-1/2 w-0.5 bg-white/25 z-10" />
           <div className="absolute inset-0 bg-gradient-to-r from-rose-500/40 via-zinc-500/20 to-emerald-500/40" />
@@ -161,7 +158,6 @@ export function MarketSentimentCard() {
         </div>
       </div>
 
-      {/* ── Dominant Narrative Box (Clean Glass Quote) ── */}
       <div className="p-4 rounded-xl bg-white/[0.02] border border-cyan-500/20 space-y-2.5">
         <div className="flex items-center justify-between gap-2 text-[10px]">
           <span className="font-bold uppercase tracking-wider text-cyan-400 font-mono flex items-center gap-1.5">
@@ -187,7 +183,6 @@ export function MarketSentimentCard() {
         )}
       </div>
 
-      {/* ── Primary Catalysts & Timestamp ── */}
       <div className="pt-1 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-[10px] text-text-muted font-mono border-t border-white/[0.04]">
         <div className="flex items-center gap-2 truncate">
           <span className="text-text-muted uppercase tracking-wider">Top Catalyst:</span>

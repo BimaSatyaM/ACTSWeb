@@ -44,7 +44,6 @@ export default function AcademyHomePage() {
 
   return (
     <div className="max-w-6xl mx-auto space-y-8 pb-12">
-      {/* Title Row (app-screens.md §4.3: one h1 at 24px, one sentence below, one primary action on right) */}
       <header className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-[#1a2030] pb-5">
         <div className="space-y-1">
           <h1 className="text-2xl font-semibold tracking-tight text-white">
@@ -72,7 +71,6 @@ export default function AcademyHomePage() {
         ) : null}
       </header>
 
-      {/* Divided KPI Strip (app-screens.md §5: one flat container split by 1px dividers, label over value) */}
       <section
         aria-label="Coursework Progress"
         className="rounded-lg border border-[#1a2030] bg-[#0a0f1a] grid grid-cols-2 lg:grid-cols-4 divide-y lg:divide-y-0 lg:divide-x divide-[#1a2030]"
@@ -110,7 +108,6 @@ export default function AcademyHomePage() {
         </div>
       </section>
 
-      {/* Core Curriculum Tracks & Inline Syllabus Rows */}
       <section className="space-y-4">
         <div className="flex items-baseline justify-between">
           <h2 className="text-base font-semibold text-white">
@@ -135,7 +132,6 @@ export default function AcademyHomePage() {
                 key={track.id}
                 className="rounded-lg border border-[#1a2030] bg-[#0a0f1a] overflow-hidden"
               >
-                {/* Track Header */}
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 sm:px-5 border-b border-[#1a2030]">
                   <div className="space-y-1 max-w-3xl">
                     <div className="flex flex-wrap items-center gap-2.5">
@@ -173,7 +169,6 @@ export default function AcademyHomePage() {
                   </div>
                 </div>
 
-                {/* Lesson Rows */}
                 <div className="divide-y divide-[#141a26]">
                   {trackLessons.map((lesson) => {
                     const isDone = progress.completedLessonIds.includes(lesson.id)
@@ -223,7 +218,6 @@ export default function AcademyHomePage() {
         </div>
       </section>
 
-      {/* Phase 2 Planned Syllabus Table */}
       <section className="space-y-3 pt-2">
         <div className="flex items-baseline justify-between">
           <h2 className="text-base font-semibold text-white">
@@ -263,7 +257,6 @@ export default function AcademyHomePage() {
         </div>
       </section>
 
-      {/* Quiet Regulatory Footnote */}
       <EsmaLossBanner />
     </div>
   )

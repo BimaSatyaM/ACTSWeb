@@ -132,14 +132,11 @@ export default function DashboardOverview() {
 
   return (
     <div className="space-y-6">
-      {/* ── Page Header: Live Market Price Sliding Ticker ── */}
       <div>
         <MarketTickerBar className="w-full" />
       </div>
 
-      {/* ── Top 4 Metric Cards Grid (Separate Standalone Glass Boxes) ── */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        {/* System Engine */}
         <div className="p-4 sm:p-5 rounded-2xl bg-[#0d121f]/80 hover:bg-[#0d121f] border border-white/[0.08] hover:border-emerald-500/30 backdrop-blur-xl transition-all duration-200 flex flex-col justify-between space-y-3 shadow-lg group">
           <div className="flex items-center justify-between">
             <span className="text-[10px] font-mono font-semibold text-text-muted uppercase tracking-wider">System Engine</span>
@@ -155,7 +152,6 @@ export default function DashboardOverview() {
           </div>
         </div>
 
-        {/* Active Regime */}
         <div className="p-4 sm:p-5 rounded-2xl bg-[#0d121f]/80 hover:bg-[#0d121f] border border-white/[0.08] hover:border-indigo-500/30 backdrop-blur-xl transition-all duration-200 flex flex-col justify-between space-y-3 shadow-lg group">
           <div className="flex items-center justify-between">
             <span className="text-[10px] font-mono font-semibold text-text-muted uppercase tracking-wider">Active Regime</span>
@@ -175,7 +171,6 @@ export default function DashboardOverview() {
           </div>
         </div>
 
-        {/* Heartbeat Cycle */}
         <div className="p-4 sm:p-5 rounded-2xl bg-[#0d121f]/80 hover:bg-[#0d121f] border border-white/[0.08] hover:border-cyan-500/30 backdrop-blur-xl transition-all duration-200 flex flex-col justify-between space-y-3 shadow-lg group">
           <div className="flex items-center justify-between">
             <span className="text-[10px] font-mono font-semibold text-text-muted uppercase tracking-wider">Heartbeat Cycle</span>
@@ -193,7 +188,6 @@ export default function DashboardOverview() {
           </div>
         </div>
 
-        {/* Last Signal */}
         <div className="p-4 sm:p-5 rounded-2xl bg-[#0d121f]/80 hover:bg-[#0d121f] border border-white/[0.08] hover:border-amber-500/30 backdrop-blur-xl transition-all duration-200 flex flex-col justify-between space-y-3 shadow-lg group">
           <div className="flex items-center justify-between">
             <span className="text-[10px] font-mono font-semibold text-text-muted uppercase tracking-wider">Last Signal</span>
@@ -212,14 +206,11 @@ export default function DashboardOverview() {
         </div>
       </div>
 
-      {/* ── Separate Box: Cumulative Performance / Equity Curve ── */}
       <div className="rounded-2xl bg-[#0d121f]/80 border border-white/[0.08] backdrop-blur-xl p-5 sm:p-6 shadow-xl">
         <PerformanceCurveCard />
       </div>
 
-      {/* ── Main Hero Section: Latest Signal + Quick Actions ── */}
       <div className="grid lg:grid-cols-3 gap-6">
-        {/* Left 2 Cols: Latest Signal Card (Visual Hero) */}
         <div className="lg:col-span-2 space-y-3">
           <div className="flex items-center justify-between px-1">
             <h2 className="text-sm font-semibold text-white">Latest Trading Signal</h2>
@@ -250,7 +241,6 @@ export default function DashboardOverview() {
 
               return (
                 <div className={`p-5 sm:p-6 rounded-2xl bg-[#0d121f]/90 border ${isBuy ? 'border-emerald-500/25 hover:border-emerald-500/40' : 'border-rose-500/25 hover:border-rose-500/40'} backdrop-blur-xl space-y-5 shadow-xl transition-all duration-200`}>
-                  {/* Hero Header: Symbol → Direction → Confluence Score */}
                   <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/[0.06] pb-4">
                     <div className="flex items-center gap-3">
                       <AssetIcon symbol={setup?.symbol || 'BTCUSDT'} size="md" />
@@ -296,7 +286,6 @@ export default function DashboardOverview() {
                     </div>
                   </div>
 
-                  {/* Multi-Tier Take Profit (Scale-Out & Trailing SL) Live Progress Tracker */}
                   <MultiTierProgressTracker
                     entryPrice={setup?.entry_price || 0}
                     stopLoss={setup?.stop_loss || 0}
@@ -309,7 +298,6 @@ export default function DashboardOverview() {
                     status={latestSignal.outcome?.status}
                   />
 
-                  {/* Bottom Action Footer */}
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-3.5 border-t border-white/[0.06] text-xs">
                     <div className="flex items-center gap-2 text-text-muted text-[11px] font-mono">
                       <svg className="w-3.5 h-3.5 text-zinc-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -332,12 +320,9 @@ export default function DashboardOverview() {
             })()
           )}
 
-          {/* ── Redesigned Symmetric Quick-Action Grid (Left: Auto-Pilot, Right: Calendar) ── */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {/* Left Card: Binance Auto-Pilot Terminal */}
             <div className="relative group rounded-2xl bg-[#0d121f]/90 hover:bg-[#0f172a]/95 border border-white/[0.08] hover:border-amber-500/30 backdrop-blur-xl p-5 shadow-xl transition-all duration-300 flex flex-col justify-between space-y-4">
               <div className="space-y-3">
-                {/* Header: Icon + Title */}
                 <div className="flex items-center gap-3">
                   <BinanceLogo size="md" variant="yellow" />
                   <div>
@@ -350,12 +335,10 @@ export default function DashboardOverview() {
                   </div>
                 </div>
 
-                {/* Description */}
                 <p className="text-xs text-text-secondary leading-relaxed">
                   Non-custodial 24/7 cloud execution on Bitcoin Futures with dynamic bracket stops, scale-out targets, and automated trailing protection.
                 </p>
 
-                {/* Feature Bullets */}
                 <div className="flex flex-wrap items-center gap-x-3.5 gap-y-1.5 pt-1 text-[11px] font-mono text-zinc-400">
                   <span className="inline-flex items-center gap-1.5">
                     <span className="w-1.5 h-1.5 rounded-full bg-amber-400/90" />
@@ -372,7 +355,6 @@ export default function DashboardOverview() {
                 </div>
               </div>
 
-              {/* CTA Link (Pure borderless text link) */}
               <div className="pt-2">
                 <Link
                   href="/dashboard/auto-trading"
@@ -384,10 +366,8 @@ export default function DashboardOverview() {
               </div>
             </div>
 
-            {/* Right Card: Historical Performance Calendar */}
             <div className="relative group rounded-2xl bg-[#0d121f]/90 hover:bg-[#0f172a]/95 border border-white/[0.08] hover:border-cyan-500/30 backdrop-blur-xl p-5 shadow-xl transition-all duration-300 flex flex-col justify-between space-y-4">
               <div className="space-y-3">
-                {/* Header: Icon + Title */}
                 <div className="flex items-center gap-3">
                   <svg className="w-6 h-6 text-cyan-400 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <rect width="18" height="18" x="3" y="4" rx="2" />
@@ -405,12 +385,10 @@ export default function DashboardOverview() {
                   </div>
                 </div>
 
-                {/* Description */}
                 <p className="text-xs text-text-secondary leading-relaxed">
                   Review daily trade outcomes, win rates, and target profit logs across historical market sessions with interactive multi-tier trade inspection.
                 </p>
 
-                {/* Feature Bullets */}
                 <div className="flex flex-wrap items-center gap-x-3.5 gap-y-1.5 pt-1 text-[11px] font-mono text-zinc-400">
                   <span className="inline-flex items-center gap-1.5">
                     <span className="w-1.5 h-1.5 rounded-full bg-cyan-400/90" />
@@ -427,7 +405,6 @@ export default function DashboardOverview() {
                 </div>
               </div>
 
-              {/* CTA Link (Pure borderless text link) */}
               <div className="pt-2">
                 <Link
                   href="/dashboard/calendar"
@@ -441,7 +418,6 @@ export default function DashboardOverview() {
           </div>
         </div>
 
-        {/* Right 1 Col: Upcoming Fed & Macro Tools */}
         <div className="space-y-3">
           <div className="flex items-center justify-between px-1">
             <h2 className="text-sm font-semibold text-white">Upcoming Fed & Macro Events</h2>
@@ -458,7 +434,6 @@ export default function DashboardOverview() {
         </div>
       </div>
 
-      {/* ── Dashboard Footer & Copyright ── */}
       <footer className="pt-6 pb-2 border-t border-white/[0.06] flex flex-col sm:flex-row items-center justify-between gap-3 text-[11px] text-text-muted font-mono">
         <div className="flex items-center gap-2">
           <span>© {new Date().getFullYear()} ACTS (Adaptive Confluence Trading System).</span>

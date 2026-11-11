@@ -11,10 +11,8 @@ interface LessonQuizProps {
   className?: string
 }
 
-/**
- * Interactive Lesson Quiz Component
- * Flat data-terminal design: no pill badges above headings, no emojis, tabular figures.
- */
+// Interactive Lesson Quiz Component
+// Flat data-terminal design: no pill badges above headings, no emojis, tabular figures.
 export function LessonQuiz({
   quiz,
   initialScore,

@@ -28,7 +28,6 @@ export function IDXNewsFeed({ articles }: Props) {
 
   return (
     <div className="rounded-xl bg-[#0d121f] border border-white/[0.08] p-5 sm:p-6 space-y-5">
-      {/* ── Toolbar: Search & Filters ── */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-white/[0.08]">
         <div>
           <div className="flex items-center gap-2">
@@ -45,7 +44,6 @@ export function IDXNewsFeed({ articles }: Props) {
           </p>
         </div>
 
-        {/* Search Input */}
         <div className="flex items-center gap-2">
           <input
             type="text"
@@ -57,7 +55,6 @@ export function IDXNewsFeed({ articles }: Props) {
         </div>
       </div>
 
-      {/* ── Secondary Sentiment & Category Pills ── */}
       <div className="flex flex-wrap items-center justify-between gap-2 text-xs font-mono">
         <div className="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0">
           <span className="text-slate-500 text-[10px] uppercase font-bold mr-1">Sentiment:</span>
@@ -94,7 +91,6 @@ export function IDXNewsFeed({ articles }: Props) {
         </div>
       </div>
 
-      {/* ── Articles List ── */}
       <div className="space-y-3">
         {filtered.length === 0 ? (
           <div className="rounded-lg bg-[#070b14] border border-white/[0.06] p-8 text-center text-xs font-mono text-slate-500">

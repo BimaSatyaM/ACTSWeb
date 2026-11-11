@@ -280,13 +280,11 @@ export function OtherCryptoPricesCard({
 
   return (
     <GlassCard className={`p-5 sm:p-6 space-y-4 border-white/[0.09] ${className}`}>
-      {/* ── CARD HEADER: Title + Interactive Crypto Pairs Dropdown ── */}
       <div className="flex items-center justify-between border-b border-white/[0.06] pb-3.5">
         <span className="text-xs font-bold text-white tracking-tight uppercase">
           Other Crypto Pairs
         </span>
 
-        {/* Dropdown Selector */}
         <div className="relative" ref={dropdownRef}>
           <button
             type="button"
@@ -310,7 +308,6 @@ export function OtherCryptoPricesCard({
             </svg>
           </button>
 
-          {/* Floating Dropdown Menu */}
           {isDropdownOpen && (
             <div className="absolute right-0 top-full mt-1.5 w-64 max-h-[228px] overflow-y-auto overscroll-contain rounded-none bg-[#090d18]/98 border border-white/[0.15] shadow-[0_15px_35px_rgba(0,0,0,0.85)] backdrop-blur-2xl z-40 p-1.5 space-y-1 animate-in fade-in zoom-in-95 duration-150 [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-white/[0.02] [&::-webkit-scrollbar-thumb]:bg-white/[0.2] [&::-webkit-scrollbar-thumb]:rounded-full hover:[&::-webkit-scrollbar-thumb]:bg-white/[0.3] [scrollbar-width:thin] [scrollbar-color:rgba(255,255,255,0.2)_transparent]">
               <div className="px-2 py-1 text-[9px] font-mono uppercase tracking-wider text-zinc-400 border-b border-white/[0.08] sticky top-0 bg-[#090d18] z-10 flex items-center justify-between">
@@ -366,7 +363,6 @@ export function OtherCryptoPricesCard({
         </div>
       </div>
 
-      {/* ── PAIR IDENTITY ROW: Asset Info + Borderless Change Text ── */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2.5">
           <AssetIcon symbol={activeTicker.symbol} size="md" />
@@ -400,7 +396,6 @@ export function OtherCryptoPricesCard({
         </div>
       </div>
 
-      {/* ── HERO PRICE DISPLAY ── */}
       <div className="space-y-1.5">
         <div
           className={`text-2xl sm:text-3xl font-black font-mono tracking-tight transition-colors duration-75 ${
@@ -432,7 +427,6 @@ export function OtherCryptoPricesCard({
         </div>
       </div>
 
-      {/* ── DAILY HIGH & LOW ── */}
       <div className="grid grid-cols-2 gap-2 pt-1 border-t border-white/[0.06] text-[11px] font-mono">
         <div className="py-1">
           <span className="text-zinc-400 block text-[10px]">Daily High</span>
@@ -448,7 +442,6 @@ export function OtherCryptoPricesCard({
         </div>
       </div>
 
-      {/* ── 24H RANGE BAR ── */}
       <div className="pt-1 space-y-1">
         <div className="flex items-center justify-between text-[9px] font-mono text-zinc-500">
           <span>24h Range</span>

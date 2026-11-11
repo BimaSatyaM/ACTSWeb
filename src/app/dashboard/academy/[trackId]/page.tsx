@@ -50,7 +50,6 @@ export default function TrackOverviewPage() {
 
   return (
     <div className="max-w-5xl mx-auto space-y-8 pb-16">
-      {/* Breadcrumb */}
       <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs text-[#94a3b8]">
         <Link
           href="/dashboard/academy"
@@ -62,7 +61,6 @@ export default function TrackOverviewPage() {
         <span className="text-white font-medium truncate">{track.title}</span>
       </nav>
 
-      {/* Title Row */}
       <header className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-[#1a2030] pb-5">
         <div className="space-y-1.5 max-w-3xl">
           <h1 className="text-2xl font-semibold tracking-tight text-white">
@@ -83,7 +81,6 @@ export default function TrackOverviewPage() {
         ) : null}
       </header>
 
-      {/* Divided 3-cell KPI Strip */}
       <section
         aria-label="Track Summary"
         className="rounded-lg border border-[#1a2030] bg-[#0a0f1a] grid grid-cols-3 divide-x divide-[#1a2030]"
@@ -110,14 +107,12 @@ export default function TrackOverviewPage() {
         </div>
       </section>
 
-      {/* Gating Defense: Inline Access Gate if Track is Locked */}
       {isTrackGated && (
         <section aria-label="Member Access Gate">
           <AcademyUnlockModal mode="inline" trackTitle={track.title} />
         </section>
       )}
 
-      {/* Modules & Lessons Syllabus */}
       <section className="space-y-5">
         <h2 className="text-base font-semibold text-white">
           Syllabus

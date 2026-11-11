@@ -48,7 +48,6 @@ export function IDXStockLogo({
       className={`${sizeConfig.box} flex items-center justify-center flex-shrink-0 select-none ${className}`}
       title={name || `${cleanSym} Tbk`}
     >
-      {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={resolvedUrl}
         alt={cleanSym}

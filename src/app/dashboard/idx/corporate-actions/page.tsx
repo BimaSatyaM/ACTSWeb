@@ -55,9 +55,7 @@ function IDXCorporateActionsPageContent() {
 
   return (
     <div className="space-y-6 pb-12">
-      {/* ── KPI Summary Cards ── */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3.5">
-        {/* Metric 1 */}
         <div className="p-4 rounded-xl bg-[#0d121f] border border-white/[0.08] space-y-1">
           <div className="flex items-center justify-between">
             <span className="text-[10px] font-mono text-slate-500 uppercase tracking-wider font-bold">
@@ -74,7 +72,6 @@ function IDXCorporateActionsPageContent() {
           </p>
         </div>
 
-        {/* Metric 2 */}
         <div className="p-4 rounded-xl bg-[#0d121f] border border-white/[0.08] space-y-1">
           <div className="flex items-center justify-between">
             <span className="text-[10px] font-mono text-slate-500 uppercase tracking-wider font-bold">
@@ -89,7 +86,6 @@ function IDXCorporateActionsPageContent() {
           <p className="text-[11px] text-slate-500 font-mono">Target emisi penawaran aktif</p>
         </div>
 
-        {/* Metric 3 */}
         <div className="p-4 rounded-xl bg-[#0d121f] border border-white/[0.08] space-y-1">
           <div className="flex items-center justify-between">
             <span className="text-[10px] font-mono text-slate-500 uppercase tracking-wider font-bold">
@@ -104,7 +100,6 @@ function IDXCorporateActionsPageContent() {
           <p className="text-[11px] text-slate-500 font-mono">Cum-dates approaching</p>
         </div>
 
-        {/* Metric 4 */}
         <div className="p-4 rounded-xl bg-[#0d121f] border border-white/[0.08] space-y-1">
           <div className="flex items-center justify-between">
             <span className="text-[10px] font-mono text-slate-500 uppercase tracking-wider font-bold">
@@ -119,7 +114,6 @@ function IDXCorporateActionsPageContent() {
         </div>
       </div>
 
-      {/* ── View Switcher Toolbar ── */}
       <div className="flex items-center justify-between gap-3 p-3 rounded-xl bg-[#0d121f] border border-white/[0.08]">
         <div className="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0">
           <button
@@ -177,7 +171,6 @@ function IDXCorporateActionsPageContent() {
         </button>
       </div>
 
-      {/* ── Content Body ── */}
       {loading ? (
         <div className="rounded-2xl bg-white/[0.02] border border-white/[0.08] p-12 text-center space-y-3">
           <div className="inline-block w-7 h-7 rounded-full border-2 border-brand-primary border-t-transparent animate-spin" />

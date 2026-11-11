@@ -8,7 +8,6 @@ import { ModernAutoTradingTerminal } from '@/components/dashboard/autotrading/Mo
 export default function AutoTradingPage() {
   return (
     <div className="space-y-6 max-w-7xl mx-auto">
-      {/* Breadcrumb & Header */}
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
           <div className="flex items-center gap-2 text-xs text-text-muted font-mono mb-1">
@@ -35,7 +34,6 @@ export default function AutoTradingPage() {
         </div>
       </div>
 
-      {/* Unified Modern Auto-Trading Terminal */}
       <ModernAutoTradingTerminal />
     </div>
   )
