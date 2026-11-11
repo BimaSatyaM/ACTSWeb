@@ -47,7 +47,6 @@ interface PerformanceResponse {
   equity_curve: EquityPoint[]
 }
 
-const RESET_EPOCH_ISO = '2026-11-11T13:10:59Z'
 const RESET_EPOCH_DATE = '2026-11-11'
 
 const fetcher = (url: string) => {
@@ -104,18 +103,12 @@ export function PerformanceCurveCard({ className = '' }: { className?: string })
   const [selectedAsset, setSelectedAsset] = useState<string>('BTC')
   const [liveBtcTicker, setLiveBtcTicker] = useState<TickerItem | null>(null)
 
-  const handleEpochSwitch = (nextEpoch: 'live' | 'legacy') => {
-    setEpoch(nextEpoch)
-    if (nextEpoch === 'legacy') {
-      setTimeframe('3M')
-    }
-  }
-
-  // 1. Fetch Performance & Equity Curve Data scoped to live reset or legacy archive
+  // 1. Fetch Performance & Equity Curve Data scoped to live reset or full start-to-end legacy archive
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || ''
+  const query = epoch === 'legacy' ? 'epoch=legacy' : `timeframe=${timeframe}&epoch=live`
   const endpoint = supabaseUrl
-    ? `${supabaseUrl}/functions/v1/get-performance?timeframe=${timeframe}&epoch=${epoch}`
-    : `/api/performance?timeframe=${timeframe}&epoch=${epoch}`
+    ? `${supabaseUrl}/functions/v1/get-performance?${query}`
+    : `/api/performance?${query}`
 
   const { data, error, isLoading } = useSWR<PerformanceResponse>(endpoint, fetcher, {
     refreshInterval: 60000,
@@ -229,13 +222,30 @@ export function PerformanceCurveCard({ className = '' }: { className?: string })
   const isBtcPositive = btcTicker.change24h >= 0
 
   // Format data for Recharts <Area> with strictly unique keys to prevent tooltip collision
-  // Ensures clean 24-hour chronological hourly resolution for 1D, and bridges multi-day curves to current time
+  // Ensures clean 24-hour chronological hourly resolution for 1D in live mode, and full start-to-end history for legacy archive
   const chartData = React.useMemo(() => {
     if (!curve || curve.length === 0) return []
 
+    // ── Legacy Archive: Fixed start-to-end span across all historical trades (no 1D/1W/1M/3M/1Y slicing) ──
+    if (epoch === 'legacy') {
+      return curve.map((item, idx) => {
+        const dStr = (item.date || item.timestamp || '').split('T')[0]
+        const dObj = dStr ? new Date(`${dStr}T00:00:00Z`) : new Date()
+        const label = dObj.toLocaleDateString('en-US', { month: 'short', day: 'numeric', timeZone: 'UTC' })
+        const timestamp = dObj.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' })
+        return {
+          ...item,
+          id: `slot_legacy_${dStr}_${idx}`,
+          label,
+          timestamp,
+          value: item.cumulative_r,
+        }
+      })
+    }
+
     // ── 1D: True 24-Hour Chronological Hourly Sequence (25 points) ──
     if (timeframe === '1D') {
-      const now = epoch === 'legacy' ? new Date(RESET_EPOCH_ISO) : new Date()
+      const now = new Date()
       const currentHour = new Date(now)
       currentHour.setMinutes(0, 0, 0)
 
@@ -254,8 +264,8 @@ export function PerformanceCurveCard({ className = '' }: { className?: string })
         }
 
         const hourStr = slotTime.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false })
-        const labelText = i === 0 ? (epoch === 'legacy' ? 'Reset' : 'Now') : hourStr
-        const tooltipTime = i === 0 ? `${hourStr} (${epoch === 'legacy' ? 'Legacy Cutoff' : 'Now'})` : hourStr
+        const labelText = i === 0 ? 'Now' : hourStr
+        const tooltipTime = i === 0 ? `${hourStr} (Now)` : hourStr
 
         slots.push({
           ...match,
@@ -290,7 +300,7 @@ export function PerformanceCurveCard({ className = '' }: { className?: string })
       }
     }
 
-    const now = epoch === 'legacy' ? new Date(RESET_EPOCH_ISO) : new Date()
+    const now = new Date()
     const windowStartMs = now.getTime() - (targetDays - 1) * 24 * 60 * 60 * 1000
     const windowStartStr = new Date(windowStartMs).toISOString().split('T')[0]
 
@@ -311,10 +321,10 @@ export function PerformanceCurveCard({ className = '' }: { className?: string })
 
       const isEnd = i === 0
       const label = timeframe === '1W'
-        ? (isEnd ? (epoch === 'legacy' ? 'Nov 11' : 'Today') : d.toLocaleDateString('en-US', { weekday: 'short' }))
+        ? (isEnd ? 'Today' : d.toLocaleDateString('en-US', { weekday: 'short' }))
         : timeframe === '1Y'
         ? d.toLocaleDateString('en-US', { month: 'short', year: '2-digit' })
-        : (isEnd ? (epoch === 'legacy' ? 'Nov 11' : 'Today') : d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }))
+        : (isEnd ? 'Today' : d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }))
 
       const timestamp = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
 
@@ -340,9 +350,10 @@ export function PerformanceCurveCard({ className = '' }: { className?: string })
           value: lastKnownPoint.cumulative_r,
         })
       } else {
-        const emptyLabel = epoch === 'live'
-          ? (dStr >= RESET_EPOCH_DATE ? `${timestamp} (Live Epoch • Active Monitoring)` : `${timestamp} (Legacy Period • Archived)`)
-          : (dStr >= '2026-08-17' ? `${timestamp} (Legacy Epoch • Warmup)` : `${timestamp} (Pre-Launch Baseline)`)
+        const emptyLabel =
+          dStr >= RESET_EPOCH_DATE
+            ? `${timestamp} (Live Epoch • Active Monitoring)`
+            : `${timestamp} (Legacy Period • Archived)`
         slots.push({
           date: dStr,
           id: `slot_${epoch}_${timeframe}_${dStr}_${i}`,
@@ -363,6 +374,20 @@ export function PerformanceCurveCard({ className = '' }: { className?: string })
 
     return slots
   }, [curve, timeframe, epoch])
+
+  const archiveRangeLabel = React.useMemo(() => {
+    if (epoch !== 'legacy' || curve.length === 0) return 'Aug 17 – Nov 5, 2026'
+    const fmt = (raw: string) =>
+      new Date(`${raw.split('T')[0]}T00:00:00Z`).toLocaleDateString('en-US', {
+        month: 'short',
+        day: 'numeric',
+        year: 'numeric',
+        timeZone: 'UTC',
+      })
+    const first = curve[0]?.date
+    const last = curve[curve.length - 1]?.date
+    return first && last ? `${fmt(first)} – ${fmt(last)}` : 'Aug 17 – Nov 5, 2026'
+  }, [epoch, curve])
 
   // Compute 5 evenly spaced tick IDs across the date range to completely eliminate stacking
   const axisTicks = React.useMemo(() => {
@@ -394,7 +419,7 @@ export function PerformanceCurveCard({ className = '' }: { className?: string })
                 </span>
                 {epoch === 'legacy' ? (
                   <span className="text-[10px] font-mono font-semibold px-2 py-0.5 rounded-md bg-amber-500/10 border border-amber-500/25 text-amber-300">
-                    Old Data (Aug–Nov 11)
+                    Old Data ({archiveRangeLabel})
                   </span>
                 ) : (
                   <span className="text-[10px] font-mono font-semibold px-2 py-0.5 rounded-md bg-emerald-500/10 border border-emerald-500/25 text-emerald-300">
@@ -404,7 +429,7 @@ export function PerformanceCurveCard({ className = '' }: { className?: string })
               </h3>
               <p className="text-[11px] text-text-secondary">
                 {epoch === 'legacy'
-                  ? 'Archived pre-reset baseline (Aug 17 – Nov 11, 2026). Preserved for historical audit.'
+                  ? `Complete pre-reset history from first trade to last trade (${archiveRangeLabel}).`
                   : 'Chronological outcome drift starting from Nov 11 reset epoch. Old data preserved in archive.'}
               </p>
             </div>
@@ -414,7 +439,7 @@ export function PerformanceCurveCard({ className = '' }: { className?: string })
             <div className="flex items-center gap-1 p-1 rounded-xl bg-white/[0.02] border border-white/[0.06]">
               <button
                 type="button"
-                onClick={() => handleEpochSwitch('live')}
+                onClick={() => setEpoch('live')}
                 className={`px-2.5 py-1 rounded-lg text-[11px] font-bold font-mono transition-all duration-150 cursor-pointer ${
                   epoch === 'live'
                     ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/35'
@@ -425,33 +450,39 @@ export function PerformanceCurveCard({ className = '' }: { className?: string })
               </button>
               <button
                 type="button"
-                onClick={() => handleEpochSwitch('legacy')}
+                onClick={() => setEpoch('legacy')}
                 className={`px-2.5 py-1 rounded-lg text-[11px] font-bold font-mono transition-all duration-150 cursor-pointer ${
                   epoch === 'legacy'
                     ? 'bg-amber-500/20 text-amber-300 border border-amber-500/35'
                     : 'text-zinc-400 hover:text-white hover:bg-white/[0.06] border border-transparent'
                 }`}
               >
-                Old Data (3M)
+                Old Data
               </button>
             </div>
 
-            <div className="flex items-center gap-1.5 p-1 rounded-xl bg-white/[0.02] border border-white/[0.06]">
-              {(['1D', '1W', '1M', '3M', '1Y'] as const).map((tf) => (
-                <button
-                  key={tf}
-                  type="button"
-                  onClick={() => setTimeframe(tf)}
-                  className={`px-3 py-1 rounded-lg text-xs font-bold font-mono uppercase transition-all duration-150 cursor-pointer ${
-                    timeframe === tf
-                      ? 'bg-accent-theme text-white shadow-[0_0_12px_rgba(255,46,84,0.4)]'
-                      : 'text-zinc-400 hover:text-white hover:bg-white/[0.06]'
-                  }`}
-                >
-                  {tf}
-                </button>
-              ))}
-            </div>
+            {epoch === 'live' ? (
+              <div className="flex items-center gap-1.5 p-1 rounded-xl bg-white/[0.02] border border-white/[0.06]">
+                {(['1D', '1W', '1M', '3M', '1Y'] as const).map((tf) => (
+                  <button
+                    key={tf}
+                    type="button"
+                    onClick={() => setTimeframe(tf)}
+                    className={`px-3 py-1 rounded-lg text-xs font-bold font-mono uppercase transition-all duration-150 cursor-pointer ${
+                      timeframe === tf
+                        ? 'bg-accent-theme text-white shadow-[0_0_12px_rgba(255,46,84,0.4)]'
+                        : 'text-zinc-400 hover:text-white hover:bg-white/[0.06]'
+                    }`}
+                  >
+                    {tf}
+                  </button>
+                ))}
+              </div>
+            ) : (
+              <div className="px-3 py-1.5 rounded-xl bg-amber-500/10 border border-amber-500/25 text-[11px] font-mono font-semibold text-amber-300">
+                Full Archive ({archiveRangeLabel})
+              </div>
+            )}
           </div>
         </div>
 
@@ -591,7 +622,7 @@ export function PerformanceCurveCard({ className = '' }: { className?: string })
             </span>
             <div className="flex items-center gap-1.5">
               <span className="text-[11px] text-zinc-400 font-mono">
-                {epoch === 'legacy' ? `Old Data • ${timeframe}` : `${timeframe} Outcome Drift`}
+                {epoch === 'legacy' ? 'Old Data • Full Archive' : `${timeframe} Outcome Drift`}
               </span>
             </div>
           </div>
