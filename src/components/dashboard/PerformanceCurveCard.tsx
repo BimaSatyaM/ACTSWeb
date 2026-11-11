@@ -412,20 +412,11 @@ export function PerformanceCurveCard({ className = '' }: { className?: string })
               </svg>
             </div>
             <div>
-              <h3 className="text-sm font-bold text-white tracking-tight flex flex-wrap items-center gap-2">
+              <h3 className="text-sm font-bold text-white tracking-tight flex items-center gap-2">
                 <span>Cumulative Performance Curve</span>
                 <span className="text-[10px] font-mono font-semibold px-2 py-0.5 rounded-md bg-white/[0.04] border border-white/[0.08] text-text-muted">
                   R-Multiple
                 </span>
-                {epoch === 'legacy' ? (
-                  <span className="text-[10px] font-mono font-semibold px-2 py-0.5 rounded-md bg-amber-500/10 border border-amber-500/25 text-amber-300">
-                    Old Data ({archiveRangeLabel})
-                  </span>
-                ) : (
-                  <span className="text-[10px] font-mono font-semibold px-2 py-0.5 rounded-md bg-emerald-500/10 border border-emerald-500/25 text-emerald-300">
-                    Reset Active (Nov 11+)
-                  </span>
-                )}
               </h3>
               <p className="text-[11px] text-text-secondary">
                 {epoch === 'legacy'
@@ -435,15 +426,15 @@ export function PerformanceCurveCard({ className = '' }: { className?: string })
             </div>
           </div>
 
-          <div className="flex flex-wrap items-center gap-2 self-start sm:self-center">
-            <div className="flex items-center gap-1 p-1 rounded-xl bg-white/[0.02] border border-white/[0.06]">
+          <div className="flex flex-wrap items-center gap-3 self-start sm:self-center">
+            <div className="flex items-center gap-3 text-[11px] font-bold font-mono">
               <button
                 type="button"
                 onClick={() => setEpoch('live')}
-                className={`px-2.5 py-1 rounded-lg text-[11px] font-bold font-mono transition-all duration-150 cursor-pointer ${
+                className={`pb-0.5 transition-colors duration-150 cursor-pointer border-b-2 ${
                   epoch === 'live'
-                    ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/35'
-                    : 'text-zinc-400 hover:text-white hover:bg-white/[0.06] border border-transparent'
+                    ? 'text-white border-accent-theme'
+                    : 'text-zinc-500 hover:text-zinc-200 border-transparent'
                 }`}
               >
                 New (Nov 11+)
@@ -451,17 +442,17 @@ export function PerformanceCurveCard({ className = '' }: { className?: string })
               <button
                 type="button"
                 onClick={() => setEpoch('legacy')}
-                className={`px-2.5 py-1 rounded-lg text-[11px] font-bold font-mono transition-all duration-150 cursor-pointer ${
+                className={`pb-0.5 transition-colors duration-150 cursor-pointer border-b-2 ${
                   epoch === 'legacy'
-                    ? 'bg-amber-500/20 text-amber-300 border border-amber-500/35'
-                    : 'text-zinc-400 hover:text-white hover:bg-white/[0.06] border border-transparent'
+                    ? 'text-white border-accent-theme'
+                    : 'text-zinc-500 hover:text-zinc-200 border-transparent'
                 }`}
               >
                 Old Data
               </button>
             </div>
 
-            {epoch === 'live' ? (
+            {epoch === 'live' && (
               <div className="flex items-center gap-1.5 p-1 rounded-xl bg-white/[0.02] border border-white/[0.06]">
                 {(['1D', '1W', '1M', '3M', '1Y'] as const).map((tf) => (
                   <button
@@ -477,10 +468,6 @@ export function PerformanceCurveCard({ className = '' }: { className?: string })
                     {tf}
                   </button>
                 ))}
-              </div>
-            ) : (
-              <div className="px-3 py-1.5 rounded-xl bg-amber-500/10 border border-amber-500/25 text-[11px] font-mono font-semibold text-amber-300">
-                Full Archive ({archiveRangeLabel})
               </div>
             )}
           </div>
