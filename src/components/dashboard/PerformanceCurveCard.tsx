@@ -29,6 +29,9 @@ interface EquityPoint {
 
 interface PerformanceResponse {
   timeframe: string
+  epoch?: 'live' | 'legacy'
+  epoch_start?: string
+  epoch_end?: string | null
   current_equity: number
   percent_gain: number
   metrics: {
@@ -43,6 +46,9 @@ interface PerformanceResponse {
   }
   equity_curve: EquityPoint[]
 }
+
+const RESET_EPOCH_ISO = '2026-11-11T13:10:59Z'
+const RESET_EPOCH_DATE = '2026-11-11'
 
 const fetcher = (url: string) => {
   const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
@@ -82,8 +88,8 @@ const CustomChartTooltip = ({ active, payload }: any) => {
           <span className="font-semibold text-white">{d.running_win_rate}%</span>
         </div>
         <div className="text-[9px] text-zinc-400 pt-0.5 border-t border-white/[0.05]">
-          {d.trades_count === 0 
-            ? (d.date >= '2026-08-17' ? 'Live Inception (Warmup / 0 Trades)' : 'Baseline (Pre-Launch)')
+          {d.trades_count === 0
+            ? (d.timestamp.includes('(') ? d.timestamp.slice(d.timestamp.indexOf('(') + 1, -1) : 'Warmup / 0 Trades')
             : `${d.wins} Wins, ${d.losses} Losses (${d.trades_count} trades)`}
         </div>
       </div>
@@ -93,15 +99,23 @@ const CustomChartTooltip = ({ active, payload }: any) => {
 }
 
 export function PerformanceCurveCard({ className = '' }: { className?: string }) {
+  const [epoch, setEpoch] = useState<'live' | 'legacy'>('live')
   const [timeframe, setTimeframe] = useState<'1D' | '1W' | '1M' | '3M' | '1Y'>('1M')
   const [selectedAsset, setSelectedAsset] = useState<string>('BTC')
   const [liveBtcTicker, setLiveBtcTicker] = useState<TickerItem | null>(null)
 
-  // 1. Fetch Performance & Equity Curve Data
+  const handleEpochSwitch = (nextEpoch: 'live' | 'legacy') => {
+    setEpoch(nextEpoch)
+    if (nextEpoch === 'legacy') {
+      setTimeframe('3M')
+    }
+  }
+
+  // 1. Fetch Performance & Equity Curve Data scoped to live reset or legacy archive
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || ''
   const endpoint = supabaseUrl
-    ? `${supabaseUrl}/functions/v1/get-performance?timeframe=${timeframe}`
-    : `/api/performance?timeframe=${timeframe}`
+    ? `${supabaseUrl}/functions/v1/get-performance?timeframe=${timeframe}&epoch=${epoch}`
+    : `/api/performance?timeframe=${timeframe}&epoch=${epoch}`
 
   const { data, error, isLoading } = useSWR<PerformanceResponse>(endpoint, fetcher, {
     refreshInterval: 60000,
@@ -219,9 +233,9 @@ export function PerformanceCurveCard({ className = '' }: { className?: string })
   const chartData = React.useMemo(() => {
     if (!curve || curve.length === 0) return []
 
-    // ── 1D: True 24-Hour Chronological Hourly Sequence (25 points from T-24h to Now) ──
+    // ── 1D: True 24-Hour Chronological Hourly Sequence (25 points) ──
     if (timeframe === '1D') {
-      const now = new Date()
+      const now = epoch === 'legacy' ? new Date(RESET_EPOCH_ISO) : new Date()
       const currentHour = new Date(now)
       currentHour.setMinutes(0, 0, 0)
 
@@ -240,8 +254,8 @@ export function PerformanceCurveCard({ className = '' }: { className?: string })
         }
 
         const hourStr = slotTime.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false })
-        const labelText = i === 0 ? 'Now' : hourStr
-        const tooltipTime = i === 0 ? `${hourStr} (Now)` : hourStr
+        const labelText = i === 0 ? (epoch === 'legacy' ? 'Reset' : 'Now') : hourStr
+        const tooltipTime = i === 0 ? `${hourStr} (${epoch === 'legacy' ? 'Legacy Cutoff' : 'Now'})` : hourStr
 
         slots.push({
           ...match,
@@ -276,7 +290,7 @@ export function PerformanceCurveCard({ className = '' }: { className?: string })
       }
     }
 
-    const now = new Date()
+    const now = epoch === 'legacy' ? new Date(RESET_EPOCH_ISO) : new Date()
     const windowStartMs = now.getTime() - (targetDays - 1) * 24 * 60 * 60 * 1000
     const windowStartStr = new Date(windowStartMs).toISOString().split('T')[0]
 
@@ -295,12 +309,12 @@ export function PerformanceCurveCard({ className = '' }: { className?: string })
       const d = new Date(now.getTime() - i * 24 * 60 * 60 * 1000)
       const dStr = d.toISOString().split('T')[0]
 
-      const isToday = i === 0
+      const isEnd = i === 0
       const label = timeframe === '1W'
-        ? (isToday ? 'Today' : d.toLocaleDateString('en-US', { weekday: 'short' }))
+        ? (isEnd ? (epoch === 'legacy' ? 'Nov 11' : 'Today') : d.toLocaleDateString('en-US', { weekday: 'short' }))
         : timeframe === '1Y'
         ? d.toLocaleDateString('en-US', { month: 'short', year: '2-digit' })
-        : (isToday ? 'Today' : d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }))
+        : (isEnd ? (epoch === 'legacy' ? 'Nov 11' : 'Today') : d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }))
 
       const timestamp = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
 
@@ -309,7 +323,7 @@ export function PerformanceCurveCard({ className = '' }: { className?: string })
         lastKnownPoint = item
         slots.push({
           ...item,
-          id: `slot_${timeframe}_${dStr}_${i}`,
+          id: `slot_${epoch}_${timeframe}_${dStr}_${i}`,
           label,
           timestamp,
           value: item.cumulative_r,
@@ -319,22 +333,21 @@ export function PerformanceCurveCard({ className = '' }: { className?: string })
         slots.push({
           ...lastKnownPoint,
           date: dStr,
-          id: `slot_${timeframe}_${dStr}_${i}`,
+          id: `slot_${epoch}_${timeframe}_${dStr}_${i}`,
           label,
           timestamp,
           daily_r: 0,
           value: lastKnownPoint.cumulative_r,
         })
       } else {
-        // Pre-launch baseline period or initial live warmup (Aug 17 - Aug 19 before first trade)
-        const isLiveWarmup = dStr >= '2026-08-17'
+        const emptyLabel = epoch === 'live'
+          ? (dStr >= RESET_EPOCH_DATE ? `${timestamp} (Live Epoch • Active Monitoring)` : `${timestamp} (Legacy Period • Archived)`)
+          : (dStr >= '2026-08-17' ? `${timestamp} (Legacy Epoch • Warmup)` : `${timestamp} (Pre-Launch Baseline)`)
         slots.push({
           date: dStr,
-          id: `slot_${timeframe}_${dStr}_${i}`,
+          id: `slot_${epoch}_${timeframe}_${dStr}_${i}`,
           label,
-          timestamp: isLiveWarmup
-            ? `${timestamp} (Live Inception • Warmup)`
-            : `${timestamp} (Pre-Launch Baseline)`,
+          timestamp: emptyLabel,
           daily_r: 0,
           cumulative_r: 0,
           equity_value: 10000.0,
@@ -349,7 +362,7 @@ export function PerformanceCurveCard({ className = '' }: { className?: string })
     }
 
     return slots
-  }, [curve, timeframe])
+  }, [curve, timeframe, epoch])
 
   // Compute 5 evenly spaced tick IDs across the date range to completely eliminate stacking
   const axisTicks = React.useMemo(() => {
@@ -374,33 +387,71 @@ export function PerformanceCurveCard({ className = '' }: { className?: string })
               </svg>
             </div>
             <div>
-              <h3 className="text-sm font-bold text-white tracking-tight flex items-center gap-2">
+              <h3 className="text-sm font-bold text-white tracking-tight flex flex-wrap items-center gap-2">
                 <span>Cumulative Performance Curve</span>
                 <span className="text-[10px] font-mono font-semibold px-2 py-0.5 rounded-md bg-white/[0.04] border border-white/[0.08] text-text-muted">
                   R-Multiple
                 </span>
+                {epoch === 'legacy' ? (
+                  <span className="text-[10px] font-mono font-semibold px-2 py-0.5 rounded-md bg-amber-500/10 border border-amber-500/25 text-amber-300">
+                    Old Data (Aug–Nov 11)
+                  </span>
+                ) : (
+                  <span className="text-[10px] font-mono font-semibold px-2 py-0.5 rounded-md bg-emerald-500/10 border border-emerald-500/25 text-emerald-300">
+                    Reset Active (Nov 11+)
+                  </span>
+                )}
               </h3>
               <p className="text-[11px] text-text-secondary">
-                Chronological outcome drift from validated trade executions.
+                {epoch === 'legacy'
+                  ? 'Archived pre-reset baseline (Aug 17 – Nov 11, 2026). Preserved for historical audit.'
+                  : 'Chronological outcome drift starting from Nov 11 reset epoch. Old data preserved in archive.'}
               </p>
             </div>
           </div>
 
-          <div className="flex items-center gap-1.5 self-start sm:self-center p-1 rounded-xl bg-white/[0.02] border border-white/[0.06]">
-            {(['1D', '1W', '1M', '3M', '1Y'] as const).map((tf) => (
+          <div className="flex flex-wrap items-center gap-2 self-start sm:self-center">
+            <div className="flex items-center gap-1 p-1 rounded-xl bg-white/[0.02] border border-white/[0.06]">
               <button
-                key={tf}
                 type="button"
-                onClick={() => setTimeframe(tf)}
-                className={`px-3 py-1 rounded-lg text-xs font-bold font-mono uppercase transition-all duration-150 cursor-pointer ${
-                  timeframe === tf
-                    ? 'bg-accent-theme text-white shadow-[0_0_12px_rgba(255,46,84,0.4)]'
-                    : 'text-zinc-400 hover:text-white hover:bg-white/[0.06]'
+                onClick={() => handleEpochSwitch('live')}
+                className={`px-2.5 py-1 rounded-lg text-[11px] font-bold font-mono transition-all duration-150 cursor-pointer ${
+                  epoch === 'live'
+                    ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/35'
+                    : 'text-zinc-400 hover:text-white hover:bg-white/[0.06] border border-transparent'
                 }`}
               >
-                {tf}
+                New (Nov 11+)
               </button>
-            ))}
+              <button
+                type="button"
+                onClick={() => handleEpochSwitch('legacy')}
+                className={`px-2.5 py-1 rounded-lg text-[11px] font-bold font-mono transition-all duration-150 cursor-pointer ${
+                  epoch === 'legacy'
+                    ? 'bg-amber-500/20 text-amber-300 border border-amber-500/35'
+                    : 'text-zinc-400 hover:text-white hover:bg-white/[0.06] border border-transparent'
+                }`}
+              >
+                Old Data (3M)
+              </button>
+            </div>
+
+            <div className="flex items-center gap-1.5 p-1 rounded-xl bg-white/[0.02] border border-white/[0.06]">
+              {(['1D', '1W', '1M', '3M', '1Y'] as const).map((tf) => (
+                <button
+                  key={tf}
+                  type="button"
+                  onClick={() => setTimeframe(tf)}
+                  className={`px-3 py-1 rounded-lg text-xs font-bold font-mono uppercase transition-all duration-150 cursor-pointer ${
+                    timeframe === tf
+                      ? 'bg-accent-theme text-white shadow-[0_0_12px_rgba(255,46,84,0.4)]'
+                      : 'text-zinc-400 hover:text-white hover:bg-white/[0.06]'
+                  }`}
+                >
+                  {tf}
+                </button>
+              ))}
+            </div>
           </div>
         </div>
 
@@ -540,7 +591,7 @@ export function PerformanceCurveCard({ className = '' }: { className?: string })
             </span>
             <div className="flex items-center gap-1.5">
               <span className="text-[11px] text-zinc-400 font-mono">
-                {timeframe} Outcome Drift
+                {epoch === 'legacy' ? `Old Data • ${timeframe}` : `${timeframe} Outcome Drift`}
               </span>
             </div>
           </div>
