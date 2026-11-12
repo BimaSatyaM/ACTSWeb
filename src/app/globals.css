@@ -41,6 +41,20 @@ body {
   color: var(--text-primary);
   min-height: 100vh;
 }
+
+@layer base {
+  a[href],
+  button:not(:disabled),
+  summary,
+  select,
+  [role="button"]:not([aria-disabled="true"]) {
+    cursor: pointer;
+  }
+
+  button:disabled {
+    cursor: not-allowed;
+  }
+}
 .glass-card {
   background: var(--glass-bg);
   -webkit-backdrop-filter: blur(var(--glass-blur));

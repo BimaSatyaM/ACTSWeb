@@ -30,6 +30,7 @@ interface EquityPoint {
 interface PerformanceResponse {
   timeframe: string
   epoch?: 'live' | 'legacy'
+  tier?: 'signal' | 'watchlist'
   epoch_start?: string
   epoch_end?: string | null
   current_equity: number
@@ -46,6 +47,14 @@ interface PerformanceResponse {
   }
   equity_curve: EquityPoint[]
 }
+
+type PerformanceView = 'signals' | 'watchlist' | 'legacy'
+
+const VIEW_TABS: Array<{ id: PerformanceView; label: string }> = [
+  { id: 'signals', label: 'Signals (Nov 11+)' },
+  { id: 'watchlist', label: 'Watchlist' },
+  { id: 'legacy', label: 'Old Data' },
+]
 
 const RESET_EPOCH_DATE = '2026-11-11'
 
@@ -65,31 +74,31 @@ const fetcher = (url: string) => {
 const marketFetcher = (url: string) => fetch(url).then((res) => res.json())
 
 // Custom Glass Tooltip for Recharts
-const CustomChartTooltip = ({ active, payload }: any) => {
+const CustomChartTooltip = ({ active, payload, isWatchlist = false }: any) => {
   if (active && payload && payload.length) {
     const d = payload[0].payload as EquityPoint
     return (
       <div className="p-2.5 bg-[#090d18]/98 border border-white/[0.15] shadow-2xl text-left space-y-1 backdrop-blur-xl">
         <div className="flex items-center justify-between gap-3 border-b border-white/[0.08] pb-1">
           <span className="text-[11px] font-bold text-white font-mono">{d.timestamp || d.label}</span>
-          <span className="text-[10px] font-mono text-zinc-400">
+          <span className="text-[10px] font-mono text-zinc-300">
             {d.daily_r >= 0 ? `+${d.daily_r.toFixed(1)}R` : `${d.daily_r.toFixed(1)}R`}
           </span>
         </div>
         <div className="flex items-center justify-between gap-3 text-xs font-mono">
-          <span className="text-zinc-400 text-[10px]">Cumulative:</span>
+          <span className="text-zinc-300 text-[10px]">Cumulative:</span>
           <span className={`font-bold ${d.cumulative_r >= 0 ? 'text-emerald-400' : 'text-rose-400'}`}>
             {d.cumulative_r >= 0 ? `+${d.cumulative_r.toFixed(1)}R` : `${d.cumulative_r.toFixed(1)}R`}
           </span>
         </div>
         <div className="flex items-center justify-between gap-3 text-xs font-mono">
-          <span className="text-zinc-400 text-[10px]">Win Rate:</span>
+          <span className="text-zinc-300 text-[10px]">Win Rate:</span>
           <span className="font-semibold text-white">{d.running_win_rate}%</span>
         </div>
-        <div className="text-[9px] text-zinc-400 pt-0.5 border-t border-white/[0.05]">
+        <div className="text-[9px] text-zinc-300 pt-0.5 border-t border-white/[0.05]">
           {d.trades_count === 0
-            ? (d.timestamp.includes('(') ? d.timestamp.slice(d.timestamp.indexOf('(') + 1, -1) : 'Warmup / 0 Trades')
-            : `${d.wins} Wins, ${d.losses} Losses (${d.trades_count} trades)`}
+            ? (d.timestamp.includes('(') ? d.timestamp.slice(d.timestamp.indexOf('(') + 1, -1) : `Warmup / 0 ${isWatchlist ? 'Setups' : 'Trades'}`)
+            : `${d.wins} Wins, ${d.losses} Losses (${d.trades_count} ${isWatchlist ? 'setups' : 'trades'})`}
         </div>
       </div>
     )
@@ -98,19 +107,24 @@ const CustomChartTooltip = ({ active, payload }: any) => {
 }
 
 export function PerformanceCurveCard({ className = '' }: { className?: string }) {
-  const [epoch, setEpoch] = useState<'live' | 'legacy'>('live')
+  const [view, setView] = useState<PerformanceView>('signals')
   const [timeframe, setTimeframe] = useState<'1D' | '1W' | '1M' | '3M' | '1Y'>('1M')
   const [selectedAsset, setSelectedAsset] = useState<string>('BTC')
   const [liveBtcTicker, setLiveBtcTicker] = useState<TickerItem | null>(null)
 
-  // 1. Fetch Performance & Equity Curve Data scoped to live reset or full start-to-end legacy archive
+  const epoch = view === 'legacy' ? 'legacy' : 'live'
+  const isWatchlist = view === 'watchlist'
+
+  // 1. Fetch Performance & Equity Curve Data scoped to signals, watchlist, or legacy archive
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || ''
-  const query = epoch === 'legacy' ? 'epoch=legacy' : `timeframe=${timeframe}&epoch=live`
+  const query = view === 'legacy'
+    ? 'epoch=legacy'
+    : `timeframe=${timeframe}&epoch=live&tier=${isWatchlist ? 'watchlist' : 'signal'}`
   const endpoint = supabaseUrl
     ? `${supabaseUrl}/functions/v1/get-performance?${query}`
     : `/api/performance?${query}`
 
-  const { data, error, isLoading } = useSWR<PerformanceResponse>(endpoint, fetcher, {
+  const { data, error, isLoading, mutate } = useSWR<PerformanceResponse>(endpoint, fetcher, {
     refreshInterval: 60000,
     revalidateOnFocus: true,
   })
@@ -215,7 +229,7 @@ export function PerformanceCurveCard({ className = '' }: { className?: string })
     category: 'crypto' as const,
   })
 
-  const curve = data?.equity_curve || []
+  const curve = React.useMemo(() => data?.equity_curve ?? [], [data?.equity_curve])
   const metrics = data?.metrics
   const netR = metrics?.net_r ?? 0
   const isNetPositive = netR >= 0
@@ -254,12 +268,13 @@ export function PerformanceCurveCard({ className = '' }: { className?: string })
         const slotTime = new Date(currentHour.getTime() - i * 3600 * 1000)
         const timeMs = slotTime.getTime()
 
-        // Match the closest/most recent trade outcome state from curve
-        let match = curve[0]
-        for (const p of curve) {
-          const pTime = new Date(p.date || p.timestamp || Date.now()).getTime()
-          if (pTime <= timeMs + 1800000) {
-            match = p
+        let match = i === 0 ? curve[curve.length - 1] : curve[0]
+        if (i !== 0) {
+          for (const p of curve) {
+            const pTime = new Date(p.date || p.timestamp || now.toISOString()).getTime()
+            if (pTime <= timeMs + 1800000) {
+              match = p
+            }
           }
         }
 
@@ -352,11 +367,11 @@ export function PerformanceCurveCard({ className = '' }: { className?: string })
       } else {
         const emptyLabel =
           dStr >= RESET_EPOCH_DATE
-            ? `${timestamp} (Live Epoch • Active Monitoring)`
-            : `${timestamp} (Legacy Period • Archived)`
+            ? `${timestamp} (${isWatchlist ? 'Watchlist · Non-Capital' : 'Signals · Active Monitoring'})`
+            : `${timestamp} (Legacy Period · Archived)`
         slots.push({
           date: dStr,
-          id: `slot_${epoch}_${timeframe}_${dStr}_${i}`,
+          id: `slot_${view}_${timeframe}_${dStr}_${i}`,
           label,
           timestamp: emptyLabel,
           daily_r: 0,
@@ -373,7 +388,7 @@ export function PerformanceCurveCard({ className = '' }: { className?: string })
     }
 
     return slots
-  }, [curve, timeframe, epoch])
+  }, [curve, timeframe, epoch, view, isWatchlist])
 
   const archiveRangeLabel = React.useMemo(() => {
     if (epoch !== 'legacy' || curve.length === 0) return 'Aug 17 – Nov 5, 2026'
@@ -403,86 +418,110 @@ export function PerformanceCurveCard({ className = '' }: { className?: string })
   return (
     <div className={`grid grid-cols-1 lg:grid-cols-12 gap-6 ${className}`}>
       <div className="lg:col-span-8 flex flex-col justify-between space-y-4 border-b lg:border-b-0 border-white/[0.06] pb-6 lg:pb-0">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3">
-          <div className="flex items-center gap-2.5">
-            <div className="text-accent-theme">
-              <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
+        <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4 pb-3">
+          <div className="flex items-start gap-2.5 min-w-0 flex-1">
+            <div className={`${isWatchlist ? 'text-amber-400' : 'text-accent-theme'} mt-0.5 shrink-0`}>
+              <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" aria-hidden="true">
                 <polyline points="22 7 13.5 15.5 8.5 10.5 2 17" />
                 <polyline points="16 7 22 7 22 13" />
               </svg>
             </div>
-            <div>
-              <h3 className="text-sm font-bold text-white tracking-tight flex items-center gap-2">
+            <div className="min-w-0">
+              <h3 className="text-sm font-bold text-white tracking-tight flex flex-wrap items-center gap-2">
                 <span>Cumulative Performance Curve</span>
-                <span className="text-[10px] font-mono font-semibold px-2 py-0.5 rounded-md bg-white/[0.04] border border-white/[0.08] text-text-muted">
-                  R-Multiple
+                <span className="text-[10px] font-mono font-semibold px-2 py-0.5 rounded-md bg-white/[0.04] border border-white/[0.08] text-zinc-300">
+                  {isWatchlist ? 'Watchlist R' : 'R-Multiple'}
                 </span>
               </h3>
               <p className="text-[11px] text-text-secondary">
                 {epoch === 'legacy'
-                  ? `Complete pre-reset history from first trade to last trade (${archiveRangeLabel}).`
-                  : 'Chronological outcome drift starting from Nov 11 reset epoch. Old data preserved in archive.'}
+                  ? `Pre-reset Signal history (${archiveRangeLabel}).`
+                  : isWatchlist
+                  ? 'Sub-threshold Watchlist setups since Nov 11 (non-capital).'
+                  : 'Executed Signal trades since Nov 11 reset.'}
               </p>
             </div>
           </div>
 
-          <div className="flex flex-wrap items-center gap-3 self-start sm:self-center">
-            <div className="flex items-center gap-3 text-[11px] font-bold font-mono">
-              <button
-                type="button"
-                onClick={() => setEpoch('live')}
-                className={`pb-0.5 transition-colors duration-150 cursor-pointer border-b-2 ${
-                  epoch === 'live'
-                    ? 'text-white border-accent-theme'
-                    : 'text-zinc-500 hover:text-zinc-200 border-transparent'
-                }`}
-              >
-                New (Nov 11+)
-              </button>
-              <button
-                type="button"
-                onClick={() => setEpoch('legacy')}
-                className={`pb-0.5 transition-colors duration-150 cursor-pointer border-b-2 ${
-                  epoch === 'legacy'
-                    ? 'text-white border-accent-theme'
-                    : 'text-zinc-500 hover:text-zinc-200 border-transparent'
-                }`}
-              >
-                Old Data
-              </button>
-            </div>
-
-            {epoch === 'live' && (
-              <div className="flex items-center gap-1.5 p-1 rounded-xl bg-white/[0.02] border border-white/[0.06]">
-                {(['1D', '1W', '1M', '3M', '1Y'] as const).map((tf) => (
+          <div className="shrink-0 flex flex-col items-start sm:items-end gap-2">
+            <div className="flex flex-wrap sm:flex-nowrap items-center gap-3 text-[11px] font-bold font-mono" role="group" aria-label="Performance data source">
+              {VIEW_TABS.map((tab) => {
+                const isActive = view === tab.id
+                const activeClasses =
+                  tab.id === 'watchlist'
+                    ? 'text-amber-400 border-amber-400'
+                    : 'text-white border-[#c41e3a]'
+                return (
                   <button
-                    key={tf}
+                    key={tab.id}
                     type="button"
-                    onClick={() => setTimeframe(tf)}
-                    className={`px-3 py-1 rounded-lg text-xs font-bold font-mono uppercase transition-all duration-150 cursor-pointer ${
-                      timeframe === tf
-                        ? 'bg-accent-theme text-white shadow-[0_0_12px_rgba(255,46,84,0.4)]'
-                        : 'text-zinc-400 hover:text-white hover:bg-white/[0.06]'
+                    aria-pressed={isActive}
+                    onClick={() => setView(tab.id)}
+                    className={`relative pb-0.5 whitespace-nowrap transition-colors duration-150 border-b-2 after:content-[''] after:absolute after:-inset-y-3 after:-inset-x-1 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white ${
+                      isActive
+                        ? activeClasses
+                        : 'text-zinc-400 hover:text-white border-transparent'
                     }`}
                   >
-                    {tf}
+                    {tab.label}
                   </button>
-                ))}
-              </div>
-            )}
+                )
+              })}
+            </div>
+
+            <div className="min-h-[34px] flex items-center">
+              {epoch === 'live' ? (
+                <div className="flex flex-wrap items-center gap-1 p-1 rounded-xl bg-white/[0.02] border border-white/[0.06]" role="group" aria-label="Timeframe window">
+                  {(['1D', '1W', '1M', '3M', '1Y'] as const).map((tf) => (
+                    <button
+                      key={tf}
+                      type="button"
+                      aria-pressed={timeframe === tf}
+                      onClick={() => setTimeframe(tf)}
+                      className={`relative px-3 py-1 rounded-lg text-xs font-bold font-mono uppercase transition-colors duration-150 after:content-[''] after:absolute after:-inset-y-2.5 after:-inset-x-0.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white ${
+                        timeframe === tf
+                          ? (isWatchlist ? 'bg-[#b45309] text-white' : 'bg-[#c41e3a] text-white')
+                          : 'text-zinc-300 hover:text-white hover:bg-white/[0.06]'
+                      }`}
+                    >
+                      {tf}
+                    </button>
+                  ))}
+                </div>
+              ) : (
+                <div className="h-[34px]" aria-hidden="true" />
+              )}
+            </div>
           </div>
         </div>
 
         <div className="relative w-full h-[240px] pt-2 select-none overflow-hidden flex-1">
           {isLoading ? (
-            <div className="w-full h-full flex flex-col items-center justify-center gap-2 animate-pulse">
-              <div className="w-6 h-6 border-2 border-accent-theme border-t-transparent animate-spin" />
-              <span className="text-xs text-text-muted font-mono">Computing smooth performance curve...</span>
+            <div className="w-full h-full flex flex-col items-center justify-center gap-2" role="status" aria-live="polite">
+              <div className="w-6 h-6 border-2 border-accent-theme border-t-transparent rounded-full animate-spin" aria-hidden="true" />
+              <span className="text-xs text-zinc-300 font-mono">Loading performance curve...</span>
             </div>
-          ) : error || chartData.length === 0 ? (
+          ) : error ? (
+            <div className="w-full h-full flex flex-col items-center justify-center gap-3 text-center p-6" role="alert">
+              <span className="text-xs font-mono text-rose-400">
+                Unable to load performance metrics. Check network connectivity and retry.
+              </span>
+              <button
+                type="button"
+                onClick={() => mutate()}
+                className="min-h-[44px] px-4 rounded-lg border border-white/[0.15] bg-white/[0.04] hover:bg-white/[0.1] text-xs font-mono font-bold text-white transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+              >
+                Retry
+              </button>
+            </div>
+          ) : chartData.length === 0 ? (
             <div className="w-full h-full flex items-center justify-center text-center p-6">
-              <span className="text-xs font-mono text-text-muted">
-                Live market session recording in progress...
+              <span className="text-xs font-mono text-zinc-300">
+                {epoch === 'legacy'
+                  ? 'No archived Signal trades found in legacy history.'
+                  : isWatchlist
+                  ? 'No Watchlist setups tracked in this window yet.'
+                  : 'No executed Signal trades recorded since Nov 11 reset.'}
               </span>
             </div>
           ) : (
@@ -492,6 +531,10 @@ export function PerformanceCurveCard({ className = '' }: { className?: string })
                   <linearGradient id="redGrad" x1="0" y1="0" x2="0" y2="1">
                     <stop offset="5%" stopColor="#c41e3a" stopOpacity={0.35} />
                     <stop offset="95%" stopColor="#c41e3a" stopOpacity={0.0} />
+                  </linearGradient>
+                  <linearGradient id="amberGrad" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="#f59e0b" stopOpacity={0.35} />
+                    <stop offset="95%" stopColor="#f59e0b" stopOpacity={0.0} />
                   </linearGradient>
                 </defs>
 
@@ -511,7 +554,7 @@ export function PerformanceCurveCard({ className = '' }: { className?: string })
                       <text
                         x={x}
                         y={y + 12}
-                        fill="#71717a"
+                        fill="#94a3b8"
                         fontSize={10}
                         fontFamily="monospace"
                         textAnchor={textAnchor}
@@ -528,15 +571,15 @@ export function PerformanceCurveCard({ className = '' }: { className?: string })
                   domain={[(dataMin: number) => dataMin - 1.0, (dataMax: number) => dataMax + 1.0]}
                 />
 
-                <Tooltip content={<CustomChartTooltip />} />
+                <Tooltip content={<CustomChartTooltip isWatchlist={isWatchlist} />} />
 
                 <Area
                   type="monotone"
                   dataKey="value"
                   baseValue="dataMin"
-                  stroke="#c41e3a"
+                  stroke={isWatchlist ? '#f59e0b' : '#c41e3a'}
                   strokeWidth={2.4}
-                  fill="url(#redGrad)"
+                  fill={isWatchlist ? 'url(#amberGrad)' : 'url(#redGrad)'}
                   dot={false}
                 />
               </AreaChart>
@@ -608,8 +651,12 @@ export function PerformanceCurveCard({ className = '' }: { className?: string })
               Performance
             </span>
             <div className="flex items-center gap-1.5">
-              <span className="text-[11px] text-zinc-400 font-mono">
-                {epoch === 'legacy' ? 'Old Data • Full Archive' : `${timeframe} Outcome Drift`}
+              <span className="text-[11px] text-zinc-300 font-mono">
+                {epoch === 'legacy'
+                  ? 'Old Data · Full Archive'
+                  : isWatchlist
+                  ? `${timeframe} Watchlist · Non-Capital`
+                  : `${timeframe} Outcome Drift`}
               </span>
             </div>
           </div>
@@ -617,8 +664,8 @@ export function PerformanceCurveCard({ className = '' }: { className?: string })
           <div className="flex items-center justify-between py-1.5 px-0.5">
             <div>
               <span className="text-xs font-bold text-zinc-200 block tracking-tight">Net Gain</span>
-              <span className="text-[11px] text-zinc-400 font-mono">
-                Avg: {metrics ? (metrics.avg_r_per_trade >= 0 ? `+${metrics.avg_r_per_trade.toFixed(2)}R` : `${metrics.avg_r_per_trade.toFixed(2)}R`) : '0.00R'}/trade
+              <span className="text-[11px] text-zinc-300 font-mono">
+                Avg: {metrics ? (metrics.avg_r_per_trade >= 0 ? `+${metrics.avg_r_per_trade.toFixed(2)}R` : `${metrics.avg_r_per_trade.toFixed(2)}R`) : '0.00R'}/{isWatchlist ? 'setup' : 'trade'}
               </span>
             </div>
             <span className={`text-sm sm:text-base font-bold font-mono ${isNetPositive ? 'text-emerald-400' : 'text-rose-400'}`}>
