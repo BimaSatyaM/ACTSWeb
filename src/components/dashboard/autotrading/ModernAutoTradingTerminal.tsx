@@ -1055,8 +1055,8 @@ export function ModernAutoTradingTerminal() {
       })
       addExecutionLog(
         strat === 'bank_and_trail'
-          ? '[STRATEGY] Multi-Tier active: Bank cash at TP1, trail runner to TP2/TP3.'
-          : '[STRATEGY] Quick Bank active: 100% position exits immediately at TP1.',
+          ? '[STRATEGY] System Default active: 100% exit at Single Take Profit (1:1.5 RR).'
+          : '[STRATEGY] Quick Bank active: 100% position exits at Single Take Profit (1:1.5 RR).',
         'info'
       )
     } catch (err) {

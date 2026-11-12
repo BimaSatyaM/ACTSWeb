@@ -41,7 +41,7 @@ export function MultiTierProgressTracker({
   const tp1Price = tp1?.target_price ?? 0
   const tp2Price = tp2?.target_price ?? 0
   const tp3Price = tp3?.target_price ?? 0
-  const isSingleTp = !tp2Price || Math.abs(tp1Price - tp2Price) < 0.01 || detail === 'TP1_SINGLE'
+  const isSingleTp = !tp2Price || Math.abs(tp1Price - tp2Price) < 0.01 || detail === 'TP_SINGLE' || detail === 'TP1_SINGLE'
   const singleRr = tp1?.rr_ratio || 1.5
 
   if (isSingleTp) {

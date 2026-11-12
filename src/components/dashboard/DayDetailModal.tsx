@@ -75,7 +75,7 @@ function getSignalDetails(sig: SignalItem) {
 
   const isTP3 = isProfit && det.includes('TP3')
   const isTP2 = isProfit && (det.includes('TP2') || det.includes('TP3'))
-  const isSingleTP = isProfit && (det === 'TP1_SINGLE' || (!sig.target_tp2 && !outcome?.tp2) || Math.abs((sig.target_tp1 || outcome?.tp1 || 0) - (sig.target_tp2 || outcome?.tp2 || 0)) < 0.01)
+  const isSingleTP = isProfit && (det === 'TP_SINGLE' || det === 'TP1_SINGLE' || (!sig.target_tp2 && !outcome?.tp2) || Math.abs((sig.target_tp1 || outcome?.tp1 || 0) - (sig.target_tp2 || outcome?.tp2 || 0)) < 0.01)
   const isMidTrailing = isProfit && (det.includes('MID') || det.includes('BREAKEVEN') || det.includes('TRAILING'))
 
   // Highest target hit price & labels

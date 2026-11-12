@@ -1398,8 +1398,9 @@ export async function submitSignalBracketOrder(
   let tp2OrderId: number | undefined
   let tp3OrderId: number | undefined
   const tpStrategy = setup.tpStrategy || 'bank_and_trail'
+  const isSingleTp = tpStrategy === 'quick_bank' || !setup.tp2 || Math.abs((setup.tp1 || 0) - setup.tp2) < 0.1
 
-  if (tpStrategy !== 'quick_bank' && totalUnits >= 0.003 && setup.tp1 && setup.tp2 && setup.tp3) {
+  if (!isSingleTp && totalUnits >= 0.003 && setup.tp1 && setup.tp2 && setup.tp3) {
     const tp1Qty = parseFloat((Math.floor(totalUnits * 0.40 * 1000) / 1000).toFixed(3))
     const tp2Qty = parseFloat((Math.floor(totalUnits * 0.35 * 1000) / 1000).toFixed(3))
     const tp3Qty = parseFloat((totalUnits - tp1Qty - tp2Qty).toFixed(3))
