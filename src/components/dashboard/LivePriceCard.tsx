@@ -430,7 +430,7 @@ export function LivePriceCard({
                 <div className="flex items-center gap-1.5 mb-0.5">
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_6px_rgba(52,211,153,0.8)]" />
                   <span className="text-zinc-400 text-[9px] font-semibold uppercase tracking-wider">
-                    {isTpHit ? 'TP1 Reached' : 'Dist to TP1'}
+                    {isTpHit ? 'TP Reached' : 'Dist to TP'}
                   </span>
                 </div>
                 <div className="text-sm font-black tracking-tight text-emerald-400 drop-shadow-[0_0_8px_rgba(52,211,153,0.3)]">

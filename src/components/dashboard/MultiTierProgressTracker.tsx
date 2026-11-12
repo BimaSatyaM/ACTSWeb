@@ -41,6 +41,87 @@ export function MultiTierProgressTracker({
   const tp1Price = tp1?.target_price ?? 0
   const tp2Price = tp2?.target_price ?? 0
   const tp3Price = tp3?.target_price ?? 0
+  const isSingleTp = !tp2Price || Math.abs(tp1Price - tp2Price) < 0.01 || detail === 'TP1_SINGLE'
+  const singleRr = tp1?.rr_ratio || 1.5
+
+  if (isSingleTp) {
+    const singleRealizedR = isSLHit
+      ? '-1.00R (Loss)'
+      : isTP1Hit
+      ? `+${singleRr.toFixed(2)}R (100% Target Banked)`
+      : '0.00R (In Trade)'
+
+    return (
+      <div className={`space-y-3 pt-2 pb-1 font-mono ${className}`}>
+        <div className="flex items-center justify-between text-xs">
+          <span className="text-[10px] text-zinc-400 font-bold uppercase tracking-widest flex items-center gap-1.5">
+            <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse shadow-[0_0_8px_rgba(34,211,238,0.8)]" />
+            Single Target Profit (1:{singleRr.toFixed(1)} RR)
+          </span>
+
+          <div className="text-[11px] flex items-center gap-1.5">
+            <span className="text-zinc-500">Realized:</span>
+            <span
+              className={`font-black ${
+                isSLHit ? 'text-rose-400' : isTP1Hit ? 'text-emerald-400' : 'text-zinc-300'
+              }`}
+            >
+              {singleRealizedR}
+            </span>
+          </div>
+        </div>
+
+        <div className="relative pt-1">
+          <div className="grid grid-cols-3 gap-1.5 text-center">
+            {/* Step 0: SL */}
+            <div
+              className={`p-2 rounded-lg border transition-all ${
+                isSLHit
+                  ? 'bg-rose-500/20 border-rose-500/50 text-rose-300 shadow-[0_0_12px_rgba(244,63,94,0.2)]'
+                  : 'bg-zinc-900/60 border-white/[0.06] text-zinc-500'
+              }`}
+            >
+              <div className="text-[9px] font-bold uppercase tracking-wider">Stop Loss</div>
+              <div className="text-[11px] font-black mt-0.5 text-rose-400">
+                ${stopLoss.toLocaleString()}
+              </div>
+              <div className="text-[8px] mt-0.5 opacity-80">{isSLHit ? 'HIT (-1.0R)' : '-1.0R Risk'}</div>
+            </div>
+
+            {/* Step 1: Entry */}
+            <div className="p-2 rounded-lg border bg-cyan-500/10 border-cyan-500/30 text-cyan-300">
+              <div className="text-[9px] font-bold uppercase tracking-wider">1. Entry</div>
+              <div className="text-[11px] font-black mt-0.5 text-white">
+                ${entryPrice.toLocaleString()}
+              </div>
+              <div className="text-[8px] mt-0.5 text-cyan-400">{direction} Triggered</div>
+            </div>
+
+            {/* Step 2: Single TP (1.5R) */}
+            <div
+              className={`p-2 rounded-lg border transition-all ${
+                isTP1Hit
+                  ? 'bg-emerald-500/20 border-emerald-500/50 text-emerald-300 shadow-[0_0_12px_rgba(52,211,153,0.2)]'
+                  : 'bg-zinc-900/60 border-white/[0.06] text-zinc-400'
+              }`}
+            >
+              <div className="text-[9px] font-bold uppercase tracking-wider flex items-center justify-center gap-0.5">
+                <span>2. Target Profit</span>
+                {isTP1Hit && <span>✓</span>}
+              </div>
+              <div className="text-[11px] font-black mt-0.5 text-emerald-400">
+                ${tp1?.target_price?.toLocaleString() || '—'}
+              </div>
+              <div className="text-[8px] mt-0.5 text-emerald-300/90 font-semibold">
+                +{singleRr.toFixed(1)}R · 100% Exit
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
   const midEntryTP1 = tp1Price > 0 ? (entryPrice + tp1Price) / 2 : entryPrice
   const midTP1TP2 = tp1Price > 0 && tp2Price > 0 ? (tp1Price + tp2Price) / 2 : tp1Price
   const midTP2TP3 = tp2Price > 0 && tp3Price > 0 ? (tp2Price + tp3Price) / 2 : tp2Price

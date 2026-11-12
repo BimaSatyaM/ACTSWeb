@@ -2131,7 +2131,7 @@ export function ModernAutoTradingTerminal() {
             <div className="flex items-center justify-between text-xs">
               <span className="text-zinc-400 font-semibold">Take Profit Strategy</span>
               <span className="font-mono font-bold text-[#F0B90B]">
-                {tpStrategy === 'bank_and_trail' ? 'Bank & Trail (Multi-Tier)' : 'Quick Bank (Single TP1)'}
+                {tpStrategy === 'bank_and_trail' ? 'Single TP (1:1.5 RR Default)' : 'Quick Bank (Single 1:1.5 TP)'}
               </span>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
@@ -2145,13 +2145,13 @@ export function ModernAutoTradingTerminal() {
                 }`}
               >
                 <div className="flex items-center justify-between mb-1">
-                  <span className="text-xs font-mono font-bold text-white">Bank &amp; Trail</span>
+                  <span className="text-xs font-mono font-bold text-white">System Default (1:1.5 RR)</span>
                   {tpStrategy === 'bank_and_trail' && (
                     <span className="w-2 h-2 rounded-full bg-[#F0B90B] shadow-[0_0_6px_#F0B90B]" />
                   )}
                 </div>
                 <p className="text-[11px] text-zinc-400 leading-snug">
-                  Banks cash at TP1, then trails remaining lots to TP2/TP3 with ratchet SL.
+                  Follows system signal TP structure (100% full exit at 1:1.5 RR target).
                 </p>
               </button>
 
@@ -2165,13 +2165,13 @@ export function ModernAutoTradingTerminal() {
                 }`}
               >
                 <div className="flex items-center justify-between mb-1">
-                  <span className="text-xs font-mono font-bold text-white">Quick Bank</span>
+                  <span className="text-xs font-mono font-bold text-white">Quick Bank (1:1.5 TP)</span>
                   {tpStrategy === 'quick_bank' && (
                     <span className="w-2 h-2 rounded-full bg-[#00e676] shadow-[0_0_6px_#00e676]" />
                   )}
                 </div>
                 <p className="text-[11px] text-zinc-400 leading-snug">
-                  Closes 100% immediately at TP1 for maximum win rate and instant cash.
+                  Forces 100% single Take Profit order at 1:1.5 RR for instant compounding.
                 </p>
               </button>
             </div>

@@ -322,18 +322,33 @@ export default function SignalsPage() {
                         <span className="text-[11px] text-text-muted block">Stop Loss</span>
                         <span className="text-sm font-bold text-rose-400">${setup?.stop_loss?.toLocaleString()}</span>
                       </div>
-                      <div>
-                        <span className="text-[11px] text-text-muted block">Target TP1</span>
-                        <span className="text-sm font-bold text-emerald-400">${setup?.tp1?.target_price?.toLocaleString()}</span>
-                      </div>
-                      <div>
-                        <span className="text-[11px] text-text-muted block">Target TP2</span>
-                        <span className="text-sm font-bold text-emerald-400">${setup?.tp2?.target_price?.toLocaleString()}</span>
-                      </div>
-                      <div className="col-span-2">
-                        <span className="text-[11px] text-text-muted block">Target TP3 (Trailing)</span>
-                        <span className="text-sm font-bold text-emerald-400">${setup?.tp3?.target_price?.toLocaleString()}</span>
-                      </div>
+                      {(!setup?.tp2?.target_price || (setup?.tp1 as any)?.allocation_pct >= 0.99 || Math.abs((setup?.tp1?.target_price || 0) - (setup?.tp2?.target_price || 0)) < 0.01) ? (
+                        <>
+                          <div>
+                            <span className="text-[11px] text-text-muted block">Target Profit (100%)</span>
+                            <span className="text-sm font-bold text-emerald-400">${setup?.tp1?.target_price?.toLocaleString()}</span>
+                          </div>
+                          <div>
+                            <span className="text-[11px] text-text-muted block">Risk : Reward</span>
+                            <span className="text-sm font-bold text-cyan-400">1 : {(setup?.tp1?.rr_ratio || 1.5).toFixed(1)}</span>
+                          </div>
+                        </>
+                      ) : (
+                        <>
+                          <div>
+                            <span className="text-[11px] text-text-muted block">Target TP1</span>
+                            <span className="text-sm font-bold text-emerald-400">${setup?.tp1?.target_price?.toLocaleString()}</span>
+                          </div>
+                          <div>
+                            <span className="text-[11px] text-text-muted block">Target TP2</span>
+                            <span className="text-sm font-bold text-emerald-400">${setup?.tp2?.target_price?.toLocaleString()}</span>
+                          </div>
+                          <div className="col-span-2">
+                            <span className="text-[11px] text-text-muted block">Target TP3 (Trailing)</span>
+                            <span className="text-sm font-bold text-emerald-400">${setup?.tp3?.target_price?.toLocaleString()}</span>
+                          </div>
+                        </>
+                      )}
                       <div>
                         <span className="text-[11px] text-text-muted block">Leverage</span>
                         <span className="text-sm font-bold text-white">{setup?.leverage?.toFixed(1)}x</span>

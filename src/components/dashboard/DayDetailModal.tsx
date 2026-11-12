@@ -75,6 +75,7 @@ function getSignalDetails(sig: SignalItem) {
 
   const isTP3 = isProfit && det.includes('TP3')
   const isTP2 = isProfit && (det.includes('TP2') || det.includes('TP3'))
+  const isSingleTP = isProfit && (det === 'TP1_SINGLE' || (!sig.target_tp2 && !outcome?.tp2) || Math.abs((sig.target_tp1 || outcome?.tp1 || 0) - (sig.target_tp2 || outcome?.tp2 || 0)) < 0.01)
   const isMidTrailing = isProfit && (det.includes('MID') || det.includes('BREAKEVEN') || det.includes('TRAILING'))
 
   // Highest target hit price & labels
@@ -83,7 +84,11 @@ function getSignalDetails(sig: SignalItem) {
   let badgeText = 'Awaiting Outcome'
 
   if (isProfit) {
-    if (isTP3) {
+    if (isSingleTP) {
+      highestHitPrice = sig.target_tp1 || outcome?.tp1 || undefined
+      targetLabel = 'Target Hit (1:1.5 TP)'
+      badgeText = 'Target Profit Hit (1:1.5 RR)'
+    } else if (isTP3) {
       highestHitPrice = sig.target_tp3 || outcome?.tp3 || undefined
       targetLabel = 'Target Hit (TP3)'
       badgeText = isMidTrailing ? 'Target Profit Hit (TP3 · Mid Trailing)' : 'Target Profit Hit (TP3)'
@@ -474,7 +479,7 @@ export function DayDetailModal({ date, isOpen, onClose }: DayDetailModalProps) {
                               <>
                                 {sig.target_tp1 && (
                                   <div>
-                                    <span className="text-text-muted block text-[10px]">Target (TP1)</span>
+                                    <span className="text-text-muted block text-[10px]">Target Profit</span>
                                     <span className="font-semibold text-emerald-400 font-mono">${sig.target_tp1.toLocaleString()}</span>
                                   </div>
                                 )}
