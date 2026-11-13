@@ -394,6 +394,7 @@ export default function SignalsPage() {
                 </div>
 
                 <MultiTierProgressTracker
+                  symbol={setup?.symbol}
                   entryPrice={setup?.entry_price || 0}
                   stopLoss={setup?.stop_loss || 0}
                   tp1={setup?.tp1}
