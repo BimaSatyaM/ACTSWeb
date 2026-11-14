@@ -65,7 +65,13 @@ export function MultiTierProgressTracker({
   const currentPrice = livePrice ?? fetchedPrice ?? null
 
   // Determine stage flags
-  const isTP1Hit = isTPHit && (detail.includes('TP1') || detail.includes('TP2') || detail.includes('TP3'))
+  const isTP1Hit =
+    isTPHit &&
+    (detail.includes('TP1') ||
+      detail.includes('TP2') ||
+      detail.includes('TP3') ||
+      detail.includes('TP_SINGLE') ||
+      !detail)
   const isTP2Hit = isTPHit && (detail.includes('TP2') || detail.includes('TP3'))
   const isTP3Hit = isTPHit && detail.includes('TP3')
 
@@ -109,6 +115,19 @@ export function MultiTierProgressTracker({
     const markerPct = slFill > 0 ? 50 - slFill * 33.33 : 50 + tpFill * 33.33
     const isInProfit = tpFill > 0 || isTP1Hit || (isClosedByNewSignal && (closedRVal ?? 0) > 0)
     const isInLoss = slFill > 0 || isSLHit || (isClosedByNewSignal && (closedRVal ?? 0) < 0)
+
+    let savedClosePrice: number | null = null
+    let savedCloseR: number | null = null
+    if (isClosedByNewSignal && closedRVal !== null) {
+      savedClosePrice = closedPriceVal
+      savedCloseR = closedRVal
+    } else if (isTP1Hit) {
+      savedClosePrice = tp1Price > 0 ? tp1Price : null
+      savedCloseR = singleRr
+    } else if (isSLHit) {
+      savedClosePrice = stopLoss > 0 ? stopLoss : null
+      savedCloseR = -1.0
+    }
 
     const singleRealizedR = isClosedByNewSignal && closedRVal !== null
       ? `${closedRVal >= 0 ? '+' : ''}${closedRVal.toFixed(2)}R (Closed @ ${closedPriceVal !== null ? '$' + closedPriceVal.toLocaleString() : 'New Signal'})`
@@ -162,8 +181,11 @@ export function MultiTierProgressTracker({
           />
 
           {/* Live / Closed Moving Price Indicator */}
-          {((isLiveTracking && currentPrice !== null) || (isClosedByNewSignal && closedPriceVal !== null)) && (() => {
-            const displayPrice = isClosedByNewSignal ? closedPriceVal! : currentPrice!
+          {((isLiveTracking && currentPrice !== null) || savedClosePrice !== null) && (() => {
+            const displayPrice = isLiveTracking ? currentPrice! : savedClosePrice!
+            const closedLabel = !isLiveTracking && savedCloseR !== null
+              ? ` (${savedCloseR >= 0 ? '+' : ''}${savedCloseR.toFixed(2)}R)`
+              : ''
             return (
               <div
                 className="absolute top-[19px] -translate-x-1/2 -translate-y-1/2 transition-all duration-700 ease-out z-20 pointer-events-none"
@@ -178,7 +200,7 @@ export function MultiTierProgressTracker({
                       : 'text-cyan-300'
                   }`}
                 >
-                  ${displayPrice.toLocaleString()}
+                  ${displayPrice.toLocaleString()}{closedLabel}
                 </span>
                 {isLiveTracking && (
                   <span

@@ -463,7 +463,8 @@ export default function SignalsPage() {
                         if (outcome.system_outcome === 'TARGET_PROFIT_HIT') {
                           const det = outcome.system_outcome_detail?.toUpperCase() || 'TP1'
                           let badgeText = `Target Profit Hit (${det})`
-                          if (det === 'TP2_TRAILING_MID' || det === 'TP2_TRAILING_TP1') badgeText = 'TP2 Reached · Exited @ Mid Trailing (+2.5R Banked)'
+                          if (det === 'TP_SINGLE' || det === 'TP1_SINGLE') badgeText = 'Target Profit Hit (+1.5R · 100% Exit)'
+                          else if (det === 'TP2_TRAILING_MID' || det === 'TP2_TRAILING_TP1') badgeText = 'TP2 Reached · Exited @ Mid Trailing (+2.5R Banked)'
                           else if (det === 'TP1_TRAILING_MID' || det === 'TP1_BREAKEVEN') badgeText = 'TP1 Reached · Exited @ Mid Trailing (+1.0R Banked)'
                           else if (det.includes('TP3')) badgeText = 'Max Target Hit (TP3 · All Targets Reached)'
                           else if (det.includes('TP2')) badgeText = 'TP2 Reached (+2.8R) · Runner Active'
