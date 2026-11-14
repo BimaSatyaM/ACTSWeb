@@ -247,10 +247,8 @@ export default function DashboardOverview() {
                       <span className="text-xl font-extrabold text-white tracking-tight">
                         {setup?.symbol || 'BTCUSDT'}
                       </span>
-                      <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-bold uppercase tracking-wide border ${
-                        isBuy 
-                          ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400' 
-                          : 'bg-rose-500/10 border-rose-500/30 text-rose-400'
+                      <span className={`inline-flex items-center gap-1.5 text-xs font-black uppercase tracking-wide ${
+                        isBuy ? 'text-emerald-400' : 'text-rose-400'
                       }`}>
                         {isBuy ? (
                           <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -265,6 +263,7 @@ export default function DashboardOverview() {
                         )}
                         <span>{setup?.direction || (isBuy ? 'BUY' : 'SELL')}</span>
                       </span>
+                      <span className="h-3 w-[1px] bg-white/[0.12]" />
                       <Badge variant={isSignal ? 'SIGNAL' : 'WATCHLIST'}>
                         {payload.tier}
                       </Badge>

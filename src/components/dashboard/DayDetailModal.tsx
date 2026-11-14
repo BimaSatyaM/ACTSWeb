@@ -67,23 +67,61 @@ interface DayDetailModalProps {
 
 function getSignalDetails(sig: SignalItem) {
   const outcome = sig.outcome
-  const isProfit = outcome?.system_outcome === 'TARGET_PROFIT_HIT' || outcome?.user_outcome === 'PROFIT'
-  const isLoss = outcome?.system_outcome === 'STOP_LOSS_HIT' || outcome?.user_outcome === 'LOSS'
-  const isNotHit = outcome?.system_outcome === 'NOT_HIT' || outcome?.system_outcome === 'SUPERSEDED' || outcome?.system_outcome === 'EXPIRED' || outcome?.user_outcome === 'NOT_HIT'
-
   const det = (outcome?.system_outcome_detail || outcome?.system_target_hit || '').toUpperCase()
+  const isClosedByNewSig =
+    det.startsWith('CLOSED_R:') ||
+    outcome?.system_outcome === 'PROFIT_CLOSED' ||
+    outcome?.system_outcome === 'LOSS_CLOSED' ||
+    outcome?.system_outcome === 'BREAKEVEN_CLOSED'
 
-  const isTP3 = isProfit && det.includes('TP3')
-  const isTP2 = isProfit && (det.includes('TP2') || det.includes('TP3'))
-  const isSingleTP = isProfit && (det === 'TP_SINGLE' || det === 'TP1_SINGLE' || (!sig.target_tp2 && !outcome?.tp2) || Math.abs((sig.target_tp1 || outcome?.tp1 || 0) - (sig.target_tp2 || outcome?.tp2 || 0)) < 0.01)
-  const isMidTrailing = isProfit && (det.includes('MID') || det.includes('BREAKEVEN') || det.includes('TRAILING'))
+  let closedR: number | null = null
+  let closedPrice: number | undefined = undefined
+  if (det.startsWith('CLOSED_R:')) {
+    const parts = det.slice('CLOSED_R:'.length).split('@')
+    const parsedR = parseFloat(parts[0])
+    const parsedP = parts[1] ? parseFloat(parts[1]) : NaN
+    if (!Number.isNaN(parsedR)) closedR = parsedR
+    if (!Number.isNaN(parsedP)) closedPrice = parsedP
+  }
+
+  const isProfit =
+    outcome?.system_outcome === 'TARGET_PROFIT_HIT' ||
+    outcome?.system_outcome === 'PROFIT_CLOSED' ||
+    outcome?.user_outcome === 'PROFIT' ||
+    (isClosedByNewSig && closedR !== null && closedR > 0)
+  const isLoss =
+    outcome?.system_outcome === 'STOP_LOSS_HIT' ||
+    outcome?.system_outcome === 'LOSS_CLOSED' ||
+    outcome?.user_outcome === 'LOSS' ||
+    (isClosedByNewSig && closedR !== null && closedR < 0)
+  const isNotHit =
+    outcome?.system_outcome === 'NOT_HIT' ||
+    outcome?.system_outcome === 'SUPERSEDED' ||
+    outcome?.system_outcome === 'EXPIRED' ||
+    outcome?.user_outcome === 'NOT_HIT' ||
+    (isClosedByNewSig && !isProfit && !isLoss)
+
+  const isTP3 = isProfit && !isClosedByNewSig && det.includes('TP3')
+  const isTP2 = isProfit && !isClosedByNewSig && (det.includes('TP2') || det.includes('TP3'))
+  const isSingleTP = isProfit && !isClosedByNewSig && (det === 'TP_SINGLE' || det === 'TP1_SINGLE' || (!sig.target_tp2 && !outcome?.tp2) || Math.abs((sig.target_tp1 || outcome?.tp1 || 0) - (sig.target_tp2 || outcome?.tp2 || 0)) < 0.01)
+  const isMidTrailing = isProfit && !isClosedByNewSig && (det.includes('MID') || det.includes('BREAKEVEN') || det.includes('TRAILING'))
 
   // Highest target hit price & labels
   let highestHitPrice: number | undefined = undefined
   let targetLabel = 'Target'
   let badgeText = 'Awaiting Outcome'
 
-  if (isProfit) {
+  if (isClosedByNewSig) {
+    highestHitPrice = closedPrice ?? outcome?.resolution_price ?? undefined
+    targetLabel = 'Closed @ Price'
+    if (isProfit) {
+      badgeText = closedR !== null ? `Closed (+${closedR.toFixed(2)}R)` : 'Closed in Profit'
+    } else if (isLoss) {
+      badgeText = closedR !== null ? `Closed (${closedR.toFixed(2)}R)` : 'Closed in Loss'
+    } else {
+      badgeText = 'Closed (0.00R)'
+    }
+  } else if (isProfit) {
     if (isSingleTP) {
       highestHitPrice = sig.target_tp1 || outcome?.tp1 || undefined
       targetLabel = 'Target Hit (1:1.5 TP)'
@@ -470,7 +508,7 @@ export function DayDetailModal({ date, isOpen, onClose }: DayDetailModalProps) {
                               </div>
                             ) : details.isLoss ? (
                               <div>
-                                <span className="text-text-muted block text-[10px]">Stop Loss Hit</span>
+                                <span className="text-text-muted block text-[10px]">{details.targetLabel || 'Stop Loss Hit'}</span>
                                 <span className="font-semibold text-rose-400 font-mono">
                                   ${(details.highestHitPrice || details.sl)?.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 3 })}
                                 </span>

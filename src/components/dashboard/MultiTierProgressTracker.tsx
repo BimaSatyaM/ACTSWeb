@@ -39,7 +39,21 @@ export function MultiTierProgressTracker({
   const isSLHit = systemOutcome === 'STOP_LOSS_HIT'
   const isTPHit = systemOutcome === 'TARGET_PROFIT_HIT'
   const isNotHit = systemOutcome === 'NOT_HIT' || systemOutcome === 'SUPERSEDED' || systemOutcome === 'EXPIRED'
-  const isLiveTracking = !isResolved && !isSLHit && !isTPHit && !isNotHit
+  const isClosedByNewSignal =
+    detail.startsWith('CLOSED_R:') ||
+    systemOutcome === 'PROFIT_CLOSED' ||
+    systemOutcome === 'LOSS_CLOSED' ||
+    systemOutcome === 'BREAKEVEN_CLOSED'
+  let closedRVal: number | null = null
+  let closedPriceVal: number | null = null
+  if (detail.startsWith('CLOSED_R:')) {
+    const parts = detail.slice('CLOSED_R:'.length).split('@')
+    const parsedR = parseFloat(parts[0])
+    const parsedP = parts[1] ? parseFloat(parts[1]) : NaN
+    if (!Number.isNaN(parsedR)) closedRVal = parsedR
+    if (!Number.isNaN(parsedP)) closedPriceVal = parsedP
+  }
+  const isLiveTracking = !isResolved && !isSLHit && !isTPHit && !isNotHit && !isClosedByNewSignal
 
   const cleanSymbol = symbol.replace(/USDT$/i, '').toUpperCase() || 'BTC'
   const { data: marketData } = useSWR<{ tickers: { symbol: string; price: number }[] }>(
@@ -59,7 +73,7 @@ export function MultiTierProgressTracker({
   const tp1Price = tp1?.target_price ?? 0
   const tp2Price = tp2?.target_price ?? 0
   const tp3Price = tp3?.target_price ?? 0
-  const isSingleTp = !tp2Price || Math.abs(tp1Price - tp2Price) < 0.01 || detail === 'TP_SINGLE' || detail === 'TP1_SINGLE'
+  const isSingleTp = isClosedByNewSignal || !tp2Price || Math.abs(tp1Price - tp2Price) < 0.01 || detail === 'TP_SINGLE' || detail === 'TP1_SINGLE'
   const singleRr = tp1?.rr_ratio || 1.5
 
   if (isSingleTp) {
@@ -71,7 +85,15 @@ export function MultiTierProgressTracker({
     let slFill = isSLHit ? 1 : 0
     let liveR: number | null = null
 
-    if (isLiveTracking && currentPrice !== null && entryPrice > 0 && slDist > 0 && tpDist > 0) {
+    if (isClosedByNewSignal && closedRVal !== null) {
+      if (closedRVal >= 0) {
+        tpFill = Math.min(1, Math.max(0, closedRVal / singleRr))
+        slFill = 0
+      } else {
+        slFill = Math.min(1, Math.max(0, Math.abs(closedRVal)))
+        tpFill = 0
+      }
+    } else if (isLiveTracking && currentPrice !== null && entryPrice > 0 && slDist > 0 && tpDist > 0) {
       const priceDelta = isSell ? entryPrice - currentPrice : currentPrice - entryPrice
       if (priceDelta >= 0) {
         tpFill = Math.min(1, Math.max(0, priceDelta / tpDist))
@@ -85,10 +107,12 @@ export function MultiTierProgressTracker({
     }
 
     const markerPct = slFill > 0 ? 50 - slFill * 33.33 : 50 + tpFill * 33.33
-    const isInProfit = tpFill > 0 || isTP1Hit
-    const isInLoss = slFill > 0 || isSLHit
+    const isInProfit = tpFill > 0 || isTP1Hit || (isClosedByNewSignal && (closedRVal ?? 0) > 0)
+    const isInLoss = slFill > 0 || isSLHit || (isClosedByNewSignal && (closedRVal ?? 0) < 0)
 
-    const singleRealizedR = isSLHit
+    const singleRealizedR = isClosedByNewSignal && closedRVal !== null
+      ? `${closedRVal >= 0 ? '+' : ''}${closedRVal.toFixed(2)}R (Closed @ ${closedPriceVal !== null ? '$' + closedPriceVal.toLocaleString() : 'New Signal'})`
+      : isSLHit
       ? '-1.00R (Loss)'
       : isTP1Hit
       ? `+${singleRr.toFixed(2)}R (100% Target Banked)`
@@ -137,39 +161,44 @@ export function MultiTierProgressTracker({
             }}
           />
 
-          {/* Live Moving Price Indicator */}
-          {isLiveTracking && currentPrice !== null && (
-            <div
-              className="absolute top-[19px] -translate-x-1/2 -translate-y-1/2 transition-all duration-700 ease-out z-20 pointer-events-none"
-              style={{ left: `${markerPct}%` }}
-            >
-              <span
-                className={`absolute -top-4 left-1/2 -translate-x-1/2 text-[9px] font-bold whitespace-nowrap drop-shadow-sm ${
-                  slFill > 0
-                    ? 'text-rose-400'
-                    : tpFill > 0
-                    ? 'text-emerald-400'
-                    : 'text-cyan-300'
-                }`}
+          {/* Live / Closed Moving Price Indicator */}
+          {((isLiveTracking && currentPrice !== null) || (isClosedByNewSignal && closedPriceVal !== null)) && (() => {
+            const displayPrice = isClosedByNewSignal ? closedPriceVal! : currentPrice!
+            return (
+              <div
+                className="absolute top-[19px] -translate-x-1/2 -translate-y-1/2 transition-all duration-700 ease-out z-20 pointer-events-none"
+                style={{ left: `${markerPct}%` }}
               >
-                ${currentPrice.toLocaleString()}
-              </span>
-              <span
-                className={`absolute inset-0 w-3 h-3 -m-0.5 rounded-full animate-ping opacity-75 ${
-                  slFill > 0 ? 'bg-rose-400' : tpFill > 0 ? 'bg-emerald-400' : 'bg-cyan-400'
-                }`}
-              />
-              <span
-                className={`relative block w-2 h-2 rounded-full border border-white/90 ${
-                  slFill > 0
-                    ? 'bg-rose-400 shadow-[0_0_8px_rgba(244,63,94,0.9)]'
-                    : tpFill > 0
-                    ? 'bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.9)]'
-                    : 'bg-cyan-400 shadow-[0_0_8px_rgba(34,211,238,0.9)]'
-                }`}
-              />
-            </div>
-          )}
+                <span
+                  className={`absolute -top-4 left-1/2 -translate-x-1/2 text-[9px] font-bold whitespace-nowrap drop-shadow-sm ${
+                    slFill > 0
+                      ? 'text-rose-400'
+                      : tpFill > 0
+                      ? 'text-emerald-400'
+                      : 'text-cyan-300'
+                  }`}
+                >
+                  ${displayPrice.toLocaleString()}
+                </span>
+                {isLiveTracking && (
+                  <span
+                    className={`absolute inset-0 w-3 h-3 -m-0.5 rounded-full animate-ping opacity-75 ${
+                      slFill > 0 ? 'bg-rose-400' : tpFill > 0 ? 'bg-emerald-400' : 'bg-cyan-400'
+                    }`}
+                  />
+                )}
+                <span
+                  className={`relative block w-2 h-2 rounded-full border border-white/90 ${
+                    slFill > 0
+                      ? 'bg-rose-400 shadow-[0_0_8px_rgba(244,63,94,0.9)]'
+                      : tpFill > 0
+                      ? 'bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.9)]'
+                      : 'bg-cyan-400 shadow-[0_0_8px_rgba(34,211,238,0.9)]'
+                  }`}
+                />
+              </div>
+            )
+          })()}
 
           <div className="grid grid-cols-3 gap-2 relative z-10">
             {/* Step 0: SL */}
@@ -250,22 +279,25 @@ export function MultiTierProgressTracker({
                   ? 'bg-rose-500'
                   : isTP1Hit
                   ? 'bg-emerald-400 shadow-[0_0_6px_rgba(52,211,153,0.8)]'
+                  : isClosedByNewSignal
+                  ? ((closedRVal ?? 0) > 0 ? 'bg-emerald-400' : (closedRVal ?? 0) < 0 ? 'bg-rose-400' : 'bg-zinc-400')
                   : 'bg-cyan-400 animate-pulse shadow-[0_0_6px_rgba(34,211,238,0.8)]'
               }`}
             />
             <span className="text-text-muted text-[10px] uppercase font-semibold tracking-wider">Active Protection:</span>
-            <span className={`font-bold ${isSLHit ? 'text-rose-500' : isTP1Hit ? 'text-zinc-400' : 'text-rose-400'}`}>
+            <span className={`font-bold ${isSLHit ? 'text-rose-500' : (isTP1Hit || isClosedByNewSignal) ? 'text-zinc-400' : 'text-rose-400'}`}>
               ${stopLoss.toLocaleString()}
             </span>
             <span className="text-text-muted text-[10px]">
-              ({isSLHit ? 'Stopped Out' : isTP1Hit ? 'Exited @ Target Profit' : 'Initial SL'})
+              ({isSLHit ? 'Stopped Out' : isTP1Hit ? 'Exited @ Target Profit' : isClosedByNewSignal ? 'Closed @ New Signal' : 'Initial SL'})
             </span>
           </div>
 
           <div className="text-[10px] text-text-muted font-mono">
             {isTP1Hit && `🎯 100% Target profit banked (+${singleRr.toFixed(1)}R · Trade Closed)!`}
             {isSLHit && '🛑 Stop loss hit (-1.0R). Capital defense executed.'}
-            {!isTP1Hit && !isSLHit && `⏳ Active trade · Monitoring 1:${singleRr.toFixed(1)} RR target exit.`}
+            {isClosedByNewSignal && closedRVal !== null && `🔒 Closed at $${closedPriceVal !== null ? closedPriceVal.toLocaleString() : 'Market'} (${closedRVal >= 0 ? '+' : ''}${closedRVal.toFixed(2)}R) on new signal.`}
+            {!isTP1Hit && !isSLHit && !isClosedByNewSignal && `⏳ Active trade · Monitoring 1:${singleRr.toFixed(1)} RR target exit.`}
           </div>
         </div>
       </div>

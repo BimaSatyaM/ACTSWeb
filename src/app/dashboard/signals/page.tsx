@@ -258,6 +258,29 @@ export default function SignalsPage() {
             const isBuy = activeDirection.toUpperCase() === 'BUY'
             const activeSymbol = payload.confluence_result?.symbol || setup?.symbol || 'BTCUSDT'
 
+            const sysOut = sig.outcome?.system_outcome
+            const sysDet = sig.outcome?.system_outcome_detail || ''
+            const sysDetUpper = sysDet.toUpperCase()
+            const isClosedByNewSig =
+              sysDetUpper.startsWith('CLOSED_R:') ||
+              sysOut === 'PROFIT_CLOSED' ||
+              sysOut === 'LOSS_CLOSED' ||
+              sysOut === 'BREAKEVEN_CLOSED'
+            let closedR: number | null = null
+            let closedPrice: number | null = null
+            if (sysDetUpper.startsWith('CLOSED_R:')) {
+              const parts = sysDetUpper.slice('CLOSED_R:'.length).split('@')
+              const parsedR = parseFloat(parts[0])
+              const parsedP = parts[1] ? parseFloat(parts[1]) : NaN
+              if (!Number.isNaN(parsedR)) closedR = parsedR
+              if (!Number.isNaN(parsedP)) closedPrice = parsedP
+            }
+            const closedRStr = closedR !== null
+              ? `${closedR >= 0 ? '+' : ''}${closedR.toFixed(2)}R`
+              : sysOut === 'PROFIT_CLOSED' ? '+0.00R' : sysOut === 'LOSS_CLOSED' ? '-0.00R' : '0.00R'
+            const closedIsWin = sysOut === 'PROFIT_CLOSED' || (closedR !== null && closedR > 0)
+            const closedIsLoss = sysOut === 'LOSS_CLOSED' || (closedR !== null && closedR < 0)
+
             return (
               <GlassCard key={sig.event_id} className="p-5 sm:p-6 space-y-5 border-white/[0.09]">
                 <div className="flex flex-wrap justify-between items-center gap-3 border-b border-white/[0.06] pb-4">
@@ -364,14 +387,15 @@ export default function SignalsPage() {
                       <div>
                         <span className="text-[11px] text-text-muted block">Execution Status</span>
                         <span className={`text-sm font-bold ${
-                          sig.outcome?.system_outcome === 'TARGET_PROFIT_HIT' ? 'text-emerald-400' :
-                          sig.outcome?.system_outcome === 'STOP_LOSS_HIT' ? 'text-rose-400' :
-                          (sig.outcome?.system_outcome === 'NOT_HIT' || sig.outcome?.system_outcome === 'SUPERSEDED') ? 'text-zinc-400' :
+                          sysOut === 'TARGET_PROFIT_HIT' || (isClosedByNewSig && closedIsWin) ? 'text-emerald-400' :
+                          sysOut === 'STOP_LOSS_HIT' || (isClosedByNewSig && closedIsLoss) ? 'text-rose-400' :
+                          (sysOut === 'NOT_HIT' || sysOut === 'SUPERSEDED' || isClosedByNewSig) ? 'text-zinc-400' :
                           'text-emerald-400'
                         }`}>
-                          {sig.outcome?.system_outcome === 'TARGET_PROFIT_HIT' ? 'Target Profit Hit' :
-                           sig.outcome?.system_outcome === 'STOP_LOSS_HIT' ? 'Stop Loss Hit' :
-                           (sig.outcome?.system_outcome === 'NOT_HIT' || sig.outcome?.system_outcome === 'SUPERSEDED') ? 'Not Hit' :
+                          {sysOut === 'TARGET_PROFIT_HIT' ? 'Target Profit Hit' :
+                           sysOut === 'STOP_LOSS_HIT' ? 'Stop Loss Hit' :
+                           isClosedByNewSig ? `Closed (${closedRStr})` :
+                           (sysOut === 'NOT_HIT' || sysOut === 'SUPERSEDED') ? 'Not Hit' :
                            'Active Signal'}
                         </span>
                       </div>
@@ -424,6 +448,15 @@ export default function SignalsPage() {
                             <div className="inline-flex items-center gap-1.5 text-amber-400 text-xs font-semibold">
                               <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" />
                               <span>Awaiting Target Resolution (Running)...</span>
+                            </div>
+                          )
+                        }
+                        if (isClosedByNewSig) {
+                          const priceLabel = closedPrice !== null ? ` · $${closedPrice.toLocaleString()}` : ''
+                          const colorClass = closedIsWin ? 'text-emerald-400' : closedIsLoss ? 'text-rose-400' : 'text-zinc-400'
+                          return (
+                            <div className={`inline-flex items-center gap-1.5 ${colorClass} text-xs font-bold font-mono`}>
+                              <span>{`Closed @ New Signal (${closedRStr}${priceLabel})`}</span>
                             </div>
                           )
                         }
