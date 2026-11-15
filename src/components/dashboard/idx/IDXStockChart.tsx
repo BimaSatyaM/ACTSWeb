@@ -105,37 +105,37 @@ export function IDXStockChart({
       width: container.clientWidth,
       height: height || 360,
       layout: {
-        background: { type: ColorType.Solid, color: '#090b13' },
-        textColor: '#71717a',
+        background: { type: ColorType.Solid, color: '#fdfaf3' },
+        textColor: '#64748b',
         fontFamily: 'var(--font-geist-mono, monospace), monospace',
         fontSize: 11,
       },
       grid: {
-        vertLines: { color: 'rgba(255, 255, 255, 0.03)' },
-        horzLines: { color: 'rgba(255, 255, 255, 0.03)' },
+        vertLines: { color: 'rgba(15, 23, 42, 0.05)' },
+        horzLines: { color: 'rgba(15, 23, 42, 0.05)' },
       },
       crosshair: {
         mode: CrosshairMode.Normal,
         vertLine: {
-          color: 'rgba(255, 255, 255, 0.25)',
+          color: 'rgba(15, 23, 42, 0.3)',
           width: 1,
           style: 3, // dashed
-          labelBackgroundColor: '#181b2a',
+          labelBackgroundColor: '#0f172a',
         },
         horzLine: {
-          color: 'rgba(255, 255, 255, 0.25)',
+          color: 'rgba(15, 23, 42, 0.3)',
           width: 1,
           style: 3,
-          labelBackgroundColor: '#181b2a',
+          labelBackgroundColor: '#0f172a',
         },
       },
       timeScale: {
-        borderColor: 'rgba(255, 255, 255, 0.08)',
+        borderColor: 'rgba(15, 23, 42, 0.1)',
         timeVisible: true,
         secondsVisible: timeframe === '1m',
       },
       rightPriceScale: {
-        borderColor: 'rgba(255, 255, 255, 0.08)',
+        borderColor: 'rgba(15, 23, 42, 0.1)',
         scaleMargins: {
           top: 0.1,
           bottom: 0.25, // Leaves bottom 25% for volume bars
@@ -158,13 +158,13 @@ export function IDXStockChart({
 
     // Candlestick series
     const candleSeries = chart.addSeries(CandlestickSeries, {
-      upColor: '#10b981',
-      downColor: '#f43f5e',
+      upColor: '#059669',
+      downColor: '#e11d48',
       borderVisible: true,
-      borderUpColor: '#10b981',
-      borderDownColor: '#f43f5e',
-      wickUpColor: '#10b981',
-      wickDownColor: '#f43f5e',
+      borderUpColor: '#059669',
+      borderDownColor: '#e11d48',
+      wickUpColor: '#059669',
+      wickDownColor: '#e11d48',
     })
 
     chartRef.current = chart
@@ -242,7 +242,7 @@ export function IDXStockChart({
     const volumeChartData = candles.map((c) => ({
       time: c.time as Time,
       value: c.volume,
-      color: c.close >= c.open ? 'rgba(16, 185, 129, 0.28)' : 'rgba(244, 63, 94, 0.28)',
+      color: c.close >= c.open ? 'rgba(5, 150, 105, 0.28)' : 'rgba(225, 29, 72, 0.28)',
     }))
 
     candleSeriesRef.current.setData(candleChartData)
@@ -314,51 +314,51 @@ export function IDXStockChart({
   const isPositive = liveChange >= 0
 
   return (
-    <div className="flex flex-col rounded-xl bg-[#0d121f] border border-white/[0.08] overflow-hidden">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3.5 sm:px-4 sm:py-3 bg-white/[0.01] border-b border-white/[0.08]">
+    <div className="flex flex-col rounded-xl bg-[#fdfaf3] border border-slate-200/80 overflow-hidden shadow-xs">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3.5 sm:px-4 sm:py-3 bg-[#faf2df]/60 border-b border-slate-200/80">
         <div className="flex items-center gap-3">
           <IDXStockLogo symbol={meta.symbol} name={meta.name} logoUrl={meta.logoUrl} size="md" />
           <div>
             <div className="flex items-center gap-1.5">
-              <span className="text-base sm:text-lg font-black text-white font-mono tracking-tight">
+              <span className="text-base sm:text-lg font-black text-slate-900 font-mono tracking-tight">
                 {meta.symbol}
               </span>
-              <span className="text-[10px] font-mono font-bold px-1.5 py-0.2 rounded bg-white/[0.05] text-slate-300 border border-white/[0.08]">
+              <span className="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-sky-50 text-sky-800 border border-sky-200/70">
                 IDX
               </span>
               {meta.group && (
-                <span className="hidden sm:inline-block text-[10px] font-mono px-1.5 py-0.2 rounded bg-white/[0.04] text-slate-400 border border-white/[0.06]">
+                <span className="hidden sm:inline-block text-[10px] font-mono px-1.5 py-0.5 rounded bg-slate-100 text-slate-600 border border-slate-200/80">
                   {meta.group}
                 </span>
               )}
             </div>
-            <p className="text-[11px] text-slate-400 font-mono line-clamp-1 max-w-[140px] sm:max-w-xs">
+            <p className="text-[11px] text-slate-500 font-mono line-clamp-1 max-w-[140px] sm:max-w-xs">
               {meta.name}
             </p>
           </div>
 
-          <div className="h-6 w-px bg-white/[0.08] hidden sm:block" />
+          <div className="h-6 w-px bg-slate-200 hidden sm:block" />
 
           <div className="flex items-baseline gap-2">
-            <span className="text-lg sm:text-xl font-black text-white font-mono tracking-tight">
+            <span className="text-lg sm:text-xl font-black text-slate-900 font-mono tracking-tight">
               Rp {livePrice.toLocaleString()}
             </span>
-            <span className={`inline-flex items-center gap-0.5 text-xs font-bold font-mono ${isPositive ? 'text-emerald-400' : 'text-rose-400'}`}>
+            <span className={`inline-flex items-center gap-0.5 text-xs font-bold font-mono ${isPositive ? 'text-emerald-700' : 'text-rose-700'}`}>
               <span>{isPositive ? '+' : ''}{liveChange.toLocaleString()}</span>
               <span>({isPositive ? '+' : ''}{liveChangePct.toFixed(2)}%)</span>
             </span>
           </div>
         </div>
 
-        <div className="flex items-center gap-1 bg-[#070b14] p-1 rounded-lg border border-white/[0.08] self-start sm:self-auto">
+        <div className="flex items-center gap-1 bg-[#f0ebe1] p-1 rounded-lg border border-slate-200/80 self-start sm:self-auto">
           {TIMEFRAMES.map((tf) => (
             <button
               key={tf}
               onClick={() => setTimeframe(tf)}
               className={`px-2 py-1 rounded-md text-[11px] font-mono font-bold transition-all cursor-pointer ${
                 timeframe === tf
-                  ? 'bg-white/[0.12] text-white border border-white/20'
-                  : 'text-slate-400 hover:text-white hover:bg-white/[0.05]'
+                  ? 'bg-[#faf2df] text-sky-950 font-bold shadow-xs border border-slate-900/15'
+                  : 'text-slate-600 hover:text-slate-900 hover:bg-[#faf2df]/60'
               }`}
             >
               {tf}
@@ -368,24 +368,24 @@ export function IDXStockChart({
       </div>
 
       {showStatsStrip && (
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 px-4 py-2 bg-[#070b14]/70 border-b border-white/[0.06] text-xs font-mono">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 px-4 py-2 bg-[#f8f5ee] border-b border-slate-200/80 text-xs font-mono">
           <div className="flex items-center justify-between sm:justify-start gap-2">
             <span className="text-[10px] text-slate-500 uppercase font-bold tracking-wider">24h H/L</span>
-            <span className="text-white font-semibold text-[11px]">
+            <span className="text-slate-900 font-semibold text-[11px]">
               {meta.dayHigh ? meta.dayHigh.toLocaleString() : '-'} / {meta.dayLow ? meta.dayLow.toLocaleString() : '-'}
             </span>
           </div>
 
           <div className="flex items-center justify-between sm:justify-start gap-2">
             <span className="text-[10px] text-slate-500 uppercase font-bold tracking-wider">Mkt Cap</span>
-            <span className="text-white font-semibold text-[11px]">
+            <span className="text-slate-900 font-semibold text-[11px]">
               Rp {(meta.marketCapTrillion || 0).toFixed(1)} T
             </span>
           </div>
 
           <div className="flex items-center justify-between sm:justify-start gap-2">
             <span className="text-[10px] text-slate-500 uppercase font-bold tracking-wider">P/E · P/BV</span>
-            <span className="text-white font-semibold text-[11px]">
+            <span className="text-slate-900 font-semibold text-[11px]">
               {(meta.peRatio || 0).toFixed(1)}x · {(meta.pbvRatio || 0).toFixed(1)}x
             </span>
           </div>
@@ -393,7 +393,7 @@ export function IDXStockChart({
           <div className="flex items-center justify-between sm:justify-start gap-2">
             <span className="text-[10px] text-slate-500 uppercase font-bold tracking-wider">Foreign</span>
             <span className={`text-[11px] font-bold ${
-              meta.foreignFlow === 'BUY' ? 'text-emerald-400' : meta.foreignFlow === 'SELL' ? 'text-rose-400' : 'text-slate-400'
+              meta.foreignFlow === 'BUY' ? 'text-emerald-700' : meta.foreignFlow === 'SELL' ? 'text-rose-700' : 'text-slate-600'
             }`}>
               {meta.foreignFlow === 'BUY' ? '+Rp ' : meta.foreignFlow === 'SELL' ? '-Rp ' : ''}{Math.abs(meta.foreignNetBillion || 0).toFixed(1)} B
             </span>
@@ -401,15 +401,15 @@ export function IDXStockChart({
         </div>
       )}
 
-      <div className="flex items-center gap-3.5 px-4 py-1.5 bg-[#070b14] text-[11px] font-mono text-slate-400 border-b border-white/[0.06] overflow-x-auto custom-scrollbar">
+      <div className="flex items-center gap-3.5 px-4 py-1.5 bg-[#f0ebe1]/70 text-[11px] font-mono text-slate-600 border-b border-slate-200/80 overflow-x-auto custom-scrollbar">
         {hoverData ? (
           <>
-            <span className="text-slate-400">{hoverData.time}</span>
-            <span>O: <strong className="text-white">Rp {hoverData.open.toLocaleString()}</strong></span>
-            <span>H: <strong className="text-emerald-400">Rp {hoverData.high.toLocaleString()}</strong></span>
-            <span>L: <strong className="text-rose-400">Rp {hoverData.low.toLocaleString()}</strong></span>
-            <span>C: <strong className="text-white">Rp {hoverData.close.toLocaleString()}</strong></span>
-            <span>Vol: <strong className="text-white">{(hoverData.volume / 1000).toFixed(1)}k</strong></span>
+            <span className="text-slate-600 font-medium">{hoverData.time}</span>
+            <span>O: <strong className="text-slate-900">Rp {hoverData.open.toLocaleString()}</strong></span>
+            <span>H: <strong className="text-emerald-700">Rp {hoverData.high.toLocaleString()}</strong></span>
+            <span>L: <strong className="text-rose-700">Rp {hoverData.low.toLocaleString()}</strong></span>
+            <span>C: <strong className="text-slate-900">Rp {hoverData.close.toLocaleString()}</strong></span>
+            <span>Vol: <strong className="text-slate-900">{(hoverData.volume / 1000).toFixed(1)}k</strong></span>
           </>
         ) : (
           <span className="text-[10px] text-slate-500 italic">
@@ -420,8 +420,8 @@ export function IDXStockChart({
 
       <div className="relative w-full" style={{ height: height || 360 }}>
         {loading && (
-          <div className="absolute inset-0 z-20 flex items-center justify-center bg-[#090b13]/80 backdrop-blur-xs">
-            <span className="w-8 h-8 border-2 border-[#ff2e54] border-t-transparent rounded-full animate-spin" />
+          <div className="absolute inset-0 z-20 flex items-center justify-center bg-[#fdfaf3]/80 backdrop-blur-xs">
+            <span className="w-8 h-8 border-2 border-sky-600 border-t-transparent rounded-full animate-spin" />
           </div>
         )}
         <div ref={chartContainerRef} className="w-full h-full" />

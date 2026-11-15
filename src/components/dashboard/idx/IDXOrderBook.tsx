@@ -163,54 +163,53 @@ export function IDXOrderBook({ symbol, meta, streamQuote }: IDXOrderBookProps) {
   const isMarketClosed = isWeekend || wibSec < (8 * 3600 + 45 * 60) || wibSec > (16 * 3600 + 15 * 60)
 
   return (
-    <div className="flex flex-col rounded-xl bg-[#0d121f] border border-white/[0.08] overflow-hidden">
+    <div className="flex flex-col rounded-xl bg-[#fdfaf3] border border-slate-900/10 overflow-hidden shadow-xs">
       
-      <div className="flex items-center justify-between px-4 py-3 bg-white/[0.01] border-b border-white/[0.08]">
+      <div className="flex items-center justify-between px-4 py-3 bg-[#faf2df]/60 border-b border-slate-900/10">
         <div className="flex items-center gap-2">
-          <span className={`w-2 h-2 rounded-full ${isMarketClosed ? 'bg-zinc-500' : 'bg-emerald-400 animate-pulse'}`} />
-          <h3 className="text-xs sm:text-sm font-bold text-white uppercase tracking-wider font-mono">
+          <span className={`w-2 h-2 rounded-full ${isMarketClosed ? 'bg-slate-400' : 'bg-emerald-500 animate-pulse'}`} />
+          <h3 className="text-xs sm:text-sm font-bold text-slate-900 uppercase tracking-wider font-mono">
             10-Level Order Book (DOM)
           </h3>
-          <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-white/[0.05] text-slate-300 border border-white/[0.08]">
+          <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-sky-50 text-sky-800 border border-sky-200/70">
             {symbol} · {isMarketClosed ? 'Market Closed' : 'Top Book (L1 Real)'}
           </span>
         </div>
 
-        <div className="flex items-center gap-3 text-xs font-mono">
-          <span className="text-slate-400 text-[11px]">
-            Spread: <strong className="text-white">Rp {(bestAsk - bestBid).toLocaleString()}</strong> ({tickSize} tick)
+        <div className="flex items-center gap-3 text-xs font-mono tabular-nums">
+          <span className="text-slate-500 text-[11px]">
+            Spread: <strong className="text-slate-900">Rp {(bestAsk - bestBid).toLocaleString()}</strong> ({tickSize} tick)
           </span>
         </div>
       </div>
 
       {isMarketClosed && (
-        <div className="px-4 py-2 bg-amber-500/10 border-b border-amber-500/20 text-[11px] font-mono flex flex-col sm:flex-row sm:items-center justify-between text-amber-300 gap-1">
+        <div className="px-4 py-2 bg-amber-50 border-b border-amber-200 text-[11px] font-mono flex flex-col sm:flex-row sm:items-center justify-between text-amber-900 gap-1">
           <span className="flex items-center gap-1.5">
-            <span>🛑</span>
             <strong>Market Session Closed</strong> (16:00 WIB)
           </span>
-          <span className="text-[10px] text-amber-300/80">Order matching resumes tomorrow at 09:00 WIB</span>
+          <span className="text-[10px] text-amber-700">Order matching resumes tomorrow at 09:00 WIB</span>
         </div>
       )}
 
-      <div className="grid grid-cols-2 gap-2 px-4 py-2 bg-[#070b14] border-b border-white/[0.06] text-[11px] font-mono">
-        <div className="flex items-center justify-between text-emerald-400">
+      <div className="grid grid-cols-2 gap-2 px-4 py-2 bg-[#faf2df] border-b border-slate-900/10 text-[11px] font-mono tabular-nums">
+        <div className="flex items-center justify-between text-emerald-700">
           <span className="font-bold flex items-center gap-1">
-            <span className="text-[9px] px-1 py-0.2 rounded bg-emerald-500/10 border border-emerald-500/20">ARA +{ratePct}%</span>
+            <span className="text-[9px] px-1 py-0.2 rounded bg-emerald-100 border border-emerald-200 text-emerald-800">ARA +{ratePct}%</span>
             <span>Rp {araPrice.toLocaleString()}</span>
           </span>
           <span className="text-[10px] text-slate-500">Upper Limit</span>
         </div>
-        <div className="flex items-center justify-between text-rose-400">
+        <div className="flex items-center justify-between text-rose-700">
           <span className="text-[10px] text-slate-500">Lower Limit</span>
           <span className="font-bold flex items-center gap-1">
             <span>Rp {arbPrice.toLocaleString()}</span>
-            <span className="text-[9px] px-1 py-0.2 rounded bg-rose-500/10 border border-rose-500/20">ARB -{ratePct}%</span>
+            <span className="text-[9px] px-1 py-0.2 rounded bg-rose-100 border border-rose-200 text-rose-800">ARB -{ratePct}%</span>
           </span>
         </div>
       </div>
 
-      <div className="grid grid-cols-2 text-[10px] uppercase font-mono font-semibold tracking-wider text-slate-400 px-4 py-2 bg-[#070b14]/50 border-b border-white/[0.06]">
+      <div className="grid grid-cols-2 text-[10px] uppercase font-mono font-bold tracking-wider text-slate-600 px-4 py-2 bg-[#faf2df]/80 border-b border-slate-900/10">
         <div className="flex justify-between pr-2">
           <span>Bid Lots</span>
           <span>Bid (Rp)</span>
@@ -221,17 +220,17 @@ export function IDXOrderBook({ symbol, meta, streamQuote }: IDXOrderBookProps) {
         </div>
       </div>
 
-      <div className="divide-y divide-white/[0.02] text-xs font-mono">
+      <div className="divide-y divide-slate-900/10 text-xs font-mono tabular-nums">
         {Array.from({ length: 10 }).map((_, i) => {
           const bid = bids[i]
           const ask = asks[i]
 
           return (
-            <div key={i} className="grid grid-cols-2 hover:bg-white/[0.02] transition-colors">
+            <div key={i} className="grid grid-cols-2 hover:bg-[#f3ead2]/40 transition-colors">
               
               <div
-                className={`relative flex items-center justify-between px-4 py-1.5 pr-3 border-r border-white/[0.06] overflow-hidden ${
-                  bid?.isBest && flashBid ? 'bg-emerald-500/20 transition-all duration-300' : ''
+                className={`relative flex items-center justify-between px-4 py-1.5 pr-3 border-r border-slate-900/10 overflow-hidden ${
+                  bid?.isBest && flashBid ? 'bg-emerald-100 transition-all duration-300' : ''
                 }`}
               >
                 {bid && (
@@ -240,17 +239,17 @@ export function IDXOrderBook({ symbol, meta, streamQuote }: IDXOrderBookProps) {
                     style={{ width: `${bid.depthPercent}%` }}
                   />
                 )}
-                <span className="relative z-10 text-text-secondary text-[11px]">
+                <span className="relative z-10 text-slate-600 text-[11px] tabular-nums">
                   {bid ? bid.lots.toLocaleString() : '--'}
                 </span>
-                <span className="relative z-10 font-bold text-emerald-400">
+                <span className="relative z-10 font-bold text-emerald-700 tabular-nums">
                   {bid ? `Rp ${bid.price.toLocaleString()}` : '--'}
                 </span>
               </div>
 
               <div
                 className={`relative flex items-center justify-between px-4 py-1.5 pl-3 overflow-hidden ${
-                  ask?.isBest && flashAsk ? 'bg-rose-500/20 transition-all duration-300' : ''
+                  ask?.isBest && flashAsk ? 'bg-rose-100 transition-all duration-300' : ''
                 }`}
               >
                 {ask && (
@@ -259,10 +258,10 @@ export function IDXOrderBook({ symbol, meta, streamQuote }: IDXOrderBookProps) {
                     style={{ width: `${ask.depthPercent}%` }}
                   />
                 )}
-                <span className="relative z-10 font-bold text-rose-400">
+                <span className="relative z-10 font-bold text-rose-700 tabular-nums">
                   {ask ? `Rp ${ask.price.toLocaleString()}` : '--'}
                 </span>
-                <span className="relative z-10 text-text-secondary text-[11px]">
+                <span className="relative z-10 text-slate-600 text-[11px] tabular-nums">
                   {ask ? ask.lots.toLocaleString() : '--'}
                 </span>
               </div>
@@ -272,24 +271,24 @@ export function IDXOrderBook({ symbol, meta, streamQuote }: IDXOrderBookProps) {
         })}
       </div>
 
-      <div className="p-4 bg-[#070b14]/50 border-t border-white/[0.08] space-y-2.5">
-        <div className="flex justify-between items-center text-xs font-mono">
+      <div className="p-4 bg-[#faf2df]/60 border-t border-slate-900/10 space-y-2.5">
+        <div className="flex justify-between items-center text-xs font-mono tabular-nums">
           <div className="text-left">
-            <span className="text-[10px] text-slate-500 uppercase block font-bold">Total Bid Lots</span>
-            <span className="text-emerald-400 font-bold text-sm">
+            <span className="text-[10px] text-slate-500 uppercase block font-bold font-sans">Total Bid Lots</span>
+            <span className="text-emerald-700 font-bold text-sm">
               {totalBidLots.toLocaleString()} <span className="text-[10px] font-normal text-slate-500">({bidRatio}%)</span>
             </span>
           </div>
 
           <div className="text-right">
-            <span className="text-[10px] text-slate-500 uppercase block font-bold">Total Ask Lots</span>
-            <span className="text-rose-400 font-bold text-sm">
+            <span className="text-[10px] text-slate-500 uppercase block font-bold font-sans">Total Ask Lots</span>
+            <span className="text-rose-700 font-bold text-sm">
               {totalAskLots.toLocaleString()} <span className="text-[10px] font-normal text-slate-500">({askRatio}%)</span>
             </span>
           </div>
         </div>
 
-        <div className="relative w-full h-2 bg-white/[0.08] rounded-full overflow-hidden flex">
+        <div className="relative w-full h-2 bg-slate-200 rounded-full overflow-hidden flex">
           <div
             className="h-full bg-emerald-500 transition-all duration-500"
             style={{ width: `${bidRatio}%` }}
@@ -300,9 +299,9 @@ export function IDXOrderBook({ symbol, meta, streamQuote }: IDXOrderBookProps) {
           />
         </div>
 
-        <div className="flex justify-between text-[10px] text-slate-400 font-mono">
-          <span className="text-emerald-400 font-semibold">Buy Pressure: {bidRatio}%</span>
-          <span className="text-rose-400 font-semibold">Sell Pressure: {askRatio}%</span>
+        <div className="flex justify-between text-[10px] font-mono tabular-nums">
+          <span className="text-emerald-700 font-semibold">Buy Pressure: {bidRatio}%</span>
+          <span className="text-rose-700 font-semibold">Sell Pressure: {askRatio}%</span>
         </div>
       </div>
 

@@ -56,41 +56,41 @@ export function MarketSentimentCard() {
         return {
           label: 'Strong Bullish',
           points: '+10.0 pts',
-          badgeClass: 'bg-emerald-500/15 text-emerald-300',
-          scoreColor: 'text-emerald-400',
-          indicatorColor: 'bg-emerald-400',
+          badgeClass: 'bg-emerald-50 text-emerald-800',
+          scoreColor: 'text-emerald-700',
+          indicatorColor: 'bg-emerald-600',
         }
       case 'BULLISH':
         return {
           label: 'Bullish Bias',
           points: '+10.0 pts',
-          badgeClass: 'bg-emerald-500/10 text-emerald-400',
-          scoreColor: 'text-emerald-400',
-          indicatorColor: 'bg-emerald-400',
+          badgeClass: 'bg-emerald-50 text-emerald-800',
+          scoreColor: 'text-emerald-700',
+          indicatorColor: 'bg-emerald-600',
         }
       case 'BEARISH':
         return {
           label: 'Bearish Bias',
           points: '0.0 pts',
-          badgeClass: 'bg-amber-500/10 text-amber-400',
-          scoreColor: 'text-amber-400',
-          indicatorColor: 'bg-amber-400',
+          badgeClass: 'bg-amber-50 text-amber-800',
+          scoreColor: 'text-amber-700',
+          indicatorColor: 'bg-amber-500',
         }
       case 'STRONG_BEARISH':
         return {
           label: 'Strong Bearish',
           points: '0.0 pts',
-          badgeClass: 'bg-rose-500/15 text-rose-300',
-          scoreColor: 'text-rose-400',
-          indicatorColor: 'bg-rose-400',
+          badgeClass: 'bg-rose-50 text-rose-800',
+          scoreColor: 'text-rose-700',
+          indicatorColor: 'bg-rose-600',
         }
       default:
         return {
           label: 'Neutral',
           points: '0.0 pts',
-          badgeClass: 'bg-zinc-500/10 text-zinc-300',
-          scoreColor: 'text-zinc-200',
-          indicatorColor: 'bg-zinc-300',
+          badgeClass: 'bg-slate-100 text-slate-700',
+          scoreColor: 'text-slate-800',
+          indicatorColor: 'bg-slate-500',
         }
     }
   }
@@ -108,89 +108,88 @@ export function MarketSentimentCard() {
   }
 
   return (
-    <div className="p-5 sm:p-6 rounded-2xl bg-gradient-to-b from-[#0d121f]/90 via-[#0d121f]/70 to-[#070b14]/90 border border-white/[0.08] backdrop-blur-xl relative overflow-hidden space-y-5 shadow-xl">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-white/[0.06] pb-3.5">
+    <div className="p-5 sm:p-6 rounded-2xl bg-[#faf2df] border border-slate-900/10 space-y-5">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-900/10 pb-3.5">
         <div className="flex items-center gap-2.5">
-          <div className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse shadow-[0_0_8px_#06b6d4]" />
-          <h2 className="text-sm font-bold text-white tracking-tight">
-            Macro & Rumor Sentiment
+          <span className="w-2 h-2 rounded-full bg-[#0284c7]" />
+          <h2 className="text-sm font-bold text-slate-900 tracking-tight">
+            Macro &amp; Rumor Sentiment
           </h2>
-          <span className="text-[10px] font-mono text-text-muted">· BTC/USDT Scope</span>
+          <span className="text-[10px] font-mono text-slate-500">· BTC/USDT Scope</span>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 font-mono tabular-nums">
           {sentiment.high_impact_warning && (
-            <span className="text-[11px] font-mono font-semibold text-amber-400 flex items-center gap-1">
-              <span>⚠️</span>
-              <span>Macro Event Ahead</span>
+            <span className="text-[11px] font-bold text-amber-800 uppercase tracking-wider">
+              Macro Event Ahead ·
             </span>
           )}
 
-          <div className={`text-xs font-bold font-mono ${config.scoreColor} flex items-center gap-1.5`}>
+          <div className={`text-xs font-bold ${config.scoreColor} flex items-center gap-1.5`}>
             <span>{config.label}</span>
             <span className="opacity-75 font-normal">({score >= 0 ? `+${score.toFixed(2)}` : score.toFixed(2)})</span>
           </div>
         </div>
       </div>
 
-      <div className="space-y-2">
-        <div className="flex items-center justify-between text-[11px]">
-          <span className="text-[11px] font-semibold text-text-muted uppercase tracking-wider font-mono">Fundamental Bias Meter</span>
-          <span className="font-mono text-text-secondary text-xs">
-            Score: <strong className={config.scoreColor}>{score >= 0 ? `+${score.toFixed(2)}` : score.toFixed(2)}</strong>
-            <span className="text-text-muted font-normal ml-1 font-mono">[-1.0 to +1.0]</span>
-          </span>
-        </div>
-
-        <div className="relative w-full h-2 rounded-full bg-black/60 overflow-hidden border border-white/[0.08]">
-          <div className="absolute top-0 bottom-0 left-1/2 w-0.5 bg-white/25 z-10" />
-          <div className="absolute inset-0 bg-gradient-to-r from-rose-500/40 via-zinc-500/20 to-emerald-500/40" />
-          <div
-            className={`absolute top-0 bottom-0 w-2.5 rounded-full ${config.indicatorColor} shadow-md shadow-white/40 transition-all duration-700 ease-out -ml-1 z-20`}
-            style={{ left: `${normalizedPct}%` }}
-          />
-        </div>
-
-        <div className="flex justify-between text-[10px] text-text-muted font-mono">
-          <span className="text-rose-400 font-medium">Bearish (-1.0)</span>
-          <span className="text-zinc-400">Neutral (0.0)</span>
-          <span className="text-emerald-400 font-medium">Bullish (+1.0)</span>
-        </div>
-      </div>
-
-      <div className="p-4 rounded-xl bg-white/[0.02] border border-cyan-500/20 space-y-2.5">
-        <div className="flex items-center justify-between gap-2 text-[10px]">
-          <span className="font-bold uppercase tracking-wider text-cyan-400 font-mono flex items-center gap-1.5">
-            <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
-            <span>Dominant Market Driver</span>
-          </span>
-          {sentiment.speaker_entity && (
-            <span className="font-mono text-text-muted">
-              Source: <strong className="text-zinc-200 font-semibold">{sentiment.speaker_entity}</strong>
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        <div className="lg:col-span-5 space-y-2.5">
+          <div className="flex items-center justify-between text-[11px] font-mono tabular-nums">
+            <span className="font-semibold text-slate-500 uppercase tracking-wider">Fundamental Bias Meter</span>
+            <span className="text-slate-600 text-xs">
+              Score <strong className={config.scoreColor}>{score >= 0 ? `+${score.toFixed(2)}` : score.toFixed(2)}</strong>
+              <span className="text-slate-500 font-normal ml-1">[-1.0 to +1.0]</span>
             </span>
+          </div>
+
+          <div className="relative w-full h-2 rounded-full bg-slate-900/10 overflow-hidden">
+            <div className="absolute top-0 bottom-0 left-1/2 w-0.5 bg-slate-900/25 z-10" />
+            <div
+              className={`absolute top-0 bottom-0 w-2.5 rounded-full ${config.indicatorColor} transition-all duration-500 ease-out -ml-1 z-20`}
+              style={{ left: `${normalizedPct}%` }}
+            />
+          </div>
+
+          <div className="flex justify-between text-[10px] text-slate-500 font-mono tabular-nums">
+            <span className="text-rose-700 font-semibold">Bearish (-1.0)</span>
+            <span className="text-slate-500">Neutral (0.0)</span>
+            <span className="text-emerald-700 font-semibold">Bullish (+1.0)</span>
+          </div>
+        </div>
+
+        <div className="lg:col-span-7 lg:border-l border-slate-900/10 lg:pl-6 space-y-2">
+          <div className="flex items-center justify-between gap-2 text-[10px] font-mono">
+            <span className="font-bold uppercase tracking-wider text-[#0369a1]">
+              Dominant Market Driver
+            </span>
+            {sentiment.speaker_entity && (
+              <span className="text-slate-500">
+                Source: <strong className="text-slate-900 font-semibold">{sentiment.speaker_entity}</strong>
+              </span>
+            )}
+          </div>
+
+          <p className="text-xs text-slate-800 leading-relaxed">
+            &ldquo;{sentiment.dominant_narrative}&rdquo;
+          </p>
+
+          {sentiment.confluence_impact && (
+            <div className="text-[11px] text-slate-600 flex items-center gap-1.5 pt-1">
+              <span className="text-[#0369a1] font-semibold font-mono text-[10px]">FACTOR 9:</span>
+              <span className="text-slate-700">{sentiment.confluence_impact}</span>
+            </div>
           )}
         </div>
-
-        <p className="text-xs text-zinc-200 italic leading-relaxed">
-          &ldquo;{sentiment.dominant_narrative}&rdquo;
-        </p>
-
-        {sentiment.confluence_impact && (
-          <div className="text-[11px] text-text-secondary flex items-center gap-1.5 pt-1.5 border-t border-white/[0.06]">
-            <span className="text-cyan-400 font-semibold font-mono text-[10px]">Factor 9:</span>
-            <span className="text-zinc-300">{sentiment.confluence_impact}</span>
-          </div>
-        )}
       </div>
 
-      <div className="pt-1 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-[10px] text-text-muted font-mono border-t border-white/[0.04]">
+      <div className="pt-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-[10px] text-slate-500 font-mono border-t border-slate-900/10">
         <div className="flex items-center gap-2 truncate">
-          <span className="text-text-muted uppercase tracking-wider">Top Catalyst:</span>
-          <span className="text-text-secondary truncate">{sentiment.key_factors?.[0] || 'Spot ETF inflows and rate stability.'}</span>
+          <span className="text-slate-500 uppercase tracking-wider">Top Catalyst:</span>
+          <span className="text-slate-700 truncate">{sentiment.key_factors?.[0] || 'Spot ETF inflows and rate stability.'}</span>
         </div>
 
-        <span className="text-text-muted flex-shrink-0">
-          Updated: <strong className="text-text-secondary font-normal">{formatEvaluatedTime(sentiment.evaluated_at)}</strong>
+        <span className="text-slate-500 flex-shrink-0 tabular-nums">
+          Updated: <strong className="text-slate-700 font-normal">{formatEvaluatedTime(sentiment.evaluated_at)}</strong>
         </span>
       </div>
     </div>

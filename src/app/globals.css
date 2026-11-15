@@ -1,24 +1,41 @@
 @import "tailwindcss";
 
 :root {
-  --bg-base: #070b14;
-  --bg-card: #0d121f;
-  --bg-elevated: #121829;
-  --glass-bg: rgba(13, 18, 31, 0.75);
-  --glass-border: rgba(255, 255, 255, 0.08);
-  --glass-blur: 16px;
-  --glass-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.5), inset 0 1px 0 0 rgba(255, 255, 255, 0.06);
+  /* 2.1 Daylight Theme (Signature Canvas & Warm Cream) */
+  --bg-main: #edf7fe;
+  --bg-base: #edf7fe;
+  --bg-card: #fdfaf3;
+  --bg-card-hover: #f3ead2;
+  --bg-elevated: #faf2df;
+  --bg-input: #ffffff;
 
-  --accent-green: #10b981;
-  --accent-red: #f43f5e;
-  --accent-theme: #ff2e54;
-  --accent-theme-hover: #e11d48;
-  --accent-cyan: #06b6d4;
-  --accent-amber: #f59e0b;
+  --canvas: #edf7fe;
+  --paper: #fdfaf3;
+  --paper-hover: #f3ead2;
+  --paper-elevated: #faf2df;
+  --hairline: rgba(15, 23, 42, 0.1);
+  --ocean: #0369a1;
+  --ocean-light: #0284c7;
 
-  --text-primary: #f8fafc;
-  --text-secondary: #94a3b8;
+  --primary: #0284c7;
+  --primary-hover: #0369a1;
+  --primary-soft: #e0f2fe;
+  --primary-ink: #ffffff;
+
+  --accent-green: #059669;
+  --accent-red: #e11d48;
+  --accent-theme: #0284c7;
+  --accent-theme-hover: #0369a1;
+  --accent-cyan: #0284c7;
+  --accent-amber: #d97706;
+
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
   --text-muted: #64748b;
+
+  --border: rgba(15, 23, 42, 0.08);
+  --border-subtle: rgba(15, 23, 42, 0.05);
+  --border-hover: rgba(2, 132, 199, 0.25);
 
   --radius-card: 14px;
   --radius-md: 10px;
@@ -27,19 +44,51 @@
 }
 
 @theme {
+  --font-sans: var(--font-geist-sans), -apple-system, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+
+  --color-canvas: var(--bg-main);
+  --color-paper: var(--bg-card);
+  --color-paper-hover: var(--bg-card-hover);
+  --color-paper-elevated: var(--bg-elevated);
+  --color-hairline: var(--hairline);
+  --color-ocean: var(--ocean);
+  --color-ocean-light: var(--ocean-light);
+
+  --color-bg-main: var(--bg-main);
+  --color-bg-base: var(--bg-base);
+  --color-bg-card: var(--bg-card);
+  --color-bg-card-hover: var(--bg-card-hover);
+  --color-bg-elevated: var(--bg-elevated);
+  --color-bg-input: var(--bg-input);
+
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-soft: var(--primary-soft);
+  --color-primary-ink: var(--primary-ink);
+
   --color-accent-green: var(--accent-green);
   --color-accent-red: var(--accent-red);
   --color-accent-theme: var(--accent-theme);
-  
+  --color-accent-theme-hover: var(--accent-theme-hover);
+  --color-accent-amber: var(--accent-amber);
+  --color-accent-cyan: var(--accent-cyan);
+
   --color-text-primary: var(--text-primary);
   --color-text-secondary: var(--text-secondary);
   --color-text-muted: var(--text-muted);
+
+  --color-border-main: var(--border);
+  --color-border-subtle: var(--border-subtle);
+  --color-border-hover: var(--border-hover);
 }
 
 body {
-  background-color: var(--bg-base);
+  background-color: var(--bg-main);
   color: var(--text-primary);
   min-height: 100vh;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
 }
 
 @layer base {
@@ -55,93 +104,53 @@ body {
     cursor: not-allowed;
   }
 }
+
+/* Surface / Card Elevation (Artisanal Warm Cream on Sky Canvas) */
 .glass-card {
-  background: var(--glass-bg);
-  -webkit-backdrop-filter: blur(var(--glass-blur));
-  backdrop-filter: blur(var(--glass-blur));
-  border: 1px solid var(--glass-border);
+  background-color: var(--bg-card);
+  border: 1px solid var(--border);
   border-radius: var(--radius-card);
-  box-shadow: var(--glass-shadow);
+  box-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.04), 0 1px 2px -1px rgba(15, 23, 42, 0.04);
   padding: 20px;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
 }
 
 .glass-card:hover {
-  border-color: rgba(255, 255, 255, 0.14);
+  border-color: var(--border-hover);
+  box-shadow: 0 4px 6px -1px rgba(15, 23, 42, 0.06);
 }
 
+/* 1 Allowed Frosted Glass Surface (Sticky Header) */
 .glass-navbar {
-  background: rgba(7, 11, 20, 0.82);
-  -webkit-backdrop-filter: blur(20px);
-  backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
-}
-.glow-red {
-  box-shadow: 0 0 24px -4px rgba(255, 46, 84, 0.3);
+  background: rgba(237, 247, 254, 0.88);
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
 }
 
-.glow-emerald {
-  box-shadow: 0 0 24px -4px rgba(16, 185, 129, 0.3);
-}
 
-.glow-amber {
-  box-shadow: 0 0 24px -4px rgba(245, 158, 11, 0.3);
-}
-
-.border-glow-red {
-  border-color: rgba(255, 46, 84, 0.4);
-}
-
-.border-glow-emerald {
-  border-color: rgba(16, 185, 129, 0.4);
-}
-.glass-badge-watchlist {
-  background: rgba(245, 158, 11, 0.1);
-  color: #fbbf24;
-  border: 1px solid rgba(245, 158, 11, 0.22);
-  border-radius: var(--radius-sm);
-}
-
-.glass-badge-signal {
-  background: rgba(16, 185, 129, 0.1);
-  color: #34d399;
-  border: 1px solid rgba(16, 185, 129, 0.22);
-  border-radius: var(--radius-sm);
-}
-
-.glass-badge-nothit {
-  background: rgba(244, 63, 94, 0.1);
-  color: #f43f5e;
-  border: 1px solid rgba(244, 63, 94, 0.22);
-  border-radius: var(--radius-sm);
-}
-
-.glass-badge-neutral {
-  background: rgba(255, 255, 255, 0.04);
-  color: #94a3b8;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: var(--radius-sm);
-}
+/* Custom Scrollbars */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: rgba(7, 11, 20, 0.6);
+  background: rgba(237, 247, 254, 0.8);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.16);
+  background: rgba(15, 23, 42, 0.18);
   border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.3);
+  background: rgba(15, 23, 42, 0.32);
 }
+
 * {
   scrollbar-width: thin;
-  scrollbar-color: rgba(255, 255, 255, 0.16) rgba(7, 11, 20, 0.6);
+  scrollbar-color: rgba(15, 23, 42, 0.18) rgba(237, 247, 254, 0.8);
 }
 
 .custom-scrollbar::-webkit-scrollbar {
@@ -149,18 +158,18 @@ body {
 }
 
 .custom-scrollbar::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.02);
-  border-radius: 9999px;
+  background: transparent;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.14);
+  background: rgba(15, 23, 42, 0.15);
   border-radius: 9999px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.28);
+  background: rgba(15, 23, 42, 0.3);
 }
+
 @keyframes tickerSlide {
   0% {
     transform: translateX(0);

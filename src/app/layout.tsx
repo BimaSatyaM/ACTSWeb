@@ -16,8 +16,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "ACTS — Adaptive Confluence Trading System",
-  description: "Frosted glass dashboard and self-learning AI trading intelligence for digital assets.",
+  title: "ACTS - Adaptive Confluence Trading System",
+  description: "Daylight dashboard and self-learning AI trading intelligence for digital assets.",
 };
 
 export default function RootLayout({
@@ -27,7 +27,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col bg-[#070b14]`}>
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col bg-[#edf7fe] text-[#0f172a]`}>
         <AuthProvider>
           <AppBackground />
 

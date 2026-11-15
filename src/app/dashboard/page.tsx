@@ -136,297 +136,263 @@ export default function DashboardOverview() {
         <MarketTickerBar className="w-full" />
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="p-4 sm:p-5 rounded-2xl bg-[#0d121f]/80 hover:bg-[#0d121f] border border-white/[0.08] hover:border-emerald-500/30 backdrop-blur-xl transition-all duration-200 flex flex-col justify-between space-y-3 shadow-lg group">
-          <div className="flex items-center justify-between">
-            <span className="text-[10px] font-mono font-semibold text-text-muted uppercase tracking-wider">System Engine</span>
-            <span className={`w-2 h-2 rounded-full ${isOnline ? 'bg-emerald-400 animate-pulse shadow-[0_0_8px_rgba(52,211,153,0.8)]' : 'bg-rose-400'}`} />
-          </div>
-          <div className="space-y-0.5">
-            <span className="text-xl font-bold text-white tracking-tight block">
-              {isLoadingStatus ? 'Loading...' : (isOnline ? 'Active' : 'Offline')}
-            </span>
-            <span className="text-[11px] text-text-secondary font-mono block">
-              Uptime: {calculateUptime(statusData?.engine_started_at, now)}
+      <div className="border-y border-slate-900/10 py-4 grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-0">
+        <div className="space-y-1 lg:pr-6">
+          <div className="flex items-center gap-2">
+            <span className={`w-2 h-2 rounded-full ${isOnline ? 'bg-emerald-600 animate-pulse' : 'bg-rose-600'}`} />
+            <span className="text-[10px] font-mono font-semibold text-slate-500 uppercase tracking-[0.14em]">
+              System Engine
             </span>
           </div>
+          <div className="text-xl font-bold text-slate-900 tracking-tight tabular-nums">
+            {isLoadingStatus ? 'Loading...' : (isOnline ? 'Active' : 'Offline')}
+          </div>
+          <span className="text-[11px] text-slate-600 font-mono tabular-nums block">
+            Uptime {calculateUptime(statusData?.engine_started_at, now)}
+          </span>
         </div>
 
-        <div className="p-4 sm:p-5 rounded-2xl bg-[#0d121f]/80 hover:bg-[#0d121f] border border-white/[0.08] hover:border-indigo-500/30 backdrop-blur-xl transition-all duration-200 flex flex-col justify-between space-y-3 shadow-lg group">
-          <div className="flex items-center justify-between">
-            <span className="text-[10px] font-mono font-semibold text-text-muted uppercase tracking-wider">Active Regime</span>
-            <span className="text-[10px] font-mono px-2 py-0.5 rounded-md bg-indigo-500/10 text-indigo-300 border border-indigo-500/20 font-semibold">
-              {regimeData?.confidence ? `${(regimeData.confidence * 100).toFixed(0)}% Conf` : 'Dynamic'}
+        <div className="space-y-1 lg:border-l border-slate-900/10 lg:px-6">
+          <div className="flex items-center justify-between gap-2">
+            <span className="text-[10px] font-mono font-semibold text-slate-500 uppercase tracking-[0.14em]">
+              Active Regime
+            </span>
+            <span className="text-[10px] font-mono text-[#0369a1] font-bold tabular-nums">
+              {regimeData?.confidence ? `${(regimeData.confidence * 100).toFixed(0)}% CONF` : 'DYNAMIC'}
             </span>
           </div>
-          <div className="space-y-0.5">
-            <div className="text-lg font-bold text-white tracking-tight truncate">
-              {regimeData?.current_labels?.length 
-                ? regimeData.current_labels.join(' + ').replace(/_/g, ' ') 
-                : 'Trending / Breakout'}
-            </div>
-            <span className="text-[11px] text-text-secondary font-mono block">
-              Multi-factor confluence active
-            </span>
+          <div className="text-lg font-bold text-slate-900 tracking-tight truncate">
+            {regimeData?.current_labels?.length
+              ? regimeData.current_labels.join(' + ').replace(/_/g, ' ')
+              : 'Trending / Breakout'}
           </div>
+          <span className="text-[11px] text-slate-600 font-mono block">
+            Multi-factor confluence active
+          </span>
         </div>
 
-        <div className="p-4 sm:p-5 rounded-2xl bg-[#0d121f]/80 hover:bg-[#0d121f] border border-white/[0.08] hover:border-cyan-500/30 backdrop-blur-xl transition-all duration-200 flex flex-col justify-between space-y-3 shadow-lg group">
-          <div className="flex items-center justify-between">
-            <span className="text-[10px] font-mono font-semibold text-text-muted uppercase tracking-wider">Heartbeat Cycle</span>
-            <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
-          </div>
-          <div className="space-y-0.5">
-            <span className="text-xl font-bold text-white tracking-tight block">
-              {statusData?.minutes_since_last_event !== undefined
-                ? `${statusData.minutes_since_last_event}m ago`
-                : 'Real-time'}
-            </span>
-            <span className="text-[11px] text-text-secondary font-mono block">
-              15m candle evaluation
+        <div className="space-y-1 lg:border-l border-slate-900/10 lg:px-6">
+          <div className="flex items-center gap-2">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#0284c7]" />
+            <span className="text-[10px] font-mono font-semibold text-slate-500 uppercase tracking-[0.14em]">
+              Heartbeat Cycle
             </span>
           </div>
+          <div className="text-xl font-bold text-slate-900 tracking-tight font-mono tabular-nums">
+            {statusData?.minutes_since_last_event !== undefined
+              ? `${statusData.minutes_since_last_event}m ago`
+              : 'Real-time'}
+          </div>
+          <span className="text-[11px] text-slate-600 font-mono block">
+            15m candle evaluation
+          </span>
         </div>
 
-        <div className="p-4 sm:p-5 rounded-2xl bg-[#0d121f]/80 hover:bg-[#0d121f] border border-white/[0.08] hover:border-amber-500/30 backdrop-blur-xl transition-all duration-200 flex flex-col justify-between space-y-3 shadow-lg group">
-          <div className="flex items-center justify-between">
-            <span className="text-[10px] font-mono font-semibold text-text-muted uppercase tracking-wider">Last Signal</span>
-            <span className="text-[10px] font-mono text-zinc-400 font-semibold">
+        <div className="space-y-1 lg:border-l border-slate-900/10 lg:pl-6">
+          <div className="flex items-center justify-between gap-2">
+            <span className="text-[10px] font-mono font-semibold text-slate-500 uppercase tracking-[0.14em]">
+              Last Signal
+            </span>
+            <span className="text-[10px] font-mono text-slate-600 font-semibold tabular-nums">
               {statusData?.latest_signal_at ? formatDate(statusData.latest_signal_at) : 'Real-time'}
             </span>
           </div>
-          <div className="space-y-0.5">
-            <span className="text-xl font-bold text-white tracking-tight block">
-              {statusData?.latest_signal_at ? formatTime(statusData.latest_signal_at) : 'Active'}
-            </span>
-            <span className="text-[11px] text-text-secondary font-mono block">
-              Continuous autonomous feed
-            </span>
+          <div className="text-xl font-bold text-slate-900 tracking-tight font-mono tabular-nums">
+            {statusData?.latest_signal_at ? formatTime(statusData.latest_signal_at) : 'Active'}
           </div>
+          <span className="text-[11px] text-slate-600 font-mono block">
+            Continuous autonomous feed
+          </span>
         </div>
       </div>
 
-      <div className="rounded-2xl bg-[#0d121f]/80 border border-white/[0.08] backdrop-blur-xl p-5 sm:p-6 shadow-xl">
-        <PerformanceCurveCard />
-      </div>
+      <PerformanceCurveCard />
 
-      <div className="grid lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2 space-y-3">
-          <div className="flex items-center justify-between px-1">
-            <h2 className="text-sm font-semibold text-white">Latest Trading Signal</h2>
-            <Link 
-              href="/dashboard/signals" 
-              className="text-xs font-semibold text-accent-theme hover:underline flex items-center gap-1 group"
-            >
-              <span>View Live Chart & Signals</span>
-              <span className="group-hover:translate-x-0.5 transition-transform">→</span>
-            </Link>
+      <div className="grid lg:grid-cols-3 gap-6 lg:gap-8 items-start">
+        <div className="lg:col-span-2 space-y-6">
+          <div className="space-y-3">
+            <div className="flex items-center justify-between">
+              <h2 className="text-xs font-mono uppercase tracking-[0.14em] font-bold text-slate-600">
+                Latest Trading Signal
+              </h2>
+              <Link
+                href="/dashboard/signals"
+                className="text-xs font-semibold text-[#0369a1] hover:text-slate-900 hover:underline flex items-center gap-1 group"
+              >
+                <span>Live Chart & Signals</span>
+                <span className="group-hover:translate-x-0.5 transition-transform font-mono">→</span>
+              </Link>
+            </div>
+
+            {isLoadingSignals ? (
+              <div className="p-6 rounded-2xl animate-pulse space-y-4 bg-[#faf2df] border border-slate-900/10">
+                <div className="h-6 w-32 bg-slate-900/10 rounded-md" />
+                <div className="h-16 bg-slate-900/5 rounded-lg" />
+              </div>
+            ) : !latestSignal ? (
+              <div className="p-8 rounded-2xl text-center text-slate-500 text-xs font-mono bg-[#faf2df] border border-slate-900/10">
+                No recent signals recorded. Indicators evaluating live market...
+              </div>
+            ) : (
+              (() => {
+                const payload = latestSignal.payload
+                const setup = payload.setup_context
+                const isSignal = payload.tier === 'SIGNAL'
+                const isBuy = setup?.direction === 'BUY'
+
+                return (
+                  <div className={`p-5 sm:p-6 rounded-2xl bg-[#faf2df] border border-slate-900/10 border-t-2 ${isBuy ? 'border-t-emerald-600' : 'border-t-rose-600'} space-y-5`}>
+                    <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-900/10 pb-4">
+                      <div className="flex items-center gap-3">
+                        <AssetIcon symbol={setup?.symbol || 'BTCUSDT'} size="md" />
+                        <span className="text-xl font-extrabold text-slate-900 tracking-tight">
+                          {setup?.symbol || 'BTCUSDT'}
+                        </span>
+                        <span className={`inline-flex items-center gap-1.5 text-xs font-black uppercase tracking-wide ${
+                          isBuy ? 'text-emerald-700' : 'text-rose-700'
+                        }`}>
+                          {isBuy ? (
+                            <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                              <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" />
+                              <polyline points="17 6 23 6 23 12" />
+                            </svg>
+                          ) : (
+                            <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                              <polyline points="23 18 13.5 8.5 8.5 13.5 1 6" />
+                              <polyline points="17 18 23 18 23 12" />
+                            </svg>
+                          )}
+                          <span>{setup?.direction || (isBuy ? 'BUY' : 'SELL')}</span>
+                        </span>
+                        <span className="text-slate-500">·</span>
+                        <Badge variant={isSignal ? 'SIGNAL' : 'WATCHLIST'}>
+                          {payload.tier}
+                        </Badge>
+                      </div>
+
+                      <div className="flex items-center gap-4">
+                        <div className="text-right">
+                          <span className="text-[10px] text-slate-500 uppercase tracking-wider block font-mono">Confluence</span>
+                          <span className="text-base font-black text-slate-900 font-mono tabular-nums">
+                            {payload.confluence_score.toFixed(1)}<span className="text-xs text-slate-500 font-normal">/100</span>
+                          </span>
+                        </div>
+                        <div className="text-right border-l border-slate-900/10 pl-4">
+                          <span className="text-[10px] text-slate-500 uppercase tracking-wider block font-mono">Grade</span>
+                          <span className="text-xs font-bold text-slate-800">
+                            {payload.grade.replace(/_/g, ' ')}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <MultiTierProgressTracker
+                      symbol={setup?.symbol}
+                      entryPrice={setup?.entry_price || 0}
+                      stopLoss={setup?.stop_loss || 0}
+                      tp1={setup?.tp1}
+                      tp2={setup?.tp2}
+                      tp3={setup?.tp3}
+                      direction={setup?.direction}
+                      systemOutcome={latestSignal.outcome?.system_outcome}
+                      systemOutcomeDetail={latestSignal.outcome?.system_outcome_detail}
+                      status={latestSignal.outcome?.status}
+                    />
+
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-3.5 border-t border-slate-900/10 text-xs">
+                      <div className="flex items-center gap-2 text-slate-500 text-[11px] font-mono tabular-nums">
+                        <svg className="w-3.5 h-3.5 text-slate-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <circle cx="12" cy="12" r="10" />
+                          <polyline points="12 6 12 12 16 14" />
+                        </svg>
+                        <span>Published {formatDate(latestSignal.published_at)} · {formatTime(latestSignal.published_at)}</span>
+                      </div>
+
+                      <Link
+                        href="/dashboard/signals"
+                        className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#0369a1] hover:text-slate-900 hover:underline group cursor-pointer"
+                      >
+                        <span>Open Execution Ticket</span>
+                        <span className="group-hover:translate-x-0.5 transition-transform font-mono">→</span>
+                      </Link>
+                    </div>
+                  </div>
+                )
+              })()
+            )}
           </div>
 
-          {isLoadingSignals ? (
-            <div className="p-6 rounded-2xl animate-pulse space-y-4 bg-[#0d121f]/80 border border-white/[0.08] backdrop-blur-md">
-              <div className="h-6 w-32 bg-white/[0.06] rounded-md" />
-              <div className="h-16 bg-white/[0.04] rounded-lg" />
-            </div>
-          ) : !latestSignal ? (
-            <div className="p-8 rounded-2xl text-center text-text-secondary text-xs bg-[#0d121f]/80 border border-white/[0.08] backdrop-blur-md">
-              No recent signals recorded. Indicators evaluating live market...
-            </div>
-          ) : (
-            (() => {
-              const payload = latestSignal.payload
-              const setup = payload.setup_context
-              const isSignal = payload.tier === 'SIGNAL'
-              const isBuy = setup?.direction === 'BUY'
-
-              return (
-                <div className={`p-5 sm:p-6 rounded-2xl bg-[#0d121f]/90 border ${isBuy ? 'border-emerald-500/25 hover:border-emerald-500/40' : 'border-rose-500/25 hover:border-rose-500/40'} backdrop-blur-xl space-y-5 shadow-xl transition-all duration-200`}>
-                  <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/[0.06] pb-4">
-                    <div className="flex items-center gap-3">
-                      <AssetIcon symbol={setup?.symbol || 'BTCUSDT'} size="md" />
-                      <span className="text-xl font-extrabold text-white tracking-tight">
-                        {setup?.symbol || 'BTCUSDT'}
-                      </span>
-                      <span className={`inline-flex items-center gap-1.5 text-xs font-black uppercase tracking-wide ${
-                        isBuy ? 'text-emerald-400' : 'text-rose-400'
-                      }`}>
-                        {isBuy ? (
-                          <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                            <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" />
-                            <polyline points="17 6 23 6 23 12" />
-                          </svg>
-                        ) : (
-                          <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                            <polyline points="23 18 13.5 8.5 8.5 13.5 1 6" />
-                            <polyline points="17 18 23 18 23 12" />
-                          </svg>
-                        )}
-                        <span>{setup?.direction || (isBuy ? 'BUY' : 'SELL')}</span>
-                      </span>
-                      <span className="h-3 w-[1px] bg-white/[0.12]" />
-                      <Badge variant={isSignal ? 'SIGNAL' : 'WATCHLIST'}>
-                        {payload.tier}
-                      </Badge>
-                    </div>
-
-                    <div className="flex items-center gap-3">
-                      <div className="text-right">
-                        <span className="text-[10px] text-text-muted uppercase tracking-wider block">Confluence Score</span>
-                        <span className="text-base font-black text-white font-mono">
-                          {payload.confluence_score.toFixed(1)}<span className="text-xs text-text-muted font-normal">/100</span>
-                        </span>
-                      </div>
-                      <div className="text-right border-l border-white/[0.08] pl-3">
-                        <span className="text-[10px] text-text-muted uppercase tracking-wider block">Grade</span>
-                        <span className="text-xs font-bold text-zinc-200">
-                          {payload.grade.replace(/_/g, ' ')}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <MultiTierProgressTracker
-                    symbol={setup?.symbol}
-                    entryPrice={setup?.entry_price || 0}
-                    stopLoss={setup?.stop_loss || 0}
-                    tp1={setup?.tp1}
-                    tp2={setup?.tp2}
-                    tp3={setup?.tp3}
-                    direction={setup?.direction}
-                    systemOutcome={latestSignal.outcome?.system_outcome}
-                    systemOutcomeDetail={latestSignal.outcome?.system_outcome_detail}
-                    status={latestSignal.outcome?.status}
-                  />
-
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-3.5 border-t border-white/[0.06] text-xs">
-                    <div className="flex items-center gap-2 text-text-muted text-[11px] font-mono">
-                      <svg className="w-3.5 h-3.5 text-zinc-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                        <circle cx="12" cy="12" r="10" />
-                        <polyline points="12 6 12 12 16 14" />
-                      </svg>
-                      <span>Published at {formatDate(latestSignal.published_at)} • {formatTime(latestSignal.published_at)}</span>
-                    </div>
-
-                    <Link
-                      href="/dashboard/signals"
-                      className="inline-flex items-center gap-1.5 text-xs font-semibold text-accent-theme hover:underline group cursor-pointer"
-                    >
-                      <span>Open Live Chart & Telemetry</span>
-                      <span className="group-hover:translate-x-0.5 transition-transform">→</span>
-                    </Link>
-                  </div>
+          <div className="border-t border-slate-900/10 pt-5 grid grid-cols-1 sm:grid-cols-2 gap-8">
+            <Link
+              href="/dashboard/auto-trading"
+              className="group flex flex-col justify-between space-y-2.5 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#0284c7]"
+            >
+              <div className="space-y-1.5">
+                <div className="flex items-center gap-2.5">
+                  <BinanceLogo size="sm" variant="yellow" />
+                  <h3 className="text-sm font-bold text-slate-900 group-hover:text-[#0369a1] transition-colors">
+                    Auto-Pilot Terminal
+                  </h3>
+                  <span className="text-[10px] font-mono uppercase tracking-wider text-amber-800 font-semibold">
+                    · Algorithmic
+                  </span>
                 </div>
-              )
-            })()
-          )}
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div className="relative group rounded-2xl bg-[#0d121f]/90 hover:bg-[#0f172a]/95 border border-white/[0.08] hover:border-amber-500/30 backdrop-blur-xl p-5 shadow-xl transition-all duration-300 flex flex-col justify-between space-y-4">
-              <div className="space-y-3">
-                <div className="flex items-center gap-3">
-                  <BinanceLogo size="md" variant="yellow" />
-                  <div>
-                    <h3 className="text-sm font-bold text-white tracking-tight">
-                      Auto-Pilot Terminal
-                    </h3>
-                    <span className="text-[10px] font-mono text-amber-400/90 tracking-wider uppercase font-semibold block">
-                      Algorithmic Execution
-                    </span>
-                  </div>
-                </div>
-
-                <p className="text-xs text-text-secondary leading-relaxed">
-                  Non-custodial 24/7 cloud execution on Bitcoin Futures with dynamic bracket stops, scale-out targets, and automated trailing protection.
+                <p className="text-xs text-slate-600 leading-relaxed">
+                  Non-custodial 24/7 cloud execution on Bitcoin Futures with bracket stops, scale-out targets, and trailing protection.
                 </p>
-
-                <div className="flex flex-wrap items-center gap-x-3.5 gap-y-1.5 pt-1 text-[11px] font-mono text-zinc-400">
-                  <span className="inline-flex items-center gap-1.5">
-                    <span className="w-1.5 h-1.5 rounded-full bg-amber-400/90" />
-                    <span>BTCUSDT Futures</span>
-                  </span>
-                  <span className="inline-flex items-center gap-1.5">
-                    <span className="w-1.5 h-1.5 rounded-full bg-amber-400/90" />
-                    <span>Dynamic Bracket</span>
-                  </span>
-                  <span className="inline-flex items-center gap-1.5">
-                    <span className="w-1.5 h-1.5 rounded-full bg-amber-400/90" />
-                    <span>1:2.0+ R:R</span>
-                  </span>
-                </div>
               </div>
-
-              <div className="pt-2">
-                <Link
-                  href="/dashboard/auto-trading"
-                  className="inline-flex items-center gap-1.5 text-xs font-bold text-amber-400 hover:text-amber-300 hover:underline transition-all group/btn cursor-pointer"
-                >
-                  <span>Configure Auto-Pilot</span>
-                  <span className="group-hover/btn:translate-x-1 transition-transform font-mono">→</span>
-                </Link>
+              <div className="flex items-center justify-between text-[11px] font-mono text-slate-500 pt-1">
+                <span>BTCUSDT Futures · 1:2.0+ R:R</span>
+                <span className="font-bold text-amber-800 group-hover:translate-x-0.5 transition-transform">
+                  Configure →
+                </span>
               </div>
-            </div>
+            </Link>
 
-            <div className="relative group rounded-2xl bg-[#0d121f]/90 hover:bg-[#0f172a]/95 border border-white/[0.08] hover:border-cyan-500/30 backdrop-blur-xl p-5 shadow-xl transition-all duration-300 flex flex-col justify-between space-y-4">
-              <div className="space-y-3">
-                <div className="flex items-center gap-3">
-                  <svg className="w-6 h-6 text-cyan-400 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <Link
+              href="/dashboard/calendar"
+              className="group flex flex-col justify-between space-y-2.5 sm:border-l border-slate-900/10 sm:pl-8 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#0284c7]"
+            >
+              <div className="space-y-1.5">
+                <div className="flex items-center gap-2.5">
+                  <svg className="w-4 h-4 text-[#0284c7] flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <rect width="18" height="18" x="3" y="4" rx="2" />
                     <line x1="16" x2="16" y1="2" y2="6" />
                     <line x1="8" x2="8" y1="2" y2="6" />
                     <line x1="3" x2="21" y1="10" y2="10" />
                   </svg>
-                  <div>
-                    <h3 className="text-sm font-bold text-white tracking-tight">
-                      Performance Calendar
-                    </h3>
-                    <span className="text-[10px] font-mono text-cyan-400/90 tracking-wider uppercase font-semibold block">
-                      Session Journal & Audit
-                    </span>
-                  </div>
+                  <h3 className="text-sm font-bold text-slate-900 group-hover:text-[#0369a1] transition-colors">
+                    Performance Calendar
+                  </h3>
+                  <span className="text-[10px] font-mono uppercase tracking-wider text-[#0369a1] font-semibold">
+                    · Journal
+                  </span>
                 </div>
-
-                <p className="text-xs text-text-secondary leading-relaxed">
-                  Review daily trade outcomes, win rates, and target profit logs across historical market sessions with interactive multi-tier trade inspection.
+                <p className="text-xs text-slate-600 leading-relaxed">
+                  Daily outcome audit, session win rates, and target profit logs across historical sessions with multi-tier inspection.
                 </p>
-
-                <div className="flex flex-wrap items-center gap-x-3.5 gap-y-1.5 pt-1 text-[11px] font-mono text-zinc-400">
-                  <span className="inline-flex items-center gap-1.5">
-                    <span className="w-1.5 h-1.5 rounded-full bg-cyan-400/90" />
-                    <span>Session Breakdown</span>
-                  </span>
-                  <span className="inline-flex items-center gap-1.5">
-                    <span className="w-1.5 h-1.5 rounded-full bg-cyan-400/90" />
-                    <span>Win Rate Heatmap</span>
-                  </span>
-                  <span className="inline-flex items-center gap-1.5">
-                    <span className="w-1.5 h-1.5 rounded-full bg-cyan-400/90" />
-                    <span>Trade Audits</span>
-                  </span>
-                </div>
               </div>
-
-              <div className="pt-2">
-                <Link
-                  href="/dashboard/calendar"
-                  className="inline-flex items-center gap-1.5 text-xs font-bold text-cyan-400 hover:text-cyan-300 hover:underline transition-all group/btn cursor-pointer"
-                >
-                  <span>Open Calendar</span>
-                  <span className="group-hover/btn:translate-x-1 transition-transform font-mono">→</span>
-                </Link>
+              <div className="flex items-center justify-between text-[11px] font-mono text-slate-500 pt-1">
+                <span>UTC Sessions · Trade Audits</span>
+                <span className="font-bold text-[#0369a1] group-hover:translate-x-0.5 transition-transform">
+                  Open Journal →
+                </span>
               </div>
-            </div>
+            </Link>
           </div>
         </div>
 
         <div className="space-y-3">
-          <div className="flex items-center justify-between px-1">
-            <h2 className="text-sm font-semibold text-white">Upcoming Fed & Macro Events</h2>
-            <Link 
-              href="/dashboard/news" 
-              className="text-xs font-semibold text-accent-theme hover:underline flex items-center gap-1"
+          <div className="flex items-center justify-between">
+            <h2 className="text-xs font-mono uppercase tracking-[0.14em] font-bold text-slate-600">
+              Macro Releases
+            </h2>
+            <Link
+              href="/dashboard/news"
+              className="text-xs font-semibold text-[#0369a1] hover:text-slate-900 hover:underline flex items-center gap-1"
             >
               <span>All News</span>
-              <span>→</span>
+              <span className="font-mono">→</span>
             </Link>
           </div>
 
@@ -434,15 +400,15 @@ export default function DashboardOverview() {
         </div>
       </div>
 
-      <footer className="pt-6 pb-2 border-t border-white/[0.06] flex flex-col sm:flex-row items-center justify-between gap-3 text-[11px] text-text-muted font-mono">
+      <footer className="pt-6 pb-2 border-t border-slate-900/10 flex flex-col sm:flex-row items-center justify-between gap-3 text-[11px] text-slate-500 font-mono">
         <div className="flex items-center gap-2">
           <span>© {new Date().getFullYear()} ACTS (Adaptive Confluence Trading System).</span>
-          <span className="hidden sm:inline text-zinc-600">·</span>
+          <span className="hidden sm:inline text-slate-500">·</span>
           <span className="hidden sm:inline">All rights reserved.</span>
         </div>
         <div className="flex items-center gap-4 text-[10px]">
           <span>Quantitative Execution Engine</span>
-          <span className="text-zinc-600">·</span>
+          <span className="text-slate-500">·</span>
           <span>v2.4.0 Multi-Regime</span>
         </div>
       </footer>

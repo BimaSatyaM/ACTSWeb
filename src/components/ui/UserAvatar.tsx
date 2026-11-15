@@ -34,14 +34,14 @@ export const UserAvatar: React.FC<UserAvatarProps> = ({
         referrerPolicy="no-referrer"
         crossOrigin="anonymous"
         onError={() => setImageError(true)}
-        className={`${sizeClasses[size]} rounded-full border border-white/[0.12] object-cover flex-shrink-0 shadow-sm ${className}`}
+        className={`${sizeClasses[size]} rounded-full border border-slate-900/10 object-cover flex-shrink-0 shadow-xs ${className}`}
       />
     )
   }
 
   return (
     <div
-      className={`${sizeClasses[size]} rounded-full bg-gradient-to-br from-[#c41e3a] to-[#6b0f20] border border-white/[0.15] text-white font-bold font-mono flex items-center justify-center flex-shrink-0 shadow-md ${className}`}
+      className={`${sizeClasses[size]} rounded-full bg-[#0369a1] border border-[#0369a1]/20 text-white font-bold font-mono flex items-center justify-center flex-shrink-0 shadow-xs ${className}`}
       title={name || 'User Profile'}
     >
       {initial}

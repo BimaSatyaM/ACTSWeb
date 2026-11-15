@@ -96,276 +96,225 @@ export default function IDXOverviewPage() {
   const displayStocks = CORE_SYMBOLS.map((sym) => stocks.find((s) => s.symbol === sym)).filter(Boolean) as StockMeta[]
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       <IDXCompositeBanner data={ihsgData || undefined} />
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-        
-        <div className="p-5 sm:p-6 rounded-2xl bg-[#0d121f] border border-white/[0.08] space-y-4 shadow-sm flex flex-col justify-between">
-          <div>
-            <div className="flex items-center justify-between pb-3 border-b border-white/[0.08]">
-              <div className="flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-accent-theme animate-pulse" />
-                <h2 className="text-sm font-bold text-white uppercase tracking-wider">
-                  Core Universe Watchlist
-                </h2>
-                <span className="text-[10px] font-mono text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/20 font-bold">
-                  LIVE 3s
-                </span>
-              </div>
-              <Link
-                href="/dashboard/idx/watchlist"
-                className="text-xs font-semibold text-accent-theme hover:text-white transition-colors flex items-center gap-1"
-              >
-                <span>Full Watchlist</span>
-                <span>→</span>
-              </Link>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
+        <div className="p-5 sm:p-6 rounded-2xl bg-[#faf2df] border border-slate-900/10 space-y-4">
+          <div className="flex items-center justify-between pb-3 border-b border-slate-900/10">
+            <div className="flex items-center gap-2">
+              <h2 className="text-sm font-bold text-slate-900 tracking-tight">
+                Core Universe Watchlist
+              </h2>
+              <span className="text-[10px] font-mono text-emerald-700 font-bold">
+                · LIVE 3S
+              </span>
             </div>
-
-            <div className="divide-y divide-white/[0.04] mt-2">
-              {displayStocks.map((s) => {
-                const isPos = s.changePoints >= 0
-                return (
-                  <div key={s.symbol} className="py-3 flex items-center justify-between hover:bg-white/[0.02] px-2 rounded-xl transition-colors">
-                    <div className="flex items-center gap-3">
-                      <IDXStockLogo
-                        symbol={s.symbol}
-                        name={s.name}
-                        logoUrl={s.logoUrl}
-                        size="md"
-                      />
-                      <div>
-                        <div className="flex items-center gap-2">
-                          <span className="font-extrabold text-white text-sm font-mono">{s.symbol}</span>
-                          <span className="text-[10px] px-1.5 py-0.2 rounded bg-white/[0.05] text-slate-400 border border-white/[0.06]">
-                            {s.group || s.sector}
-                          </span>
-                        </div>
-                        <span className="text-xs text-slate-400 line-clamp-1">{s.name}</span>
-                      </div>
-                    </div>
-
-                    <div className="text-right">
-                      <span className="font-bold text-white text-sm font-mono block">
-                        Rp {s.currentPrice.toLocaleString()}
-                      </span>
-                      <div className="flex items-center justify-end gap-2 mt-0.5">
-                        <span className={`text-[11px] font-bold font-mono ${isPos ? 'text-emerald-400' : 'text-rose-400'}`}>
-                          {isPos ? '+' : ''}{s.changePercent.toFixed(2)}%
-                        </span>
-                        <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded font-mono ${
-                          s.foreignFlow === 'BUY'
-                            ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20'
-                            : s.foreignFlow === 'SELL'
-                            ? 'bg-rose-500/10 text-rose-400 border border-rose-500/20'
-                            : 'bg-zinc-500/10 text-zinc-400'
-                        }`}>
-                          F.{s.foreignFlow}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                )
-              })}
-            </div>
-          </div>
-
-          <div className="pt-3 border-t border-white/[0.06]">
             <Link
               href="/dashboard/idx/watchlist"
-              className="block w-full py-2.5 rounded-xl text-center text-xs font-semibold bg-white/[0.04] hover:bg-white/[0.08] text-white border border-white/[0.08] transition-colors"
+              className="text-xs font-semibold text-[#0369a1] hover:text-slate-900 hover:underline transition-colors flex items-center gap-1"
             >
-              Open Interactive Chart & Watchlist →
+              <span>Full Watchlist</span>
+              <span className="font-mono">→</span>
             </Link>
           </div>
-        </div>
 
-        <div className="p-5 sm:p-6 rounded-2xl bg-[#0d121f] border border-white/[0.08] space-y-4 shadow-sm flex flex-col justify-between">
-          <div>
-            <div className="flex items-center justify-between pb-3 border-b border-white/[0.08]">
-              <div className="flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                <h2 className="text-sm font-bold text-white uppercase tracking-wider">
-                  Live Order Book (DOM)
-                </h2>
-                <span className="text-[10px] font-mono text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/20 font-bold">
-                  BBCA · Depth
-                </span>
-              </div>
-              <Link
-                href="/dashboard/idx/orderbook"
-                className="text-xs font-semibold text-accent-theme hover:text-white transition-colors flex items-center gap-1"
-              >
-                <span>Full DOM</span>
-                <span>→</span>
-              </Link>
-            </div>
-
-            <div className="mt-3 space-y-2.5">
-              <div className="grid grid-cols-2 gap-3 text-[10px] uppercase tracking-wider font-bold text-slate-400 px-1">
-                <div className="flex justify-between">
-                  <span>Bid Lots</span>
-                  <span>Bid Price</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>Offer Price</span>
-                  <span>Offer Lots</span>
-                </div>
-              </div>
-
-              <div className="grid grid-cols-2 gap-3 text-xs font-mono">
-                <div className="space-y-1.5">
-                  {domBids.map((b) => (
-                    <div key={b.price} className="relative flex justify-between items-center px-2.5 py-1.5 rounded-lg overflow-hidden bg-white/[0.02]">
-                      <div
-                        className="absolute inset-y-0 right-0 bg-emerald-500/15 transition-all duration-300 pointer-events-none"
-                        style={{ width: b.width }}
-                      />
-                      <span className="relative z-10 text-slate-400 text-xs">{b.lots.toLocaleString()}</span>
-                      <span className="relative z-10 font-bold text-emerald-400">Rp {b.price.toLocaleString()}</span>
+          <div className="divide-y divide-slate-900/10">
+            {displayStocks.map((s) => {
+              const isPos = s.changePoints >= 0
+              return (
+                <div key={s.symbol} className="py-2.5 flex items-center justify-between hover:bg-[#f3ead2]/50 -mx-2 px-2 rounded-lg transition-colors">
+                  <div className="flex items-center gap-3">
+                    <IDXStockLogo
+                      symbol={s.symbol}
+                      name={s.name}
+                      logoUrl={s.logoUrl}
+                      size="md"
+                    />
+                    <div>
+                      <div className="flex items-center gap-2">
+                        <span className="font-extrabold text-slate-900 text-sm font-mono">{s.symbol}</span>
+                        <span className="text-[10px] font-mono text-slate-500">
+                          · {s.group || s.sector}
+                        </span>
+                      </div>
+                      <span className="text-xs text-slate-600 line-clamp-1">{s.name}</span>
                     </div>
-                  ))}
-                </div>
+                  </div>
 
-                <div className="space-y-1.5">
-                  {domAsks.map((a) => (
-                    <div key={a.price} className="relative flex justify-between items-center px-2.5 py-1.5 rounded-lg overflow-hidden bg-white/[0.02]">
-                      <div
-                        className="absolute inset-y-0 left-0 bg-rose-500/15 transition-all duration-300 pointer-events-none"
-                        style={{ width: a.width }}
-                      />
-                      <span className="relative z-10 font-bold text-rose-400">Rp {a.price.toLocaleString()}</span>
-                      <span className="relative z-10 text-slate-400 text-xs">{a.lots.toLocaleString()}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div className="flex justify-between items-center p-3 rounded-xl bg-[#121829]/60 border border-white/[0.06] text-xs font-mono mt-3">
-                <div className="flex items-center gap-1.5 text-emerald-400">
-                  <span className="font-bold">ARA (+20%):</span>
-                  <span>Rp {araPrice.toLocaleString()}</span>
-                </div>
-                <div className="flex items-center gap-1.5 text-rose-400">
-                  <span className="font-bold">ARB (-20%):</span>
-                  <span>Rp {arbPrice.toLocaleString()}</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="pt-3 border-t border-white/[0.06]">
-            <Link
-              href="/dashboard/idx/orderbook"
-              className="block w-full py-2.5 rounded-xl text-center text-xs font-semibold bg-white/[0.04] hover:bg-white/[0.08] text-white border border-white/[0.08] transition-colors"
-            >
-              Inspect 10-Level Order Book & Tape →
-            </Link>
-          </div>
-        </div>
-
-        <div className="p-5 sm:p-6 rounded-2xl bg-[#0d121f] border border-white/[0.08] space-y-4 shadow-sm flex flex-col justify-between">
-          <div>
-            <div className="flex items-center justify-between pb-3 border-b border-white/[0.08]">
-              <div className="flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-amber-400" />
-                <h2 className="text-sm font-bold text-white uppercase tracking-wider">
-                  Corporate Actions & e-IPO
-                </h2>
-              </div>
-              <Link
-                href="/dashboard/idx/corporate-actions"
-                className="text-xs font-semibold text-accent-theme hover:text-white transition-colors flex items-center gap-1"
-              >
-                <span>All Actions</span>
-                <span>→</span>
-              </Link>
-            </div>
-
-            <div className="space-y-2.5 mt-3">
-              {CORPORATE_ACTIONS_PREVIEW.map((c) => (
-                <div key={c.ticker} className="p-3 rounded-xl bg-[#121829]/60 border border-white/[0.06] flex items-center justify-between text-xs">
-                  <div>
-                    <div className="flex items-center gap-2">
-                      <span className="font-bold text-white font-mono">{c.ticker}</span>
-                      <span className="text-[10px] px-2 py-0.5 rounded font-medium bg-amber-400/10 text-amber-300 border border-amber-400/20">
-                        {c.type}
+                  <div className="text-right font-mono tabular-nums">
+                    <span className="font-bold text-slate-900 text-sm block">
+                      Rp {s.currentPrice.toLocaleString()}
+                    </span>
+                    <div className="flex items-center justify-end gap-2 mt-0.5 text-[11px]">
+                      <span className={`font-bold ${isPos ? 'text-emerald-700' : 'text-rose-700'}`}>
+                        {isPos ? '+' : ''}{s.changePercent.toFixed(2)}%
+                      </span>
+                      <span className="text-slate-500">·</span>
+                      <span className={`text-[10px] font-bold ${
+                        s.foreignFlow === 'BUY'
+                          ? 'text-emerald-700'
+                          : s.foreignFlow === 'SELL'
+                          ? 'text-rose-700'
+                          : 'text-slate-500'
+                      }`}>
+                        F.{s.foreignFlow}
                       </span>
                     </div>
-                    <span className="text-xs text-slate-400 block mt-1">{c.value}</span>
-                  </div>
-                  <div className="text-right font-mono">
-                    <span className="text-[10px] text-slate-400 block">Cum Date: {c.cumDate}</span>
-                    <span className="text-xs font-bold text-emerald-400">{c.yieldPct}</span>
                   </div>
                 </div>
-              ))}
+              )
+            })}
+          </div>
+        </div>
+
+        <div className="p-5 sm:p-6 rounded-2xl bg-[#faf2df] border border-slate-900/10 space-y-4">
+          <div className="flex items-center justify-between pb-3 border-b border-slate-900/10">
+            <div className="flex items-center gap-2">
+              <h2 className="text-sm font-bold text-slate-900 tracking-tight">
+                Live Order Book (DOM)
+              </h2>
+              <span className="text-[10px] font-mono text-[#0369a1] font-bold">
+                · BBCA DEPTH
+              </span>
             </div>
+            <Link
+              href="/dashboard/idx/orderbook"
+              className="text-xs font-semibold text-[#0369a1] hover:text-slate-900 hover:underline transition-colors flex items-center gap-1"
+            >
+              <span>10-Level DOM</span>
+              <span className="font-mono">→</span>
+            </Link>
           </div>
 
-          <div className="pt-3 border-t border-white/[0.06]">
+          <div className="space-y-3">
+            <div className="grid grid-cols-2 gap-4 text-[10px] font-mono uppercase tracking-wider font-bold text-slate-500 border-b border-slate-900/10 pb-1.5">
+              <div className="flex justify-between">
+                <span>Bid Lots</span>
+                <span>Bid Price</span>
+              </div>
+              <div className="flex justify-between">
+                <span>Offer Price</span>
+                <span>Offer Lots</span>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-4 text-xs font-mono tabular-nums">
+              <div className="divide-y divide-slate-900/10">
+                {domBids.map((b) => (
+                  <div key={b.price} className="relative flex justify-between items-center py-2 px-2 overflow-hidden">
+                    <div
+                      className="absolute inset-y-0.5 right-0 bg-emerald-600/15 rounded-xs transition-all duration-300 pointer-events-none"
+                      style={{ width: b.width }}
+                    />
+                    <span className="relative z-10 text-slate-600">{b.lots.toLocaleString()}</span>
+                    <span className="relative z-10 font-bold text-emerald-700">Rp {b.price.toLocaleString()}</span>
+                  </div>
+                ))}
+              </div>
+
+              <div className="divide-y divide-slate-900/10">
+                {domAsks.map((a) => (
+                  <div key={a.price} className="relative flex justify-between items-center py-2 px-2 overflow-hidden">
+                    <div
+                      className="absolute inset-y-0.5 left-0 bg-rose-600/15 rounded-xs transition-all duration-300 pointer-events-none"
+                      style={{ width: a.width }}
+                    />
+                    <span className="relative z-10 font-bold text-rose-700">Rp {a.price.toLocaleString()}</span>
+                    <span className="relative z-10 text-slate-600">{a.lots.toLocaleString()}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="flex justify-between items-center pt-3 border-t border-slate-900/10 text-xs font-mono tabular-nums">
+              <div className="flex items-center gap-1.5 text-emerald-700">
+                <span className="font-bold">ARA (+20%):</span>
+                <span>Rp {araPrice.toLocaleString()}</span>
+              </div>
+              <div className="flex items-center gap-1.5 text-rose-700">
+                <span className="font-bold">ARB (-20%):</span>
+                <span>Rp {arbPrice.toLocaleString()}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 pt-2 border-t border-slate-900/10">
+        <div className="space-y-3">
+          <div className="flex items-center justify-between border-b border-slate-900/10 pb-2.5">
+            <h2 className="text-sm font-bold text-slate-900 tracking-tight">
+              Corporate Actions &amp; e-IPO
+            </h2>
             <Link
               href="/dashboard/idx/corporate-actions"
-              className="block w-full py-2.5 rounded-xl text-center text-xs font-semibold bg-white/[0.04] hover:bg-white/[0.08] text-white border border-white/[0.08] transition-colors"
+              className="text-xs font-semibold text-[#0369a1] hover:text-slate-900 hover:underline transition-colors flex items-center gap-1"
             >
-              Explore e-IPO Pipeline & Corporate Actions Calendar →
+              <span>All Actions</span>
+              <span className="font-mono">→</span>
             </Link>
           </div>
-        </div>
 
-        <div className="p-5 sm:p-6 rounded-2xl bg-[#0d121f] border border-white/[0.08] space-y-4 shadow-sm flex flex-col justify-between">
-          <div>
-            <div className="flex items-center justify-between pb-3 border-b border-white/[0.08]">
-              <div className="flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-cyan-400" />
-                <h2 className="text-sm font-bold text-white uppercase tracking-wider">
-                  BEI Intelligence & Rumor Radar
-                </h2>
-              </div>
-              <Link
-                href="/dashboard/idx/news"
-                className="text-xs font-semibold text-accent-theme hover:text-white transition-colors flex items-center gap-1"
-              >
-                <span>Live Feed</span>
-                <span>→</span>
-              </Link>
-            </div>
-
-            <div className="space-y-2.5 mt-3">
-              {DISCLOSURES_PREVIEW.map((d, i) => (
-                <div key={i} className="p-3 rounded-xl bg-[#121829]/60 border border-white/[0.06] space-y-1.5 text-xs">
-                  <div className="flex items-center justify-between text-[11px]">
-                    <div className="flex items-center gap-2">
-                      <span className="font-bold text-white font-mono bg-white/[0.06] px-1.5 py-0.5 rounded">{d.ticker}</span>
-                      <span className="text-slate-400">{d.source}</span>
-                      <span className="text-slate-500 font-mono">{d.time}</span>
-                    </div>
-                    <span className={`font-bold font-mono px-2 py-0.5 rounded text-[10px] ${
-                      d.impact === 'BULLISH'
-                        ? 'text-emerald-400 bg-emerald-500/10 border border-emerald-500/20'
-                        : 'text-zinc-400 bg-zinc-500/10'
-                    }`}>
-                      {d.impact}
+          <div className="divide-y divide-slate-900/10">
+            {CORPORATE_ACTIONS_PREVIEW.map((c) => (
+              <div key={c.ticker} className="py-3 flex items-center justify-between text-xs">
+                <div>
+                  <div className="flex items-center gap-2">
+                    <span className="font-bold text-slate-900 font-mono">{c.ticker}</span>
+                    <span className="text-[11px] font-mono font-semibold text-amber-800">
+                      · {c.type}
                     </span>
                   </div>
-                  <p className="text-xs text-slate-300 leading-snug line-clamp-2">
-                    {d.title}
-                  </p>
+                  <span className="text-xs text-slate-600 block mt-0.5">{c.value}</span>
                 </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="pt-3 border-t border-white/[0.06]">
-            <Link
-              href="/dashboard/idx/news"
-              className="block w-full py-2.5 rounded-xl text-center text-xs font-semibold bg-white/[0.04] hover:bg-white/[0.08] text-white border border-white/[0.08] transition-colors"
-            >
-              Open BEI Disclosures & Conglomerate Radar →
-            </Link>
+                <div className="text-right font-mono tabular-nums">
+                  <span className="text-[10px] text-slate-500 block">Cum Date: {c.cumDate}</span>
+                  <span className="text-xs font-bold text-emerald-700">{c.yieldPct}</span>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
 
+        <div className="space-y-3">
+          <div className="flex items-center justify-between border-b border-slate-900/10 pb-2.5">
+            <h2 className="text-sm font-bold text-slate-900 tracking-tight">
+              BEI Intelligence &amp; Rumor Radar
+            </h2>
+            <Link
+              href="/dashboard/idx/news"
+              className="text-xs font-semibold text-[#0369a1] hover:text-slate-900 hover:underline transition-colors flex items-center gap-1"
+            >
+              <span>Disclosures Feed</span>
+              <span className="font-mono">→</span>
+            </Link>
+          </div>
+
+          <div className="divide-y divide-slate-900/10">
+            {DISCLOSURES_PREVIEW.map((d, i) => (
+              <div key={i} className="py-3 space-y-1 text-xs">
+                <div className="flex items-center justify-between text-[11px] font-mono">
+                  <div className="flex items-center gap-2">
+                    <span className="font-bold text-[#0369a1]">{d.ticker}</span>
+                    <span className="text-slate-500">·</span>
+                    <span className="text-slate-600 font-sans">{d.source}</span>
+                    <span className="text-slate-500">·</span>
+                    <span className="text-slate-500 tabular-nums">{d.time}</span>
+                  </div>
+                  <span className={`font-bold text-[10px] ${
+                    d.impact === 'BULLISH' ? 'text-emerald-700' : 'text-slate-600'
+                  }`}>
+                    {d.impact}
+                  </span>
+                </div>
+                <p className="text-xs text-slate-800 leading-snug line-clamp-2">
+                  {d.title}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   )

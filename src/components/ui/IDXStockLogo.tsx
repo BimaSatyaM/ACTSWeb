@@ -35,7 +35,7 @@ export function IDXStockLogo({
   if (!resolvedUrl || hasError) {
     return (
       <div
-        className={`${sizeConfig.box} ${sizeConfig.rounded} bg-white/[0.06] flex items-center justify-center font-bold ${sizeConfig.font} font-mono text-text-secondary select-none flex-shrink-0 ${className}`}
+        className={`${sizeConfig.box} ${sizeConfig.rounded} bg-sky-100/80 border border-sky-200/70 flex items-center justify-center font-bold ${sizeConfig.font} font-mono text-sky-950 select-none flex-shrink-0 ${className}`}
         title={name || cleanSym}
       >
         {cleanSym.slice(0, 2)}

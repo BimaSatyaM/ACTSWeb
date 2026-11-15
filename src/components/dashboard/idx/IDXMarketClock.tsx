@@ -58,7 +58,7 @@ function getJakartaSession(now: Date): MarketSessionInfo {
     return {
       sessionName: 'Weekend · Market Closed',
       isOpen: false,
-      statusColor: 'text-zinc-400 bg-zinc-500/10 border-zinc-500/20',
+      statusColor: 'text-slate-600 bg-slate-100 border-slate-300',
       nextEventLabel: 'Opens Monday',
       timeUntilNext: 'Mon 09:00 WIB',
       subNote: 'Pre-Open 08:45',
@@ -73,7 +73,7 @@ function getJakartaSession(now: Date): MarketSessionInfo {
     return {
       sessionName: 'Market Closed',
       isOpen: false,
-      statusColor: 'text-zinc-400 bg-zinc-500/10 border-zinc-500/20',
+      statusColor: 'text-slate-600 bg-slate-100 border-slate-300',
       nextEventLabel: 'Market Opens in',
       timeUntilNext: formatCountdown(diffToOpen),
       subNote: `Pre-Open in ${formatCountdown(diffToPreOpen)}`,
@@ -88,7 +88,7 @@ function getJakartaSession(now: Date): MarketSessionInfo {
     return {
       sessionName: 'Pre-Opening (Order Entry)',
       isOpen: true,
-      statusColor: 'text-amber-400 bg-amber-500/10 border-amber-500/20',
+      statusColor: 'text-amber-800 bg-amber-50 border-amber-200',
       nextEventLabel: 'Regular Trading in',
       timeUntilNext: formatCountdown(session1Start - totalSeconds),
       subNote: 'Opens 09:00',
@@ -103,7 +103,7 @@ function getJakartaSession(now: Date): MarketSessionInfo {
     return {
       sessionName: 'Session 1 Trading',
       isOpen: true,
-      statusColor: 'text-emerald-400 bg-emerald-500/10 border-emerald-500/20',
+      statusColor: 'text-emerald-800 bg-emerald-50 border-emerald-200',
       nextEventLabel: isFriday ? 'Friday Break in' : 'Lunch Break in',
       timeUntilNext: formatCountdown(session1End - totalSeconds),
       subNote: isFriday ? 'Until 11:30' : 'Until 12:00',
@@ -118,7 +118,7 @@ function getJakartaSession(now: Date): MarketSessionInfo {
     return {
       sessionName: isFriday ? 'Friday Break · Paused' : 'Lunch Break · Paused',
       isOpen: false,
-      statusColor: 'text-amber-400 bg-amber-500/10 border-amber-500/20',
+      statusColor: 'text-amber-800 bg-amber-50 border-amber-200',
       nextEventLabel: 'Session 2 Resumes in',
       timeUntilNext: formatCountdown(session2Start - totalSeconds),
       subNote: isFriday ? '14:00 WIB' : '13:30 WIB',
@@ -133,7 +133,7 @@ function getJakartaSession(now: Date): MarketSessionInfo {
     return {
       sessionName: 'Session 2 Trading',
       isOpen: true,
-      statusColor: 'text-emerald-400 bg-emerald-500/10 border-emerald-500/20',
+      statusColor: 'text-emerald-800 bg-emerald-50 border-emerald-200',
       nextEventLabel: 'Pre-Closing in',
       timeUntilNext: formatCountdown(preCloseStart - totalSeconds),
       subNote: 'Until 15:50',
@@ -148,7 +148,7 @@ function getJakartaSession(now: Date): MarketSessionInfo {
     return {
       sessionName: 'Pre-Closing Auction',
       isOpen: true,
-      statusColor: 'text-amber-400 bg-amber-500/10 border-amber-500/20',
+      statusColor: 'text-amber-800 bg-amber-50 border-amber-200',
       nextEventLabel: 'Real Close in',
       timeUntilNext: formatCountdown(marketClose - totalSeconds),
       subNote: 'Matching 16:00',
@@ -163,7 +163,7 @@ function getJakartaSession(now: Date): MarketSessionInfo {
     return {
       sessionName: 'Post-Trading (Closing Price)',
       isOpen: true,
-      statusColor: 'text-sky-400 bg-sky-500/10 border-sky-500/20',
+      statusColor: 'text-sky-800 bg-sky-50 border-sky-200',
       nextEventLabel: 'Final Close in',
       timeUntilNext: formatCountdown(postTradingEnd - totalSeconds),
       subNote: 'Ends 16:15',
@@ -175,7 +175,7 @@ function getJakartaSession(now: Date): MarketSessionInfo {
   return {
     sessionName: 'Market Closed',
     isOpen: false,
-    statusColor: 'text-zinc-400 bg-zinc-500/10 border-zinc-500/20',
+    statusColor: 'text-slate-600 bg-slate-100 border-slate-300',
     nextEventLabel: isFriday ? 'Opens Monday' : 'Opens Next Day',
     timeUntilNext: isFriday ? 'Mon 09:00 WIB' : '09:00 WIB',
     subNote: 'Pre-Open 08:45',
@@ -189,7 +189,7 @@ export function IDXMarketClock() {
   const [session, setSession] = useState<MarketSessionInfo>({
     sessionName: 'Calculating...',
     isOpen: false,
-    statusColor: 'text-zinc-400 bg-zinc-500/10 border-zinc-500/20',
+    statusColor: 'text-slate-600 bg-slate-100 border-slate-300',
     nextEventLabel: 'Session Clock',
     timeUntilNext: '--',
     progressPercent: 0,
@@ -220,7 +220,7 @@ export function IDXMarketClock() {
   }, [])
 
   return (
-    <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 px-4 py-3 rounded-xl bg-[#0d121f] border border-white/[0.08] shadow-sm">
+    <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 px-4 py-3 rounded-xl bg-[#fdfaf3] border border-slate-900/10 shadow-xs">
       <div className="flex items-center gap-3">
         <div className="w-7 h-7 flex items-center justify-center flex-shrink-0">
           <Image
@@ -233,35 +233,34 @@ export function IDXMarketClock() {
           />
         </div>
         <div className="flex items-baseline gap-2">
-          <span className="text-sm font-bold text-white font-mono tracking-tight">{timeStr || 'Loading...'}</span>
-          <span className="text-[10px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded bg-white/[0.05] text-slate-400 border border-white/[0.08]">
+          <span className="text-sm font-bold text-slate-900 font-mono tracking-tight tabular-nums">{timeStr || 'Loading...'}</span>
+          <span className="text-[11px] font-mono text-slate-500 font-semibold uppercase tracking-wider">
             WIB · UTC+7
           </span>
-          <span className="hidden sm:inline text-xs text-slate-400 font-medium">({dateStr || 'Jakarta Trading Desk'})</span>
+          <span className="hidden sm:inline text-xs text-slate-500 font-medium">({dateStr || 'Jakarta Trading Desk'})</span>
         </div>
       </div>
 
       <div className="flex flex-col sm:items-end w-full sm:w-auto gap-1">
         <div className="flex flex-wrap items-center gap-2">
-          <span className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-bold font-mono border ${session.statusColor}`}>
-            <span className={`w-1.5 h-1.5 rounded-full ${session.isOpen ? 'bg-emerald-400 animate-pulse' : 'bg-slate-500'}`} />
-            <span>{session.sessionName}</span>
-          </span>
-          <div className="text-[11px] font-mono text-slate-300 flex items-center gap-1.5">
-            <span className="text-slate-400">{session.nextEventLabel}:</span>
-            <span className="font-bold text-white">{session.timeUntilNext}</span>
+          <div className="flex items-center gap-2 text-xs font-mono">
+            <span className={`w-2 h-2 rounded-full ${session.isOpen ? 'bg-emerald-500 animate-pulse' : 'bg-slate-400'}`} />
+            <span className="font-bold text-slate-900">{session.sessionName}</span>
+            <span className="text-slate-500 font-normal">·</span>
+            <span className="text-slate-500 font-sans">{session.nextEventLabel}:</span>
+            <span className="font-bold text-slate-900 tabular-nums">{session.timeUntilNext}</span>
             {session.subNote && (
-              <span className="text-[10px] text-slate-400 px-1.5 py-0.2 rounded bg-white/[0.04] border border-white/[0.06]">
-                {session.subNote}
+              <span className="text-[11px] text-slate-500 tabular-nums font-mono">
+                ({session.subNote})
               </span>
             )}
           </div>
         </div>
 
         {session.isOpen && (
-          <div className="w-full sm:w-44 h-1 bg-white/[0.06] rounded-full overflow-hidden mt-0.5">
+          <div className="w-full sm:w-44 h-1 bg-slate-200 rounded-full overflow-hidden mt-0.5">
             <div
-              className="h-full bg-emerald-400 rounded-full transition-all duration-1000"
+              className="h-full bg-emerald-500 rounded-full transition-all duration-1000"
               style={{ width: `${session.progressPercent}%` }}
             />
           </div>

@@ -77,7 +77,7 @@ function IDXKeyStatsPageContent() {
 
   return (
     <div className="space-y-6 pb-12">
-      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 p-4 rounded-xl bg-[#0d121f] border border-white/[0.08]">
+      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 p-4 rounded-xl bg-[#fdfaf3] border border-slate-900/10 shadow-xs">
         <form onSubmit={handleSearchSubmit} className="flex items-center gap-2 max-w-md w-full">
           <div className="relative flex-1">
             <input
@@ -85,7 +85,7 @@ function IDXKeyStatsPageContent() {
               placeholder="Search ticker (e.g. BBRI, BREN, BNBR)..."
               value={searchInput}
               onChange={(e) => setSearchInput(e.target.value.toUpperCase())}
-              className="w-full px-4 py-2 pl-9 rounded-lg bg-[#070b14] border border-white/[0.08] text-xs font-mono text-white placeholder:text-slate-500 focus:outline-none focus:border-[#ff2e54]/50 transition-colors"
+              className="w-full px-4 py-2 pl-9 rounded-lg bg-[#faf2df] border border-slate-900/15 text-xs font-mono text-slate-900 placeholder:text-slate-500 focus:outline-hidden focus:border-sky-600 transition-colors"
             />
             <svg
               className="absolute left-3 top-2.5 w-3.5 h-3.5 text-slate-500 pointer-events-none"
@@ -103,14 +103,14 @@ function IDXKeyStatsPageContent() {
           </div>
           <button
             type="submit"
-            className="px-4 py-2 rounded-lg bg-[#ff2e54] hover:bg-[#e02647] text-white text-xs font-bold font-mono transition-all shadow-sm cursor-pointer"
+            className="px-4 py-2 rounded-lg bg-sky-600 hover:bg-sky-700 text-white text-xs font-bold font-mono transition-all shadow-xs cursor-pointer"
           >
             Inspect
           </button>
         </form>
 
         <div className="flex items-center gap-1.5 overflow-x-auto pb-1 lg:pb-0 scrollbar-none">
-          <span className="text-[10px] font-mono text-slate-500 uppercase tracking-wider mr-1 hidden sm:inline">
+          <span className="text-[10px] font-mono text-slate-500 uppercase tracking-wider mr-1 hidden sm:inline font-semibold">
             Quick:
           </span>
           {POPULAR_TICKERS.map((item) => {
@@ -121,8 +121,8 @@ function IDXKeyStatsPageContent() {
                 onClick={() => handleSelectSymbol(item.symbol)}
                 className={`px-2.5 py-1 rounded-lg text-xs font-mono font-bold transition-all shrink-0 cursor-pointer ${
                   isSelected
-                    ? 'bg-[#ff2e54] text-white border border-[#ff2e54]'
-                    : 'bg-[#070b14] text-slate-400 hover:text-white hover:bg-white/[0.05] border border-white/[0.06]'
+                    ? 'bg-sky-600 text-white border border-sky-600 shadow-2xs'
+                    : 'bg-[#faf2df]/80 text-slate-600 hover:text-slate-900 hover:bg-[#faf2df] border border-slate-900/10'
                 }`}
               >
                 {item.symbol}
@@ -133,19 +133,19 @@ function IDXKeyStatsPageContent() {
       </div>
 
       {loading ? (
-        <div className="rounded-2xl bg-white/[0.02] border border-white/[0.08] p-12 text-center space-y-4">
-          <div className="inline-block w-8 h-8 rounded-full border-2 border-brand-primary border-t-transparent animate-spin" />
-          <p className="text-xs font-mono text-text-secondary">
-            Fetching institutional fundamentals for <span className="text-white font-bold">{currentSymbol}</span>...
+        <div className="rounded-2xl bg-[#fdfaf3] border border-slate-900/10 p-12 text-center space-y-4 shadow-xs">
+          <div className="inline-block w-8 h-8 rounded-full border-2 border-sky-600 border-t-transparent animate-spin" />
+          <p className="text-xs font-mono text-slate-600">
+            Fetching institutional fundamentals for <span className="text-slate-900 font-bold">{currentSymbol}</span>...
           </p>
         </div>
       ) : error ? (
-        <div className="rounded-2xl bg-rose-500/10 border border-rose-500/20 p-8 text-center space-y-3">
-          <div className="text-rose-400 text-sm font-bold">Unable to load valuation profile</div>
-          <p className="text-xs font-mono text-text-muted">{error}</p>
+        <div className="rounded-2xl bg-rose-50 border border-rose-200 p-8 text-center space-y-3">
+          <div className="text-rose-700 text-sm font-bold">Unable to load valuation profile</div>
+          <p className="text-xs font-mono text-slate-500">{error}</p>
           <button
             onClick={() => fetchKeyStats(currentSymbol)}
-            className="px-4 py-1.5 rounded-lg bg-white/[0.08] hover:bg-white/[0.12] text-xs font-bold text-white transition-colors"
+            className="px-4 py-1.5 rounded-lg bg-rose-600 text-xs font-bold text-white hover:bg-rose-700 transition-colors cursor-pointer"
           >
             Retry Connection
           </button>
@@ -169,9 +169,9 @@ export default function IDXKeyStatsPage() {
   return (
     <Suspense
       fallback={
-        <div className="rounded-2xl bg-white/[0.02] border border-white/[0.08] p-12 text-center space-y-4">
-          <div className="inline-block w-8 h-8 rounded-full border-2 border-brand-primary border-t-transparent animate-spin" />
-          <p className="text-xs font-mono text-text-secondary">Loading IDX Key Stats Terminal...</p>
+        <div className="rounded-2xl bg-[#fdfaf3] border border-slate-900/10 p-12 text-center space-y-4 shadow-xs">
+          <div className="inline-block w-8 h-8 rounded-full border-2 border-sky-600 border-t-transparent animate-spin" />
+          <p className="text-xs font-mono text-slate-600">Loading IDX Key Stats Terminal...</p>
         </div>
       }
     >

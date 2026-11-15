@@ -70,7 +70,7 @@ export default function IDXOrderBookPage() {
   const [searchQuery, setSearchQuery] = useState<string>('')
   const [isSearchOpen, setIsSearchOpen] = useState<boolean>(false)
 
-  // Fetch real-time initial metadata for all 845 stocks
+  // Fetch real-time initial metadata for all stocks
   useEffect(() => {
     let isMounted = true
     const fetchWatchlist = async () => {
@@ -97,7 +97,7 @@ export default function IDXOrderBookPage() {
     return stockList.find((s) => s.symbol === selectedSymbol) || IDX_UNIVERSE[selectedSymbol] || stockList[0]
   }, [stockList, selectedSymbol])
 
-  // Search filter across all 845 Indonesian stocks
+  // Search filter across all stocks
   const searchResults = useMemo(() => {
     if (!searchQuery.trim()) return []
     const q = searchQuery.toLowerCase()
@@ -117,7 +117,7 @@ export default function IDXOrderBookPage() {
     return CATEGORY_MAP[activeCategory]?.tickers || CATEGORY_MAP.liquid.tickers
   }, [activeCategory, stockList])
 
-  // Symbols to subscribe over WebSocket (full Indonesian universe from stockList + active symbol)
+  // Symbols to subscribe over WebSocket
   const streamSymbols = useMemo(() => {
     if (stockList && stockList.length > 0) {
       return Array.from(new Set([
@@ -145,31 +145,31 @@ export default function IDXOrderBookPage() {
   return (
     <div className="space-y-5">
       
-      <div className="p-4 sm:p-5 rounded-xl bg-[#0d121f] border border-white/[0.08] space-y-4">
+      <div className="p-4 sm:p-5 rounded-xl bg-[#fdfaf3] border border-slate-900/10 shadow-sm space-y-4">
         
-        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3 pb-3 border-b border-white/[0.08]">
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3 pb-3 border-b border-slate-900/10">
           <div className="flex items-center gap-2">
-            <span className={`w-2 h-2 rounded-full ${connected ? 'bg-emerald-400 animate-pulse' : 'bg-amber-400'}`} />
-            <h1 className="text-base sm:text-lg font-black text-white uppercase tracking-tight font-mono">
-              Depth of Market (DOM) & Tape
+            <span className={`w-2 h-2 rounded-full ${connected ? 'bg-emerald-600 animate-pulse' : 'bg-amber-500'}`} />
+            <h1 className="text-base sm:text-lg font-bold text-slate-900 uppercase tracking-tight font-mono">
+              Depth of Market (DOM) &amp; Tape
             </h1>
           </div>
 
           <div className="relative">
-            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#070b14] border border-white/[0.08] focus-within:border-[#ff2e54]/50 transition-colors">
+            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#fdfaf3] border border-slate-900/15 focus-within:border-sky-600 transition-colors">
               <svg className="w-3.5 h-3.5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
               </svg>
               <input
                 type="text"
-                placeholder="Search 884 IDX stocks (e.g. ENZO, BRMS, COCO)..."
+                placeholder="Search IDX stocks (e.g. ENZO, BRMS, COCO)..."
                 value={searchQuery}
                 onChange={(e) => {
                   setSearchQuery(e.target.value)
                   setIsSearchOpen(true)
                 }}
                 onFocus={() => setIsSearchOpen(true)}
-                className="bg-transparent border-none outline-none text-xs text-white placeholder:text-slate-500 w-52 sm:w-64 font-mono"
+                className="bg-transparent border-none outline-none text-xs text-slate-900 placeholder:text-slate-500 w-52 sm:w-64 font-mono"
               />
               {searchQuery && (
                 <button
@@ -177,7 +177,7 @@ export default function IDXOrderBookPage() {
                     setSearchQuery('')
                     setIsSearchOpen(false)
                   }}
-                  className="text-[10px] text-slate-500 hover:text-white"
+                  className="text-[10px] text-slate-500 hover:text-slate-700 cursor-pointer"
                 >
                   ✕
                 </button>
@@ -185,7 +185,7 @@ export default function IDXOrderBookPage() {
             </div>
 
             {isSearchOpen && searchResults.length > 0 && (
-              <div className="absolute top-full left-0 right-0 mt-1.5 py-1 rounded-xl bg-[#0d121f] border border-white/15 shadow-2xl z-50 divide-y divide-white/[0.04] max-h-72 overflow-y-auto">
+              <div className="absolute top-full left-0 right-0 mt-1.5 py-1 rounded-xl bg-[#fdfaf3] border border-slate-900/15 shadow-xl z-50 divide-y divide-slate-900/10 max-h-72 overflow-y-auto">
                 {searchResults.map((stock) => {
                   const q = quotes[stock.symbol]
                   const p = q?.price || stock.currentPrice
@@ -199,15 +199,15 @@ export default function IDXOrderBookPage() {
                         setSearchQuery('')
                         setIsSearchOpen(false)
                       }}
-                      className="w-full text-left px-3 py-2 hover:bg-white/[0.06] flex items-center justify-between text-xs font-mono transition-colors cursor-pointer"
+                      className="w-full text-left px-3 py-2 hover:bg-[#f3ead2]/40 flex items-center justify-between text-xs font-mono transition-colors cursor-pointer tabular-nums"
                     >
                       <div>
-                        <span className="font-bold text-white block">{stock.symbol}</span>
-                        <span className="text-[10px] text-slate-400 block line-clamp-1">{stock.name}</span>
+                        <span className="font-bold text-slate-900 block">{stock.symbol}</span>
+                        <span className="text-[10px] text-slate-500 block line-clamp-1 font-sans">{stock.name}</span>
                       </div>
                       <div className="text-right">
-                        <span className="font-bold text-white block">Rp {p.toLocaleString()}</span>
-                        <span className={`text-[10px] ${chgPct >= 0 ? 'text-emerald-400' : 'text-rose-400'}`}>
+                        <span className="font-bold text-slate-900 block">Rp {p.toLocaleString()}</span>
+                        <span className={`text-[10px] font-semibold ${chgPct >= 0 ? 'text-emerald-700' : 'text-rose-700'}`}>
                           {chgPct >= 0 ? '+' : ''}{chgPct.toFixed(2)}%
                         </span>
                       </div>
@@ -231,11 +231,11 @@ export default function IDXOrderBookPage() {
                   onClick={() => setActiveCategory(cat)}
                   className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono font-medium transition-all whitespace-nowrap cursor-pointer ${
                     isActive
-                      ? 'bg-white/[0.08] text-white font-bold border border-white/20 shadow-xs'
-                      : 'text-slate-400 hover:text-white hover:bg-white/[0.03] border border-transparent'
+                      ? 'bg-sky-100/90 text-sky-950 font-bold border border-sky-300'
+                      : 'text-slate-600 hover:text-slate-900 hover:bg-[#faf2df] border border-transparent'
                   }`}
                 >
-                  <span className={isActive ? 'text-[#ff2e54]' : 'text-slate-500'}>
+                  <span className={isActive ? 'text-sky-700' : 'text-slate-500'}>
                     {item.icon('w-3.5 h-3.5')}
                   </span>
                   <span>{item.label}</span>
@@ -248,12 +248,12 @@ export default function IDXOrderBookPage() {
             {!displayedCategoryTickers.includes(selectedSymbol) && (
               <button
                 onClick={() => setSelectedSymbol(selectedSymbol)}
-                className="px-2.5 py-1.5 rounded-lg text-xs font-mono font-bold bg-[#ff2e54]/15 text-white border border-[#ff2e54]/50 flex items-center gap-2 whitespace-nowrap shadow-xs cursor-pointer ring-1 ring-[#ff2e54]/20"
+                className="px-2.5 py-1.5 rounded-lg text-xs font-mono font-bold bg-sky-100/90 text-sky-950 border border-sky-400 flex items-center gap-2 whitespace-nowrap cursor-pointer ring-1 ring-sky-300 tabular-nums"
               >
                 <IDXStockLogo symbol={selectedSymbol} name={activeStock?.name} logoUrl={activeStock?.logoUrl} size="xs" />
                 <span>{selectedSymbol}</span>
-                <span className="text-[11px] text-slate-300">Rp {livePrice.toLocaleString()}</span>
-                <span className={`text-[10px] font-bold ${activeStock.changePercent >= 0 ? 'text-emerald-400' : 'text-rose-400'}`}>
+                <span className="text-[11px] text-slate-600 tabular-nums">Rp {livePrice.toLocaleString()}</span>
+                <span className={`text-[10px] font-bold tabular-nums ${activeStock.changePercent >= 0 ? 'text-emerald-700' : 'text-rose-700'}`}>
                   {activeStock.changePercent >= 0 ? '+' : ''}{activeStock.changePercent.toFixed(1)}%
                 </span>
               </button>
@@ -270,19 +270,19 @@ export default function IDXOrderBookPage() {
                 <button
                   key={sym}
                   onClick={() => setSelectedSymbol(sym)}
-                  className={`px-2.5 py-1.5 rounded-lg text-xs font-mono transition-all whitespace-nowrap flex items-center gap-2 cursor-pointer ${
+                  className={`px-2.5 py-1.5 rounded-lg text-xs font-mono transition-all whitespace-nowrap flex items-center gap-2 cursor-pointer tabular-nums ${
                     isSelected
-                      ? 'bg-[#ff2e54]/15 text-white font-bold border border-[#ff2e54]/50 shadow-xs ring-1 ring-[#ff2e54]/20'
-                      : 'bg-[#070b14] text-slate-400 font-medium hover:text-white hover:bg-white/[0.04] border border-white/[0.06]'
+                      ? 'bg-sky-100/90 text-sky-950 font-bold border border-sky-400 ring-1 ring-sky-300'
+                      : 'bg-[#fdfaf3] text-slate-600 font-medium hover:text-slate-900 hover:bg-[#faf2df] border border-slate-900/10'
                   }`}
                 >
                   <IDXStockLogo symbol={sym} name={stockObj?.name} logoUrl={stockObj?.logoUrl} size="xs" />
-                  <span className={isSelected ? 'text-white font-bold' : 'text-slate-200'}>{sym}</span>
-                  <span className={`text-[11px] ${isSelected ? 'text-white font-semibold' : 'text-slate-400'}`}>
+                  <span className={isSelected ? 'text-sky-950 font-bold' : 'text-slate-800'}>{sym}</span>
+                  <span className={`text-[11px] tabular-nums ${isSelected ? 'text-sky-900 font-semibold' : 'text-slate-500'}`}>
                     {typeof price === 'number' ? `Rp ${price.toLocaleString()}` : price}
                   </span>
                   {typeof chg === 'number' && (
-                    <span className={`text-[10px] font-semibold ${chg >= 0 ? 'text-emerald-400' : 'text-rose-400'}`}>
+                    <span className={`text-[10px] font-bold ${chg >= 0 ? 'text-emerald-700' : 'text-rose-700'}`}>
                       {chg >= 0 ? '+' : ''}{chg.toFixed(1)}%
                     </span>
                   )}
@@ -292,7 +292,7 @@ export default function IDXOrderBookPage() {
           </div>
         </div>
 
-        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pt-2 border-t border-white/[0.06]">
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pt-2 border-t border-slate-900/10">
           <div className="flex items-center gap-3.5">
             <IDXStockLogo
               symbol={activeStock.symbol}
@@ -302,46 +302,46 @@ export default function IDXOrderBookPage() {
             />
             <div>
               <div className="flex items-center gap-2">
-                <h2 className="text-xl sm:text-2xl font-black text-white font-mono tracking-tight">
+                <h2 className="text-xl sm:text-2xl font-bold text-slate-900 font-mono tracking-tight">
                   {activeStock.symbol}
                 </h2>
-                <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-md bg-white/[0.05] text-slate-300 border border-white/[0.08]">
+                <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-md bg-sky-50 text-sky-900 border border-sky-200">
                   IDX · Equity
                 </span>
                 {activeStock.group && (
-                  <span className="text-[10px] font-mono font-semibold px-2 py-0.5 rounded-md bg-white/[0.04] text-slate-400 border border-white/[0.06]">
+                  <span className="text-[10px] font-mono font-semibold px-2 py-0.5 rounded-md bg-slate-100 text-slate-600 border border-slate-900/10">
                     {activeStock.group}
                   </span>
                 )}
               </div>
-              <p className="text-xs text-slate-400 mt-0.5 font-mono">
-                {activeStock.name} · <span className="text-slate-500">{activeStock.sector}</span>
+              <p className="text-xs text-slate-600 mt-0.5 font-mono">
+                {activeStock.name} · <span className="text-slate-500 font-sans">{activeStock.sector}</span>
               </p>
             </div>
           </div>
 
           <div className="flex flex-wrap items-center gap-4">
             <div className="text-left lg:text-right">
-              <span className="text-2xl sm:text-3xl font-black text-white font-mono tracking-tight block">
+              <span className="text-2xl sm:text-3xl font-bold text-slate-900 font-mono tracking-tight block tabular-nums">
                 Rp {livePrice.toLocaleString()}
               </span>
-              <div className={`flex items-center lg:justify-end gap-1.5 text-xs font-bold font-mono ${isPos ? 'text-emerald-400' : 'text-rose-400'}`}>
+              <div className={`flex items-center lg:justify-end gap-1.5 text-xs font-bold font-mono tabular-nums ${isPos ? 'text-emerald-700' : 'text-rose-700'}`}>
                 <span>{isPos ? '+' : ''}{liveChange}</span>
                 <span>({isPos ? '+' : ''}{liveChangePct.toFixed(2)}%)</span>
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping inline-block" />
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-ping inline-block" />
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-3 text-xs font-mono border-l border-white/[0.08] pl-4">
-              <div className="bg-[#070b14] px-3 py-1.5 rounded-lg border border-white/[0.05]">
-                <span className="text-[10px] text-slate-500 uppercase block font-bold">24h High / Low</span>
-                <span className="text-white font-semibold">
+            <div className="grid grid-cols-2 gap-3 text-xs font-mono tabular-nums border-l border-slate-900/10 pl-4">
+              <div className="bg-[#faf2df] px-3 py-1.5 rounded-lg border border-slate-900/10">
+                <span className="text-[10px] text-slate-500 uppercase block font-bold font-sans">24h High / Low</span>
+                <span className="text-slate-900 font-semibold">
                   {(currentStreamQuote?.high || activeStock.dayHigh).toLocaleString()} / {(currentStreamQuote?.low || activeStock.dayLow).toLocaleString()}
                 </span>
               </div>
-              <div className="bg-[#070b14] px-3 py-1.5 rounded-lg border border-white/[0.05]">
-                <span className="text-[10px] text-slate-500 uppercase block font-bold">Traded Volume</span>
-                <span className="text-slate-300">
+              <div className="bg-[#faf2df] px-3 py-1.5 rounded-lg border border-slate-900/10">
+                <span className="text-[10px] text-slate-500 uppercase block font-bold font-sans">Traded Volume</span>
+                <span className="text-slate-700 font-medium">
                   {(currentStreamQuote?.volume || activeStock.volume).toLocaleString()}
                 </span>
               </div>

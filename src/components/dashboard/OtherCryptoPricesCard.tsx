@@ -279,9 +279,9 @@ export function OtherCryptoPricesCard({
   const formatDecimals = isFractional ? 4 : 2
 
   return (
-    <GlassCard className={`p-5 sm:p-6 space-y-4 border-white/[0.09] ${className}`}>
-      <div className="flex items-center justify-between border-b border-white/[0.06] pb-3.5">
-        <span className="text-xs font-bold text-white tracking-tight uppercase">
+    <GlassCard className={`p-5 sm:p-6 space-y-4 border-slate-900/10 ${className}`}>
+      <div className="flex items-center justify-between border-b border-slate-900/10 pb-3.5">
+        <span className="text-xs font-bold text-slate-900 tracking-tight uppercase">
           Other Crypto Pairs
         </span>
 
@@ -289,15 +289,15 @@ export function OtherCryptoPricesCard({
           <button
             type="button"
             onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-            className="flex items-center gap-1.5 text-xs font-semibold text-white hover:text-zinc-200 transition-colors cursor-pointer"
+            className="flex items-center gap-1.5 text-xs font-semibold text-slate-900 hover:text-[#0369a1] transition-colors cursor-pointer"
             aria-haspopup="listbox"
             aria-expanded={isDropdownOpen}
           >
             <AssetIcon symbol={selectedSymbol} size="xs" />
             <span className="font-mono text-xs font-bold">{selectedSymbol} / USDT</span>
             <svg
-              className={`w-3.5 h-3.5 text-zinc-400 transition-transform duration-200 ${
-                isDropdownOpen ? 'rotate-180 text-white' : ''
+              className={`w-3.5 h-3.5 text-slate-500 transition-transform duration-200 ${
+                isDropdownOpen ? 'rotate-180 text-[#0369a1]' : ''
               }`}
               fill="none"
               stroke="currentColor"
@@ -309,10 +309,10 @@ export function OtherCryptoPricesCard({
           </button>
 
           {isDropdownOpen && (
-            <div className="absolute right-0 top-full mt-1.5 w-64 max-h-[228px] overflow-y-auto overscroll-contain rounded-none bg-[#090d18]/98 border border-white/[0.15] shadow-[0_15px_35px_rgba(0,0,0,0.85)] backdrop-blur-2xl z-40 p-1.5 space-y-1 animate-in fade-in zoom-in-95 duration-150 [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-white/[0.02] [&::-webkit-scrollbar-thumb]:bg-white/[0.2] [&::-webkit-scrollbar-thumb]:rounded-full hover:[&::-webkit-scrollbar-thumb]:bg-white/[0.3] [scrollbar-width:thin] [scrollbar-color:rgba(255,255,255,0.2)_transparent]">
-              <div className="px-2 py-1 text-[9px] font-mono uppercase tracking-wider text-zinc-400 border-b border-white/[0.08] sticky top-0 bg-[#090d18] z-10 flex items-center justify-between">
+            <div className="absolute right-0 top-full mt-1.5 w-64 max-h-[228px] overflow-y-auto overscroll-contain rounded-xl bg-[#fdfaf3] border border-slate-900/10 shadow-lg z-40 p-1.5 space-y-1 animate-in fade-in zoom-in-95 duration-150">
+              <div className="px-2 py-1 text-[9px] font-mono uppercase tracking-wider text-slate-500 border-b border-slate-900/10 sticky top-0 bg-[#fdfaf3] z-10 flex items-center justify-between">
                 <span>Select Crypto Pair</span>
-                <span className="text-[8px] text-zinc-500">Scroll for more</span>
+                <span className="text-[8px] text-slate-500">Scroll for more</span>
               </div>
               {availableSymbols.map((sym) => {
                 const item = getTicker(sym)
@@ -330,25 +330,25 @@ export function OtherCryptoPricesCard({
                     }}
                     className={`w-full flex items-center justify-between px-2.5 py-2 text-xs transition-colors cursor-pointer ${
                       isSelected
-                        ? 'bg-white/[0.1] text-white'
-                        : 'text-zinc-300 hover:text-white hover:bg-white/[0.05]'
+                        ? 'bg-[#f3ead2] text-slate-900 font-semibold'
+                        : 'text-slate-600 hover:text-slate-900 hover:bg-[#f3ead2]/50'
                     }`}
                   >
                     <div className="flex items-center gap-2">
                       <AssetIcon symbol={sym} size="xs" />
                       <div className="text-left">
                         <span className="font-mono font-bold block leading-tight">{sym} / USDT</span>
-                        <span className="text-[10px] text-zinc-400 font-mono">{item.name}</span>
+                        <span className="text-[10px] text-slate-500 font-mono">{item.name}</span>
                       </div>
                     </div>
 
-                    <div className="text-right font-mono">
-                      <span className="font-bold block leading-tight text-white">
+                    <div className="text-right font-mono tabular-nums">
+                      <span className="font-bold block leading-tight text-slate-900">
                         ${item.price.toLocaleString('en-US', { minimumFractionDigits: itemDecimals, maximumFractionDigits: itemDecimals })}
                       </span>
                       <span
                         className={`text-[10px] font-bold ${
-                          isItemPos ? 'text-emerald-400' : 'text-rose-400'
+                          isItemPos ? 'text-emerald-700' : 'text-rose-700'
                         }`}
                       >
                         {isItemPos ? '▲ +' : '▼ '}
@@ -367,27 +367,22 @@ export function OtherCryptoPricesCard({
         <div className="flex items-center gap-2.5">
           <AssetIcon symbol={activeTicker.symbol} size="md" />
           <div>
-            <div className="flex items-center gap-1.5">
-              <span className="text-xs font-bold text-white tracking-tight font-mono">
-                {activeTicker.symbol} / USDT
-              </span>
-              <span className="text-[9px] font-mono uppercase px-1.5 py-0.2 bg-white/[0.05] text-zinc-300 border border-white/[0.1] rounded-none">
-                Spot
-              </span>
+            <div className="text-xs font-bold text-slate-900 tracking-tight font-mono">
+              {activeTicker.symbol} / USDT <span className="text-slate-500 font-normal">· SPOT</span>
             </div>
             <div className="flex items-center gap-1.5">
-              <span className="text-[11px] text-zinc-400 font-mono">
+              <span className="text-[11px] text-slate-500 font-mono">
                 {activeTicker.name} Live Feed
               </span>
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_6px_rgba(52,211,153,0.8)]" />
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
             </div>
           </div>
         </div>
 
         <div className="text-right">
           <span
-            className={`inline-flex items-center gap-1 text-xs font-bold font-mono ${
-              isPositive ? 'text-emerald-400' : 'text-rose-400'
+            className={`inline-flex items-center gap-1 text-xs font-bold font-mono tabular-nums ${
+              isPositive ? 'text-emerald-700' : 'text-rose-700'
             }`}
           >
             <span>{isPositive ? '▲ +' : '▼ '}</span>
@@ -398,27 +393,27 @@ export function OtherCryptoPricesCard({
 
       <div className="space-y-1.5">
         <div
-          className={`text-2xl sm:text-3xl font-black font-mono tracking-tight transition-colors duration-75 ${
+          className={`text-2xl sm:text-3xl font-black font-mono tracking-tight tabular-nums transition-colors duration-75 ${
             priceFlash === 'up'
-              ? 'text-emerald-400 drop-shadow-[0_0_8px_rgba(52,211,153,0.4)]'
+              ? 'text-emerald-700'
               : priceFlash === 'down'
-              ? 'text-rose-400 drop-shadow-[0_0_8px_rgba(244,63,94,0.4)]'
-              : 'text-white'
+              ? 'text-rose-700'
+              : 'text-slate-900'
           }`}
         >
           ${activeTicker.price.toLocaleString('en-US', { minimumFractionDigits: formatDecimals, maximumFractionDigits: formatDecimals })}
         </div>
 
-        <div className="flex items-center justify-between text-[11px] font-mono text-zinc-300">
+        <div className="flex items-center justify-between text-[11px] font-mono tabular-nums text-slate-600">
           <span className="flex items-center gap-1">
-            <span className="text-zinc-400">Delta:</span>
-            <span className={isPositive ? 'text-emerald-400 font-bold' : 'text-rose-400 font-bold'}>
+            <span className="text-slate-500">Delta:</span>
+            <span className={isPositive ? 'text-emerald-700 font-bold' : 'text-rose-700 font-bold'}>
               {activeTicker.changeDollar >= 0
                 ? `+$${activeTicker.changeDollar.toLocaleString('en-US', { minimumFractionDigits: formatDecimals, maximumFractionDigits: formatDecimals })}`
                 : `-$${Math.abs(activeTicker.changeDollar).toLocaleString('en-US', { minimumFractionDigits: formatDecimals, maximumFractionDigits: formatDecimals })}`}
             </span>
           </span>
-          <span className="text-[11px] text-zinc-400">
+          <span className="text-[11px] text-slate-500">
             {activeTicker.changePips >= 0
               ? `+${activeTicker.changePips.toLocaleString()}`
               : `-${Math.abs(activeTicker.changePips).toLocaleString()}`}{' '}
@@ -427,32 +422,32 @@ export function OtherCryptoPricesCard({
         </div>
       </div>
 
-      <div className="grid grid-cols-2 gap-2 pt-1 border-t border-white/[0.06] text-[11px] font-mono">
+      <div className="grid grid-cols-2 gap-2 pt-1 border-t border-slate-900/10 text-[11px] font-mono tabular-nums">
         <div className="py-1">
-          <span className="text-zinc-400 block text-[10px]">Daily High</span>
-          <span className="font-bold text-white">
+          <span className="text-slate-500 block text-[10px]">Daily High</span>
+          <span className="font-bold text-slate-900">
             ${activeTicker.high24h.toLocaleString('en-US', { minimumFractionDigits: formatDecimals, maximumFractionDigits: formatDecimals })}
           </span>
         </div>
         <div className="py-1">
-          <span className="text-zinc-400 block text-[10px]">Daily Low</span>
-          <span className="font-bold text-white">
+          <span className="text-slate-500 block text-[10px]">Daily Low</span>
+          <span className="font-bold text-slate-900">
             ${activeTicker.low24h.toLocaleString('en-US', { minimumFractionDigits: formatDecimals, maximumFractionDigits: formatDecimals })}
           </span>
         </div>
       </div>
 
       <div className="pt-1 space-y-1">
-        <div className="flex items-center justify-between text-[9px] font-mono text-zinc-500">
+        <div className="flex items-center justify-between text-[9px] font-mono tabular-nums text-slate-500">
           <span>24h Range</span>
           <span>
-            ${activeTicker.low24h.toLocaleString('en-US', { maximumFractionDigits: formatDecimals })} — ${activeTicker.high24h.toLocaleString('en-US', { maximumFractionDigits: formatDecimals })}
+            ${activeTicker.low24h.toLocaleString('en-US', { maximumFractionDigits: formatDecimals })} to ${activeTicker.high24h.toLocaleString('en-US', { maximumFractionDigits: formatDecimals })}
           </span>
         </div>
-        <div className="w-full h-1 bg-white/[0.05] rounded-none overflow-hidden relative">
+        <div className="w-full h-1 bg-slate-900/10 rounded-full overflow-hidden relative">
           <div
             className={`h-full transition-all duration-300 ${
-              isPositive ? 'bg-emerald-400/80' : 'bg-rose-400/80'
+              isPositive ? 'bg-emerald-600' : 'bg-rose-600'
             }`}
             style={{ width: `${rangePct}%` }}
           />

@@ -32,24 +32,24 @@ export const AssetIcon: React.FC<AssetIconProps> = ({
   }[size]
 
   // Supported Crypto Assets with official logos
-  const CRYPTO_ICONS: Record<string, { name: string; shadow: string }> = {
-    BTC: { name: 'Bitcoin', shadow: 'shadow-[0_0_12px_rgba(247,147,26,0.35)]' },
-    ETH: { name: 'Ethereum', shadow: 'shadow-[0_0_12px_rgba(98,126,234,0.35)]' },
-    SOL: { name: 'Solana', shadow: 'shadow-[0_0_12px_rgba(20,241,149,0.35)]' },
-    BNB: { name: 'BNB', shadow: 'shadow-[0_0_12px_rgba(243,186,47,0.35)]' },
-    XRP: { name: 'XRP', shadow: 'shadow-[0_0_12px_rgba(255,255,255,0.25)]' },
-    ADA: { name: 'Cardano', shadow: 'shadow-[0_0_12px_rgba(0,51,173,0.35)]' },
-    AVAX: { name: 'Avalanche', shadow: 'shadow-[0_0_12px_rgba(232,65,66,0.35)]' },
-    LINK: { name: 'Chainlink', shadow: 'shadow-[0_0_12px_rgba(42,90,218,0.35)]' },
-    DOGE: { name: 'Dogecoin', shadow: 'shadow-[0_0_12px_rgba(195,166,52,0.35)]' },
-    SUI: { name: 'Sui', shadow: 'shadow-[0_0_12px_rgba(77,162,255,0.35)]' },
+  const CRYPTO_ICONS: Record<string, { name: string }> = {
+    BTC: { name: 'Bitcoin' },
+    ETH: { name: 'Ethereum' },
+    SOL: { name: 'Solana' },
+    BNB: { name: 'BNB' },
+    XRP: { name: 'XRP' },
+    ADA: { name: 'Cardano' },
+    AVAX: { name: 'Avalanche' },
+    LINK: { name: 'Chainlink' },
+    DOGE: { name: 'Dogecoin' },
+    SUI: { name: 'Sui' },
   }
 
   if (CRYPTO_ICONS[baseAsset]) {
     const meta = CRYPTO_ICONS[baseAsset]
     return (
       <span
-        className={`inline-flex items-center justify-center flex-shrink-0 rounded-full overflow-hidden ${meta.shadow} ${sizeClasses} ${className}`}
+        className={`inline-flex items-center justify-center flex-shrink-0 rounded-full overflow-hidden ${sizeClasses} ${className}`}
         title={`${meta.name} (${baseAsset})`}
       >
         <img
@@ -65,7 +65,7 @@ export const AssetIcon: React.FC<AssetIconProps> = ({
   // Commodities / Gold (XAUUSD / GOLD)
   if (baseAsset === 'XAU' || baseAsset === 'GOLD') {
     return (
-      <span className={`inline-flex items-center justify-center flex-shrink-0 rounded-full bg-gradient-to-tr from-[#D4AF37] via-[#FFD700] to-[#FFF8DC] text-[#4A3B00] shadow-[0_0_12px_rgba(255,215,0,0.4)] font-extrabold ${sizeClasses} ${className}`} title="Gold (XAUUSD)">
+      <span className={`inline-flex items-center justify-center flex-shrink-0 rounded-full bg-amber-400 border border-amber-300/80 text-amber-950 font-extrabold ${sizeClasses} ${className}`} title="Gold (XAUUSD)">
         <span className="leading-none text-[65%] font-black tracking-tighter">AU</span>
       </span>
     )
@@ -91,7 +91,7 @@ export const AssetIcon: React.FC<AssetIconProps> = ({
 
   // Dynamic Fallback for Other Assets
   return (
-    <span className={`inline-flex items-center justify-center flex-shrink-0 rounded-full bg-gradient-to-br from-white/[0.15] to-white/[0.05] border border-white/[0.15] text-white shadow-sm font-bold uppercase ${sizeClasses} ${className}`} title={symbol}>
+    <span className={`inline-flex items-center justify-center flex-shrink-0 rounded-full bg-sky-100/90 border border-slate-900/10 text-slate-900 shadow-xs font-bold uppercase ${sizeClasses} ${className}`} title={symbol}>
       <span className="leading-none text-[60%] tracking-tight">
         {baseAsset.slice(0, 2)}
       </span>

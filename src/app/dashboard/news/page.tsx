@@ -89,56 +89,54 @@ export default function NewsSentimentPage() {
 
   return (
     <div className="space-y-6 w-full">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/[0.08] pb-5">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-900/10 pb-5">
         <div>
-          <h1 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
+          <h1 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">
             Market News & Sentiment
           </h1>
-          <p className="text-xs text-text-secondary mt-1 max-w-2xl">
-            Real-time economic calendar schedule, breaking market rumors with verified media, and institutional macro intelligence evaluated for <strong className="text-zinc-300 font-medium">Global Crypto & US Macro assets (BTC/USDT)</strong>.
+          <p className="text-xs text-slate-600 mt-1 max-w-2xl">
+            Real-time economic calendar schedule, breaking market rumors with verified media, and institutional macro intelligence evaluated for <strong className="text-slate-900 font-medium">Global Crypto & US Macro assets (BTC/USDT)</strong>.
           </p>
         </div>
 
         <div className="flex items-center gap-4 self-start sm:self-auto">
-          <div className="flex items-center gap-2 text-emerald-400 text-xs font-semibold font-mono">
+          <div className="flex items-center gap-2 text-emerald-700 text-xs font-semibold font-mono">
             <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-600" />
             </span>
             <span>Live Updated News</span>
           </div>
 
           <Link
             href="/dashboard/signals"
-            className="text-xs font-semibold text-accent-theme hover:underline flex items-center gap-1 transition-colors"
+            className="text-xs font-semibold text-[#0369a1] hover:text-slate-900 hover:underline flex items-center gap-1 transition-colors"
           >
             <span>Live Signals</span>
-            <span>→</span>
+            <span className="font-mono">→</span>
           </Link>
         </div>
       </div>
 
       <MarketSentimentCard />
 
-      <div className="grid lg:grid-cols-2 lg:divide-x lg:divide-white/[0.06] items-start gap-8 lg:gap-0 border-t border-white/[0.06]">
-        <div className="space-y-4 lg:pr-6 pb-8 lg:pb-0 pt-6 border-b border-white/[0.06] lg:border-b-0">
-          <div className="h-10 flex items-center justify-between px-1 border-b border-transparent">
-            <div className="flex items-center gap-2">
-              <h2 className="text-sm font-semibold text-white">Breaking News & Rumors</h2>
-            </div>
+      <div className="grid lg:grid-cols-12 items-start gap-8 border-t border-slate-900/10 pt-6">
+        <div className="lg:col-span-7 space-y-4">
+          <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-900/10 pb-2.5">
+            <h2 className="text-sm font-bold text-slate-900 tracking-tight">Breaking News &amp; Rumors</h2>
 
-            <div className="flex items-center gap-1.5 p-1 rounded-xl bg-white/[0.02] border border-white/[0.06]">
+            <div className="flex items-center gap-4 text-[11px] font-mono font-bold uppercase tracking-wider">
               {(['all', 'rumor', 'macro', 'crypto'] as const).map((cat) => (
                 <button
                   key={cat}
+                  type="button"
                   onClick={() => {
                     setFilter(cat)
                     setCurrentPage(1)
                   }}
-                  className={`px-3 py-1 rounded-lg text-[10px] font-mono font-semibold uppercase tracking-wider transition-all duration-150 cursor-pointer ${
+                  className={`pb-1 border-b-2 transition-colors duration-150 cursor-pointer ${
                     filter === cat
-                      ? 'bg-accent-theme text-white shadow-[0_0_12px_rgba(255,46,84,0.35)]'
-                      : 'text-text-muted hover:text-white hover:bg-white/[0.04]'
+                      ? 'border-[#0369a1] text-slate-900'
+                      : 'border-transparent text-slate-500 hover:text-slate-900'
                   }`}
                 >
                   {cat === 'all' ? 'All' : cat}
@@ -148,113 +146,116 @@ export default function NewsSentimentPage() {
           </div>
 
           {isLoading && articles.length === 0 ? (
-            <div className="p-8 rounded-2xl bg-[#0d111c]/75 border border-white/[0.08] backdrop-blur-md space-y-3">
-              <div className="h-4 bg-white/[0.06] w-3/4 animate-pulse rounded" />
-              <div className="h-4 bg-white/[0.04] w-1/2 animate-pulse rounded" />
-              <div className="h-4 bg-white/[0.04] w-2/3 animate-pulse rounded" />
+            <div className="p-6 rounded-2xl bg-[#faf2df] border border-slate-900/10 space-y-3">
+              <div className="h-4 bg-slate-900/10 w-3/4 animate-pulse rounded" />
+              <div className="h-4 bg-slate-900/5 w-1/2 animate-pulse rounded" />
+              <div className="h-4 bg-slate-900/5 w-2/3 animate-pulse rounded" />
             </div>
           ) : filteredArticles.length === 0 ? (
-            <div className="p-8 rounded-2xl text-center text-xs text-text-secondary bg-[#0d111c]/75 border border-white/[0.08]">
-              No articles found in this category.
+            <div className="p-8 rounded-2xl text-center text-xs font-mono text-slate-500 bg-[#faf2df] border border-slate-900/10">
+              No articles found in this category. Select All to view the full intelligence feed.
             </div>
           ) : (
-            <div className="space-y-3">
-              {paginatedArticles.map((article, idx) => {
-                const isRumor = article.category === 'rumor'
-                const isMacro = article.category === 'macro'
-                return (
-                  <a
-                    key={idx}
-                    href={article.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex flex-row items-center gap-3.5 p-3.5 rounded-xl bg-white/[0.02] hover:bg-white/[0.05] border border-white/[0.05] hover:border-white/[0.12] transition-all duration-200 group overflow-hidden h-[120px] shadow-sm"
-                  >
-                    {article.image_url ? (
-                      <div className="w-28 h-20 flex-shrink-0 relative overflow-hidden rounded-lg bg-[#141926]">
-                        <img
-                          src={article.image_url}
-                          alt={article.title}
-                          loading="lazy"
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                          onError={(e) => {
-                            const target = e.target as HTMLImageElement
-                            target.style.display = 'none'
-                          }}
-                        />
-                      </div>
-                    ) : (
-                      <div className="w-28 h-20 flex-shrink-0 flex flex-col items-center justify-center rounded-lg bg-white/[0.02] text-text-muted text-[10px] font-mono border border-white/[0.04]">
-                        <span className="text-xl mb-1">📰</span>
-                        <span>{article.source}</span>
-                      </div>
-                    )}
+            <div className="rounded-2xl bg-[#faf2df] border border-slate-900/10 p-5 space-y-4">
+              <div className="divide-y divide-slate-900/10">
+                {paginatedArticles.map((article, idx) => {
+                  const isRumor = article.category === 'rumor'
+                  const isMacro = article.category === 'macro'
+                  return (
+                    <a
+                      key={idx}
+                      href={article.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex flex-row items-start gap-4 py-3.5 first:pt-0 last:pb-0 hover:bg-[#f3ead2]/50 -mx-2 px-2 rounded-lg transition-colors duration-150 group"
+                    >
+                      {article.image_url && (
+                        <div className="w-24 h-16 flex-shrink-0 relative overflow-hidden rounded-md bg-slate-900/5">
+                          <img
+                            src={article.image_url}
+                            alt={article.title}
+                            width={96}
+                            height={64}
+                            loading="lazy"
+                            className="w-full h-full object-cover"
+                            onError={(e) => {
+                              const target = e.target as HTMLImageElement
+                              target.style.display = 'none'
+                            }}
+                          />
+                        </div>
+                      )}
 
-                    <div className="space-y-1 flex-1 min-w-0 flex flex-col justify-between h-full py-0.5">
-                      <div className="flex items-center gap-2 flex-wrap text-[10px]">
-                        <span className="font-bold text-zinc-300 uppercase tracking-wider font-mono">{article.source}</span>
-                        <span className="text-text-muted">·</span>
-                        <span className="font-mono text-text-muted">{formatPubTime(article.published_at)}</span>
-                        <span className="text-text-muted">·</span>
-                        <span
-                          className={`text-[9px] font-mono font-medium uppercase tracking-wider ${
-                            isRumor
-                              ? 'text-amber-400'
-                              : isMacro
-                              ? 'text-cyan-400'
-                              : 'text-text-muted'
-                          }`}
-                        >
-                          {article.category}
-                        </span>
-                      </div>
+                      <div className="space-y-1 flex-1 min-w-0">
+                        <div className="flex items-center gap-2 flex-wrap text-[10px] font-mono tabular-nums">
+                          <span className="font-bold text-slate-800 uppercase tracking-wider">{article.source}</span>
+                          <span className="text-slate-500">·</span>
+                          <span className="text-slate-500">{formatPubTime(article.published_at)}</span>
+                          <span className="text-slate-500">·</span>
+                          <span
+                            className={`text-[10px] font-bold uppercase tracking-wider ${
+                              isRumor
+                                ? 'text-amber-800'
+                                : isMacro
+                                ? 'text-[#0369a1]'
+                                : 'text-slate-600'
+                            }`}
+                          >
+                            {article.category}
+                          </span>
+                        </div>
 
-                      <h3 className="text-xs sm:text-sm font-semibold text-white group-hover:text-accent-theme transition-colors leading-snug line-clamp-2">
-                        {article.title}
-                      </h3>
+                        <h3 className="text-xs sm:text-sm font-bold text-slate-900 group-hover:text-[#0369a1] transition-colors leading-snug line-clamp-2">
+                          {article.title}
+                        </h3>
 
-                      <div className="flex items-center gap-1 text-[11px] font-medium text-text-muted group-hover:text-white transition-colors">
-                        <span>Read full article</span>
-                        <span className="group-hover:translate-x-0.5 transition-transform">→</span>
+                        <div className="text-[11px] font-medium text-slate-500 group-hover:text-slate-900 transition-colors">
+                          Read full article →
+                        </div>
                       </div>
-                    </div>
-                  </a>
-                )
-              })}
+                    </a>
+                  )
+                })}
+              </div>
 
               {totalPages > 1 && (
-                <div className="flex items-center justify-between pt-3 border-t border-white/[0.06] text-xs">
-                  <span className="text-text-muted text-[11px] font-mono">
-                    Showing {(safePage - 1) * ITEMS_PER_PAGE + 1}–{Math.min(safePage * ITEMS_PER_PAGE, cappedArticles.length)} of {cappedArticles.length} (Page {safePage} of {totalPages})
+                <div className="flex items-center justify-between pt-3 border-t border-slate-900/10 text-xs font-mono tabular-nums">
+                  <span className="text-slate-500 text-[11px]">
+                    {(safePage - 1) * ITEMS_PER_PAGE + 1}-{Math.min(safePage * ITEMS_PER_PAGE, cappedArticles.length)} of {cappedArticles.length}
                   </span>
 
-                  <div className="flex items-center gap-1.5">
+                  <div className="flex items-center gap-3">
                     <button
+                      type="button"
                       onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
                       disabled={safePage === 1}
-                      className="px-2.5 py-1 text-xs font-semibold rounded-lg bg-white/[0.04] hover:bg-white/[0.08] disabled:opacity-30 disabled:pointer-events-none border border-white/[0.08] text-zinc-300 transition-colors"
+                      className="text-xs font-bold text-slate-700 hover:text-[#0369a1] disabled:opacity-30 disabled:pointer-events-none cursor-pointer"
                     >
                       ← Prev
                     </button>
 
-                    {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
-                      <button
-                        key={pageNum}
-                        onClick={() => setCurrentPage(pageNum)}
-                        className={`w-7 h-7 flex items-center justify-center text-xs font-mono font-bold rounded-lg transition-all ${
-                          safePage === pageNum
-                            ? 'bg-accent-theme text-white shadow-[0_0_10px_rgba(255,46,84,0.4)]'
-                            : 'bg-white/[0.03] text-text-muted hover:text-white hover:bg-white/[0.08] border border-white/[0.06]'
-                        }`}
-                      >
-                        {pageNum}
-                      </button>
-                    ))}
+                    <div className="flex items-center gap-2">
+                      {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
+                        <button
+                          key={pageNum}
+                          type="button"
+                          onClick={() => setCurrentPage(pageNum)}
+                          className={`px-1.5 py-0.5 text-xs font-bold border-b-2 transition-colors cursor-pointer ${
+                            safePage === pageNum
+                              ? 'border-[#0369a1] text-slate-900'
+                              : 'border-transparent text-slate-500 hover:text-slate-900'
+                          }`}
+                        >
+                          {pageNum}
+                        </button>
+                      ))}
+                    </div>
 
                     <button
+                      type="button"
                       onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
                       disabled={safePage === totalPages}
-                      className="px-2.5 py-1 text-xs font-semibold rounded-lg bg-white/[0.04] hover:bg-white/[0.08] disabled:opacity-30 disabled:pointer-events-none border border-white/[0.08] text-zinc-300 transition-colors"
+                      className="text-xs font-bold text-slate-700 hover:text-[#0369a1] disabled:opacity-30 disabled:pointer-events-none cursor-pointer"
                     >
                       Next →
                     </button>
@@ -265,117 +266,90 @@ export default function NewsSentimentPage() {
           )}
         </div>
 
-        <div className="space-y-4 lg:pl-6 pt-6">
-          <div className="h-10 flex items-center justify-between px-1 border-b border-transparent">
+        <div className="lg:col-span-5 space-y-4">
+          <div className="flex items-center justify-between border-b border-slate-900/10 pb-2.5">
             <div className="flex items-center gap-2 flex-wrap">
-              <h2 className="text-sm font-semibold text-white">Macroeconomic Calendar</h2>
-              <span className="text-[10px] font-mono text-text-muted">
+              <h2 className="text-sm font-bold text-slate-900 tracking-tight">Macroeconomic Calendar</h2>
+              <span className="text-[10px] font-mono text-slate-500">
                 (F = Forecast · P = Previous)
               </span>
             </div>
-            <div className="flex items-center p-0.5">
-              <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-cyan-400">
-                High-Impact Events
-              </span>
-            </div>
+            <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-[#0369a1]">
+              High-Impact
+            </span>
           </div>
 
-          <div className="space-y-3">
+          <div className="divide-y divide-slate-900/10">
             {sortedMacroEvents.slice(0, 5).map((ev, idx) => {
               const isHigh = ev.impact === 'HIGH'
               return (
-                <div
+                <button
                   key={idx}
+                  type="button"
                   onClick={() => setSelectedMacroEvent(ev)}
-                  role="button"
-                  tabIndex={0}
-                  className="flex flex-row items-center gap-3.5 p-3.5 rounded-xl bg-white/[0.02] hover:bg-white/[0.05] border border-white/[0.05] hover:border-cyan-500/30 transition-all duration-200 group overflow-hidden h-[120px] cursor-pointer shadow-sm"
+                  className="w-full text-left py-3.5 first:pt-0 hover:bg-[#faf2df]/70 -mx-2 px-2 rounded-lg transition-colors duration-150 group cursor-pointer space-y-1.5"
                 >
-                  {ev.image_url ? (
-                    <div className="w-28 h-20 flex-shrink-0 relative overflow-hidden rounded-lg bg-black/40">
-                      <img
-                        src={ev.image_url}
-                        alt={ev.title}
-                        className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
-                        loading="lazy"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-1.5">
-                        <span className="text-[8px] font-mono font-bold text-cyan-300 uppercase tracking-wider bg-black/80 px-1.5 py-0.5 rounded border border-white/10">
-                          {formatCalendarBadge(ev.date_time)}
-                        </span>
-                      </div>
-                    </div>
-                  ) : (
-                    <div className="w-28 h-20 flex-shrink-0 flex flex-col items-center justify-center rounded-lg bg-white/[0.02] text-center p-1.5 border border-white/[0.04]">
-                      <span className="text-lg mb-0.5">🏛️</span>
-                      <span className="text-[10px] font-mono font-bold text-cyan-300 tracking-wider">USD EVENT</span>
-                      <span className="text-[9px] font-mono font-bold text-text-muted mt-0.5">{formatCalendarBadge(ev.date_time)}</span>
-                    </div>
-                  )}
-
-                  <div className="space-y-1 flex-1 min-w-0 flex flex-col justify-between h-full py-0.5">
-                    <div className="flex items-center justify-between gap-2">
-                      <div className="flex items-center gap-1.5 text-[10px]">
-                        <span className="font-bold text-zinc-300 uppercase tracking-wider font-mono">FEDERAL RELEASE</span>
-                        <span className="text-text-muted">·</span>
-                        <span className="font-mono text-text-muted">{formatCalendarDate(ev.date_time)}</span>
-                      </div>
-
-                      <span
-                        className={`text-[10px] font-mono font-bold uppercase tracking-wider flex-shrink-0 ${
-                          isHigh ? 'text-rose-400' : 'text-amber-400'
-                        }`}
-                      >
-                        {ev.impact}
+                  <div className="flex items-center justify-between gap-2 text-[10px] font-mono tabular-nums">
+                    <div className="flex items-center gap-2">
+                      <span className="font-bold text-[#0369a1] uppercase tracking-wider">
+                        {formatCalendarBadge(ev.date_time)}
                       </span>
+                      <span className="text-slate-500">·</span>
+                      <span className="text-slate-600">{formatCalendarDate(ev.date_time)}</span>
                     </div>
 
-                    <h3 className="text-xs sm:text-sm font-semibold text-white leading-snug line-clamp-2 group-hover:text-cyan-300 transition-colors">
-                      {ev.title}
-                    </h3>
+                    <span
+                      className={`font-bold uppercase tracking-wider flex-shrink-0 ${
+                        isHigh ? 'text-rose-700' : 'text-amber-800'
+                      }`}
+                    >
+                      {ev.impact}
+                    </span>
+                  </div>
 
-                    <div className="flex items-center justify-between pt-0.5 text-[11px] font-mono text-text-muted">
-                      <div className="flex items-center gap-3">
-                        {ev.forecast ? (
-                          <span>F: <strong className="text-zinc-200 font-semibold">{ev.forecast}</strong></span>
-                        ) : (
-                          <span>Forecast: <strong className="text-text-muted">N/A</strong></span>
-                        )}
-                        {ev.previous && (
-                          <span>P: <strong className="text-text-muted">{ev.previous}</strong></span>
-                        )}
-                      </div>
+                  <h3 className="text-xs sm:text-sm font-bold text-slate-900 leading-snug line-clamp-2 group-hover:text-[#0369a1] transition-colors">
+                    {ev.title}
+                  </h3>
 
-                      <div className="flex items-center gap-1.5 font-mono">
-                        {ev.actual ? (
-                          <span className="text-[10px] uppercase font-bold text-emerald-400 bg-emerald-500/10 px-1.5 py-0.5 border border-emerald-500/20">
-                            Actual: {ev.actual}
-                          </span>
-                        ) : (
-                          <span className="text-[10px] uppercase tracking-wider text-cyan-400 group-hover:underline flex items-center gap-1">
-                            <span>DETAILS</span>
-                            <span>→</span>
-                          </span>
-                        )}
-                      </div>
+                  <div className="flex items-center justify-between pt-0.5 text-[11px] font-mono tabular-nums text-slate-500">
+                    <div className="flex items-center gap-3">
+                      {ev.forecast ? (
+                        <span>F: <strong className="text-slate-900 font-semibold">{ev.forecast}</strong></span>
+                      ) : (
+                        <span>Forecast: <strong className="text-slate-500">N/A</strong></span>
+                      )}
+                      {ev.previous && (
+                        <span>P: <strong className="text-slate-600">{ev.previous}</strong></span>
+                      )}
+                    </div>
+
+                    <div>
+                      {ev.actual ? (
+                        <span className="text-[10px] uppercase font-bold text-emerald-700">
+                          Actual: {ev.actual}
+                        </span>
+                      ) : (
+                        <span className="text-[10px] uppercase tracking-wider text-[#0369a1] font-bold group-hover:underline">
+                          Inspect →
+                        </span>
+                      )}
                     </div>
                   </div>
-                </div>
+                </button>
               )
             })}
           </div>
 
-          <div className="p-3.5 bg-transparent space-y-2">
-            <div className="flex items-center justify-between">
-              <span className="text-[11px] font-medium text-text-muted uppercase tracking-wider flex items-center gap-1.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
+          <div className="border-t border-slate-900/10 pt-3.5 space-y-1.5">
+            <div className="flex items-center justify-between text-[11px] font-mono">
+              <span className="font-bold text-slate-700 uppercase tracking-wider">
                 Factor 9 Confluence Execution
               </span>
-              <span className="text-[10px] font-mono text-text-muted">Max +10.0 pts</span>
+              <span className="text-slate-500 tabular-nums">Max +10.0 pts</span>
             </div>
 
-            <p className="text-[11px] text-text-secondary leading-relaxed">
-              Macro alignment gives up to <strong className="text-zinc-200">+10.0 pts</strong> for fundamental setups (ETF inflows, dovish Fed). Opposing sentiment awards <strong className="text-zinc-200">0.0 pts</strong> to protect capital from macro shocks.
+            <p className="text-[11px] text-slate-600 leading-relaxed">
+              Macro alignment gives up to <strong className="text-slate-900">+10.0 pts</strong> for fundamental setups (ETF inflows, dovish Fed). Opposing sentiment awards <strong className="text-slate-900">0.0 pts</strong> to protect capital from macro shocks.
             </p>
           </div>
         </div>

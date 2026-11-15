@@ -26,7 +26,7 @@ export function BinanceLogo({
   return (
     <div className={`inline-flex items-center gap-2 flex-shrink-0 ${className}`}>
       {variant === 'badge' ? (
-        <div className={`${dim} rounded-lg bg-[#F0B90B]/10 border border-[#F0B90B]/30 flex items-center justify-center p-1 shadow-[0_0_12px_rgba(240,185,11,0.2)]`}>
+        <div className={`${dim} rounded-lg bg-[#F0B90B]/10 border border-[#F0B90B]/30 flex items-center justify-center p-1`}>
           <svg
             viewBox="0 0 24 24"
             fill="none"
@@ -54,7 +54,7 @@ export function BinanceLogo({
       )}
 
       {withText && (
-        <span className="font-sans font-bold tracking-tight text-white uppercase text-sm">
+        <span className="font-sans font-bold tracking-tight text-slate-900 uppercase text-sm">
           BINANCE
         </span>
       )}

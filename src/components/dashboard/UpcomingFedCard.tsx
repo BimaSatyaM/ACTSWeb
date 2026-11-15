@@ -58,108 +58,79 @@ export function UpcomingFedCard({ className = '' }: { className?: string }) {
 
   return (
     <>
-      <div className={`p-5 sm:p-6 rounded-2xl bg-gradient-to-b from-[#0d121f]/90 to-[#070b14]/90 border border-white/[0.08] backdrop-blur-xl flex flex-col justify-between shadow-xl space-y-4 ${className}`}>
+      <div className={`p-5 sm:p-6 rounded-2xl bg-[#faf2df] border border-slate-900/10 flex flex-col justify-between space-y-4 ${className}`}>
         {isLoading && events.length === 0 ? (
           <div className="space-y-3 py-2 animate-pulse flex-1">
-            <div className="h-16 bg-white/[0.04] rounded-xl" />
-            <div className="h-16 bg-white/[0.04] rounded-xl" />
-            <div className="h-16 bg-white/[0.04] rounded-xl" />
+            <div className="h-14 border-b border-slate-900/10" />
+            <div className="h-14 border-b border-slate-900/10" />
+            <div className="h-14" />
           </div>
         ) : sortedEvents.length === 0 ? (
-          <div className="p-6 text-center text-xs text-text-secondary flex-1 flex items-center justify-center">
+          <div className="p-6 text-center text-xs text-slate-500 font-mono flex-1 flex items-center justify-center">
             No high-impact releases scheduled for the current session.
           </div>
         ) : (
-          <div className="space-y-2 flex-1">
+          <div className="divide-y divide-slate-900/10 flex-1">
             {sortedEvents.slice(0, 3).map((ev, idx) => {
               const isHigh = ev.impact === 'HIGH'
               return (
-                <div
+                <button
                   key={idx}
+                  type="button"
                   onClick={() => setSelectedEvent(ev)}
-                  role="button"
-                  tabIndex={0}
-                  className="flex items-center gap-3.5 p-2.5 rounded-xl hover:bg-white/[0.04] transition-all duration-200 group overflow-hidden cursor-pointer border border-transparent hover:border-white/[0.06]"
+                  className="w-full text-left py-3 first:pt-0 last:pb-0 hover:bg-[#f3ead2]/50 -mx-2 px-2 rounded-lg transition-colors duration-150 group cursor-pointer space-y-1.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0284c7]"
                 >
-                  {ev.image_url ? (
-                    <div className="w-16 h-12 flex-shrink-0 relative overflow-hidden rounded-lg bg-black/40 border border-white/[0.08]">
-                      <img
-                        src={ev.image_url}
-                        alt={ev.title}
-                        className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
-                        loading="lazy"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-0.5">
-                        <span className="text-[7px] font-mono font-bold text-cyan-300 uppercase tracking-wider bg-black/80 px-1 py-0.2 rounded">
-                          {formatCalendarBadge(ev.date_time)}
-                        </span>
-                      </div>
-                    </div>
-                  ) : (
-                    <div className="w-16 h-12 flex-shrink-0 flex flex-col items-center justify-center rounded-lg bg-white/[0.02] border border-white/[0.06] text-center p-1">
-                      <span className="text-xs mb-0.5">🏛️</span>
-                      <span className="text-[8px] font-mono font-bold text-cyan-300 tracking-wider">USD EVENT</span>
-                    </div>
-                  )}
+                  <div className="flex items-center justify-between gap-2 text-[10px] font-mono tabular-nums uppercase tracking-wider">
+                    <span className="font-bold text-slate-500">
+                      {formatCalendarBadge(ev.date_time)} · {formatEventTime(ev.date_time)}
+                    </span>
+                    <span
+                      className={`font-extrabold ${
+                        isHigh ? 'text-rose-700' : 'text-amber-800'
+                      }`}
+                    >
+                      {ev.impact}
+                    </span>
+                  </div>
 
-                  <div className="flex-1 min-w-0 space-y-0.5">
-                    <div className="flex items-center justify-between gap-1">
-                      <span className="text-[9px] font-mono font-bold text-zinc-400 uppercase tracking-wider">
-                        {formatCalendarBadge(ev.date_time)} · {formatEventTime(ev.date_time)}
-                      </span>
-                      <span
-                        className={`text-[8px] font-mono font-extrabold uppercase px-1.5 py-0.2 rounded border ${
-                          isHigh
-                            ? 'bg-rose-500/10 text-rose-400 border-rose-500/25'
-                            : 'bg-amber-500/10 text-amber-400 border-amber-500/25'
-                        }`}
-                      >
-                        {ev.impact}
-                      </span>
-                    </div>
+                  <h4 className="text-xs font-bold text-slate-900 truncate group-hover:text-[#0369a1] transition-colors leading-snug">
+                    {ev.title}
+                  </h4>
 
-                    <h4 className="text-xs font-semibold text-white truncate group-hover:text-cyan-300 transition-colors leading-snug">
-                      {ev.title}
-                    </h4>
-
-                    <div className="flex items-center justify-between text-[10px] font-mono text-text-muted">
-                      <div className="flex items-center gap-2">
-                        {ev.forecast && (
-                          <span>F: <strong className="text-zinc-200 font-semibold">{ev.forecast}</strong></span>
-                        )}
-                        {ev.previous && (
-                          <span>P: <strong className="text-text-muted">{ev.previous}</strong></span>
-                        )}
-                      </div>
-
-                      {ev.actual ? (
-                        <span className="text-[9px] font-bold text-emerald-400 bg-emerald-500/10 px-1.5 py-0.5 rounded border border-emerald-500/20">
-                          {ev.actual}
-                        </span>
-                      ) : (
-                        <span className="text-[9px] text-cyan-400 group-hover:underline flex items-center gap-0.5">
-                          <span>Details</span>
-                          <span>→</span>
-                        </span>
+                  <div className="flex items-center justify-between text-[10px] font-mono tabular-nums text-slate-500">
+                    <div className="flex items-center gap-3">
+                      {ev.forecast && (
+                        <span>F: <strong className="text-slate-900 font-semibold">{ev.forecast}</strong></span>
+                      )}
+                      {ev.previous && (
+                        <span>P: <strong className="text-slate-600">{ev.previous}</strong></span>
                       )}
                     </div>
+
+                    {ev.actual ? (
+                      <span className="text-[10px] font-bold text-emerald-700">
+                        ACT {ev.actual}
+                      </span>
+                    ) : (
+                      <span className="text-[10px] font-semibold text-[#0369a1] group-hover:underline flex items-center gap-0.5">
+                        <span>Inspect</span>
+                        <span>→</span>
+                      </span>
+                    )}
                   </div>
-                </div>
+                </button>
               )
             })}
           </div>
         )}
 
-        <div className="pt-2 border-t border-white/[0.04]">
+        <div className="pt-3 border-t border-slate-900/10">
           <Link
             href="/dashboard/news"
-            className="w-full flex items-center justify-between py-2 text-white text-xs font-semibold transition-all group hover:text-cyan-400"
+            className="w-full flex items-center justify-between py-1 text-slate-900 text-xs font-semibold transition-colors group hover:text-[#0369a1]"
           >
-            <div className="flex items-center gap-2">
-              <span className="text-accent-theme">📡</span>
-              <span>Live News & Macro Sentiment AI</span>
-            </div>
-            <span className="group-hover:translate-x-0.5 transition-transform text-text-muted">→</span>
+            <span>Live News & Macro Sentiment Desk</span>
+            <span className="group-hover:translate-x-0.5 transition-transform text-slate-500 font-mono">→</span>
           </Link>
         </div>
       </div>

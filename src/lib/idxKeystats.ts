@@ -69,22 +69,22 @@ export interface IDXPeerItem {
 }
 
 export function formatIDR(val: number | null | undefined): string {
-  if (val === null || val === undefined || isNaN(val)) return '—'
+  if (val === null || val === undefined || isNaN(val)) return '-'
   return `Rp ${new Intl.NumberFormat('id-ID').format(Math.round(val))}`
 }
 
 export function formatTrillion(val: number | null | undefined): string {
-  if (val === null || val === undefined || isNaN(val)) return '—'
+  if (val === null || val === undefined || isNaN(val)) return '-'
   return `${(val).toLocaleString('id-ID', { minimumFractionDigits: 1, maximumFractionDigits: 2 })} T`
 }
 
 export function formatPercent(val: number | null | undefined): string {
-  if (val === null || val === undefined || isNaN(val)) return '—'
+  if (val === null || val === undefined || isNaN(val)) return '-'
   const sign = val > 0 ? '+' : ''
   return `${sign}${val.toFixed(2)}%`
 }
 
 export function formatRatio(val: number | null | undefined, suffix: string = 'x'): string {
-  if (val === null || val === undefined || isNaN(val)) return '—'
+  if (val === null || val === undefined || isNaN(val)) return '-'
   return `${val.toFixed(2)}${suffix}`
 }

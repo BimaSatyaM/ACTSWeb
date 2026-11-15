@@ -12,7 +12,7 @@ interface LessonQuizProps {
 }
 
 // Interactive Lesson Quiz Component
-// Flat data-terminal design: no pill badges above headings, no emojis, tabular figures.
+// Daylight 2.1 design: clean typography, tabular figures, high contrast.
 export function LessonQuiz({
   quiz,
   initialScore,
@@ -67,24 +67,24 @@ export function LessonQuiz({
   return (
     <section
       aria-label="Check Your Understanding"
-      className={`rounded-lg border border-[#1a2030] bg-[#0a0f1a] p-5 sm:p-6 space-y-5 ${className}`}
+      className={`rounded-xl border border-slate-900/10 bg-[#faf2df] p-5 sm:p-6 space-y-5 ${className}`}
     >
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#1a2030] pb-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-900/10 pb-4">
         <div>
-          <h3 className="text-base font-semibold text-white">
+          <h3 className="text-base font-bold text-slate-900">
             Comprehension check
           </h3>
-          <p className="text-xs text-[#94a3b8] [font-variant-numeric:tabular-nums]">
+          <p className="text-xs text-slate-500 font-mono tabular-nums">
             {quiz.length} {quiz.length === 1 ? 'question' : 'questions'} · 70% required to pass
           </p>
         </div>
 
         {scoreResult && (
           <div
-            className={`inline-flex items-center gap-2 rounded px-2.5 py-1 text-xs font-medium [font-variant-numeric:tabular-nums] ${
+            className={`inline-flex items-center gap-2 rounded-lg border px-2.5 py-1 text-xs font-semibold font-mono tabular-nums ${
               scoreResult.passed
-                ? 'bg-[#172a1d] text-[#3fc07a]'
-                : 'bg-[#2c1a20] text-[#e5566f]'
+                ? 'bg-emerald-500/10 text-emerald-800 border-emerald-600/30'
+                : 'bg-rose-500/10 text-rose-800 border-rose-600/30'
             }`}
           >
             <span>
@@ -103,9 +103,9 @@ export function LessonQuiz({
           return (
             <div
               key={q.id || `quiz-q-${qIdx}`}
-              className="space-y-3 border-b border-[#141a26] pb-5 last:border-b-0 last:pb-0"
+              className="space-y-3 border-b border-slate-900/10 pb-5 last:border-b-0 last:pb-0"
             >
-              <p className="text-sm font-medium text-white leading-relaxed">
+              <p className="text-sm font-semibold text-slate-900 leading-relaxed">
                 {q.question}
               </p>
 
@@ -115,18 +115,18 @@ export function LessonQuiz({
                   const isThisCorrect = q.correctIndex === optIdx
 
                   let buttonStyle =
-                    'border-[#1a2030] bg-[#070b14] text-[#cbd5e1] hover:border-[#2e3852] hover:text-white'
+                    'border-slate-900/15 bg-[#fdfaf3] text-slate-800 hover:border-slate-900/30 hover:bg-[#f3ead2]'
 
                   if (submitted) {
                     if (isThisCorrect) {
-                      buttonStyle = 'border-[#3fc07a] bg-[#172a1d] text-[#3fc07a] font-medium'
+                      buttonStyle = 'border-emerald-600/40 bg-emerald-500/15 text-emerald-950 font-semibold'
                     } else if (isThisSelected && !isThisCorrect) {
-                      buttonStyle = 'border-[#e5566f] bg-[#2c1a20] text-[#e5566f]'
+                      buttonStyle = 'border-rose-600/40 bg-rose-500/15 text-rose-950 font-medium'
                     } else {
-                      buttonStyle = 'border-[#141a26] bg-[#070b14] text-[#64748b]'
+                      buttonStyle = 'border-slate-900/10 bg-[#faf2df]/60 text-slate-500'
                     }
                   } else if (isThisSelected) {
-                    buttonStyle = 'border-[#ff2e54] bg-[#141b29] text-white font-medium'
+                    buttonStyle = 'border-[#0369a1] bg-[#e0f2fe]/60 text-[#0369a1] font-bold'
                   }
 
                   return (
@@ -135,14 +135,14 @@ export function LessonQuiz({
                       type="button"
                       disabled={submitted}
                       onClick={() => handleSelectOption(qIdx, optIdx)}
-                      className={`flex items-start justify-between gap-3 rounded border px-3.5 py-2.5 text-left text-xs transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#ff2e54] ${buttonStyle}`}
+                      className={`flex items-start justify-between gap-3 rounded-lg border px-3.5 py-2.5 text-left text-xs transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#0284c7] cursor-pointer ${buttonStyle}`}
                     >
                       <span className="leading-relaxed">{opt}</span>
                       {submitted && isThisCorrect && (
-                        <span className="text-xs font-medium text-[#3fc07a] flex-shrink-0">Correct</span>
+                        <span className="text-xs font-bold text-emerald-700 flex-shrink-0">Correct</span>
                       )}
                       {submitted && isThisSelected && !isThisCorrect && (
-                        <span className="text-xs font-medium text-[#e5566f] flex-shrink-0">Incorrect</span>
+                        <span className="text-xs font-bold text-rose-700 flex-shrink-0">Incorrect</span>
                       )}
                     </button>
                   )
@@ -150,8 +150,8 @@ export function LessonQuiz({
               </div>
 
               {submitted && (
-                <div className="rounded bg-[#0d1322] p-3.5 text-xs text-[#cbd5e1] leading-relaxed border-l-2 border-[#2e3852]">
-                  <span className="font-medium text-white">Explanation: </span>
+                <div className="border-l-2 border-[#0369a1] pl-3.5 py-1.5 text-xs text-slate-700 leading-relaxed bg-[#e0f2fe]/30 rounded-r">
+                  <span className="font-bold text-slate-900">Explanation: </span>
                   {q.explanation}
                 </div>
               )}
@@ -160,8 +160,8 @@ export function LessonQuiz({
         })}
       </div>
 
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-3 border-t border-[#1a2030]">
-        <span className="text-xs text-[#94a3b8] [font-variant-numeric:tabular-nums]">
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-3 border-t border-slate-900/10">
+        <span className="text-xs text-slate-500 font-mono tabular-nums">
           {!submitted
             ? `${Object.keys(selectedAnswers).length} of ${quiz.length} answered`
             : 'Review the explanations above before advancing.'}
@@ -171,7 +171,7 @@ export function LessonQuiz({
           <button
             type="button"
             onClick={handleRetry}
-            className="h-8 rounded border border-[#262f45] bg-[#070b14] px-3.5 text-xs font-medium text-white transition-colors hover:bg-[#141b29] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#ff2e54]"
+            className="h-8 rounded-lg border border-slate-900/15 bg-[#faf2df] px-3.5 text-xs font-semibold text-slate-800 transition-colors hover:bg-[#f3ead2] cursor-pointer focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#0284c7]"
           >
             Reset answers
           </button>
@@ -180,7 +180,7 @@ export function LessonQuiz({
             type="button"
             disabled={!allAnswered}
             onClick={handleSubmit}
-            className="h-8 rounded bg-white px-4 text-xs font-medium text-[#070b14] transition-colors hover:bg-[#e2e8f0] disabled:opacity-40 disabled:cursor-not-allowed focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#ff2e54]"
+            className="h-8 rounded-lg bg-[#0369a1] px-4 text-xs font-semibold text-white transition-colors hover:bg-[#0284c7] disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#0284c7]"
           >
             Check answers
           </button>

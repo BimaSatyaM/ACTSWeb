@@ -69,19 +69,19 @@ export function DashboardGating() {
 
   return (
     <div className="w-full flex items-center justify-center p-4 sm:p-8 min-h-[70vh]">
-      <GlassCard className="w-full max-w-lg p-6 sm:p-8 text-center space-y-6">
+      <GlassCard className="w-full max-w-lg p-6 sm:p-8 text-center space-y-6 bg-[#fdfaf3] border-slate-900/10 shadow-sm">
         {!user ? (
           // 1. Visitor state: Not logged in
           <div className="space-y-4">
-            <div className="inline-flex items-center gap-2 text-rose-400 text-xs font-semibold">
-              <span className="w-1.5 h-1.5 rounded-full bg-rose-400" />
+            <div className="inline-flex items-center gap-2 text-rose-700 text-xs font-semibold">
+              <span className="w-1.5 h-1.5 rounded-full bg-rose-600" />
               <span>Gated Dashboard</span>
             </div>
-            <h2 className="text-xl font-bold text-white">Access Locked</h2>
-            <p className="text-xs text-text-secondary leading-relaxed">
+            <h2 className="text-xl font-bold text-slate-900">Access Locked</h2>
+            <p className="text-xs text-slate-600 leading-relaxed">
               Live signal feeds, market telemetry, and custom validation calendars are only available to authorized traders.
             </p>
-            <div className="bg-white/[0.02] border border-white/[0.05] rounded-lg p-4 text-xs text-text-muted leading-relaxed">
+            <div className="border-l-2 border-[#0369a1] pl-3 py-1 text-left text-xs text-slate-600 leading-relaxed">
               Log in first to view the contact channel and submit your access request.
             </div>
             <Link href="/login" className="inline-block pt-2">
@@ -99,21 +99,21 @@ export function DashboardGating() {
         ) : !profile?.displayName ? (
           // 2. Initial login: Set display name
           <form onSubmit={handleSetName} className="space-y-4 text-left">
-            <h2 className="text-xl font-bold text-white text-center">Set Display Name</h2>
-            <p className="text-xs text-text-secondary leading-relaxed text-center">
+            <h2 className="text-xl font-bold text-slate-900 text-center">Set Display Name</h2>
+            <p className="text-xs text-slate-600 leading-relaxed text-center">
               Please set your trader name before proceeding.
             </p>
             
-            {errorMsg && <p className="text-xs text-accent-red bg-accent-red/10 p-3 rounded-lg border border-accent-red/20">{errorMsg}</p>}
+            {errorMsg && <p className="text-xs text-rose-700 border-l-2 border-rose-600 pl-3 py-1.5">{errorMsg}</p>}
             
             <div className="space-y-1">
-              <label className="text-xs font-semibold text-text-muted">Trader Name</label>
+              <label className="text-xs font-semibold text-slate-700">Trader Name</label>
               <input 
                 type="text" 
                 value={displayNameInput}
                 onChange={(e) => setDisplayNameInput(e.target.value)}
                 placeholder="e.g. Satoshi"
-                className="w-full px-4 py-2.5 rounded-lg bg-white/[0.04] border border-white/[0.08] text-white text-xs focus:outline-none focus:border-accent-theme/50"
+                className="w-full px-3.5 py-2 rounded-lg bg-[#fdfaf3] border border-slate-900/15 text-slate-900 text-xs focus:outline-none focus:border-[#0369a1]"
                 required
               />
             </div>
@@ -132,25 +132,25 @@ export function DashboardGating() {
           // 3. Authenticated: Token activation / Telegram contact
           <div className="space-y-5 text-left">
             <div className="text-center space-y-2">
-              <div className="inline-flex items-center gap-2 text-rose-400 text-xs font-semibold">
-                <span className="w-1.5 h-1.5 rounded-full bg-rose-400" />
+              <div className="inline-flex items-center gap-2 text-amber-700 text-xs font-semibold">
+                <span className="w-1.5 h-1.5 rounded-full bg-amber-600" />
                 <span>Activation Required</span>
               </div>
-              <h2 className="text-xl font-bold text-white">Pending Activation</h2>
-              <p className="text-xs text-text-secondary leading-relaxed">
+              <h2 className="text-xl font-bold text-slate-900">Pending Activation</h2>
+              <p className="text-xs text-slate-600 leading-relaxed">
                 To activate your dashboard, request an invitation token from the system administrator on Telegram.
               </p>
             </div>
 
-            {errorMsg && <p className="text-xs text-accent-red bg-accent-red/10 p-3 rounded-lg border border-accent-red/20">{errorMsg}</p>}
-            {successMsg && <p className="text-xs text-accent-green bg-accent-green/10 p-3 rounded-lg border border-accent-green/20">{successMsg}</p>}
+            {errorMsg && <p className="text-xs text-rose-700 border-l-2 border-rose-600 pl-3 py-1.5">{errorMsg}</p>}
+            {successMsg && <p className="text-xs text-emerald-700 border-l-2 border-emerald-600 pl-3 py-1.5">{successMsg}</p>}
 
             <div className="space-y-4 text-center">
               <a 
                 href="https://t.me/Mahenssss" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 mx-auto text-xs font-medium text-[#38bdf8] hover:text-white hover:underline transition-colors"
+                className="inline-flex items-center justify-center gap-2 mx-auto text-xs font-medium text-[#0369a1] hover:text-slate-950 hover:underline transition-colors"
               >
                 <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
                   <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.161c-.18.717-.962 4.084-1.362 5.752-.169.706-.432.943-.685.966-.55.051-.968-.362-1.501-.711-.835-.546-1.307-.886-2.119-1.421-.938-.619-.33-.958.205-1.514.14-.145 2.573-2.358 2.62-2.56.006-.025.011-.122-.047-.174-.059-.051-.144-.034-.207-.02-.089.02-1.506.958-4.251 2.811-.402.277-.766.412-1.092.405-.361-.008-1.055-.204-1.571-.372-.633-.206-1.137-.315-1.093-.665.023-.182.273-.369.749-.561 2.932-1.277 4.888-2.12 5.867-2.529 2.793-1.166 3.375-1.368 3.753-1.375.083-.001.268.02.388.118.101.082.129.193.136.27.008.087.014.286-.002.433z"/>
@@ -160,13 +160,13 @@ export function DashboardGating() {
 
               <form onSubmit={handleClaimToken} className="space-y-3 pt-2 text-left">
                 <div className="space-y-1">
-                  <label className="text-xs font-semibold text-text-muted">Enter Activation Token</label>
+                  <label className="text-xs font-semibold text-slate-700">Enter Activation Token</label>
                   <input 
                     type="text" 
                     value={tokenInput}
                     onChange={(e) => setTokenInput(e.target.value)}
                     placeholder="e.g. ACTS-XXXX-XXXX-XXXX"
-                    className="w-full px-4 py-2 rounded-lg bg-white/[0.04] border border-white/[0.08] text-white text-xs focus:outline-none focus:border-accent-theme/50"
+                    className="w-full px-3.5 py-2 rounded-lg bg-[#fdfaf3] border border-slate-900/15 text-slate-900 text-xs focus:outline-none focus:border-[#0369a1]"
                     required
                   />
                 </div>
@@ -187,53 +187,53 @@ export function DashboardGating() {
           // 4. System Rules Agreement Panel
           <div className="space-y-5 text-left">
             <div className="text-center space-y-2">
-              <div className="inline-flex items-center gap-2 text-rose-400 text-xs font-semibold">
-                <span className="w-1.5 h-1.5 rounded-full bg-rose-400" />
+              <div className="inline-flex items-center gap-2 text-sky-700 text-xs font-semibold">
+                <span className="w-1.5 h-1.5 rounded-full bg-sky-600" />
                 <span>Usage Guidelines</span>
               </div>
-              <h2 className="text-xl font-bold text-white">System Security Agreement</h2>
-              <p className="text-xs text-text-secondary leading-relaxed">
+              <h2 className="text-xl font-bold text-slate-900">System Security Agreement</h2>
+              <p className="text-xs text-slate-600 leading-relaxed">
                 Please confirm your commitment to the system guidelines.
               </p>
             </div>
 
-            <div className="space-y-2.5 bg-white/[0.02] border border-white/[0.04] p-4 rounded-lg text-xs text-text-secondary leading-relaxed">
-              <div className="flex items-start gap-2.5">
-                <span className="text-accent-theme font-bold">1.</span>
+            <div className="divide-y divide-slate-900/10 border-y border-slate-900/10 text-xs text-slate-600 leading-relaxed">
+              <div className="py-2.5 flex items-start gap-3">
+                <span className="font-mono text-[11px] font-bold text-[#0369a1] pt-0.5">01</span>
                 <div>
-                  <strong className="text-white block font-semibold">Private Activation Keys</strong>
+                  <strong className="text-slate-900 block font-semibold">Private Activation Keys</strong>
                   Tokens are single-use and bound exclusively to your unique profile.
                 </div>
               </div>
               
-              <div className="flex items-start gap-2.5">
-                <span className="text-accent-theme font-bold">2.</span>
+              <div className="py-2.5 flex items-start gap-3">
+                <span className="font-mono text-[11px] font-bold text-[#0369a1] pt-0.5">02</span>
                 <div>
-                  <strong className="text-white block font-semibold">Zero Signal Redistribution</strong>
+                  <strong className="text-slate-900 block font-semibold">Zero Signal Redistribution</strong>
                   Do not forward or distribute live confluence signals to external forums or channels.
                 </div>
               </div>
 
-              <div className="flex items-start gap-2.5">
-                <span className="text-accent-theme font-bold">3.</span>
+              <div className="py-2.5 flex items-start gap-3">
+                <span className="font-mono text-[11px] font-bold text-[#0369a1] pt-0.5">03</span>
                 <div>
-                  <strong className="text-white block font-semibold">Research Telemetry</strong>
+                  <strong className="text-slate-900 block font-semibold">Research Telemetry</strong>
                   All model telemetry is for analysis and execution assistance. Trade responsibly.
                 </div>
               </div>
             </div>
 
-            {errorMsg && <p className="text-xs text-accent-red bg-accent-red/10 p-3 rounded-lg border border-accent-red/20">{errorMsg}</p>}
+            {errorMsg && <p className="text-xs text-rose-700 border-l-2 border-rose-600 pl-3 py-1.5">{errorMsg}</p>}
 
-            <div className="flex items-start gap-3 bg-white/[0.02] border border-white/[0.05] p-3.5 rounded-lg">
+            <div className="flex items-start gap-3 pt-1">
               <input 
                 type="checkbox" 
                 id="accept-rules-check"
                 checked={rulesChecked}
                 onChange={(e) => setRulesChecked(e.target.checked)}
-                className="mt-0.5 w-4 h-4 cursor-pointer accent-accent-theme rounded border-white/20 bg-white/[0.04]"
+                className="mt-0.5 w-4 h-4 cursor-pointer accent-[#0369a1] rounded border-slate-900/20"
               />
-              <label htmlFor="accept-rules-check" className="text-xs text-text-secondary select-none leading-relaxed cursor-pointer">
+              <label htmlFor="accept-rules-check" className="text-xs text-slate-700 select-none leading-relaxed cursor-pointer">
                 I agree to the usage guidelines and security protocols of the ACTS dashboard.
               </label>
             </div>

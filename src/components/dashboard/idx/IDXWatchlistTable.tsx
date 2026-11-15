@@ -102,16 +102,16 @@ export function IDXWatchlistTable({
   // ── Compact Side-by-Side Mode ──
   if (compact) {
     return (
-      <div className="rounded-xl bg-[#0d121f] border border-white/[0.08] overflow-hidden flex flex-col h-[480px]">
-        <div className="p-3.5 bg-white/[0.01] border-b border-white/[0.08] space-y-2.5">
+      <div className="rounded-xl bg-[#fdfaf3] border border-slate-900/10 overflow-hidden flex flex-col h-[480px] shadow-xs">
+        <div className="p-3.5 bg-[#faf2df]/60 border-b border-slate-900/10 space-y-2.5">
           <div className="flex items-center justify-between gap-2">
             <div className="flex items-center gap-2">
-              <span className={`w-2 h-2 rounded-full ${isLive ? 'bg-emerald-400 animate-pulse' : 'bg-[#ff2e54]'}`} />
-              <h3 className="text-xs font-bold text-white uppercase tracking-wider font-mono">
+              <span className={`w-2 h-2 rounded-full ${isLive ? 'bg-emerald-500 animate-pulse' : 'bg-slate-400'}`} />
+              <h3 className="text-xs font-bold text-slate-900 uppercase tracking-wider font-mono">
                 Indonesian Equities
               </h3>
-              <span className="text-[10px] font-mono text-slate-400 bg-white/[0.04] px-1.5 py-0.5 rounded border border-white/[0.06]">
-                {filteredStocks.length}
+              <span className="text-[11px] font-mono text-slate-500 opacity-70 tabular-nums font-semibold">
+                ({filteredStocks.length})
               </span>
             </div>
 
@@ -124,7 +124,7 @@ export function IDXWatchlistTable({
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search ticker..."
-                className="w-full bg-[#070b14] border border-white/[0.08] focus:border-[#ff2e54]/50 rounded-lg pl-8 pr-2.5 py-1 text-xs text-white placeholder:text-slate-500 focus:outline-hidden transition-colors font-mono"
+                className="w-full bg-[#fdfaf3] border border-slate-900/15 focus:border-sky-600 rounded-lg pl-8 pr-2.5 py-1 text-xs text-slate-900 placeholder:text-slate-500 focus:outline-hidden transition-colors font-mono"
               />
             </div>
           </div>
@@ -136,8 +136,8 @@ export function IDXWatchlistTable({
                 onClick={() => setSelectedFilter(f)}
                 className={`px-2 py-0.5 rounded-md text-[10px] font-mono font-semibold whitespace-nowrap transition-all cursor-pointer ${
                   selectedFilter === f
-                    ? 'bg-[#ff2e54]/20 text-white border border-[#ff2e54]/50'
-                    : 'bg-white/[0.02] text-slate-400 hover:text-white hover:bg-white/[0.05] border border-white/[0.05]'
+                    ? 'bg-sky-50 text-sky-900 border border-sky-300 font-bold'
+                    : 'bg-[#faf2df]/80 text-slate-600 hover:text-slate-900 hover:bg-[#faf2df] border border-slate-900/10'
                 }`}
               >
                 {f}
@@ -148,7 +148,7 @@ export function IDXWatchlistTable({
 
         <div
           onScroll={handleScroll}
-          className="flex-1 overflow-y-auto custom-scrollbar divide-y divide-white/[0.03]"
+          className="flex-1 overflow-y-auto custom-scrollbar divide-y divide-slate-900/10"
         >
           {displayedStocks.length === 0 ? (
             <div className="p-8 text-center text-xs font-mono text-slate-500">
@@ -165,8 +165,8 @@ export function IDXWatchlistTable({
                   onClick={() => onSelectStock(s)}
                   className={`group flex items-center justify-between p-2.5 sm:px-3.5 cursor-pointer transition-all duration-150 ${
                     isSelected
-                      ? 'bg-white/[0.06] border-l-2 border-[#ff2e54]'
-                      : 'hover:bg-white/[0.02]'
+                      ? 'bg-sky-50/70 border-l-2 border-sky-600'
+                      : 'hover:bg-[#f3ead2]/40'
                   }`}
                 >
                   <div className="flex items-center gap-2.5 min-w-0 pr-2">
@@ -178,26 +178,26 @@ export function IDXWatchlistTable({
                     />
                     <div className="min-w-0">
                       <div className="flex items-center gap-1.5">
-                        <span className="font-bold text-white font-mono text-xs">{s.symbol}</span>
+                        <span className="font-bold text-slate-900 font-mono text-xs">{s.symbol}</span>
                         {s.group && (
-                          <span className="hidden sm:inline-block text-[9px] px-1 py-0.2 rounded bg-white/[0.04] text-slate-400 font-mono truncate max-w-[90px]">
+                          <span className="hidden sm:inline-block text-[9px] px-1 py-0.2 rounded bg-[#faf2df] text-slate-600 border border-slate-900/10 font-mono truncate max-w-[90px]">
                             {s.group}
                           </span>
                         )}
                       </div>
-                      <p className="text-[10px] text-slate-400 truncate max-w-[130px] sm:max-w-[170px]">
+                      <p className="text-[10px] text-slate-500 truncate max-w-[130px] sm:max-w-[170px] font-sans">
                         {s.name}
                       </p>
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-3 shrink-0 text-right font-mono">
+                  <div className="flex items-center gap-3 shrink-0 text-right font-mono tabular-nums">
                     <div>
-                      <div className="text-xs font-bold text-white">
+                      <div className="text-xs font-bold text-slate-900">
                         Rp {s.currentPrice.toLocaleString()}
                       </div>
                       <span className={`text-[9px] block ${
-                        s.foreignFlow === 'BUY' ? 'text-emerald-400' : s.foreignFlow === 'SELL' ? 'text-rose-400' : 'text-slate-500'
+                        s.foreignFlow === 'BUY' ? 'text-emerald-700' : s.foreignFlow === 'SELL' ? 'text-rose-700' : 'text-slate-500'
                       }`}>
                         {s.foreignFlow === 'BUY' ? '▲ F.Buy' : s.foreignFlow === 'SELL' ? '▼ F.Sell' : '• Neut'}
                       </span>
@@ -206,8 +206,8 @@ export function IDXWatchlistTable({
                     <div className="w-16 text-right">
                       <span className={`inline-block px-1.5 py-0.5 rounded text-[10px] font-bold ${
                         isPos
-                          ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20'
-                          : 'bg-rose-500/10 text-rose-400 border border-rose-500/20'
+                          ? 'bg-emerald-50 text-emerald-800 border border-emerald-200'
+                          : 'bg-rose-50 text-rose-800 border border-rose-200'
                       }`}>
                         {isPos ? '+' : ''}{s.changePercent.toFixed(2)}%
                       </span>
@@ -222,8 +222,8 @@ export function IDXWatchlistTable({
           )}
         </div>
 
-        <div className="px-3 py-1.5 bg-[#070b14] border-t border-white/[0.06] flex items-center justify-between text-[10px] font-mono text-slate-500">
-          <span>Showing {displayedStocks.length} of {filteredStocks.length} stocks</span>
+        <div className="px-3 py-1.5 bg-[#faf2df]/60 border-t border-slate-900/10 flex items-center justify-between text-[10px] font-mono text-slate-500">
+          <span className="tabular-nums">Showing {displayedStocks.length} of {filteredStocks.length} stocks</span>
           <span>Click ticker to inspect</span>
         </div>
       </div>
@@ -231,18 +231,18 @@ export function IDXWatchlistTable({
   }
 
   return (
-    <div className="rounded-xl bg-[#0d121f] border border-white/[0.08] overflow-hidden space-y-3.5 p-4 sm:p-5">
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 pb-3 border-b border-white/[0.08]">
+    <div className="rounded-xl bg-[#fdfaf3] border border-slate-900/10 overflow-hidden space-y-3.5 p-4 sm:p-5 shadow-xs">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 pb-3 border-b border-slate-900/10">
         <div className="flex items-center gap-2">
-          <span className={`w-2 h-2 rounded-full ${isLive ? 'bg-emerald-400 animate-pulse' : 'bg-brand-primary'}`} />
-          <h3 className="text-xs sm:text-sm font-bold text-white uppercase tracking-wider font-mono">
+          <span className={`w-2 h-2 rounded-full ${isLive ? 'bg-emerald-500 animate-pulse' : 'bg-sky-600'}`} />
+          <h3 className="text-xs sm:text-sm font-bold text-slate-900 uppercase tracking-wider font-mono">
             Indonesian Equities Watchlist
           </h3>
-          <span className="text-[10px] font-mono text-emerald-400 bg-emerald-500/10 px-1.5 py-0.5 rounded border border-emerald-500/20 font-bold">
+          <span className="text-[11px] font-mono font-bold text-emerald-800">
             {isLive ? 'LIVE STREAM' : 'FEED READY'}
           </span>
-          <span className="text-[10px] font-mono text-slate-400 bg-white/[0.04] px-1.5 py-0.5 rounded border border-white/[0.06]">
-            {filteredStocks.length} Tickers
+          <span className="text-[11px] font-mono text-slate-500 tabular-nums">
+            · {filteredStocks.length} Tickers
           </span>
         </div>
 
@@ -255,7 +255,7 @@ export function IDXWatchlistTable({
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search symbol or name..."
-            className="w-full bg-[#070b14] border border-white/[0.08] focus:border-[#ff2e54]/50 rounded-lg pl-9 pr-3 py-1.5 text-xs text-white placeholder:text-slate-500 focus:outline-hidden transition-colors font-mono"
+            className="w-full bg-[#faf2df] border border-slate-900/15 focus:border-sky-600 rounded-lg pl-9 pr-3 py-1.5 text-xs text-slate-900 placeholder:text-slate-500 focus:outline-hidden transition-colors font-mono"
           />
         </div>
       </div>
@@ -267,8 +267,8 @@ export function IDXWatchlistTable({
             onClick={() => setSelectedFilter(f)}
             className={`px-3 py-1 rounded-lg text-[11px] font-mono font-semibold whitespace-nowrap transition-all cursor-pointer ${
               selectedFilter === f
-                ? 'bg-[#ff2e54]/15 text-white border border-[#ff2e54]/40'
-                : 'bg-white/[0.02] text-slate-400 hover:text-white hover:bg-white/[0.05] border border-white/[0.05]'
+                ? 'bg-sky-50 text-sky-900 border border-sky-300 font-bold'
+                : 'bg-[#faf2df]/80 text-slate-600 hover:text-slate-900 hover:bg-[#faf2df] border border-slate-900/10'
             }`}
           >
             {f}
@@ -279,7 +279,7 @@ export function IDXWatchlistTable({
       <div className="overflow-x-auto custom-scrollbar">
         <table className="w-full text-left border-collapse text-xs">
           <thead>
-            <tr className="border-b border-white/[0.08] text-[10px] uppercase font-mono font-semibold text-slate-400 tracking-wider bg-[#070b14]/40">
+            <tr className="border-b border-slate-900/10 text-[10px] uppercase font-mono font-bold text-slate-600 tracking-wider bg-[#faf2df]/80">
               <th className="py-2.5 px-3">Ticker</th>
               <th className="py-2.5 px-3 text-right">Price (IDR)</th>
               <th className="py-2.5 px-3 text-right">Change (1D)</th>
@@ -288,7 +288,7 @@ export function IDXWatchlistTable({
               <th className="py-2.5 px-3 text-right">Day Range</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-white/[0.03]">
+          <tbody className="divide-y divide-slate-900/10">
             {displayedStocks.map((s) => {
               const isSelected = selectedSymbol === s.symbol
               const isPos = s.changePoints >= 0
@@ -301,8 +301,8 @@ export function IDXWatchlistTable({
                   onClick={() => onSelectStock(s)}
                   className={`group cursor-pointer transition-colors duration-150 ${
                     isSelected
-                      ? 'bg-white/[0.04] border-l-2 border-[#ff2e54]'
-                      : 'hover:bg-white/[0.02]'
+                      ? 'bg-sky-50/70 border-l-2 border-sky-600'
+                      : 'hover:bg-[#f3ead2]/40'
                   }`}
                 >
                   <td className="py-2.5 px-3">
@@ -315,26 +315,26 @@ export function IDXWatchlistTable({
                       />
                       <div>
                         <div className="flex items-center gap-1.5">
-                          <span className="font-bold text-white font-mono">{s.symbol}</span>
+                          <span className="font-bold text-slate-900 font-mono">{s.symbol}</span>
                           {s.group && (
-                            <span className="text-[9px] px-1 py-0.2 rounded bg-white/[0.04] text-slate-400 font-mono">
+                            <span className="text-[9px] px-1 py-0.2 rounded bg-[#faf2df] text-slate-600 border border-slate-900/10 font-mono">
                               {s.group}
                             </span>
                           )}
                         </div>
-                        <span className="text-[11px] text-slate-400 line-clamp-1 max-w-[180px]">
+                        <span className="text-[11px] text-slate-500 line-clamp-1 max-w-[180px] font-sans">
                           {s.name}
                         </span>
                       </div>
                     </div>
                   </td>
 
-                  <td className="py-2.5 px-3 text-right font-mono font-bold text-white">
+                  <td className="py-2.5 px-3 text-right font-mono font-bold text-slate-900 tabular-nums">
                     Rp {s.currentPrice.toLocaleString()}
                   </td>
 
-                  <td className="py-2.5 px-3 text-right font-mono">
-                    <span className={`font-bold ${isPos ? 'text-emerald-400' : 'text-rose-400'}`}>
+                  <td className="py-2.5 px-3 text-right font-mono tabular-nums">
+                    <span className={`font-bold ${isPos ? 'text-emerald-700' : 'text-rose-700'}`}>
                       {isPos ? '+' : ''}{s.changePercent.toFixed(2)}%
                     </span>
                     <span className="text-[10px] text-slate-500 block">
@@ -342,13 +342,13 @@ export function IDXWatchlistTable({
                     </span>
                   </td>
 
-                  <td className="py-2.5 px-3 text-center font-mono">
+                  <td className="py-2.5 px-3 text-center font-mono tabular-nums">
                     <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-bold ${
                       s.foreignFlow === 'BUY'
-                        ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20'
+                        ? 'bg-emerald-50 text-emerald-800 border border-emerald-200'
                         : s.foreignFlow === 'SELL'
-                        ? 'bg-rose-500/10 text-rose-400 border border-rose-500/20'
-                        : 'bg-zinc-500/10 text-zinc-400'
+                        ? 'bg-rose-50 text-rose-800 border border-rose-200'
+                        : 'bg-slate-100 text-slate-600 border border-slate-900/10'
                     }`}>
                       {s.foreignFlow === 'BUY' ? '▲ F.BUY' : s.foreignFlow === 'SELL' ? '▼ F.SELL' : '• NEUTRAL'}
                     </span>
@@ -357,8 +357,8 @@ export function IDXWatchlistTable({
                     </span>
                   </td>
 
-                  <td className="py-2.5 px-3 text-right font-mono text-slate-400">
-                    <span className="font-semibold text-white block">
+                  <td className="py-2.5 px-3 text-right font-mono text-slate-500 tabular-nums">
+                    <span className="font-semibold text-slate-900 block">
                       Rp {(s.turnover / 1000000000).toFixed(1)} B
                     </span>
                     <span className="text-[10px] text-slate-500">
@@ -366,15 +366,15 @@ export function IDXWatchlistTable({
                     </span>
                   </td>
 
-                  <td className="py-2.5 px-3 text-right font-mono">
+                  <td className="py-2.5 px-3 text-right font-mono tabular-nums">
                     <div className="w-24 ml-auto space-y-1">
-                      <div className="relative w-full h-1.5 bg-white/[0.08] rounded-full overflow-hidden">
+                      <div className="relative w-full h-1.5 bg-slate-200 rounded-full overflow-hidden">
                         <div
                           className="absolute inset-y-0 left-0 bg-slate-600 rounded-full"
                           style={{ width: `${rangePos}%` }}
                         />
                         <div
-                          className="absolute top-1/2 -translate-y-1/2 w-1.5 h-2 bg-white rounded-xs"
+                          className="absolute top-1/2 -translate-y-1/2 w-1.5 h-2 bg-slate-900 rounded-xs"
                           style={{ left: `calc(${rangePos}% - 3px)` }}
                         />
                       </div>
@@ -392,10 +392,10 @@ export function IDXWatchlistTable({
       </div>
 
       {!searchQuery.trim() && displayedStocks.length < filteredStocks.length && (
-        <div className="pt-3 border-t border-white/[0.08] text-center">
+        <div className="pt-3 border-t border-slate-900/10 text-center">
           <button
             onClick={() => setDisplayLimit((prev) => prev + 50)}
-            className="px-4 py-2 rounded-lg text-xs font-mono font-semibold bg-[#070b14] hover:bg-white/[0.06] text-slate-300 hover:text-white border border-white/[0.08] transition-colors cursor-pointer"
+            className="text-xs font-semibold text-[#0369a1] hover:text-slate-900 hover:underline cursor-pointer font-mono"
           >
             Load More Tickers (Showing {displayedStocks.length} of {filteredStocks.length}) ↓
           </button>

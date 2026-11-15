@@ -27,19 +27,19 @@ export function IDXNewsFeed({ articles }: Props) {
   }, [articles, search, sentimentFilter, selectedCategory])
 
   return (
-    <div className="rounded-xl bg-[#0d121f] border border-white/[0.08] p-5 sm:p-6 space-y-5">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-white/[0.08]">
+    <div className="rounded-xl bg-[#fdfaf3] border border-slate-900/10 p-5 sm:p-6 space-y-5 shadow-xs">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-900/10">
         <div>
           <div className="flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-emerald-400" />
-            <h3 className="text-xs sm:text-sm font-bold uppercase tracking-wider text-white font-mono">
+            <span className="w-2 h-2 rounded-full bg-emerald-500" />
+            <h3 className="text-xs sm:text-sm font-bold uppercase tracking-wider text-slate-900 font-mono">
               Live Indonesian Financial Wire
             </h3>
-            <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+            <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-200 font-bold">
               CNBC &amp; Media Wire
             </span>
           </div>
-          <p className="text-xs text-slate-400 mt-0.5 font-mono">
+          <p className="text-xs text-slate-500 mt-0.5 font-mono">
             Streaming real-time Indonesian market news, sector rotation, and corporate earnings.
           </p>
         </div>
@@ -50,7 +50,7 @@ export function IDXNewsFeed({ articles }: Props) {
             placeholder="Search headline, emiten, or source..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="px-3 py-1.5 rounded-lg bg-[#070b14] border border-white/[0.08] text-xs font-mono text-white placeholder:text-slate-500 focus:outline-none focus:border-[#ff2e54]/50 w-52 sm:w-64"
+            className="px-3 py-1.5 rounded-lg bg-[#fdfaf3] border border-slate-900/15 text-xs font-mono text-slate-900 placeholder:text-slate-500 focus:outline-hidden focus:border-sky-600 w-52 sm:w-64"
           />
         </div>
       </div>
@@ -64,8 +64,8 @@ export function IDXNewsFeed({ articles }: Props) {
               onClick={() => setSentimentFilter(st)}
               className={`px-2.5 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${
                 sentimentFilter === st
-                  ? 'bg-[#ff2e54] text-white'
-                  : 'bg-[#070b14] text-slate-400 hover:text-white border border-white/[0.06]'
+                  ? 'bg-sky-600 text-white shadow-xs'
+                  : 'bg-[#faf2df]/80 text-slate-600 hover:text-slate-900 hover:bg-[#faf2df] border border-slate-900/10'
               }`}
             >
               {st}
@@ -81,8 +81,8 @@ export function IDXNewsFeed({ articles }: Props) {
               onClick={() => setSelectedCategory(cat)}
               className={`px-2.5 py-1 rounded-lg text-[11px] font-bold transition-all cursor-pointer ${
                 selectedCategory === cat
-                  ? 'bg-white/[0.12] text-white border border-white/20'
-                  : 'bg-[#070b14] text-slate-400 hover:text-white border border-white/[0.06]'
+                  ? 'bg-sky-600 text-white shadow-xs'
+                  : 'bg-[#faf2df]/80 text-slate-600 hover:text-slate-900 hover:bg-[#faf2df] border border-slate-900/10'
               }`}
             >
               {cat.replace('_', ' ')}
@@ -91,9 +91,9 @@ export function IDXNewsFeed({ articles }: Props) {
         </div>
       </div>
 
-      <div className="space-y-3">
+      <div className="divide-y divide-slate-900/10">
         {filtered.length === 0 ? (
-          <div className="rounded-lg bg-[#070b14] border border-white/[0.06] p-8 text-center text-xs font-mono text-slate-500">
+          <div className="rounded-lg bg-[#faf2df] border border-slate-900/10 p-8 text-center text-xs font-mono text-slate-500">
             No articles found matching criteria.
           </div>
         ) : (
@@ -104,22 +104,22 @@ export function IDXNewsFeed({ articles }: Props) {
             return (
               <div
                 key={a.id}
-                className="p-4 rounded-xl bg-[#070b14] border border-white/[0.08] hover:border-white/[0.14] transition-all space-y-2.5 group"
+                className="py-4 space-y-2.5 group first:pt-0 last:pb-0"
               >
                 <div className="flex flex-wrap items-center justify-between gap-2 text-[11px] font-mono">
                   <div className="flex flex-wrap items-center gap-1.5">
                     {a.tickers.map((t) => (
                       <span
                         key={t}
-                        className="font-black text-white px-2 py-0.5 rounded bg-white/[0.06] border border-white/[0.08]"
+                        className="font-black text-slate-900 px-2 py-0.5 rounded bg-slate-100 border border-slate-900/10"
                       >
                         {t}
                       </span>
                     ))}
-                    <span className="px-2 py-0.5 rounded bg-white/[0.04] text-slate-400">
+                    <span className="px-2 py-0.5 rounded bg-slate-100 text-slate-600 font-sans">
                       {a.source}
                     </span>
-                    <span className="text-slate-500 text-[10px]">
+                    <span className="text-slate-500 text-[10px] tabular-nums">
                       {a.publishedTimeAgo}
                     </span>
                   </div>
@@ -127,10 +127,10 @@ export function IDXNewsFeed({ articles }: Props) {
                   <span
                     className={`px-2 py-0.5 rounded font-bold text-[10px] ${
                       isBullish
-                        ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/30'
+                        ? 'bg-emerald-50 text-emerald-800 border border-emerald-200'
                         : isBearish
-                        ? 'bg-rose-500/10 text-rose-400 border border-rose-500/30'
-                        : 'bg-white/[0.06] text-slate-400'
+                        ? 'bg-rose-50 text-rose-800 border border-rose-200'
+                        : 'bg-slate-100 text-slate-600 border border-slate-900/10'
                     }`}
                   >
                     {isBullish ? '▲ Bullish' : isBearish ? '▼ Bearish' : '● Neutral'}
@@ -138,24 +138,24 @@ export function IDXNewsFeed({ articles }: Props) {
                   </span>
                 </div>
 
-                <h4 className="text-xs sm:text-sm font-bold text-white group-hover:text-brand-primary transition-colors leading-snug">
+                <h4 className="text-xs sm:text-sm font-bold text-slate-900 group-hover:text-sky-800 transition-colors leading-snug">
                   {a.title}
                 </h4>
 
                 {a.aiImpactSummary && (
-                  <p className="text-[11px] font-mono text-slate-400 leading-relaxed bg-[#0d121f] p-2.5 rounded-lg border border-white/[0.06]">
-                    <span className="text-brand-primary font-bold mr-1">AI Context:</span>
+                  <p className="border-l-2 border-sky-600 pl-3 py-0.5 text-xs text-slate-600 leading-relaxed font-mono">
+                    <span className="text-[#0369a1] font-bold mr-1.5">Desk Summary:</span>
                     <span>{a.aiImpactSummary}</span>
                   </p>
                 )}
 
-                <div className="pt-2 border-t border-white/[0.06] flex items-center justify-between text-[11px] font-mono">
-                  <span className="text-slate-500">{a.publishedAt.slice(0, 22)}</span>
+                <div className="pt-2 flex items-center justify-between text-[11px] font-mono">
+                  <span className="text-slate-500 tabular-nums">{a.publishedAt.slice(0, 22)}</span>
                   <a
                     href={a.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-xs font-semibold text-brand-primary hover:text-white transition-colors flex items-center gap-1"
+                    className="text-xs font-semibold text-[#0369a1] hover:text-slate-900 hover:underline flex items-center gap-1"
                   >
                     <span>Read Article</span>
                     <span>↗</span>

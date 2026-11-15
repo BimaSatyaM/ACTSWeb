@@ -51,37 +51,37 @@ export function formatIPOStageLabel(stage: IPOStage): {
     case 'BOOK_BUILDING':
       return {
         label: 'Book Building (Penawaran Awal)',
-        color: 'text-cyan-400 bg-cyan-500/10 border-cyan-500/20',
+        color: 'text-sky-800 bg-sky-50 border-sky-200',
         step: 1,
       }
     case 'OFFERING':
       return {
         label: 'Offering (Penawaran Umum)',
-        color: 'text-amber-400 bg-amber-500/10 border-amber-500/20',
+        color: 'text-amber-800 bg-amber-50 border-amber-200',
         step: 2,
       }
     case 'ALLOTMENT':
       return {
         label: 'Allotment (Penjatahan & Distribusi)',
-        color: 'text-purple-400 bg-purple-500/10 border-purple-500/20',
+        color: 'text-[#0369a1] bg-sky-50 border-sky-200',
         step: 3,
       }
     case 'LISTING':
       return {
         label: 'Listing (Pencatatan Perdana BEI)',
-        color: 'text-emerald-400 bg-emerald-500/10 border-emerald-500/20',
+        color: 'text-emerald-800 bg-emerald-50 border-emerald-200',
         step: 4,
       }
     case 'CANCELED':
       return {
         label: 'Batal / Canceled',
-        color: 'text-rose-400 bg-rose-500/10 border-rose-500/30',
+        color: 'text-rose-800 bg-rose-50 border-rose-200',
         step: 0,
       }
     case 'CLOSED':
       return {
         label: 'Selesai / Closed',
-        color: 'text-zinc-400 bg-zinc-500/10 border-zinc-500/20',
+        color: 'text-slate-600 bg-slate-100 border-slate-300',
         step: 4,
       }
   }

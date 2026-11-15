@@ -156,12 +156,12 @@ function CandlestickAndSrZonesVisual() {
 
   return (
     <div data-ui className="my-6 space-y-5">
-      <div className="rounded-lg border border-[#1a2030] bg-[#070b14] p-4 sm:p-5">
-        <div className="flex flex-wrap items-center justify-between gap-2 pb-3 mb-3 border-b border-[#1a2030]">
-          <span className="text-xs sm:text-sm font-semibold text-white">
+      <div className="rounded-xl border border-slate-900/10 bg-[#faf2df] p-4 sm:p-5">
+        <div className="flex flex-wrap items-center justify-between gap-2 pb-3 mb-3 border-b border-slate-900/10">
+          <span className="text-xs sm:text-sm font-semibold text-slate-900">
             OHLC Candlestick Microstructure (Bullish Impulse vs. Bearish Rejection)
           </span>
-          <span className="text-xs text-[#94a3b8] [font-variant-numeric:tabular-nums]">
+          <span className="text-xs text-slate-500 font-mono tabular-nums">
             Every candle records 4 auction prices: Open, High, Low, Close
           </span>
         </div>
@@ -179,7 +179,7 @@ function CandlestickAndSrZonesVisual() {
               y1={y}
               x2="760"
               y2={y}
-              stroke="#141c2b"
+              stroke="rgba(15,23,42,0.08)"
               strokeDasharray="3 3"
             />
           ))}
@@ -223,7 +223,7 @@ function CandlestickAndSrZonesVisual() {
             Low ($75,710) · Lower Wick (Demand tail)
           </text>
 
-          <line x1="425" y1="16" x2="425" y2="210" stroke="#1a2030" />
+          <line x1="425" y1="16" x2="425" y2="210" stroke="#e2e8f0" />
 
           <text x="545" y="24" textAnchor="middle" fill="#e5566f" fontSize="12.5" fontWeight="600">
             BEARISH CANDLE (Close &lt; Open)
@@ -266,20 +266,20 @@ function CandlestickAndSrZonesVisual() {
         </svg>
       </div>
 
-      <div className="rounded-lg border border-[#1a2030] bg-[#070b14] p-4 sm:p-5 space-y-3">
-        <div className="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-[#1a2030]">
+      <div className="rounded-xl border border-slate-900/10 bg-[#faf2df] p-4 sm:p-5 space-y-3">
+        <div className="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-slate-900/10">
           <div>
-            <div className="text-xs sm:text-sm font-semibold text-white">
+            <div className="text-xs sm:text-sm font-semibold text-slate-900">
               Support &amp; Resistance Liquidity Zones + Long Bounce Trade Setup (60 Continuous Bars)
             </div>
-            <div className="text-xs text-[#94a3b8]">
+            <div className="text-xs text-slate-500">
               Shaded horizontal supply/demand bands with touch counts (R 4x–6x, S 3x) and full Entry / Stop-Loss / Target bracket box
             </div>
           </div>
-          <div className="flex flex-wrap items-center gap-3 text-xs [font-variant-numeric:tabular-nums]">
-            <span className="text-[#e5566f]">■ Resistance Zone</span>
-            <span className="text-[#3fc07a]">■ Support Zone &amp; Profit Box</span>
-            <span className="text-[#38bdf8]">● Entry Trigger</span>
+          <div className="flex flex-wrap items-center gap-3 text-xs font-mono tabular-nums">
+            <span className="text-rose-700">■ Resistance Zone</span>
+            <span className="text-emerald-700">■ Support Zone &amp; Profit Box</span>
+            <span className="text-[#0369a1]">● Entry Trigger</span>
           </div>
         </div>
 
@@ -296,7 +296,7 @@ function CandlestickAndSrZonesVisual() {
               y1={priceToY(p)}
               x2={chartW}
               y2={priceToY(p)}
-              stroke="#131b2c"
+              stroke="rgba(15,23,42,0.08)"
               strokeWidth="1"
             />
           ))}
@@ -310,8 +310,8 @@ function CandlestickAndSrZonesVisual() {
             fillOpacity="0.15"
           />
           <line x1="14" y1={priceToY(80827)} x2={chartW} y2={priceToY(80827)} stroke="#e5566f" strokeWidth="1.3" />
-          <rect x="24" y={priceToY(80827) - 18} width="168" height="16" rx="2" fill="#2c1620" stroke="#e5566f" strokeWidth="0.8" />
-          <text x="32" y={priceToY(80827) - 7} fill="#fda4af" fontSize="10" fontWeight="600">
+          <rect x="24" y={priceToY(80827) - 18} width="168" height="16" rx="2" fill="#ffe4e6" stroke="#e11d48" strokeWidth="0.8" />
+          <text x="32" y={priceToY(80827) - 7} fill="#9f1239" fontSize="10" fontWeight="600">
             Resistance 80,827.13 · R 4x
           </text>
 
@@ -332,8 +332,8 @@ function CandlestickAndSrZonesVisual() {
             strokeWidth="1.1"
             strokeDasharray="4 2"
           />
-          <rect x="24" y={priceToY(80696) - 17} width="168" height="16" rx="2" fill="#2c1620" stroke="#e5566f" strokeWidth="0.8" />
-          <text x="32" y={priceToY(80696) - 6} fill="#fda4af" fontSize="10" fontWeight="600">
+          <rect x="24" y={priceToY(80696) - 17} width="168" height="16" rx="2" fill="#ffe4e6" stroke="#e11d48" strokeWidth="0.8" />
+          <text x="32" y={priceToY(80696) - 6} fill="#9f1239" fontSize="10" fontWeight="600">
             Resistance 80,696.00 · R 5x
           </text>
 
@@ -346,8 +346,8 @@ function CandlestickAndSrZonesVisual() {
             fillOpacity="0.16"
           />
           <line x1="14" y1={priceToY(80451)} x2={chartW} y2={priceToY(80451)} stroke="#e5566f" strokeWidth="1.4" />
-          <rect x="24" y={priceToY(80451) - 17} width="168" height="16" rx="2" fill="#2c1620" stroke="#e5566f" strokeWidth="0.8" />
-          <text x="32" y={priceToY(80451) - 6} fill="#fda4af" fontSize="10" fontWeight="600">
+          <rect x="24" y={priceToY(80451) - 17} width="168" height="16" rx="2" fill="#ffe4e6" stroke="#e11d48" strokeWidth="0.8" />
+          <text x="32" y={priceToY(80451) - 6} fill="#9f1239" fontSize="10" fontWeight="600">
             Resistance 80,451.18 · R 6x
           </text>
 
@@ -434,22 +434,22 @@ function CandlestickAndSrZonesVisual() {
             )
           })}
 
-          <circle cx={entryX} cy={priceToY(entryPrice)} r="5" fill="#38bdf8" stroke="#070b14" strokeWidth="1.5" />
+          <circle cx={entryX} cy={priceToY(entryPrice)} r="5" fill="#0284c7" stroke="#ffffff" strokeWidth="1.5" />
           <rect
             x={entryX - 185}
             y={priceToY(entryPrice) - 11}
             width="175"
             height="22"
             rx="3"
-            fill="#0d1829"
-            stroke="#38bdf8"
+            fill="#fdfaf3"
+            stroke="#0284c7"
             strokeWidth="1.2"
           />
-          <text x={entryX - 97} y={priceToY(entryPrice) + 3.5} textAnchor="middle" fill="#38bdf8" fontSize="10" fontWeight="600">
+          <text x={entryX - 97} y={priceToY(entryPrice) + 3.5} textAnchor="middle" fill="#0369a1" fontSize="10" fontWeight="600">
             LONG ENTRY @ $79,810 →
           </text>
 
-          <line x1={chartW} y1="12" x2={chartW} y2={chartH - 12} stroke="#262f45" strokeWidth="1" />
+          <line x1={chartW} y1="12" x2={chartW} y2={chartH - 12} stroke="rgba(15,23,42,0.12)" strokeWidth="1" />
           {[
             { price: '80,827.13', y: priceToY(80827), bg: '#e5566f', fg: '#ffffff' },
             { price: '80,696.00', y: priceToY(80696), bg: '#be3e55', fg: '#ffffff' },
@@ -467,26 +467,26 @@ function CandlestickAndSrZonesVisual() {
           ))}
         </svg>
 
-        <div className="grid grid-cols-1 sm:grid-cols-4 gap-2.5 pt-2 border-t border-[#1a2030] text-xs [font-variant-numeric:tabular-nums]">
-          <div className="rounded bg-[#0a0f1a] border border-[#1a2030] p-2.5">
-            <div className="text-[#94a3b8] text-[11px]">1. Liquidity Zone</div>
-            <div className="text-white font-semibold mt-0.5">Support $79,640 (S 3x)</div>
-            <div className="text-[#64748b] text-[11px]">Multi-touch demand absorption</div>
+        <div className="grid grid-cols-1 sm:grid-cols-4 divide-y sm:divide-y-0 sm:divide-x divide-slate-900/10 pt-2 border-t border-slate-900/10 text-xs font-mono tabular-nums">
+          <div className="p-2.5 sm:px-3 sm:py-2">
+            <div className="text-slate-500 text-[11px]">1. Liquidity Zone</div>
+            <div className="text-slate-900 font-semibold mt-0.5">Support $79,640 (S 3x)</div>
+            <div className="text-slate-600 text-[11px]">Multi-touch demand absorption</div>
           </div>
-          <div className="rounded bg-[#0a0f1a] border border-[#1a2030] p-2.5">
-            <div className="text-[#38bdf8] text-[11px]">2. Entry Trigger</div>
-            <div className="text-white font-semibold mt-0.5">Long @ $79,810</div>
-            <div className="text-[#64748b] text-[11px]">Bullish rejection candle close</div>
+          <div className="p-2.5 sm:px-3 sm:py-2">
+            <div className="text-[#0369a1] text-[11px]">2. Entry Trigger</div>
+            <div className="text-slate-900 font-semibold mt-0.5">Long @ $79,810</div>
+            <div className="text-slate-600 text-[11px]">Bullish rejection candle close</div>
           </div>
-          <div className="rounded bg-[#0a0f1a] border border-[#1a2030] p-2.5">
-            <div className="text-[#e5566f] text-[11px]">3. Stop-Loss (−1.0R)</div>
-            <div className="text-white font-semibold mt-0.5">$79,510 ($300 Risk)</div>
-            <div className="text-[#64748b] text-[11px]">Placed below Support zone wick</div>
+          <div className="p-2.5 sm:px-3 sm:py-2">
+            <div className="text-rose-700 text-[11px]">3. Stop-Loss (−1.0R)</div>
+            <div className="text-slate-900 font-semibold mt-0.5">$79,510 ($300 Risk)</div>
+            <div className="text-slate-600 text-[11px]">Placed below Support zone wick</div>
           </div>
-          <div className="rounded bg-[#0a0f1a] border border-[#1a2030] p-2.5">
-            <div className="text-[#3fc07a] text-[11px]">4. Targets (+1.975R)</div>
-            <div className="text-white font-semibold mt-0.5">$80,110 / $80,451 / $80,827</div>
-            <div className="text-[#64748b] text-[11px]">Scale out into Resistance bands</div>
+          <div className="p-2.5 sm:px-3 sm:py-2">
+            <div className="text-emerald-700 text-[11px]">4. Targets (+1.975R)</div>
+            <div className="text-slate-900 font-semibold mt-0.5">$80,110 / $80,451 / $80,827</div>
+            <div className="text-slate-600 text-[11px]">Scale out into Resistance bands</div>
           </div>
         </div>
       </div>
@@ -529,20 +529,20 @@ function MarketStructureBosVisual() {
   const tp3P = 75020 // (+3.05R / structural target)
 
   return (
-    <div data-ui className="my-6 rounded-lg border border-[#1a2030] bg-[#070b14] p-4 sm:p-5 space-y-3">
-      <div className="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-[#1a2030]">
+    <div data-ui className="my-6 rounded-xl border border-slate-900/10 bg-[#faf2df] p-4 sm:p-5 space-y-3">
+      <div className="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-slate-900/10">
         <div>
-          <div className="text-xs sm:text-sm font-semibold text-white">
+          <div className="text-xs sm:text-sm font-semibold text-slate-900">
             Market Structure: Bullish BOS Continuation, Bearish CHoCH Breakdown &amp; Retest Setup (62 Bars)
           </div>
-          <div className="text-xs text-[#94a3b8]">
+          <div className="text-xs text-slate-500">
             Wait for CHoCH candle close below Key Higher Low (HL2), then enter on the pullback retest with Stop-Loss above the zone
           </div>
         </div>
-        <div className="flex flex-wrap items-center gap-3 text-xs [font-variant-numeric:tabular-nums]">
-          <span className="text-[#3fc07a]">── BOS (Trend Continuation)</span>
-          <span className="text-[#e5566f]">── CHoCH (Trend Reversal)</span>
-          <span className="text-[#38bdf8]">● Retest Entry</span>
+        <div className="flex flex-wrap items-center gap-3 text-xs font-mono tabular-nums">
+          <span className="text-emerald-700">── BOS (Trend Continuation)</span>
+          <span className="text-rose-700">── CHoCH (Trend Reversal)</span>
+          <span className="text-[#0369a1]">● Retest Entry</span>
         </div>
       </div>
 
@@ -553,7 +553,7 @@ function MarketStructureBosVisual() {
         aria-label="62-candle Market Structure chart showing HH, HL, BOS, CHoCH, and Short Retest Setup Box"
       >
         {[75200, 75800, 76220, 76850, 77380].map((p) => (
-          <line key={p} x1="14" y1={toY(p)} x2={chartW} y2={toY(p)} stroke="#131b2c" strokeWidth="1" />
+          <line key={p} x1="14" y1={toY(p)} x2={chartW} y2={toY(p)} stroke="rgba(15,23,42,0.08)" strokeWidth="1" />
         ))}
 
         <rect
@@ -661,8 +661,8 @@ function MarketStructureBosVisual() {
         <text x={toX(22)} y={toY(76850) - 14} textAnchor="middle" fill="#ffffff" fontSize="10.5" fontWeight="600">
           HH2
         </text>
-        <rect x={toX(29) - 48} y={toY(76220) + 12} width="96" height="17" rx="2" fill="#0d1829" stroke="#38bdf8" strokeWidth="0.8" />
-        <text x={toX(29)} y={toY(76220) + 24} textAnchor="middle" fill="#38bdf8" fontSize="10" fontWeight="600">
+        <rect x={toX(29) - 48} y={toY(76220) + 12} width="96" height="17" rx="2" fill="#fdfaf3" stroke="#0284c7" strokeWidth="0.8" />
+        <text x={toX(29)} y={toY(76220) + 24} textAnchor="middle" fill="#0369a1" fontSize="10" fontWeight="600">
           HL2 (Key Low)
         </text>
 
@@ -670,23 +670,23 @@ function MarketStructureBosVisual() {
           HH3 ($77,380)
         </text>
 
-        <rect x={toX(46) - 52} y={toY(77080) - 28} width="104" height="17" rx="2" fill="#2c1620" stroke="#e5566f" strokeWidth="0.8" />
-        <text x={toX(46)} y={toY(77080) - 16} textAnchor="middle" fill="#fda4af" fontSize="10" fontWeight="600">
+        <rect x={toX(46) - 52} y={toY(77080) - 28} width="104" height="17" rx="2" fill="#ffe4e6" stroke="#e11d48" strokeWidth="0.8" />
+        <text x={toX(46)} y={toY(77080) - 16} textAnchor="middle" fill="#9f1239" fontSize="10" fontWeight="600">
           LH (Failed High)
         </text>
 
-        <rect x={toX(44) - 58} y={toY(76220) + 12} width="116" height="17" rx="2" fill="#2c1620" stroke="#e5566f" strokeWidth="0.8" />
-        <text x={toX(44)} y={toY(76220) + 24} textAnchor="middle" fill="#fda4af" fontSize="10" fontWeight="600">
+        <rect x={toX(44) - 58} y={toY(76220) + 12} width="116" height="17" rx="2" fill="#ffe4e6" stroke="#e11d48" strokeWidth="0.8" />
+        <text x={toX(44)} y={toY(76220) + 24} textAnchor="middle" fill="#9f1239" fontSize="10" fontWeight="600">
           CHoCH Breakdown
         </text>
 
-        <circle cx={entryX} cy={toY(entryP)} r="5" fill="#38bdf8" stroke="#070b14" strokeWidth="1.5" />
-        <rect x={entryX - 135} y={toY(entryP) - 34} width="150" height="20" rx="3" fill="#0d1829" stroke="#38bdf8" strokeWidth="1.2" />
-        <text x={entryX - 60} y={toY(entryP) - 21} textAnchor="middle" fill="#38bdf8" fontSize="10" fontWeight="600">
+        <circle cx={entryX} cy={toY(entryP)} r="5" fill="#0284c7" stroke="#ffffff" strokeWidth="1.5" />
+        <rect x={entryX - 135} y={toY(entryP) - 34} width="150" height="20" rx="3" fill="#fdfaf3" stroke="#0284c7" strokeWidth="1.2" />
+        <text x={entryX - 60} y={toY(entryP) - 21} textAnchor="middle" fill="#0369a1" fontSize="10" fontWeight="600">
           SHORT RETEST ENTRY
         </text>
 
-        <line x1={chartW} y1="12" x2={chartW} y2={chartH - 12} stroke="#262f45" />
+        <line x1={chartW} y1="12" x2={chartW} y2={chartH - 12} stroke="rgba(15,23,42,0.12)" />
         {[
           { p: '77,380.00', y: toY(77380), bg: '#1e293b', fg: '#cbd5e1' },
           { p: '76,640.00', y: toY(slP), bg: '#881337', fg: '#fda4af' },
@@ -704,26 +704,26 @@ function MarketStructureBosVisual() {
         ))}
       </svg>
 
-      <div className="grid grid-cols-1 sm:grid-cols-4 gap-2.5 pt-2 border-t border-[#1a2030] text-xs [font-variant-numeric:tabular-nums]">
-        <div className="rounded bg-[#0a0f1a] border border-[#1a2030] p-2.5">
-          <div className="text-[#94a3b8] text-[11px]">1. Structure Shift</div>
-          <div className="text-white font-semibold mt-0.5">CHoCH Below $76,220</div>
-          <div className="text-[#64748b] text-[11px]">Candle closes below Key HL2</div>
+      <div className="grid grid-cols-1 sm:grid-cols-4 divide-y sm:divide-y-0 sm:divide-x divide-slate-900/10 pt-2 border-t border-slate-900/10 text-xs font-mono tabular-nums">
+        <div className="p-2.5 sm:px-3 sm:py-2">
+          <div className="text-slate-500 text-[11px]">1. Structure Shift</div>
+          <div className="text-slate-900 font-semibold mt-0.5">CHoCH Below $76,220</div>
+          <div className="text-slate-600 text-[11px]">Candle closes below Key HL2</div>
         </div>
-        <div className="rounded bg-[#0a0f1a] border border-[#1a2030] p-2.5">
-          <div className="text-[#38bdf8] text-[11px]">2. Where to Enter</div>
-          <div className="text-white font-semibold mt-0.5">Retest @ $76,240</div>
-          <div className="text-[#64748b] text-[11px]">Wait for pullback to broken HL2</div>
+        <div className="p-2.5 sm:px-3 sm:py-2">
+          <div className="text-[#0369a1] text-[11px]">2. Where to Enter</div>
+          <div className="text-slate-900 font-semibold mt-0.5">Retest @ $76,240</div>
+          <div className="text-slate-600 text-[11px]">Wait for pullback to broken HL2</div>
         </div>
-        <div className="rounded bg-[#0a0f1a] border border-[#1a2030] p-2.5">
-          <div className="text-[#e5566f] text-[11px]">3. Stop-Loss (−1.0R)</div>
-          <div className="text-white font-semibold mt-0.5">$76,640 ($400 Risk)</div>
-          <div className="text-[#64748b] text-[11px]">Above retest wick &amp; supply zone</div>
+        <div className="p-2.5 sm:px-3 sm:py-2">
+          <div className="text-rose-700 text-[11px]">3. Stop-Loss (−1.0R)</div>
+          <div className="text-slate-900 font-semibold mt-0.5">$76,640 ($400 Risk)</div>
+          <div className="text-slate-600 text-[11px]">Above retest wick &amp; supply zone</div>
         </div>
-        <div className="rounded bg-[#0a0f1a] border border-[#1a2030] p-2.5">
-          <div className="text-[#3fc07a] text-[11px]">4. Targets (+1.975R)</div>
-          <div className="text-white font-semibold mt-0.5">$75,840 / $75,440 / $75,020</div>
-          <div className="text-[#64748b] text-[11px]">40% @ 1R, 35% @ 2R, 25% @ 3.5R</div>
+        <div className="p-2.5 sm:px-3 sm:py-2">
+          <div className="text-emerald-700 text-[11px]">4. Targets (+1.975R)</div>
+          <div className="text-slate-900 font-semibold mt-0.5">$75,840 / $75,440 / $75,020</div>
+          <div className="text-slate-600 text-[11px]">40% @ 1R, 35% @ 2R, 25% @ 3.5R</div>
         </div>
       </div>
     </div>
@@ -774,20 +774,20 @@ function EmaRibbonVisual() {
   const tp3P = 79250
 
   return (
-    <div data-ui className="my-6 rounded-lg border border-[#1a2030] bg-[#070b14] p-4 sm:p-5 space-y-3">
-      <div className="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-[#1a2030]">
+    <div data-ui className="my-6 rounded-xl border border-slate-900/10 bg-[#faf2df] p-4 sm:p-5 space-y-3">
+      <div className="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-slate-900/10">
         <div>
-          <div className="text-xs sm:text-sm font-semibold text-white">
+          <div className="text-xs sm:text-sm font-semibold text-slate-900">
             EMA 20 / 50 / 200 Trend Ribbon &amp; Dynamic Value Pocket Entry Setup (60 Bars)
           </div>
-          <div className="text-xs text-[#94a3b8]">
+          <div className="text-xs text-slate-500">
             Never chase extended green candles; wait for price to pull back into the shaded 20–50 EMA pocket above a rising 200 EMA
           </div>
         </div>
-        <div className="flex flex-wrap items-center gap-3 text-xs [font-variant-numeric:tabular-nums]">
-          <span className="text-[#38bdf8]">── EMA 20</span>
+        <div className="flex flex-wrap items-center gap-3 text-xs font-mono tabular-nums">
+          <span className="text-[#0369a1]">── EMA 20</span>
           <span className="text-[#e2a84b]">── EMA 50</span>
-          <span className="text-[#cbd5e1]">── EMA 200 (Regime Floor)</span>
+          <span className="text-slate-700">── EMA 200 (Regime Floor)</span>
         </div>
       </div>
 
@@ -798,7 +798,7 @@ function EmaRibbonVisual() {
         aria-label="60-candle chart showing EMA 20, 50, 200 ribbon and Pullback Entry Setup Box"
       >
         {[76000, 76800, 77800, 78800].map((p) => (
-          <line key={p} x1="14" y1={toY(p)} x2={chartW} y2={toY(p)} stroke="#131b2c" />
+          <line key={p} x1="14" y1={toY(p)} x2={chartW} y2={toY(p)} stroke="rgba(15,23,42,0.08)" />
         ))}
 
         <polygon points={ribbonPolygon} fill="#38bdf8" fillOpacity="0.12" />
@@ -885,9 +885,9 @@ function EmaRibbonVisual() {
           Pullback #2 (20/50 Pocket)
         </text>
 
-        <circle cx={entryX} cy={toY(entryP)} r="5" fill="#38bdf8" stroke="#070b14" strokeWidth="1.5" />
-        <rect x={entryX - 165} y={toY(entryP) - 10} width="155" height="20" rx="3" fill="#0d1829" stroke="#38bdf8" strokeWidth="1.2" />
-        <text x={entryX - 87} y={toY(entryP) + 3.5} textAnchor="middle" fill="#38bdf8" fontSize="10" fontWeight="600">
+        <circle cx={entryX} cy={toY(entryP)} r="5" fill="#0284c7" stroke="#ffffff" strokeWidth="1.5" />
+        <rect x={entryX - 165} y={toY(entryP) - 10} width="155" height="20" rx="3" fill="#fdfaf3" stroke="#0284c7" strokeWidth="1.2" />
+        <text x={entryX - 87} y={toY(entryP) + 3.5} textAnchor="middle" fill="#0369a1" fontSize="10" fontWeight="600">
           PULLBACK ENTRY @ $77,800 →
         </text>
 
@@ -895,7 +895,7 @@ function EmaRibbonVisual() {
           200 EMA Bullish Regime Filter (Price &gt; 200 EMA)
         </text>
 
-        <line x1={chartW} y1="12" x2={chartW} y2={chartH - 12} stroke="#262f45" />
+        <line x1={chartW} y1="12" x2={chartW} y2={chartH - 12} stroke="rgba(15,23,42,0.12)" />
         {[
           { p: '78,800.00', y: toY(tp2P), bg: '#247b50', fg: '#ffffff' },
           { p: '78,300.00', y: toY(tp1P), bg: '#247b50', fg: '#ffffff' },
@@ -912,26 +912,26 @@ function EmaRibbonVisual() {
         ))}
       </svg>
 
-      <div className="grid grid-cols-1 sm:grid-cols-4 gap-2.5 pt-2 border-t border-[#1a2030] text-xs [font-variant-numeric:tabular-nums]">
-        <div className="rounded bg-[#0a0f1a] border border-[#1a2030] p-2.5">
-          <div className="text-[#94a3b8] text-[11px]">1. Regime Filter</div>
-          <div className="text-white font-semibold mt-0.5">Price &gt; 200 EMA</div>
-          <div className="text-[#64748b] text-[11px]">20 EMA &gt; 50 EMA &gt; 200 EMA</div>
+      <div className="grid grid-cols-1 sm:grid-cols-4 divide-y sm:divide-y-0 sm:divide-x divide-slate-900/10 pt-2 border-t border-slate-900/10 text-xs font-mono tabular-nums">
+        <div className="p-2.5 sm:px-3 sm:py-2">
+          <div className="text-slate-500 text-[11px]">1. Regime Filter</div>
+          <div className="text-slate-900 font-semibold mt-0.5">Price &gt; 200 EMA</div>
+          <div className="text-slate-600 text-[11px]">20 EMA &gt; 50 EMA &gt; 200 EMA</div>
         </div>
-        <div className="rounded bg-[#0a0f1a] border border-[#1a2030] p-2.5">
-          <div className="text-[#38bdf8] text-[11px]">2. Where to Enter</div>
-          <div className="text-white font-semibold mt-0.5">20/50 EMA Pocket ($77,800)</div>
-          <div className="text-[#64748b] text-[11px]">Enter on bullish bounce candle</div>
+        <div className="p-2.5 sm:px-3 sm:py-2">
+          <div className="text-[#0369a1] text-[11px]">2. Where to Enter</div>
+          <div className="text-slate-900 font-semibold mt-0.5">20/50 EMA Pocket ($77,800)</div>
+          <div className="text-slate-600 text-[11px]">Enter on bullish bounce candle</div>
         </div>
-        <div className="rounded bg-[#0a0f1a] border border-[#1a2030] p-2.5">
-          <div className="text-[#e5566f] text-[11px]">3. Stop-Loss (−1.0R)</div>
-          <div className="text-white font-semibold mt-0.5">$77,300 ($500 Risk)</div>
-          <div className="text-[#64748b] text-[11px]">Below 50 EMA &amp; pullback low</div>
+        <div className="p-2.5 sm:px-3 sm:py-2">
+          <div className="text-rose-700 text-[11px]">3. Stop-Loss (−1.0R)</div>
+          <div className="text-slate-900 font-semibold mt-0.5">$77,300 ($500 Risk)</div>
+          <div className="text-slate-600 text-[11px]">Below 50 EMA &amp; pullback low</div>
         </div>
-        <div className="rounded bg-[#0a0f1a] border border-[#1a2030] p-2.5">
-          <div className="text-[#3fc07a] text-[11px]">4. Targets (+1.975R)</div>
-          <div className="text-white font-semibold mt-0.5">$78,300 / $78,800 / $79,550</div>
-          <div className="text-[#64748b] text-[11px]">Scale out into trend extension</div>
+        <div className="p-2.5 sm:px-3 sm:py-2">
+          <div className="text-emerald-700 text-[11px]">4. Targets (+1.975R)</div>
+          <div className="text-slate-900 font-semibold mt-0.5">$78,300 / $78,800 / $79,550</div>
+          <div className="text-slate-600 text-[11px]">Scale out into trend extension</div>
         </div>
       </div>
     </div>
@@ -980,18 +980,18 @@ function RsiDivergenceVisual() {
   const tp2P = 78300
 
   return (
-    <div data-ui className="my-6 rounded-lg border border-[#1a2030] bg-[#070b14] p-4 sm:p-5 space-y-3">
-      <div className="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-[#1a2030]">
+    <div data-ui className="my-6 rounded-xl border border-slate-900/10 bg-[#faf2df] p-4 sm:p-5 space-y-3">
+      <div className="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-slate-900/10">
         <div>
-          <div className="text-xs sm:text-sm font-semibold text-white">
+          <div className="text-xs sm:text-sm font-semibold text-slate-900">
             Synchronized Price &amp; RSI(14) Sub-Pane: Regular Bullish Divergence Entry Setup (58 Bars)
           </div>
-          <div className="text-xs text-[#94a3b8]">
+          <div className="text-xs text-slate-500">
             Price prints a Lower Low ($76,420 → $76,110) while RSI prints a Higher Low (24.2 → 33.8); enter on the bullish confirmation close
           </div>
         </div>
-        <div className="flex items-center gap-3 text-xs [font-variant-numeric:tabular-nums]">
-          <span className="text-[#3fc07a]">── Regular Bullish Div</span>
+        <div className="flex items-center gap-3 text-xs font-mono tabular-nums">
+          <span className="text-emerald-700">── Regular Bullish Div</span>
           <span className="text-[#e2a84b]">── Hidden Bullish Div</span>
         </div>
       </div>
@@ -1003,7 +1003,7 @@ function RsiDivergenceVisual() {
         aria-label="58-candle dual-pane chart with Price on top and RSI 14 below showing Regular and Hidden Bullish Divergence"
       >
         {[76200, 77000, 77800, 78600].map((p) => (
-          <line key={p} x1="14" y1={pToY(p)} x2={chartW} y2={pToY(p)} stroke="#131b2c" />
+          <line key={p} x1="14" y1={pToY(p)} x2={chartW} y2={pToY(p)} stroke="rgba(15,23,42,0.08)" />
         ))}
 
         <rect
@@ -1058,25 +1058,25 @@ function RsiDivergenceVisual() {
           Price: Lower Low ($76,420 → $76,110)
         </text>
 
-        <circle cx={entryX} cy={pToY(entryP)} r="5" fill="#38bdf8" stroke="#070b14" strokeWidth="1.5" />
-        <rect x={entryX - 150} y={pToY(entryP) - 24} width="142" height="19" rx="3" fill="#0d1829" stroke="#38bdf8" strokeWidth="1.1" />
-        <text x={entryX - 79} y={pToY(entryP) - 11} textAnchor="middle" fill="#38bdf8" fontSize="9.5" fontWeight="600">
+        <circle cx={entryX} cy={pToY(entryP)} r="5" fill="#0284c7" stroke="#ffffff" strokeWidth="1.5" />
+        <rect x={entryX - 150} y={pToY(entryP) - 24} width="142" height="19" rx="3" fill="#fdfaf3" stroke="#0284c7" strokeWidth="1.1" />
+        <text x={entryX - 79} y={pToY(entryP) - 11} textAnchor="middle" fill="#0369a1" fontSize="9.5" fontWeight="600">
           CONFIRMATION ENTRY →
         </text>
 
-        <line x1="14" y1="248" x2={chartW} y2="248" stroke="#262f45" strokeWidth="1" />
-        <text x="20" y="264" fill="#94a3b8" fontSize="10" fontWeight="600">
+        <line x1="14" y1="248" x2={chartW} y2="248" stroke="rgba(15,23,42,0.12)" strokeWidth="1" />
+        <text x="20" y="264" fill="#64748b" fontSize="10" fontWeight="600">
           RSI (14) SUB-PANE (30 Oversold / 70 Overbought)
         </text>
 
-        <rect x="14" y={rToY(70)} width={chartW - 14} height={rToY(30) - rToY(70)} fill="#1e293b" fillOpacity="0.28" />
+        <rect x="14" y={rToY(70)} width={chartW - 14} height={rToY(30) - rToY(70)} fill="#e2e8f0" fillOpacity="0.4" />
         <line x1="14" y1={rToY(70)} x2={chartW} y2={rToY(70)} stroke="#e5566f" strokeDasharray="3 3" strokeWidth="0.9" />
-        <line x1="14" y1={rToY(50)} x2={chartW} y2={rToY(50)} stroke="#475569" strokeDasharray="2 2" strokeWidth="0.7" />
+        <line x1="14" y1={rToY(50)} x2={chartW} y2={rToY(50)} stroke="#94a3b8" strokeDasharray="2 2" strokeWidth="0.7" />
         <line x1="14" y1={rToY(30)} x2={chartW} y2={rToY(30)} stroke="#3fc07a" strokeDasharray="3 3" strokeWidth="0.9" />
 
         <polyline
           fill="none"
-          stroke="#38bdf8"
+          stroke="#0284c7"
           strokeWidth="2"
           points={rsiBars.map((r, i) => `${toX(i)},${rToY(r.c)}`).join(' ')}
         />
@@ -1094,7 +1094,7 @@ function RsiDivergenceVisual() {
           Hidden Div Reset (35.0)
         </text>
 
-        <line x1={chartW} y1="12" x2={chartW} y2="390" stroke="#262f45" />
+        <line x1={chartW} y1="12" x2={chartW} y2="390" stroke="rgba(15,23,42,0.12)" />
         <text x={chartW + 8} y={rToY(70) + 3} fill="#e5566f" fontSize="10" fontWeight="600">
           RSI 70
         </text>
@@ -1106,26 +1106,26 @@ function RsiDivergenceVisual() {
         </text>
       </svg>
 
-      <div className="grid grid-cols-1 sm:grid-cols-4 gap-2.5 pt-2 border-t border-[#1a2030] text-xs [font-variant-numeric:tabular-nums]">
-        <div className="rounded bg-[#0a0f1a] border border-[#1a2030] p-2.5">
-          <div className="text-[#94a3b8] text-[11px]">1. Divergence Signal</div>
-          <div className="text-white font-semibold mt-0.5">Price LL + RSI HL</div>
-          <div className="text-[#64748b] text-[11px]">Downward velocity is exhausting</div>
+      <div className="grid grid-cols-1 sm:grid-cols-4 divide-y sm:divide-y-0 sm:divide-x divide-slate-900/10 pt-2 border-t border-slate-900/10 text-xs font-mono tabular-nums">
+        <div className="p-2.5 sm:px-3 sm:py-2">
+          <div className="text-slate-500 text-[11px]">1. Divergence Signal</div>
+          <div className="text-slate-900 font-semibold mt-0.5">Price LL + RSI HL</div>
+          <div className="text-slate-600 text-[11px]">Downward velocity is exhausting</div>
         </div>
-        <div className="rounded bg-[#0a0f1a] border border-[#1a2030] p-2.5">
-          <div className="text-[#38bdf8] text-[11px]">2. Where to Enter</div>
-          <div className="text-white font-semibold mt-0.5">Confirmation @ $76,800</div>
-          <div className="text-[#64748b] text-[11px]">Wait for bullish structure close</div>
+        <div className="p-2.5 sm:px-3 sm:py-2">
+          <div className="text-[#0369a1] text-[11px]">2. Where to Enter</div>
+          <div className="text-slate-900 font-semibold mt-0.5">Confirmation @ $76,800</div>
+          <div className="text-slate-600 text-[11px]">Wait for bullish structure close</div>
         </div>
-        <div className="rounded bg-[#0a0f1a] border border-[#1a2030] p-2.5">
-          <div className="text-[#e5566f] text-[11px]">3. Stop-Loss (−1.0R)</div>
-          <div className="text-white font-semibold mt-0.5">$76,050</div>
-          <div className="text-[#64748b] text-[11px]">Below the 2nd divergence trough</div>
+        <div className="p-2.5 sm:px-3 sm:py-2">
+          <div className="text-rose-700 text-[11px]">3. Stop-Loss (−1.0R)</div>
+          <div className="text-slate-900 font-semibold mt-0.5">$76,050</div>
+          <div className="text-slate-600 text-[11px]">Below the 2nd divergence trough</div>
         </div>
-        <div className="rounded bg-[#0a0f1a] border border-[#1a2030] p-2.5">
-          <div className="text-[#3fc07a] text-[11px]">4. Targets (+1.975R)</div>
-          <div className="text-white font-semibold mt-0.5">$77,400 / $78,000 / $78,900</div>
-          <div className="text-[#64748b] text-[11px]">40% @ 1R, 35% @ 2R, 25% @ 3.5R</div>
+        <div className="p-2.5 sm:px-3 sm:py-2">
+          <div className="text-emerald-700 text-[11px]">4. Targets (+1.975R)</div>
+          <div className="text-slate-900 font-semibold mt-0.5">$77,400 / $78,000 / $78,900</div>
+          <div className="text-slate-600 text-[11px]">40% @ 1R, 35% @ 2R, 25% @ 3.5R</div>
         </div>
       </div>
     </div>
@@ -1174,20 +1174,20 @@ function MacdMomentumVisual() {
   const tp3P = 79050
 
   return (
-    <div data-ui className="my-6 rounded-lg border border-[#1a2030] bg-[#070b14] p-4 sm:p-5 space-y-3">
-      <div className="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-[#1a2030]">
+    <div data-ui className="my-6 rounded-xl border border-slate-900/10 bg-[#faf2df] p-4 sm:p-5 space-y-3">
+      <div className="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-slate-900/10">
         <div>
-          <div className="text-xs sm:text-sm font-semibold text-white">
+          <div className="text-xs sm:text-sm font-semibold text-slate-900">
             MACD (12, 26, 9) Dual-Pane: Zero-Line Breakout Setup &amp; Histogram Contraction (55 Bars)
           </div>
-          <div className="text-xs text-[#94a3b8]">
+          <div className="text-xs text-slate-500">
             Enter when MACD crosses above the Signal line &amp; Zero Line (0.0) with expanding green histogram bars
           </div>
         </div>
-        <div className="flex items-center gap-3 text-xs [font-variant-numeric:tabular-nums]">
-          <span className="text-[#38bdf8]">── MACD Line</span>
+        <div className="flex items-center gap-3 text-xs font-mono tabular-nums">
+          <span className="text-[#0369a1]">── MACD Line</span>
           <span className="text-[#e2a84b]">── Signal Line</span>
-          <span className="text-[#3fc07a]">■ Histogram</span>
+          <span className="text-emerald-700">■ Histogram</span>
         </div>
       </div>
 
@@ -1198,7 +1198,7 @@ function MacdMomentumVisual() {
         aria-label="55-candle chart with MACD 12, 26, 9 sub-pane and Zero-Line Breakout Trade Setup Box"
       >
         {[76800, 77500, 78200, 78900].map((p) => (
-          <line key={p} x1="14" y1={pToY(p)} x2={chartW} y2={pToY(p)} stroke="#131b2c" />
+          <line key={p} x1="14" y1={pToY(p)} x2={chartW} y2={pToY(p)} stroke="rgba(15,23,42,0.08)" />
         ))}
 
         <rect
@@ -1252,14 +1252,14 @@ function MacdMomentumVisual() {
           )
         })}
 
-        <circle cx={entryX} cy={pToY(entryP)} r="5" fill="#38bdf8" stroke="#070b14" strokeWidth="1.5" />
-        <rect x={entryX - 165} y={pToY(entryP) - 10} width="155" height="20" rx="3" fill="#0d1829" stroke="#38bdf8" strokeWidth="1.2" />
-        <text x={entryX - 87} y={pToY(entryP) + 3.5} textAnchor="middle" fill="#38bdf8" fontSize="10" fontWeight="600">
+        <circle cx={entryX} cy={pToY(entryP)} r="5" fill="#0284c7" stroke="#ffffff" strokeWidth="1.5" />
+        <rect x={entryX - 165} y={pToY(entryP) - 10} width="155" height="20" rx="3" fill="#fdfaf3" stroke="#0284c7" strokeWidth="1.2" />
+        <text x={entryX - 87} y={pToY(entryP) + 3.5} textAnchor="middle" fill="#0369a1" fontSize="10" fontWeight="600">
           ZERO-LINE BREAK ENTRY →
         </text>
 
-        <line x1="14" y1="242" x2={chartW} y2="242" stroke="#262f45" />
-        <text x="20" y="258" fill="#94a3b8" fontSize="10" fontWeight="600">
+        <line x1="14" y1="242" x2={chartW} y2="242" stroke="rgba(15,23,42,0.12)" />
+        <text x="20" y="258" fill="#64748b" fontSize="10" fontWeight="600">
           MACD (12, 26, 9) SUB-PANE
         </text>
 
@@ -1282,37 +1282,37 @@ function MacdMomentumVisual() {
         />
         <polyline
           fill="none"
-          stroke="#38bdf8"
+          stroke="#0284c7"
           strokeWidth="2"
           points={macdLine.map((v, i) => `${toX(i)},${mToY(v)}`).join(' ')}
         />
 
-        <circle cx={entryX} cy={zeroY} r="4.5" fill="#38bdf8" />
-        <text x={entryX} y="378" textAnchor="middle" fill="#38bdf8" fontSize="10" fontWeight="600">
+        <circle cx={entryX} cy={zeroY} r="4.5" fill="#0284c7" />
+        <text x={entryX} y="378" textAnchor="middle" fill="#0369a1" fontSize="10" fontWeight="600">
           MACD Crosses Above Zero Line (0.0)
         </text>
       </svg>
 
-      <div className="grid grid-cols-1 sm:grid-cols-4 gap-2.5 pt-2 border-t border-[#1a2030] text-xs [font-variant-numeric:tabular-nums]">
-        <div className="rounded bg-[#0a0f1a] border border-[#1a2030] p-2.5">
-          <div className="text-[#94a3b8] text-[11px]">1. Momentum Shift</div>
-          <div className="text-white font-semibold mt-0.5">MACD &gt; Signal &amp; &gt; 0</div>
-          <div className="text-[#64748b] text-[11px]">12 EMA crosses above 26 EMA</div>
+      <div className="grid grid-cols-1 sm:grid-cols-4 divide-y sm:divide-y-0 sm:divide-x divide-slate-900/10 pt-2 border-t border-slate-900/10 text-xs font-mono tabular-nums">
+        <div className="p-2.5 sm:px-3 sm:py-2">
+          <div className="text-slate-500 text-[11px]">1. Momentum Shift</div>
+          <div className="text-slate-900 font-semibold mt-0.5">MACD &gt; Signal &amp; &gt; 0</div>
+          <div className="text-slate-600 text-[11px]">12 EMA crosses above 26 EMA</div>
         </div>
-        <div className="rounded bg-[#0a0f1a] border border-[#1a2030] p-2.5">
-          <div className="text-[#38bdf8] text-[11px]">2. Where to Enter</div>
-          <div className="text-white font-semibold mt-0.5">Breakout Close @ $77,500</div>
-          <div className="text-[#64748b] text-[11px]">Expanding positive histogram</div>
+        <div className="p-2.5 sm:px-3 sm:py-2">
+          <div className="text-[#0369a1] text-[11px]">2. Where to Enter</div>
+          <div className="text-slate-900 font-semibold mt-0.5">Breakout Close @ $77,500</div>
+          <div className="text-slate-600 text-[11px]">Expanding positive histogram</div>
         </div>
-        <div className="rounded bg-[#0a0f1a] border border-[#1a2030] p-2.5">
-          <div className="text-[#e5566f] text-[11px]">3. Stop-Loss (−1.0R)</div>
-          <div className="text-white font-semibold mt-0.5">$77,000 ($500 Risk)</div>
-          <div className="text-[#64748b] text-[11px]">Below impulse trigger bar low</div>
+        <div className="p-2.5 sm:px-3 sm:py-2">
+          <div className="text-rose-700 text-[11px]">3. Stop-Loss (−1.0R)</div>
+          <div className="text-slate-900 font-semibold mt-0.5">$77,000 ($500 Risk)</div>
+          <div className="text-slate-600 text-[11px]">Below impulse trigger bar low</div>
         </div>
-        <div className="rounded bg-[#0a0f1a] border border-[#1a2030] p-2.5">
-          <div className="text-[#3fc07a] text-[11px]">4. Early Exit Warning</div>
-          <div className="text-white font-semibold mt-0.5">Histogram Contraction</div>
-          <div className="text-[#64748b] text-[11px]">Scale out at TP1/TP2/TP3</div>
+        <div className="p-2.5 sm:px-3 sm:py-2">
+          <div className="text-emerald-700 text-[11px]">4. Early Exit Warning</div>
+          <div className="text-slate-900 font-semibold mt-0.5">Histogram Contraction</div>
+          <div className="text-slate-600 text-[11px]">Scale out at TP1/TP2/TP3</div>
         </div>
       </div>
     </div>
@@ -1372,20 +1372,20 @@ function BollingerAtrVisual() {
   const tp3P = 80100
 
   return (
-    <div data-ui className="my-6 rounded-lg border border-[#1a2030] bg-[#070b14] p-4 sm:p-5 space-y-3">
-      <div className="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-[#1a2030]">
+    <div data-ui className="my-6 rounded-xl border border-slate-900/10 bg-[#faf2df] p-4 sm:p-5 space-y-3">
+      <div className="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-slate-900/10">
         <div>
-          <div className="text-xs sm:text-sm font-semibold text-white">
+          <div className="text-xs sm:text-sm font-semibold text-slate-900">
             Bollinger Band (20, 2σ) Squeeze Breakout &amp; 1.5× ATR(14) Stop-Loss Setup (58 Bars)
           </div>
-          <div className="text-xs text-[#94a3b8]">
+          <div className="text-xs text-slate-500">
             Wait for the bands to pinch into a tight Squeeze, enter on a decisive candle close outside the Upper Band, and size Stop-Loss at 1.5× ATR
           </div>
         </div>
-        <div className="flex items-center gap-3 text-xs [font-variant-numeric:tabular-nums]">
-          <span className="text-[#38bdf8]">── Bollinger Bands (±2σ)</span>
+        <div className="flex items-center gap-3 text-xs font-mono tabular-nums">
+          <span className="text-[#0369a1]">── Bollinger Bands (±2σ)</span>
           <span className="text-[#e2a84b]">── Squeeze Zone</span>
-          <span className="text-[#e5566f]">── 1.5× ATR Stop</span>
+          <span className="text-rose-700">── 1.5× ATR Stop</span>
         </div>
       </div>
 
@@ -1396,7 +1396,7 @@ function BollingerAtrVisual() {
         aria-label="58-candle chart showing Bollinger Band Squeeze, Breakout Entry, and 1.5x ATR Stop-Loss Box"
       >
         {[77400, 78000, 78600, 79200, 80100].map((p) => (
-          <line key={p} x1="14" y1={toY(p)} x2={chartW} y2={toY(p)} stroke="#131b2c" />
+          <line key={p} x1="14" y1={toY(p)} x2={chartW} y2={toY(p)} stroke="rgba(15,23,42,0.08)" />
         ))}
 
         <polygon points={bandPoly} fill="#38bdf8" fillOpacity="0.10" />
@@ -1471,13 +1471,13 @@ function BollingerAtrVisual() {
           )
         })}
 
-        <circle cx={entryX} cy={toY(entryP)} r="5" fill="#38bdf8" stroke="#070b14" strokeWidth="1.5" />
-        <rect x={entryX - 165} y={toY(entryP) - 32} width="160" height="20" rx="3" fill="#0d1829" stroke="#38bdf8" strokeWidth="1.2" />
-        <text x={entryX - 85} y={toY(entryP) - 19} textAnchor="middle" fill="#38bdf8" fontSize="10" fontWeight="600">
+        <circle cx={entryX} cy={toY(entryP)} r="5" fill="#0284c7" stroke="#ffffff" strokeWidth="1.5" />
+        <rect x={entryX - 165} y={toY(entryP) - 32} width="160" height="20" rx="3" fill="#fdfaf3" stroke="#0284c7" strokeWidth="1.2" />
+        <text x={entryX - 85} y={toY(entryP) - 19} textAnchor="middle" fill="#0369a1" fontSize="10" fontWeight="600">
           SQUEEZE BREAKOUT ENTRY
         </text>
 
-        <line x1={chartW} y1="12" x2={chartW} y2={chartH - 12} stroke="#262f45" />
+        <line x1={chartW} y1="12" x2={chartW} y2={chartH - 12} stroke="rgba(15,23,42,0.12)" />
         {[
           { p: '80,100.00', y: toY(tp3P), bg: '#166534', fg: '#86efac' },
           { p: '79,200.00', y: toY(tp2P), bg: '#247b50', fg: '#ffffff' },
@@ -1494,26 +1494,26 @@ function BollingerAtrVisual() {
         ))}
       </svg>
 
-      <div className="grid grid-cols-1 sm:grid-cols-4 gap-2.5 pt-2 border-t border-[#1a2030] text-xs [font-variant-numeric:tabular-nums]">
-        <div className="rounded bg-[#0a0f1a] border border-[#1a2030] p-2.5">
+      <div className="grid grid-cols-1 sm:grid-cols-4 divide-y sm:divide-y-0 sm:divide-x divide-slate-900/10 pt-2 border-t border-slate-900/10 text-xs font-mono tabular-nums">
+        <div className="p-2.5 sm:px-3 sm:py-2">
           <div className="text-[#e2a84b] text-[11px]">1. Volatility Setup</div>
-          <div className="text-white font-semibold mt-0.5">20, 2σ Band Squeeze</div>
-          <div className="text-[#64748b] text-[11px]">Standard deviation narrows</div>
+          <div className="text-slate-900 font-semibold mt-0.5">20, 2σ Band Squeeze</div>
+          <div className="text-slate-600 text-[11px]">Standard deviation narrows</div>
         </div>
-        <div className="rounded bg-[#0a0f1a] border border-[#1a2030] p-2.5">
-          <div className="text-[#38bdf8] text-[11px]">2. Where to Enter</div>
-          <div className="text-white font-semibold mt-0.5">Upper Band Close ($78,000)</div>
-          <div className="text-[#64748b] text-[11px]">Candle closes outside Upper Band</div>
+        <div className="p-2.5 sm:px-3 sm:py-2">
+          <div className="text-[#0369a1] text-[11px]">2. Where to Enter</div>
+          <div className="text-slate-900 font-semibold mt-0.5">Upper Band Close ($78,000)</div>
+          <div className="text-slate-600 text-[11px]">Candle closes outside Upper Band</div>
         </div>
-        <div className="rounded bg-[#0a0f1a] border border-[#1a2030] p-2.5">
-          <div className="text-[#e5566f] text-[11px]">3. ATR Stop-Loss (−1.0R)</div>
-          <div className="text-white font-semibold mt-0.5">$77,400 (1.5× ATR = $600)</div>
-          <div className="text-[#64748b] text-[11px]">Outside normal bar noise</div>
+        <div className="p-2.5 sm:px-3 sm:py-2">
+          <div className="text-rose-700 text-[11px]">3. ATR Stop-Loss (−1.0R)</div>
+          <div className="text-slate-900 font-semibold mt-0.5">$77,400 (1.5× ATR = $600)</div>
+          <div className="text-slate-600 text-[11px]">Outside normal bar noise</div>
         </div>
-        <div className="rounded bg-[#0a0f1a] border border-[#1a2030] p-2.5">
-          <div className="text-[#3fc07a] text-[11px]">4. Targets (+1.975R)</div>
-          <div className="text-white font-semibold mt-0.5">$78,600 / $79,200 / $80,100</div>
-          <div className="text-[#64748b] text-[11px]">40% @ 1R, 35% @ 2R, 25% @ 3.5R</div>
+        <div className="p-2.5 sm:px-3 sm:py-2">
+          <div className="text-emerald-700 text-[11px]">4. Targets (+1.975R)</div>
+          <div className="text-slate-900 font-semibold mt-0.5">$78,600 / $79,200 / $80,100</div>
+          <div className="text-slate-600 text-[11px]">40% @ 1R, 35% @ 2R, 25% @ 3.5R</div>
         </div>
       </div>
     </div>
@@ -1527,13 +1527,13 @@ function ConfluenceStackVisual() {
       dim: 'Factor 1 · Market Structure',
       signal: '4H Support/Resistance Polarity Flip Zone ($77,550–$77,650)',
       metric: '4 historical touches (R 3x → S 1x)',
-      color: 'text-[#3fc07a]',
+      color: 'text-emerald-700',
     },
     {
       dim: 'Factor 2 · Trend Filter',
       signal: 'Price trading above rising 200 EMA & pulling into 50 EMA pocket',
       metric: 'Bullish regime confirmed',
-      color: 'text-[#38bdf8]',
+      color: 'text-sky-700',
     },
     {
       dim: 'Factor 3 · Momentum Velocity',
@@ -1545,29 +1545,29 @@ function ConfluenceStackVisual() {
       dim: 'Factor 4 · Volatility & Bracket',
       signal: 'Stop-Loss sized at 1.5× ATR ($77,000) · Weighted TP1/TP2/TP3 Bracket',
       metric: 'Expected Full Target: +1.975R',
-      color: 'text-white',
+      color: 'text-slate-900',
     },
   ]
 
   return (
-    <div data-ui className="my-5 rounded-lg border border-[#1a2030] bg-[#070b14] p-4">
-      <div className="flex flex-wrap items-center justify-between gap-2 pb-3 mb-3 border-b border-[#1a2030]">
-        <span className="text-xs font-semibold text-white">
+    <div data-ui className="my-5 rounded-xl border border-slate-900/10 bg-[#faf2df] p-4">
+      <div className="flex flex-wrap items-center justify-between gap-2 pb-3 mb-3 border-b border-slate-900/10">
+        <span className="text-xs font-semibold text-slate-900">
           Orthogonal 4-Factor Confluence Stack (Zero Multicollinearity)
         </span>
-        <span className="text-[11px] text-[#3fc07a] font-medium">
+        <span className="text-[11px] text-emerald-700 font-medium">
           4 / 4 Independent Dimensions Aligned
         </span>
       </div>
 
-      <div className="divide-y divide-[#141a26] [font-variant-numeric:tabular-nums]">
+      <div className="divide-y divide-slate-900/10 font-mono tabular-nums">
         {factors.map((f, idx) => (
           <div key={idx} className="py-2.5 first:pt-0 last:pb-0 flex flex-col sm:flex-row sm:items-center justify-between gap-1">
             <div>
               <span className={`text-xs font-semibold ${f.color}`}>{f.dim}: </span>
-              <span className="text-xs text-[#cbd5e1]">{f.signal}</span>
+              <span className="text-xs text-slate-700">{f.signal}</span>
             </div>
-            <span className="text-[11px] text-[#94a3b8] shrink-0">{f.metric}</span>
+            <span className="text-[11px] text-slate-500 shrink-0">{f.metric}</span>
           </div>
         ))}
       </div>
@@ -1589,19 +1589,19 @@ function OrderBookDepthVisual() {
   ]
 
   return (
-    <div data-ui className="my-5 rounded-lg border border-[#1a2030] bg-[#070b14] p-4 [font-variant-numeric:tabular-nums]">
-      <div className="flex flex-wrap items-center justify-between gap-2 pb-3 mb-3 border-b border-[#1a2030]">
-        <span className="text-xs font-semibold text-white">
+    <div data-ui className="my-5 rounded-xl border border-slate-900/10 bg-[#faf2df] p-4 font-mono tabular-nums">
+      <div className="flex flex-wrap items-center justify-between gap-2 pb-3 mb-3 border-b border-slate-900/10">
+        <span className="text-xs font-semibold text-slate-900">
           BTC/USDT Limit Order Book (LOB) Depth Ladder &amp; Market Sweep Simulation
         </span>
-        <span className="text-[11px] text-[#94a3b8]">
+        <span className="text-[11px] text-slate-500">
           Maker (Resting Limit) vs. Taker (Market Sweep)
         </span>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div className="rounded border border-[#1a2030] bg-[#0a0f1a] p-3 text-xs space-y-1.5">
-          <div className="grid grid-cols-3 text-[11px] text-[#64748b] pb-1 border-b border-[#141a26]">
+        <div className="rounded-xl border border-slate-900/10 bg-[#fdfaf3] p-3 text-xs space-y-1.5">
+          <div className="grid grid-cols-3 text-[11px] text-slate-600 pb-1 border-b border-slate-900/10">
             <span>Price (USDT)</span>
             <span className="text-right">Size (BTC)</span>
             <span className="text-right">Cumulative</span>
@@ -1613,15 +1613,15 @@ function OrderBookDepthVisual() {
                 className="absolute right-0 top-0 bottom-0 bg-[#e5566f]/15 pointer-events-none"
                 style={{ width: `${a.pct}%` }}
               />
-              <span className="relative text-[#e5566f] font-medium">${a.price.toLocaleString()}</span>
-              <span className="relative text-right text-[#cbd5e1]">{a.size.toFixed(2)}</span>
-              <span className="relative text-right text-[#94a3b8]">{a.total.toFixed(2)}</span>
+              <span className="relative text-rose-700 font-medium tabular-nums">${a.price.toLocaleString()}</span>
+              <span className="relative text-right text-slate-700 tabular-nums">{a.size.toFixed(2)}</span>
+              <span className="relative text-right text-slate-500 tabular-nums">{a.total.toFixed(2)}</span>
             </div>
           ))}
 
-          <div className="py-1.5 px-2 my-1 rounded bg-[#070b14] border border-[#1a2030] flex items-center justify-between text-[11px]">
-            <span className="text-white font-medium">Bid–Ask Spread: $10.00</span>
-            <span className="text-[#94a3b8]">0.015% (Tight Liquidity)</span>
+          <div className="py-1.5 px-2 my-1 rounded bg-[#faf2df] border border-slate-900/10 flex items-center justify-between text-[11px]">
+            <span className="text-slate-900 font-medium">Bid–Ask Spread: $10.00</span>
+            <span className="text-slate-500">0.015% (Tight Liquidity)</span>
           </div>
 
           {bids.map((b) => (
@@ -1630,45 +1630,45 @@ function OrderBookDepthVisual() {
                 className="absolute right-0 top-0 bottom-0 bg-[#3fc07a]/15 pointer-events-none"
                 style={{ width: `${b.pct}%` }}
               />
-              <span className="relative text-[#3fc07a] font-medium">${b.price.toLocaleString()}</span>
-              <span className="relative text-right text-[#cbd5e1]">{b.size.toFixed(2)}</span>
-              <span className="relative text-right text-[#94a3b8]">{b.total.toFixed(2)}</span>
+              <span className="relative text-emerald-700 font-medium tabular-nums">${b.price.toLocaleString()}</span>
+              <span className="relative text-right text-slate-700 tabular-nums">{b.size.toFixed(2)}</span>
+              <span className="relative text-right text-slate-500 tabular-nums">{b.total.toFixed(2)}</span>
             </div>
           ))}
         </div>
 
-        <div className="rounded border border-[#1a2030] bg-[#0a0f1a] p-3 flex flex-col justify-between text-xs space-y-3">
+        <div className="rounded-xl border border-slate-900/10 bg-[#fdfaf3] p-3 flex flex-col justify-between text-xs space-y-3">
           <div className="space-y-2">
-            <div className="text-white font-semibold">
+            <div className="text-slate-900 font-semibold">
               Execution Trace: 4.00 BTC Market Buy (Taker)
             </div>
-            <p className="text-[#94a3b8] leading-relaxed">
+            <p className="text-slate-500 leading-relaxed">
               A 4.00 BTC Market Order exceeds the 1.20 BTC resting at the best ask ($65,010) and walks up three levels of the order book:
             </p>
             <div className="space-y-1.5 pt-1">
-              <div className="flex justify-between text-[#cbd5e1]">
+              <div className="flex justify-between text-slate-700">
                 <span>Tier 1: 1.20 BTC @ $65,010</span>
-                <span className="text-white">$78,012.00</span>
+                <span className="text-slate-900">$78,012.00</span>
               </div>
-              <div className="flex justify-between text-[#cbd5e1]">
+              <div className="flex justify-between text-slate-700">
                 <span>Tier 2: 1.80 BTC @ $65,020</span>
-                <span className="text-white">$117,036.00</span>
+                <span className="text-slate-900">$117,036.00</span>
               </div>
-              <div className="flex justify-between text-[#cbd5e1]">
+              <div className="flex justify-between text-slate-700">
                 <span>Tier 3: 1.00 BTC @ $65,030</span>
-                <span className="text-white">$65,030.00</span>
+                <span className="text-slate-900">$65,030.00</span>
               </div>
             </div>
           </div>
 
-          <div className="pt-2.5 border-t border-[#141a26] space-y-1">
+          <div className="pt-2.5 border-t border-slate-900/10 space-y-1">
             <div className="flex justify-between">
-              <span className="text-[#94a3b8]">Volume-Weighted Avg Price (VWAP):</span>
-              <span className="text-white font-semibold">$65,019.50</span>
+              <span className="text-slate-500">Volume-Weighted Avg Price (VWAP):</span>
+              <span className="text-slate-900 font-semibold">$65,019.50</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-[#94a3b8]">Adverse Slippage Cost vs. Best Ask:</span>
-              <span className="text-[#e5566f] font-medium">+$9.50 / BTC ($38.00 total)</span>
+              <span className="text-slate-500">Adverse Slippage Cost vs. Best Ask:</span>
+              <span className="text-rose-700 font-medium">+$9.50 / BTC ($38.00 total)</span>
             </div>
           </div>
         </div>
@@ -1686,7 +1686,7 @@ function OrderTypesMatrixVisual() {
       priceControl: 'Exact price or better',
       execCertainty: 'Not assured (waits for match)',
       bestUse: 'Patient pullbacks into S/R & EMA value zones; scaling out at TP1/TP2/TP3',
-      color: 'text-[#3fc07a]',
+      color: 'text-emerald-700',
     },
     {
       type: 'Market Order',
@@ -1694,7 +1694,7 @@ function OrderTypesMatrixVisual() {
       priceControl: 'None (sweeps available book)',
       execCertainty: 'Immediate execution',
       bestUse: 'Emergency position exits or high-liquidity momentum triggers',
-      color: 'text-[#38bdf8]',
+      color: 'text-sky-700',
     },
     {
       type: 'Stop-Market Order',
@@ -1702,7 +1702,7 @@ function OrderTypesMatrixVisual() {
       priceControl: 'Triggers at stop; fills at market',
       execCertainty: 'Immediate exit execution on trigger',
       bestUse: 'Mandatory protective Stop-Loss (-1.0R) to ensure capital exit',
-      color: 'text-[#e5566f]',
+      color: 'text-rose-700',
     },
     {
       type: 'Stop-Limit Order',
@@ -1715,10 +1715,10 @@ function OrderTypesMatrixVisual() {
   ]
 
   return (
-    <div data-ui className="my-5 rounded-lg border border-[#1a2030] bg-[#070b14] overflow-x-auto">
-      <table className="w-full text-left border-collapse text-xs [font-variant-numeric:tabular-nums]">
+    <div data-ui className="my-5 rounded-xl border border-slate-900/10 bg-[#faf2df] overflow-x-auto">
+      <table className="w-full text-left border-collapse text-xs font-mono tabular-nums">
         <thead>
-          <tr className="border-b border-[#1a2030] bg-[#0a0f1a] text-[#94a3b8]">
+          <tr className="border-b border-slate-900/10 bg-[#f3ead2]/50 text-slate-700 font-semibold">
             <th className="py-2.5 px-3.5 font-medium">Order Type</th>
             <th className="py-2.5 px-3.5 font-medium">Book Role</th>
             <th className="py-2.5 px-3.5 font-medium">Price Control</th>
@@ -1726,14 +1726,14 @@ function OrderTypesMatrixVisual() {
             <th className="py-2.5 px-3.5 font-medium">Institutional Use Case</th>
           </tr>
         </thead>
-        <tbody className="divide-y divide-[#141a26]">
+        <tbody className="divide-y divide-slate-900/10">
           {rows.map((r) => (
-            <tr key={r.type} className="hover:bg-[#0a0f1a]/60">
+            <tr key={r.type} className="hover:bg-[#f3ead2]/60">
               <td className={`py-2.5 px-3.5 font-semibold ${r.color}`}>{r.type}</td>
-              <td className="py-2.5 px-3.5 text-[#cbd5e1]">{r.role}</td>
-              <td className="py-2.5 px-3.5 text-white">{r.priceControl}</td>
-              <td className="py-2.5 px-3.5 text-[#cbd5e1]">{r.execCertainty}</td>
-              <td className="py-2.5 px-3.5 text-[#94a3b8]">{r.bestUse}</td>
+              <td className="py-2.5 px-3.5 text-slate-700">{r.role}</td>
+              <td className="py-2.5 px-3.5 text-slate-900">{r.priceControl}</td>
+              <td className="py-2.5 px-3.5 text-slate-700">{r.execCertainty}</td>
+              <td className="py-2.5 px-3.5 text-slate-500">{r.bestUse}</td>
             </tr>
           ))}
         </tbody>
@@ -1757,84 +1757,84 @@ function PositionSizerVisual() {
   const effLeverage = equity > 0 ? notional / equity : 0
 
   return (
-    <div data-ui className="my-5 rounded-lg border border-[#1a2030] bg-[#070b14] p-4 [font-variant-numeric:tabular-nums]">
-      <div className="flex flex-wrap items-center justify-between gap-2 pb-3 mb-3 border-b border-[#1a2030]">
-        <span className="text-xs font-semibold text-white">
+    <div data-ui className="my-5 rounded-xl border border-slate-900/10 bg-[#faf2df] p-4 font-mono tabular-nums">
+      <div className="flex flex-wrap items-center justify-between gap-2 pb-3 mb-3 border-b border-slate-900/10">
+        <span className="text-xs font-semibold text-slate-900">
           Interactive 1% Risk Position Sizing &amp; Exposure Calculator
         </span>
-        <span className="text-[11px] text-[#3fc07a]">
+        <span className="text-[11px] text-emerald-700">
           Formula: Units = (Equity × Risk%) / |Entry − SL|
         </span>
       </div>
 
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4 text-xs">
         <div>
-          <label className="block text-[#94a3b8] mb-1">Account Equity ($)</label>
+          <label className="block text-slate-500 mb-1">Account Equity ($)</label>
           <input
             type="number"
             value={equity}
             onChange={(e) => setEquity(Math.max(100, Number(e.target.value) || 0))}
-            className="w-full h-8 px-2.5 rounded bg-[#0a0f1a] border border-[#262f45] text-white focus:outline-none focus:border-[#ff2e54]"
+            className="w-full h-8 px-2.5 rounded-lg bg-[#fdfaf3] border border-slate-900/15 text-slate-900 font-mono tabular-nums focus:outline-none focus:border-[#0369a1]"
           />
         </div>
         <div>
-          <label className="block text-[#94a3b8] mb-1">Risk per Trade (%)</label>
+          <label className="block text-slate-500 mb-1">Risk per Trade (%)</label>
           <input
             type="number"
             step="0.25"
             value={riskPct}
             onChange={(e) => setRiskPct(Math.min(10, Math.max(0.1, Number(e.target.value) || 0)))}
-            className="w-full h-8 px-2.5 rounded bg-[#0a0f1a] border border-[#262f45] text-white focus:outline-none focus:border-[#ff2e54]"
+            className="w-full h-8 px-2.5 rounded-lg bg-[#fdfaf3] border border-slate-900/15 text-slate-900 font-mono tabular-nums focus:outline-none focus:border-[#0369a1]"
           />
         </div>
         <div>
-          <label className="block text-[#94a3b8] mb-1">Entry Price ($)</label>
+          <label className="block text-slate-500 mb-1">Entry Price ($)</label>
           <input
             type="number"
             value={entry}
             onChange={(e) => setEntry(Math.max(1, Number(e.target.value) || 0))}
-            className="w-full h-8 px-2.5 rounded bg-[#0a0f1a] border border-[#262f45] text-white focus:outline-none focus:border-[#ff2e54]"
+            className="w-full h-8 px-2.5 rounded-lg bg-[#fdfaf3] border border-slate-900/15 text-slate-900 font-mono tabular-nums focus:outline-none focus:border-[#0369a1]"
           />
         </div>
         <div>
-          <label className="block text-[#94a3b8] mb-1">Stop-Loss Price ($)</label>
+          <label className="block text-slate-500 mb-1">Stop-Loss Price ($)</label>
           <input
             type="number"
             value={sl}
             onChange={(e) => setSl(Math.max(1, Number(e.target.value) || 0))}
-            className="w-full h-8 px-2.5 rounded bg-[#0a0f1a] border border-[#262f45] text-white focus:outline-none focus:border-[#ff2e54]"
+            className="w-full h-8 px-2.5 rounded-lg bg-[#fdfaf3] border border-slate-900/15 text-slate-900 font-mono tabular-nums focus:outline-none focus:border-[#0369a1]"
           />
         </div>
       </div>
 
-      <div className="grid grid-cols-2 sm:grid-cols-5 gap-2.5 pt-3 border-t border-[#141a26] text-xs">
-        <div className="rounded bg-[#0a0f1a] border border-[#1a2030] p-2.5">
-          <div className="text-[11px] text-[#94a3b8]">1R Capital Risk</div>
-          <div className="text-sm font-semibold text-[#e5566f] mt-0.5">
+      <div className="grid grid-cols-2 sm:grid-cols-5 divide-y sm:divide-y-0 sm:divide-x divide-slate-900/10 pt-3 border-t border-slate-900/10 text-xs font-mono tabular-nums">
+        <div className="p-2 sm:px-3">
+          <div className="text-[11px] text-slate-500">1R Capital Risk</div>
+          <div className="text-sm font-semibold text-rose-700 mt-0.5">
             ${riskDollars.toFixed(2)}
           </div>
         </div>
-        <div className="rounded bg-[#0a0f1a] border border-[#1a2030] p-2.5">
-          <div className="text-[11px] text-[#94a3b8]">Stop Distance</div>
-          <div className="text-sm font-semibold text-white mt-0.5">
+        <div className="p-2 sm:px-3">
+          <div className="text-[11px] text-slate-500">Stop Distance</div>
+          <div className="text-sm font-semibold text-slate-900 mt-0.5">
             ${stopDist.toLocaleString()} ({stopPct.toFixed(2)}%)
           </div>
         </div>
-        <div className="rounded bg-[#0a0f1a] border border-[#1a2030] p-2.5">
-          <div className="text-[11px] text-[#94a3b8]">Position Size</div>
-          <div className="text-sm font-semibold text-[#3fc07a] mt-0.5">
+        <div className="p-2 sm:px-3">
+          <div className="text-[11px] text-slate-500">Position Size</div>
+          <div className="text-sm font-semibold text-emerald-700 mt-0.5">
             {units.toFixed(4)} BTC
           </div>
         </div>
-        <div className="rounded bg-[#0a0f1a] border border-[#1a2030] p-2.5">
-          <div className="text-[11px] text-[#94a3b8]">Notional Value</div>
-          <div className="text-sm font-semibold text-white mt-0.5">
+        <div className="p-2 sm:px-3">
+          <div className="text-[11px] text-slate-500">Notional Value</div>
+          <div className="text-sm font-semibold text-slate-900 mt-0.5">
             ${notional.toLocaleString(undefined, { maximumFractionDigits: 0 })}
           </div>
         </div>
-        <div className="rounded bg-[#0a0f1a] border border-[#1a2030] p-2.5">
-          <div className="text-[11px] text-[#94a3b8]">Notional Ratio</div>
-          <div className="text-sm font-semibold text-[#38bdf8] mt-0.5">
+        <div className="p-2 sm:px-3">
+          <div className="text-[11px] text-slate-500">Notional Ratio</div>
+          <div className="text-sm font-semibold text-[#0369a1] mt-0.5">
             {effLeverage.toFixed(2)}×
           </div>
         </div>
@@ -1852,7 +1852,7 @@ function BracketRMathVisual() {
       weight: '25% of position',
       contrib: '+0.875R',
       rule: 'Closes final 25% runner; total realized return = +1.975R',
-      color: 'text-[#3fc07a]',
+      color: 'text-emerald-700',
       barBg: 'bg-[#3fc07a]',
     },
     {
@@ -1861,7 +1861,7 @@ function BracketRMathVisual() {
       weight: '35% of position',
       contrib: '+0.700R',
       rule: 'Locks in +0.700R; trails Stop-Loss on remaining 25% up to TP1 (+1.0R)',
-      color: 'text-[#3fc07a]',
+      color: 'text-emerald-700',
       barBg: 'bg-[#3fc07a]',
     },
     {
@@ -1870,7 +1870,7 @@ function BracketRMathVisual() {
       weight: '40% of position',
       contrib: '+0.400R',
       rule: 'Locks in +0.400R; moves Stop-Loss on remaining 60% to Breakeven ($60,000)',
-      color: 'text-[#3fc07a]',
+      color: 'text-emerald-700',
       barBg: 'bg-[#3fc07a]',
     },
     {
@@ -1879,7 +1879,7 @@ function BracketRMathVisual() {
       weight: '100% initial size',
       contrib: '0.000R',
       rule: '1R Distance = $1,000 ($60,000 Entry − $59,000 Stop-Loss)',
-      color: 'text-[#38bdf8]',
+      color: 'text-sky-700',
       barBg: 'bg-[#38bdf8]',
     },
     {
@@ -1888,39 +1888,39 @@ function BracketRMathVisual() {
       weight: '100% protected',
       contrib: '−1.000R',
       rule: 'Maximum loss capped strictly at 1.0% of account equity',
-      color: 'text-[#e5566f]',
+      color: 'text-rose-700',
       barBg: 'bg-[#e5566f]',
     },
   ]
 
   return (
-    <div data-ui className="my-5 rounded-lg border border-[#1a2030] bg-[#070b14] p-4 [font-variant-numeric:tabular-nums]">
-      <div className="flex flex-wrap items-center justify-between gap-2 pb-3 mb-3 border-b border-[#1a2030]">
-        <span className="text-xs font-semibold text-white">
+    <div data-ui className="my-5 rounded-xl border border-slate-900/10 bg-[#faf2df] shadow-xs p-4 font-mono tabular-nums">
+      <div className="flex flex-wrap items-center justify-between gap-2 pb-3 mb-3 border-b border-slate-900/10">
+        <span className="text-xs font-semibold text-slate-900">
           ACTS True Weighted Exit Bracket Architecture (40% @ 1.0R · 35% @ 2.0R · 25% @ 3.5R)
         </span>
-        <span className="text-xs font-semibold text-[#3fc07a]">
+        <span className="text-xs font-semibold text-emerald-700">
           Full TP3 Realized Return = +1.975R
         </span>
       </div>
 
-      <div className="space-y-2">
+      <div className="rounded-lg border border-slate-900/10 bg-[#fdfaf3] divide-y divide-slate-900/10 overflow-hidden">
         {levels.map((lv) => (
           <div
             key={lv.label}
-            className="rounded border border-[#1a2030] bg-[#0a0f1a] p-2.5 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs"
+            className="p-2.5 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs hover:bg-[#f3ead2]/40 transition-colors"
           >
             <div className="flex items-start gap-2.5">
               <span className={`w-1.5 h-8 rounded-sm shrink-0 mt-0.5 ${lv.barBg}`} />
               <div>
                 <div className={`font-semibold ${lv.color}`}>
-                  {lv.label} · <span className="text-white">{lv.price}</span>
+                  {lv.label} · <span className="text-slate-900">{lv.price}</span>
                 </div>
-                <div className="text-[#94a3b8] text-[11px] mt-0.5">{lv.rule}</div>
+                <div className="text-slate-600 text-[11px] mt-0.5">{lv.rule}</div>
               </div>
             </div>
             <div className="flex items-center gap-3 sm:text-right shrink-0 pl-4 sm:pl-0">
-              <span className="text-[#cbd5e1]">{lv.weight}</span>
+              <span className="text-slate-700">{lv.weight}</span>
               <span className={`font-semibold w-16 text-right ${lv.color}`}>{lv.contrib}</span>
             </div>
           </div>
@@ -1972,14 +1972,14 @@ function PreTradeChecklistVisual() {
   const allPassed = passedCount === gates.length
 
   return (
-    <div data-ui className="my-5 rounded-lg border border-[#1a2030] bg-[#070b14] p-4 [font-variant-numeric:tabular-nums]">
-      <div className="flex flex-wrap items-center justify-between gap-2 pb-3 mb-3 border-b border-[#1a2030]">
-        <span className="text-xs font-semibold text-white">
+    <div data-ui className="my-5 rounded-xl border border-slate-900/10 bg-[#faf2df] shadow-xs p-4 font-mono tabular-nums">
+      <div className="flex flex-wrap items-center justify-between gap-2 pb-3 mb-3 border-b border-slate-900/10">
+        <span className="text-xs font-semibold text-slate-900">
           Interactive ACTS 5-Gate Pre-Trade Execution Verification
         </span>
         <span
           className={`text-xs font-semibold ${
-            allPassed ? 'text-[#3fc07a]' : 'text-[#e5566f]'
+            allPassed ? 'text-emerald-700' : 'text-rose-700'
           }`}
         >
           {allPassed
@@ -1996,19 +1996,19 @@ function PreTradeChecklistVisual() {
               key={g.id}
               type="button"
               onClick={() => setChecked((prev) => ({ ...prev, [g.id]: !prev[g.id] }))}
-              className={`w-full text-left rounded border p-2.5 transition-colors flex items-start justify-between gap-3 ${
+              className={`w-full text-left rounded-lg border p-2.5 transition-colors flex items-start justify-between gap-3 ${
                 isOn
-                  ? 'border-[#1a2030] bg-[#0a0f1a]'
-                  : 'border-[#e5566f]/40 bg-[#1a0f16]'
+                  ? 'border-slate-900/15 bg-[#fdfaf3] hover:bg-[#f3ead2]'
+                  : 'border-rose-600/40 bg-rose-500/10'
               }`}
             >
               <div>
-                <div className="text-xs font-semibold text-white">{g.title}</div>
-                <div className="text-[11px] text-[#94a3b8] mt-0.5">{g.desc}</div>
+                <div className="text-xs font-semibold text-slate-900">{g.title}</div>
+                <div className="text-[11px] text-slate-600 mt-0.5">{g.desc}</div>
               </div>
               <span
                 className={`text-xs font-semibold shrink-0 ${
-                  isOn ? 'text-[#3fc07a]' : 'text-[#e5566f]'
+                  isOn ? 'text-emerald-700' : 'text-rose-700'
                 }`}
               >
                 {isOn ? 'PASS' : 'FAIL'}
@@ -2047,21 +2047,21 @@ function MacroCpiTransmissionVisual() {
   ]
 
   return (
-    <div data-ui className="my-5 rounded-lg border border-[#1a2030] bg-[#070b14] overflow-x-auto">
-      <table className="w-full text-left border-collapse text-xs [font-variant-numeric:tabular-nums]">
+    <div data-ui className="my-5 rounded-xl border border-slate-900/10 bg-[#faf2df] shadow-xs overflow-x-auto">
+      <table className="w-full text-left border-collapse text-xs font-mono tabular-nums">
         <thead>
-          <tr className="border-b border-[#1a2030] bg-[#0a0f1a] text-[#94a3b8]">
+          <tr className="border-b border-slate-900/10 bg-[#f3ead2]/50 text-slate-700 font-semibold">
             <th className="py-2.5 px-3.5 font-medium">Transmission Stage</th>
-            <th className="py-2.5 px-3.5 font-medium text-[#e5566f]">Hawkish Shock (Hot CPI)</th>
-            <th className="py-2.5 px-3.5 font-medium text-[#3fc07a]">Dovish Shock (Cool CPI)</th>
+            <th className="py-2.5 px-3.5 font-medium text-rose-700">Hawkish Shock (Hot CPI)</th>
+            <th className="py-2.5 px-3.5 font-medium text-emerald-700">Dovish Shock (Cool CPI)</th>
           </tr>
         </thead>
-        <tbody className="divide-y divide-[#141a26]">
+        <tbody className="divide-y divide-slate-900/10">
           {steps.map((s) => (
-            <tr key={s.step}>
-              <td className="py-2.5 px-3.5 font-semibold text-white">{s.step}</td>
-              <td className="py-2.5 px-3.5 text-[#cbd5e1]">{s.hot}</td>
-              <td className="py-2.5 px-3.5 text-[#cbd5e1]">{s.cool}</td>
+            <tr key={s.step} className="hover:bg-[#f3ead2]/40 transition-colors">
+              <td className="py-2.5 px-3.5 font-semibold text-slate-900">{s.step}</td>
+              <td className="py-2.5 px-3.5 text-slate-700">{s.hot}</td>
+              <td className="py-2.5 px-3.5 text-slate-700">{s.cool}</td>
             </tr>
           ))}
         </tbody>
@@ -2073,26 +2073,26 @@ function MacroCpiTransmissionVisual() {
 function MacroFomcToolsVisual() {
   return (
     <div data-ui className="my-5 grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
-      <div className="rounded-lg border border-[#1a2030] bg-[#070b14] p-4 space-y-2">
-        <div className="text-white font-semibold border-b border-[#1a2030] pb-2">
+      <div className="rounded-xl border border-slate-900/10 bg-[#faf2df] shadow-xs p-4 space-y-2">
+        <div className="text-slate-900 font-semibold border-b border-slate-900/10 pb-2">
           Tool 1 · Federal Funds Target Rate (Price of Money)
         </div>
-        <p className="text-[#cbd5e1] leading-relaxed">
-          <strong className="text-[#e5566f]">Rate Hikes:</strong> Raises overnight interbank borrowing cost, reprices sovereign yields higher, and cools credit expansion.
+        <p className="text-slate-700 leading-relaxed">
+          <strong className="text-rose-700">Rate Hikes:</strong> Raises overnight interbank borrowing cost, reprices sovereign yields higher, and cools credit expansion.
         </p>
-        <p className="text-[#cbd5e1] leading-relaxed">
-          <strong className="text-[#3fc07a]">Rate Cuts:</strong> Lowers cost of capital, reduces yield on cash reserves, and stimulates risk-asset allocation.
+        <p className="text-slate-700 leading-relaxed">
+          <strong className="text-emerald-700">Rate Cuts:</strong> Lowers cost of capital, reduces yield on cash reserves, and stimulates risk-asset allocation.
         </p>
       </div>
-      <div className="rounded-lg border border-[#1a2030] bg-[#070b14] p-4 space-y-2">
-        <div className="text-white font-semibold border-b border-[#1a2030] pb-2">
+      <div className="rounded-xl border border-slate-900/10 bg-[#faf2df] shadow-xs p-4 space-y-2">
+        <div className="text-slate-900 font-semibold border-b border-slate-900/10 pb-2">
           Tool 2 · Fed Balance Sheet (Quantity of Money)
         </div>
-        <p className="text-[#cbd5e1] leading-relaxed">
-          <strong className="text-[#3fc07a]">Quantitative Easing (QE):</strong> Central bank creates reserves to buy Treasuries/MBS, directly injecting base liquidity.
+        <p className="text-slate-700 leading-relaxed">
+          <strong className="text-emerald-700">Quantitative Easing (QE):</strong> Central bank creates reserves to buy Treasuries/MBS, directly injecting base liquidity.
         </p>
-        <p className="text-[#cbd5e1] leading-relaxed">
-          <strong className="text-[#e5566f]">Quantitative Tightening (QT):</strong> Bonds mature without reinvestment, draining liquidity reserves from commercial banks.
+        <p className="text-slate-700 leading-relaxed">
+          <strong className="text-rose-700">Quantitative Tightening (QT):</strong> Bonds mature without reinvestment, draining liquidity reserves from commercial banks.
         </p>
       </div>
     </div>
@@ -2101,14 +2101,14 @@ function MacroFomcToolsVisual() {
 
 function MacroYieldCurveVisual() {
   return (
-    <div data-ui className="my-5 rounded-lg border border-[#1a2030] bg-[#070b14] p-4">
-      <div className="flex flex-wrap items-center justify-between gap-2 pb-3 mb-3 border-b border-[#1a2030]">
-        <span className="text-xs font-semibold text-white">
+    <div data-ui className="my-5 rounded-xl border border-slate-900/10 bg-[#faf2df] shadow-xs p-4">
+      <div className="flex flex-wrap items-center justify-between gap-2 pb-3 mb-3 border-b border-slate-900/10">
+        <span className="text-xs font-semibold text-slate-900">
           U.S. Treasury Yield Curve: Normal Upward Slope vs. 2Y–10Y Recession Inversion
         </span>
-        <div className="flex items-center gap-3 text-[11px] [font-variant-numeric:tabular-nums]">
-          <span className="text-[#3fc07a]">── Normal Curve (10Y &gt; 2Y)</span>
-          <span className="text-[#e5566f]">── Inverted Curve (2Y &gt; 10Y Warning)</span>
+        <div className="flex items-center gap-3 text-[11px] font-mono tabular-nums">
+          <span className="text-emerald-700">── Normal Curve (10Y &gt; 2Y)</span>
+          <span className="text-rose-700">── Inverted Curve (2Y &gt; 10Y Warning)</span>
         </div>
       </div>
 
@@ -2118,8 +2118,8 @@ function MacroYieldCurveVisual() {
         role="img"
         aria-label="Comparison of Normal upward Treasury Yield Curve and Inverted Treasury Yield Curve"
       >
-        <line x1="50" y1="20" x2="50" y2="155" stroke="#262f45" />
-        <line x1="50" y1="155" x2="560" y2="155" stroke="#262f45" />
+        <line x1="50" y1="20" x2="50" y2="155" stroke="rgba(15,23,42,0.15)" />
+        <line x1="50" y1="155" x2="560" y2="155" stroke="rgba(15,23,42,0.15)" />
 
         {[
           { x: 80, m: '3M' },
@@ -2128,7 +2128,7 @@ function MacroYieldCurveVisual() {
           { x: 420, m: '10Y Bond' },
           { x: 530, m: '30Y Bond' },
         ].map((t) => (
-          <text key={t.m} x={t.x} y="172" textAnchor="middle" fill="#94a3b8" fontSize="10">
+          <text key={t.m} x={t.x} y="172" textAnchor="middle" fill="#64748b" fontSize="10">
             {t.m}
           </text>
         ))}
@@ -2179,22 +2179,22 @@ function MacroDxyBasketVisual() {
   ]
 
   return (
-    <div data-ui className="my-5 rounded-lg border border-[#1a2030] bg-[#070b14] p-4 [font-variant-numeric:tabular-nums]">
-      <div className="flex items-center justify-between pb-3 mb-3 border-b border-[#1a2030] text-xs">
-        <span className="font-semibold text-white">
+    <div data-ui className="my-5 rounded-xl border border-slate-900/10 bg-[#faf2df] shadow-xs p-4 font-mono tabular-nums">
+      <div className="flex items-center justify-between pb-3 mb-3 border-b border-slate-900/10 text-xs">
+        <span className="font-semibold text-slate-900">
           ICE U.S. Dollar Index (DXY) Trade-Weighted Currency Basket
         </span>
-        <span className="text-[#94a3b8]">6 Sovereign Currencies</span>
+        <span className="text-slate-600">6 Sovereign Currencies</span>
       </div>
 
       <div className="space-y-2 text-xs">
         {weights.map((w) => (
           <div key={w.cur} className="space-y-1">
             <div className="flex justify-between">
-              <span className="text-[#cbd5e1]">{w.cur}</span>
-              <span className="text-white font-semibold">{w.pct}%</span>
+              <span className="text-slate-700">{w.cur}</span>
+              <span className="text-slate-900 font-semibold">{w.pct}%</span>
             </div>
-            <div className="w-full h-2 rounded bg-[#0a0f1a] overflow-hidden">
+            <div className="w-full h-2 rounded bg-slate-900/10 overflow-hidden">
               <div className={`h-full ${w.color}`} style={{ width: `${w.pct}%` }} />
             </div>
           </div>
@@ -2206,26 +2206,26 @@ function MacroDxyBasketVisual() {
 
 function MacroSurpriseDeltaVisual() {
   return (
-    <div data-ui className="my-5 rounded-lg border border-[#1a2030] bg-[#070b14] p-4 space-y-3 text-xs [font-variant-numeric:tabular-nums]">
-      <div className="font-semibold text-white border-b border-[#1a2030] pb-2">
+    <div data-ui className="my-5 rounded-xl border border-slate-900/10 bg-[#faf2df] shadow-xs p-4 space-y-3 text-xs font-mono tabular-nums">
+      <div className="font-semibold text-slate-900 border-b border-slate-900/10 pb-2">
         CPI Surprise Delta (Δ = Actual − Consensus Forecast) &amp; Execution Protocol
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
-        <div className="rounded border border-[#1a2030] bg-[#0a0f1a] p-3">
-          <div className="text-white font-semibold">Case 1 · In-Line (Δ = 0.0%)</div>
-          <div className="text-[#94a3b8] mt-1">
+        <div className="rounded-lg border border-slate-900/10 bg-[#fdfaf3] p-3 border-l-2 border-l-slate-400">
+          <div className="text-slate-900 font-semibold">Case 1 · In-Line (Δ = 0.0%)</div>
+          <div className="text-slate-600 mt-1">
             Actual 0.2% vs Forecast 0.2%. Consensus already priced in; initial 60-second algos whipsaw both sides before resuming prior trend.
           </div>
         </div>
-        <div className="rounded border border-[#1a2030] bg-[#0a0f1a] p-3">
-          <div className="text-[#e5566f] font-semibold">Case 2 · Hot Surprise (Δ = +0.3%)</div>
-          <div className="text-[#94a3b8] mt-1">
+        <div className="rounded-lg border border-slate-900/10 bg-[#fdfaf3] p-3 border-l-2 border-l-rose-600">
+          <div className="text-rose-700 font-semibold">Case 2 · Hot Surprise (Δ = +0.3%)</div>
+          <div className="text-slate-600 mt-1">
             Actual 0.5% vs Forecast 0.2%. Severe hawkish shock; yields &amp; DXY spike; order book thins and BTC sweeps downside liquidity.
           </div>
         </div>
-        <div className="rounded border border-[#1a2030] bg-[#0a0f1a] p-3">
-          <div className="text-[#3fc07a] font-semibold">Case 3 · Cool Surprise (Δ = −0.3%)</div>
-          <div className="text-[#94a3b8] mt-1">
+        <div className="rounded-lg border border-slate-900/10 bg-[#fdfaf3] p-3 border-l-2 border-l-emerald-600">
+          <div className="text-emerald-700 font-semibold">Case 3 · Cool Surprise (Δ = −0.3%)</div>
+          <div className="text-slate-600 mt-1">
             Actual −0.1% vs Forecast 0.2%. Dovish shock; yields drop; wait for the 15m structure close after spreads normalize to enter long.
           </div>
         </div>

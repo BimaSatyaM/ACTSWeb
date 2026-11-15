@@ -151,66 +151,65 @@ export default function AdminPanel() {
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 border-b border-white/[0.06] pb-4">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-3 border-b border-slate-900/10 pb-4">
         <div>
-          <div className="inline-flex items-center gap-1.5 text-accent-theme text-xs font-semibold">
-            <span>🛡️</span>
-            <span>Admin Control Center</span>
-          </div>
-          <h1 className="text-xl sm:text-2xl font-bold text-white tracking-tight mt-1">Access Key Manager</h1>
-          <p className="text-xs text-text-secondary">Generate and audit secure, single-use activation tokens for ACTS traders.</p>
+          <span className="text-[10px] font-mono uppercase tracking-[0.14em] text-[#0369a1] font-bold block mb-1">
+            Admin Control Center
+          </span>
+          <h1 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">Access Key Manager</h1>
+          <p className="text-xs text-slate-600">Generate and audit secure, single-use activation tokens for ACTS traders.</p>
         </div>
       </div>
 
-      <div className="grid lg:grid-cols-3 gap-6">
-        
+      <div className="grid lg:grid-cols-3 gap-6 items-start">
         <div className="space-y-6">
-          <GlassCard className="space-y-4">
-            <h3 className="text-xs font-bold text-white">Token Generator</h3>
-            <p className="text-xs text-text-secondary leading-relaxed">
+          <GlassCard className="space-y-4 bg-[#faf2df] border-slate-900/10">
+            <h3 className="text-xs font-bold text-slate-900 uppercase tracking-wider font-mono">Token Generator</h3>
+            <p className="text-xs text-slate-600 leading-relaxed">
               Create a cryptographically secure, single-use activation key. Provide this key to verified traders to unlock their dashboard access.
             </p>
-            
-            {errorMsg && <p className="text-xs text-accent-red bg-accent-red/10 p-3 rounded-lg border border-accent-red/20">{errorMsg}</p>}
-            {successMsg && <p className="text-xs text-accent-green bg-accent-green/10 p-3 rounded-lg border border-accent-green/20">{successMsg}</p>}
 
-            <Button 
-              variant="primary" 
-              className="w-full py-2.5 text-xs font-bold cursor-pointer hover:scale-[1.01]"
+            {errorMsg && <p className="text-xs text-rose-700 border-l-2 border-rose-600 pl-3 py-1">{errorMsg}</p>}
+            {successMsg && <p className="text-xs font-mono text-emerald-700 border-l-2 border-emerald-600 pl-3 py-1">{successMsg}</p>}
+
+            <Button
+              variant="primary"
+              className="w-full py-2.5 text-xs font-bold cursor-pointer"
               onClick={handleGenerateToken}
               disabled={generating}
             >
-              {generating ? 'Generating...' : '⚡ Generate Access Token'}
+              {generating ? 'Generating...' : 'Generate Access Token'}
             </Button>
           </GlassCard>
 
-          <GlassCard className="space-y-3">
-            <h3 className="text-xs font-bold text-white">Console Rules</h3>
-            <p className="text-xs text-text-muted leading-relaxed">
+          <div className="border-l-2 border-[#0369a1] pl-3.5 py-0.5 space-y-1">
+            <h3 className="text-xs font-mono font-bold text-slate-900 uppercase tracking-wider">Console Rules</h3>
+            <p className="text-xs text-slate-600 leading-relaxed">
               Cloud Firestore security rules restrict read/write access to this directory to the admin UID only. All user queries on individual keys are audited.
             </p>
-          </GlassCard>
+          </div>
         </div>
 
         <div className="lg:col-span-2 space-y-4">
-          <GlassCard className="space-y-5">
-            
-            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-white/[0.04] pb-4">
-              <h3 className="text-xs font-bold text-white">Key Database</h3>
-              
+          <GlassCard className="space-y-5 bg-[#faf2df] border-slate-900/10">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-slate-900/10 pb-4">
+              <h3 className="text-xs font-mono font-bold text-slate-900 uppercase tracking-wider">Key Database</h3>
+
               <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto">
-                <input 
-                  type="text" 
+                <input
+                  type="text"
+                  aria-label="Search activation keys or emails"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Search by key/email..."
-                  className="px-3 py-1.5 rounded-lg bg-white/[0.04] border border-white/[0.08] text-white text-xs focus:outline-none focus:border-accent-theme/40 w-full sm:w-44"
+                  placeholder="Search by key or email..."
+                  className="px-3 py-1.5 rounded-lg bg-[#fdfaf3] border border-slate-900/15 text-slate-900 text-xs focus:outline-none focus:border-[#0284c7] w-full sm:w-44"
                 />
-                
+
                 <select
+                  aria-label="Filter keys by status"
                   value={statusFilter}
                   onChange={(e) => setStatusFilter(e.target.value as any)}
-                  className="px-3 py-1.5 rounded-lg bg-white/[0.04] border border-white/[0.08] text-white text-xs focus:outline-none focus:border-accent-theme/40 cursor-pointer"
+                  className="px-3 py-1.5 rounded-lg bg-[#fdfaf3] border border-slate-900/15 text-slate-900 text-xs focus:outline-none focus:border-[#0284c7] cursor-pointer"
                 >
                   <option value="ALL">All Status</option>
                   <option value="UNUSED">Unused Only</option>
@@ -220,41 +219,40 @@ export default function AdminPanel() {
             </div>
 
             {loadingTokens ? (
-              <div className="text-center py-12 text-xs text-text-muted">Loading tokens from Firestore...</div>
+              <div className="text-center py-12 text-xs font-mono text-slate-500">Loading tokens from Firestore...</div>
             ) : filteredTokens.length === 0 ? (
-              <div className="text-center py-12 text-xs text-text-muted">No activation keys found.</div>
+              <div className="text-center py-12 text-xs font-mono text-slate-500">No activation keys found.</div>
             ) : (
               <div className="overflow-x-auto">
                 <table className="w-full text-left text-xs border-collapse">
                   <thead>
-                    <tr className="border-b border-white/[0.04] text-[10px] text-text-muted uppercase tracking-wider font-bold">
+                    <tr className="border-b border-slate-900/10 text-[10px] font-mono text-slate-500 uppercase tracking-wider font-bold">
                       <th className="pb-3">Activation Key</th>
                       <th className="pb-3">Status</th>
                       <th className="pb-3">Used By</th>
                       <th className="pb-3 text-right">Action</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-white/[0.02]">
+                  <tbody className="divide-y divide-slate-900/10">
                     {filteredTokens.map((t) => (
-                      <tr key={t.id} className="hover:bg-white/[0.01] transition-colors duration-150">
-                        <td className="py-3 font-mono font-bold text-white selection:bg-accent-theme/30">{t.id}</td>
+                      <tr key={t.id} className="hover:bg-[#f3ead2]/50 transition-colors duration-150">
+                        <td className="py-3 font-mono tabular-nums font-bold text-slate-900 selection:bg-sky-200">{t.id}</td>
                         <td className="py-3">
-                          <Badge variant={t.used ? 'NOT_HIT' : 'SIGNAL'} className="text-[8px] font-bold tracking-wider uppercase py-0.5">
+                          <Badge variant={t.used ? 'NOT_HIT' : 'SIGNAL'}>
                             {t.used ? 'USED' : 'UNUSED'}
                           </Badge>
                         </td>
-                        <td className="py-3 text-text-secondary truncate max-w-[150px]" title={t.usedByEmail || ''}>
-                          {t.usedByEmail || '—'}
+                        <td className="py-3 text-slate-600 font-mono truncate max-w-[150px]" title={t.usedByEmail || ''}>
+                          {t.usedByEmail || '-'}
                         </td>
                         <td className="py-3 text-right">
-                          <button 
-                            className="p-1 rounded bg-white/[0.04] border border-white/[0.08] hover:bg-accent-red/15 hover:border-accent-red/30 hover:text-accent-red transition-all cursor-pointer"
+                          <button
+                            type="button"
+                            className="text-xs font-mono font-bold text-rose-700 hover:text-rose-900 hover:underline transition-colors cursor-pointer"
                             onClick={() => handleDeleteToken(t.id)}
-                            title="Delete Key"
+                            aria-label={`Delete key ${t.id}`}
                           >
-                            <svg className="w-3.5 h-3.5 fill-none stroke-current" strokeWidth="2" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
-                            </svg>
+                            Delete
                           </button>
                         </td>
                       </tr>

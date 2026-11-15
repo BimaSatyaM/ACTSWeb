@@ -309,28 +309,28 @@ export function DayDetailModal({ date, isOpen, onClose }: DayDetailModalProps) {
   })()
 
   return createPortal(
-    <div className="fixed inset-0 z-[99999] flex items-center justify-center p-4 sm:p-6 bg-black/80 backdrop-blur-md animate-in fade-in duration-200 overflow-y-auto">
+    <div className="fixed inset-0 z-[99999] flex items-center justify-center p-4 sm:p-6 bg-slate-900/40 backdrop-blur-sm animate-in fade-in duration-200 overflow-y-auto">
       <div 
         className="fixed inset-0" 
         onClick={onClose} 
         aria-hidden="true" 
       />
 
-      <div className="relative z-10 w-full max-w-3xl max-h-[88vh] flex flex-col p-6 sm:p-7 rounded-2xl bg-[#0c0e16]/98 border border-white/10 shadow-[0_25px_70px_rgba(0,0,0,0.85)] my-auto overflow-hidden">
+      <div className="relative z-10 w-full max-w-3xl max-h-[88vh] flex flex-col p-6 sm:p-7 rounded-2xl bg-[#fdfaf3] border border-slate-900/15 shadow-2xl my-auto overflow-hidden">
         
-        <div className="flex items-start justify-between border-b border-white/[0.08] pb-4">
+        <div className="flex items-start justify-between border-b border-slate-900/10 pb-4">
           <div className="space-y-1">
-            <span className="text-[10px] uppercase font-bold tracking-widest text-text-muted block">
+            <span className="text-[10px] uppercase font-bold tracking-widest text-slate-500 block">
               Daily History Drilldown
             </span>
-            <h2 className="text-xl sm:text-2xl font-bold text-white tracking-tight leading-tight">
+            <h2 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight leading-tight">
               {formattedDate}
             </h2>
           </div>
 
           <button
             onClick={onClose}
-            className="p-2 rounded-xl text-text-muted hover:text-white bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.08] transition-colors cursor-pointer"
+            className="p-2 rounded-xl text-slate-500 hover:text-slate-900 bg-[#faf2df] hover:bg-[#f3ead2] border border-slate-900/15 transition-colors cursor-pointer"
             aria-label="Close modal"
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -342,62 +342,62 @@ export function DayDetailModal({ date, isOpen, onClose }: DayDetailModalProps) {
         <div className="flex-1 overflow-y-auto pr-1 space-y-6 custom-scrollbar">
           {loading ? (
             <div className="py-16 flex flex-col items-center justify-center space-y-3">
-              <span className="w-8 h-8 border-3 border-accent-theme border-t-transparent rounded-full animate-spin" />
-              <p className="text-xs text-text-secondary">Loading daily summary telemetry...</p>
+              <span className="w-8 h-8 border-3 border-sky-600 border-t-transparent rounded-full animate-spin" />
+              <p className="text-xs text-slate-500">Loading daily summary telemetry...</p>
             </div>
           ) : error ? (
-            <div className="p-4 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-300 text-xs leading-relaxed">
+            <div className="border-l-2 border-rose-600 pl-3 py-2 text-rose-700 text-xs leading-relaxed">
               {error}
             </div>
           ) : !data ? (
-            <p className="text-xs text-text-secondary text-center py-8">No records available for this date.</p>
+            <p className="text-xs text-slate-500 text-center py-8">No records available for this date.</p>
           ) : (
             <>
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 py-1 border-b border-white/[0.06]">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 py-1 border-b border-slate-900/10 font-mono tabular-nums">
                 <div>
-                  <span className="text-[10px] uppercase tracking-wider text-text-muted font-bold block">Total Signals</span>
-                  <span className="text-2xl font-bold text-white mt-0.5 block">{data.summary.total_signals}</span>
+                  <span className="text-[10px] uppercase tracking-wider text-slate-500 font-bold block font-sans">Total Signals</span>
+                  <span className="text-2xl font-bold text-slate-900 mt-0.5 block font-mono tabular-nums">{data.summary.total_signals}</span>
                 </div>
 
                 <div>
-                  <span className="text-[10px] uppercase tracking-wider text-text-muted font-bold block">Watchlist Setups</span>
-                  <span className="text-2xl font-bold text-amber-400 mt-0.5 block">{data.summary.watchlist_count}</span>
+                  <span className="text-[10px] uppercase tracking-wider text-slate-500 font-bold block font-sans">Watchlist Setups</span>
+                  <span className="text-2xl font-bold text-amber-700 mt-0.5 block font-mono tabular-nums">{data.summary.watchlist_count}</span>
                 </div>
 
                 <div>
-                  <span className="text-[10px] uppercase tracking-wider text-text-muted font-bold block">Target Profit</span>
-                  <span className="text-2xl font-bold text-emerald-400 mt-0.5 block">
-                    {data.summary.profit_count} <span className="text-xs font-normal text-emerald-400/70">Hits</span>
+                  <span className="text-[10px] uppercase tracking-wider text-slate-500 font-bold block font-sans">Target Profit</span>
+                  <span className="text-2xl font-bold text-emerald-700 mt-0.5 block font-mono tabular-nums">
+                    {data.summary.profit_count} <span className="text-xs font-normal text-emerald-700/80">Hits</span>
                   </span>
                 </div>
 
                 <div>
-                  <span className="text-[10px] uppercase tracking-wider text-text-muted font-bold block">Stop Losses</span>
-                  <span className="text-2xl font-bold text-rose-400 mt-0.5 block">
-                    {data.summary.loss_count} <span className="text-xs font-normal text-rose-400/70">Hits</span>
+                  <span className="text-[10px] uppercase tracking-wider text-slate-500 font-bold block font-sans">Stop Losses</span>
+                  <span className="text-2xl font-bold text-rose-700 mt-0.5 block font-mono tabular-nums">
+                    {data.summary.loss_count} <span className="text-xs font-normal text-rose-700/80">Hits</span>
                   </span>
                 </div>
               </div>
 
               {data.regimes && data.regimes.length > 0 && (
                 <div className="space-y-2">
-                  <h4 className="text-xs font-bold text-text-secondary uppercase tracking-wider">
+                  <h4 className="text-xs font-bold text-slate-700 uppercase tracking-wider">
                     Market Regimes on {date}
                   </h4>
-                  <div className="flex flex-wrap gap-2">
+                  <div className="flex flex-wrap gap-3">
                     {data.regimes.map((r, idx) => {
                       const timeStr = formatUtcTime(r.published_at)
                       return (
                         <div
                           key={idx}
-                          className="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-white/[0.03] border border-white/[0.07] text-xs"
+                          className="inline-flex items-center gap-2 text-xs text-slate-800"
                         >
-                          <span className="text-text-muted text-[10px] font-mono">{timeStr}</span>
-                          <span className="text-white font-semibold">
+                          <span className="text-slate-500 text-[10px] font-mono tabular-nums">{timeStr}</span>
+                          <span className="text-slate-900 font-semibold">
                             {r.regimes.map((lbl) => lbl.replace(/_/g, ' ')).join(' + ')}
                           </span>
                           {r.confidence && (
-                            <span className="text-accent-blue text-[10px] font-mono">
+                            <span className="text-[#0369a1] text-[10px] font-mono font-bold tabular-nums">
                               ({(r.confidence * 100).toFixed(0)}%)
                             </span>
                           )}
@@ -409,16 +409,16 @@ export function DayDetailModal({ date, isOpen, onClose }: DayDetailModalProps) {
               )}
 
               <div className="space-y-3">
-                <h4 className="text-xs font-bold text-text-secondary uppercase tracking-wider">
+                <h4 className="text-xs font-bold text-slate-700 uppercase tracking-wider">
                   Signals Fired ({data.signals.length})
                 </h4>
 
                 {data.signals.length === 0 ? (
-                  <div className="p-6 rounded-xl bg-white/[0.01] border border-white/[0.04] text-center text-xs text-text-muted">
+                  <div className="py-8 text-center text-xs font-mono text-slate-500">
                     No trade setups or watchlist signals were recorded on this date.
                   </div>
                 ) : (
-                  <div className="space-y-2.5">
+                  <div className="divide-y divide-slate-900/10">
                     {data.signals.map((sig) => {
                       const timeStr = formatUtcTime(sig.published_at)
                       const isSignal = sig.tier === 'SIGNAL'
@@ -427,15 +427,23 @@ export function DayDetailModal({ date, isOpen, onClose }: DayDetailModalProps) {
                       return (
                         <div
                           key={sig.event_id}
-                          className="p-3.5 rounded-xl bg-white/[0.02] border border-white/[0.06] hover:border-white/[0.12] transition-all space-y-2.5"
+                          className={`py-3.5 pl-3.5 pr-2 transition-colors space-y-2.5 ${
+                            details.isProfit
+                              ? 'border-l-2 border-emerald-600'
+                              : details.isLoss
+                              ? 'border-l-2 border-rose-600'
+                              : details.isNotHit
+                              ? 'border-l-2 border-slate-400'
+                              : 'border-l-2 border-amber-500'
+                          }`}
                         >
                           <div className="flex items-center justify-between">
                             <div className="flex items-center gap-2">
                               <AssetIcon symbol={sig.symbol} size="xs" />
-                              <span className="text-text-muted text-xs font-mono">{timeStr}</span>
-                              <span className="font-bold text-white text-sm">{sig.symbol}</span>
+                              <span className="text-slate-500 text-xs font-mono tabular-nums">{timeStr}</span>
+                              <span className="font-bold text-slate-900 text-sm">{sig.symbol}</span>
                               <span className={`inline-flex items-center gap-1 text-[11px] font-extrabold ${
-                                sig.direction === 'BUY' ? 'text-emerald-400' : 'text-rose-400'
+                                sig.direction === 'BUY' ? 'text-emerald-700' : 'text-rose-700'
                               }`}>
                                 {sig.direction === 'BUY' ? (
                                   <svg className="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -450,7 +458,7 @@ export function DayDetailModal({ date, isOpen, onClose }: DayDetailModalProps) {
                                 )}
                                 <span>{sig.direction}</span>
                               </span>
-                              <span className="h-3 w-[1px] bg-white/[0.12]" />
+                              <span className="h-3 w-[1px] bg-slate-900/15" />
                               <Badge variant={isSignal ? 'SIGNAL' : 'WATCHLIST'}>
                                 {sig.tier}
                               </Badge>
@@ -458,58 +466,58 @@ export function DayDetailModal({ date, isOpen, onClose }: DayDetailModalProps) {
 
                             <div>
                               {details.isProfit ? (
-                                <span className="inline-flex items-center gap-1.5 text-[11px] font-bold text-emerald-400 font-mono">
-                                  <svg className="w-3.5 h-3.5 text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                                <span className="inline-flex items-center gap-1.5 text-[11px] font-bold text-emerald-700 font-mono tabular-nums">
+                                  <svg className="w-3.5 h-3.5 text-emerald-700" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                                     <polyline points="22 7 13.5 15.5 8.5 10.5 2 17" />
                                     <polyline points="16 7 22 7 22 13" />
                                   </svg>
                                   <span>{details.badgeText}</span>
                                 </span>
                               ) : details.isLoss ? (
-                                <span className="inline-flex items-center gap-1.5 text-[11px] font-bold text-rose-400 font-mono">
-                                  <svg className="w-3.5 h-3.5 text-rose-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                                <span className="inline-flex items-center gap-1.5 text-[11px] font-bold text-rose-700 font-mono tabular-nums">
+                                  <svg className="w-3.5 h-3.5 text-rose-700" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                                     <polyline points="22 17 13.5 8.5 8.5 13.5 2 7" />
                                     <polyline points="16 17 22 17 22 11" />
                                   </svg>
                                   <span>{details.badgeText}</span>
                                 </span>
                               ) : details.isNotHit ? (
-                                <span className="inline-flex items-center gap-1.5 text-[11px] font-bold text-zinc-400 font-mono">
+                                <span className="inline-flex items-center gap-1.5 text-[11px] font-bold text-slate-500 font-mono tabular-nums">
                                   <span>{details.badgeText}</span>
                                 </span>
                               ) : (
-                                <span className="inline-flex items-center gap-1.5 text-[11px] font-bold text-amber-300 font-mono">
-                                  <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-ping" />
+                                <span className="inline-flex items-center gap-1.5 text-[11px] font-bold text-amber-700 font-mono">
+                                  <span className="w-1.5 h-1.5 rounded-full bg-amber-600" />
                                   <span>Awaiting Outcome</span>
                                 </span>
                               )}
                             </div>
                           </div>
 
-                          <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 pt-1 text-[11px] text-text-secondary border-t border-white/[0.03]">
+                          <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 pt-1 text-[11px] text-slate-600 border-t border-slate-900/10">
                             <div>
-                              <span className="text-text-muted block text-[10px]">Confluence Score</span>
-                              <span className="font-semibold text-white font-mono">{sig.confluence_score.toFixed(1)}/100</span>
+                              <span className="text-slate-600 block text-[10px]">Confluence Score</span>
+                              <span className="font-semibold text-slate-900 font-mono tabular-nums">{sig.confluence_score.toFixed(1)}/100</span>
                             </div>
                             {details.entry > 0 && (
                               <div>
-                                <span className="text-text-muted block text-[10px]">Entry Price</span>
-                                <span className="font-semibold text-white font-mono">
+                                <span className="text-slate-600 block text-[10px]">Entry Price</span>
+                                <span className="font-semibold text-slate-900 font-mono tabular-nums">
                                   ${details.entry.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                                 </span>
                               </div>
                             )}
                             {details.isProfit ? (
                               <div>
-                                <span className="text-text-muted block text-[10px]">{details.targetLabel}</span>
-                                <span className="font-semibold text-emerald-400 font-mono">
+                                <span className="text-slate-600 block text-[10px]">{details.targetLabel}</span>
+                                <span className="font-semibold text-emerald-700 font-mono tabular-nums">
                                   ${details.highestHitPrice ? details.highestHitPrice.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 3 }) : sig.target_tp1?.toLocaleString()}
                                 </span>
                               </div>
                             ) : details.isLoss ? (
                               <div>
-                                <span className="text-text-muted block text-[10px]">{details.targetLabel || 'Stop Loss Hit'}</span>
-                                <span className="font-semibold text-rose-400 font-mono">
+                                <span className="text-slate-600 block text-[10px]">{details.targetLabel || 'Stop Loss Hit'}</span>
+                                <span className="font-semibold text-rose-700 font-mono tabular-nums">
                                   ${(details.highestHitPrice || details.sl)?.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 3 })}
                                 </span>
                               </div>
@@ -517,8 +525,8 @@ export function DayDetailModal({ date, isOpen, onClose }: DayDetailModalProps) {
                               <>
                                 {sig.target_tp1 && (
                                   <div>
-                                    <span className="text-text-muted block text-[10px]">Target Profit</span>
-                                    <span className="font-semibold text-emerald-400 font-mono">${sig.target_tp1.toLocaleString()}</span>
+                                    <span className="text-slate-600 block text-[10px]">Target Profit</span>
+                                    <span className="font-semibold text-emerald-700 font-mono tabular-nums">${sig.target_tp1.toLocaleString()}</span>
                                   </div>
                                 )}
                               </>

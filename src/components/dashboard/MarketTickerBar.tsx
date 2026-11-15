@@ -58,14 +58,12 @@ export function MarketTickerBar({ className = '' }: { className?: string }) {
         ws.onmessage = (event) => {
           try {
             const msg = JSON.parse(event.data)
-            
-            // Sub-second millisecond trade tick (@trade or @aggTrade)
+
             if (msg.e === 'aggTrade' || msg.e === 'trade') {
               const sym = msg.s === 'BTCUSDT' ? 'BTC' : msg.s === 'ETHUSDT' ? 'ETH' : msg.s === 'SOLUSDT' ? 'SOL' : msg.s === 'BNBUSDT' ? 'BNB' : null
               if (sym) {
                 const livePrice = parseFloat(parseFloat(msg.p).toFixed(2))
 
-                // Price flash animation
                 const prev = prevPricesRef.current[sym]
                 if (prev !== undefined && prev !== livePrice) {
                   const dir = livePrice > prev ? 'up' : 'down'
@@ -90,7 +88,6 @@ export function MarketTickerBar({ className = '' }: { className?: string }) {
               }
             }
 
-            // 24hr Ticker update (keep latest real-time trade price)
             if (msg.e === '24hrTicker') {
               const sym = msg.s === 'BTCUSDT' ? 'BTC' : msg.s === 'ETHUSDT' ? 'ETH' : msg.s === 'SOLUSDT' ? 'SOL' : msg.s === 'BNBUSDT' ? 'BNB' : null
               if (sym) {
@@ -146,7 +143,6 @@ export function MarketTickerBar({ className = '' }: { className?: string }) {
     return t
   })
 
-  // Format price helper
   const formatPrice = (price: number, symbol: string) => {
     if (symbol === 'BTC' || symbol === 'ETH' || symbol === 'XAUUSD' || symbol === 'SPX' || symbol === 'NDX' || symbol === 'DJI') {
       return price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
@@ -155,15 +151,15 @@ export function MarketTickerBar({ className = '' }: { className?: string }) {
   }
 
   return (
-    <div className={`flex items-center bg-[#090d18]/90 border border-white/[0.08] rounded-xl h-8 overflow-hidden select-none shadow-sm ${className}`}>
-      <div className="bg-accent-theme text-white font-black text-[10px] tracking-wider uppercase px-3 h-full flex items-center justify-center flex-shrink-0 z-10 shadow-md whitespace-nowrap gap-1.5">
-        <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
-        <span>MARKET LIVE</span>
+    <div className={`flex items-center border-b border-slate-900/10 bg-transparent h-8 overflow-hidden select-none ${className}`}>
+      <div className="flex items-center gap-2 pr-4 border-r border-slate-900/10 flex-shrink-0 text-[10px] font-mono font-bold uppercase tracking-widest text-slate-700 whitespace-nowrap">
+        <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+        <span>LIVE TAPE</span>
       </div>
 
       <div className="overflow-hidden relative flex-1 h-full flex items-center">
-        <div className="absolute left-0 top-0 bottom-0 w-6 bg-gradient-to-r from-[#090d18] to-transparent z-10 pointer-events-none" />
-        <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-[#090d18] to-transparent z-10 pointer-events-none" />
+        <div className="absolute left-0 top-0 bottom-0 w-6 bg-gradient-to-r from-[#edf7fe] to-transparent z-10 pointer-events-none" />
+        <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-[#edf7fe] to-transparent z-10 pointer-events-none" />
 
         <div className="animate-ticker-slide flex items-center whitespace-nowrap pl-4">
           {[...tickers, ...tickers].map((item, idx) => {
@@ -171,30 +167,18 @@ export function MarketTickerBar({ className = '' }: { className?: string }) {
             const flash = flashSymbols[item.symbol]
             return (
               <div key={`${item.symbol}-${idx}`} className="inline-flex items-center">
-                <div className="inline-flex items-center text-xs font-mono mx-4">
-                  <span className="text-zinc-400 font-semibold mr-1.5 text-[11px]">
+                <div className="inline-flex items-center text-[11px] font-mono tabular-nums mx-4">
+                  <span className="text-slate-500 font-semibold mr-2">
                     {item.category === 'crypto' ? `${item.symbol} Perp` : item.symbol}
                   </span>
-                  <span
-                    className={`font-bold mr-1.5 text-[11px] transition-colors duration-75 ${
-                      flash === 'up'
-                        ? 'text-emerald-400 drop-shadow-[0_0_6px_rgba(52,211,153,0.6)]'
-                        : flash === 'down'
-                        ? 'text-rose-400 drop-shadow-[0_0_6px_rgba(244,63,94,0.6)]'
-                        : 'text-white'
-                    }`}
-                  >
+                  <span className={`font-bold tabular-nums mr-1.5 transition-colors duration-75 ${flash === 'up' ? 'text-emerald-600' : flash === 'down' ? 'text-rose-600' : 'text-slate-900'}`}>
                     ${formatPrice(item.price, item.symbol)}
                   </span>
-                  <span
-                    className={`text-[10.5px] font-bold flex items-center ${
-                      isPositive ? 'text-emerald-400' : 'text-rose-400'
-                    }`}
-                  >
+                  <span className={`text-[10.5px] font-bold tabular-nums ${isPositive ? 'text-emerald-600' : 'text-rose-600'}`}>
                     {isPositive ? `+${item.change24h.toFixed(2)}%` : `${item.change24h.toFixed(2)}%`}
                   </span>
                 </div>
-                <div className="w-[1px] h-3.5 bg-white/[0.15]" />
+                <span className="w-[1px] h-3 bg-slate-900/10" />
               </div>
             )
           })}

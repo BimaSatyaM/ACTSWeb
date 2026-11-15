@@ -11,7 +11,7 @@ interface MacroEventEmbedProps {
 }
 
 // Macro Event Intelligence Embed
-// Flat data-terminal table/strip linking lesson concepts to real economic calendar events.
+// Daylight 2.1 data-terminal table/strip linking lesson concepts to real economic calendar events.
 export function MacroEventEmbed({ macroEvent, className = '' }: MacroEventEmbedProps) {
   const [isModalOpen, setIsModalOpen] = useState(false)
 
@@ -67,14 +67,14 @@ export function MacroEventEmbed({ macroEvent, className = '' }: MacroEventEmbedP
     <>
       <section
         aria-label="Macroeconomic Release Data"
-        className={`rounded-lg border border-[#1a2030] bg-[#0a0f1a] overflow-hidden ${className}`}
+        className={`rounded-xl border border-slate-900/10 bg-[#faf2df] overflow-hidden ${className}`}
       >
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#1a2030] p-4 sm:px-5">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-900/10 bg-[#f3ead2]/50 p-4 sm:px-5">
           <div>
-            <h4 className="text-sm font-semibold text-white">
+            <h4 className="text-sm font-bold text-slate-900">
               {matchedEvent.title}
             </h4>
-            <p className="text-xs text-[#94a3b8]">
+            <p className="text-xs text-slate-500">
               Source: {source.name}
             </p>
           </div>
@@ -82,43 +82,43 @@ export function MacroEventEmbed({ macroEvent, className = '' }: MacroEventEmbedP
           <button
             type="button"
             onClick={() => setIsModalOpen(true)}
-            className="h-8 rounded border border-[#262f45] bg-[#070b14] px-3 text-xs font-medium text-white transition-colors hover:bg-[#141b29] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#ff2e54] self-start sm:self-center"
+            className="h-8 rounded-lg border border-slate-900/15 bg-[#faf2df] px-3 text-xs font-semibold text-slate-800 transition-colors hover:bg-[#f3ead2] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#0284c7] self-start sm:self-center cursor-pointer"
           >
             Open calendar release
           </button>
         </div>
 
-        <div className="grid grid-cols-3 divide-x divide-[#1a2030] border-b border-[#1a2030] bg-[#070b14]">
+        <div className="grid grid-cols-3 divide-x divide-slate-900/10 border-b border-slate-900/10 bg-[#fdfaf3]">
           <div className="p-3.5 sm:px-5">
-            <span className="block text-xs text-[#94a3b8]">Release date</span>
-            <span className="mt-1 block text-sm font-medium text-white [font-variant-numeric:tabular-nums]">
+            <span className="block text-xs font-medium text-slate-500">Release date</span>
+            <span className="mt-1 block text-sm font-bold text-slate-900 font-mono tabular-nums">
               {new Date(matchedEvent.date_time).toISOString().slice(0, 10)}
             </span>
           </div>
 
           <div className="p-3.5 sm:px-5">
-            <span className="block text-xs text-[#94a3b8]">Consensus forecast</span>
-            <span className="mt-1 block text-sm font-medium text-white [font-variant-numeric:tabular-nums]">
-              {matchedEvent.forecast || macroEvent.forecast || '—'}
+            <span className="block text-xs font-medium text-slate-500">Consensus forecast</span>
+            <span className="mt-1 block text-sm font-bold text-slate-900 font-mono tabular-nums">
+              {matchedEvent.forecast || macroEvent.forecast || '-'}
             </span>
           </div>
 
           <div className="p-3.5 sm:px-5">
-            <span className="block text-xs text-[#94a3b8]">Prior print</span>
-            <span className="mt-1 block text-sm font-medium text-[#cbd5e1] [font-variant-numeric:tabular-nums]">
-              {matchedEvent.previous || macroEvent.previous || '—'}
+            <span className="block text-xs font-medium text-slate-500">Prior print</span>
+            <span className="mt-1 block text-sm font-bold text-slate-700 font-mono tabular-nums">
+              {matchedEvent.previous || macroEvent.previous || '-'}
             </span>
           </div>
         </div>
 
-        <div className="p-4 sm:px-5 space-y-2 text-xs text-[#cbd5e1] leading-relaxed">
+        <div className="p-4 sm:px-5 space-y-2 text-xs text-slate-700 leading-relaxed">
           <p>{macroEvent.historicalBtcImpact}</p>
           <div className="pt-1">
             <a
               href={source.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-white underline underline-offset-2 hover:text-[#cbd5e1]"
+              className="text-[#0369a1] underline underline-offset-2 hover:text-[#0284c7] font-semibold"
             >
               Official data series ({source.name})
             </a>

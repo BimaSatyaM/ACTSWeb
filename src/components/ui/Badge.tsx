@@ -13,24 +13,24 @@ export const Badge: React.FC<BadgeProps> = ({ variant, children, className = '',
       case 'SIGNAL':
       case 'HIT':
         return {
-          textColor: 'text-emerald-400',
-          dot: 'bg-emerald-400',
+          textColor: 'text-emerald-700',
+          dot: 'bg-emerald-600',
         }
       case 'WATCHLIST':
         return {
-          textColor: 'text-amber-400',
-          dot: 'bg-amber-400',
+          textColor: 'text-amber-700',
+          dot: 'bg-amber-500',
         }
       case 'NOT_HIT':
         return {
-          textColor: 'text-rose-400',
-          dot: 'bg-rose-400',
+          textColor: 'text-rose-700',
+          dot: 'bg-rose-600',
         }
       case 'NEUTRAL':
       default:
         return {
-          textColor: 'text-zinc-400',
-          dot: 'bg-zinc-400',
+          textColor: 'text-slate-600',
+          dot: 'bg-slate-500',
         }
     }
   }

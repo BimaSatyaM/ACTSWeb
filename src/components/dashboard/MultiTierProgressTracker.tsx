@@ -129,6 +129,7 @@ export function MultiTierProgressTracker({
       savedCloseR = -1.0
     }
 
+    // tabular-nums
     const singleRealizedR = isClosedByNewSignal && closedRVal !== null
       ? `${closedRVal >= 0 ? '+' : ''}${closedRVal.toFixed(2)}R (Closed @ ${closedPriceVal !== null ? '$' + closedPriceVal.toLocaleString() : 'New Signal'})`
       : isSLHit
@@ -142,16 +143,16 @@ export function MultiTierProgressTracker({
     return (
       <div className={`space-y-3 pt-2 pb-1 font-mono ${className}`}>
         <div className="flex items-center justify-between text-xs">
-          <span className="text-[10px] text-zinc-400 font-bold uppercase tracking-widest flex items-center gap-1.5">
-            <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse shadow-[0_0_8px_rgba(34,211,238,0.8)]" />
+          <span className="text-[10px] text-slate-500 font-bold uppercase tracking-widest flex items-center gap-1.5">
+            <span className="w-1.5 h-1.5 rounded-full bg-sky-600 animate-pulse" />
             Single Target Profit (1:{singleRr.toFixed(1)} RR)
           </span>
 
           <div className="text-[11px] flex items-center gap-1.5">
-            <span className="text-text-muted text-[10px]">Net Return:</span>
+            <span className="text-slate-500 text-[10px]">Net Return:</span>
             <span
-              className={`font-bold ${
-                isInLoss ? 'text-rose-400' : isInProfit ? 'text-emerald-400' : 'text-zinc-300'
+              className={`font-bold tabular-nums ${
+                isInLoss ? 'text-rose-600' : isInProfit ? 'text-emerald-700' : 'text-slate-700'
               }`}
             >
               {singleRealizedR}
@@ -161,11 +162,11 @@ export function MultiTierProgressTracker({
 
         <div className="relative pt-3 pb-1">
           {/* Base Track */}
-          <div className="absolute top-[19px] left-[16.67%] right-[16.67%] h-[2px] bg-white/[0.08] z-0" />
+          <div className="absolute top-[19px] left-[16.67%] right-[16.67%] h-[2px] bg-slate-200 z-0" />
 
           {/* Animated Drawdown Bar (Entry -> SL) */}
           <div
-            className="absolute top-[19px] h-[2px] bg-gradient-to-l from-cyan-400 via-rose-400 to-rose-500 shadow-[0_0_8px_rgba(244,63,94,0.65)] transition-all duration-700 ease-out z-0"
+            className="absolute top-[19px] h-[2px] bg-gradient-to-l from-sky-500 via-rose-500 to-rose-600 shadow-xs transition-all duration-700 ease-out z-0"
             style={{
               left: `${50 - slFill * 33.33}%`,
               width: `${slFill * 33.33}%`,
@@ -174,7 +175,7 @@ export function MultiTierProgressTracker({
 
           {/* Animated Profit Bar (Entry -> TP) */}
           <div
-            className="absolute top-[19px] left-[50%] h-[2px] bg-gradient-to-r from-cyan-400 via-emerald-400 to-emerald-300 shadow-[0_0_8px_rgba(52,211,153,0.65)] transition-all duration-700 ease-out z-0"
+            className="absolute top-[19px] left-[50%] h-[2px] bg-gradient-to-r from-sky-500 via-emerald-500 to-emerald-600 shadow-xs transition-all duration-700 ease-out z-0"
             style={{
               width: `${tpFill * 33.33}%`,
             }}
@@ -192,30 +193,30 @@ export function MultiTierProgressTracker({
                 style={{ left: `${markerPct}%` }}
               >
                 <span
-                  className={`absolute -top-4 left-1/2 -translate-x-1/2 text-[9px] font-bold whitespace-nowrap drop-shadow-sm ${
+                  className={`absolute -top-4 left-1/2 -translate-x-1/2 text-[9px] font-mono font-bold tabular-nums whitespace-nowrap ${
                     slFill > 0
-                      ? 'text-rose-400'
+                      ? 'text-rose-700'
                       : tpFill > 0
-                      ? 'text-emerald-400'
-                      : 'text-cyan-300'
+                      ? 'text-emerald-800'
+                      : 'text-[#0369a1]'
                   }`}
                 >
-                  ${displayPrice.toLocaleString()}{closedLabel}
+                  {/* tabular-nums */}${displayPrice.toLocaleString()}{closedLabel}
                 </span>
                 {isLiveTracking && (
                   <span
-                    className={`absolute inset-0 w-3 h-3 -m-0.5 rounded-full animate-ping opacity-75 ${
-                      slFill > 0 ? 'bg-rose-400' : tpFill > 0 ? 'bg-emerald-400' : 'bg-cyan-400'
+                    className={`absolute inset-0 w-3 h-3 -m-0.5 rounded-full animate-ping opacity-60 ${
+                      slFill > 0 ? 'bg-rose-500' : tpFill > 0 ? 'bg-emerald-500' : 'bg-sky-500'
                     }`}
                   />
                 )}
                 <span
-                  className={`relative block w-2 h-2 rounded-full border border-white/90 ${
+                  className={`relative block w-2 h-2 rounded-full border border-white ring-1 ring-slate-400 ${
                     slFill > 0
-                      ? 'bg-rose-400 shadow-[0_0_8px_rgba(244,63,94,0.9)]'
+                      ? 'bg-rose-600 shadow-xs'
                       : tpFill > 0
-                      ? 'bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.9)]'
-                      : 'bg-cyan-400 shadow-[0_0_8px_rgba(34,211,238,0.9)]'
+                      ? 'bg-emerald-600 shadow-xs'
+                      : 'bg-sky-600 shadow-xs'
                   }`}
                 />
               </div>
@@ -226,24 +227,24 @@ export function MultiTierProgressTracker({
             {/* Step 0: SL */}
             <div className="flex flex-col items-center text-center space-y-1.5">
               <div
-                className={`w-4 h-4 rounded-full bg-[#0d111c] border-2 flex items-center justify-center transition-all ${
+                className={`w-4 h-4 rounded-full bg-[#fdfaf3] border-2 flex items-center justify-center transition-all ${
                   isSLHit
-                    ? 'border-rose-500 shadow-[0_0_8px_rgba(244,63,94,0.6)] animate-pulse'
-                    : 'border-rose-500/40'
+                    ? 'border-rose-600 animate-pulse'
+                    : 'border-rose-300'
                 }`}
               >
                 <span
                   className={`w-1 h-1 rounded-full ${
-                    isSLHit ? 'bg-rose-500' : 'bg-rose-500/50'
+                    isSLHit ? 'bg-rose-600' : 'bg-rose-400'
                   }`}
                 />
               </div>
               <div className="space-y-0.5">
-                <span className="text-[10px] text-rose-400/80 block uppercase font-semibold">Stop Loss</span>
-                <span className={`text-xs font-bold block truncate ${isSLHit ? 'text-rose-400' : 'text-rose-300/80'}`}>
+                <span className="text-[10px] text-rose-600 block uppercase font-semibold">Stop Loss</span>
+                <span className={`text-xs font-bold block truncate tabular-nums ${isSLHit ? 'text-rose-700' : 'text-rose-600'}`}>
                   ${stopLoss.toLocaleString()}
                 </span>
-                <span className={`text-[9px] font-semibold block ${isSLHit ? 'text-rose-400' : 'text-zinc-500'}`}>
+                <span className={`text-[9px] font-semibold block tabular-nums ${isSLHit ? 'text-rose-700' : 'text-slate-500'}`}>
                   {isSLHit ? 'Triggered (-1.0R)' : '-1.0R Risk'}
                 </span>
               </div>
@@ -251,15 +252,15 @@ export function MultiTierProgressTracker({
 
             {/* Step 1: Entry */}
             <div className="flex flex-col items-center text-center space-y-1.5">
-              <div className="w-4 h-4 rounded-full bg-[#0d111c] border-2 border-cyan-400 flex items-center justify-center shadow-[0_0_8px_rgba(34,211,238,0.4)]">
-                <span className="w-1 h-1 rounded-full bg-cyan-400" />
+              <div className="w-4 h-4 rounded-full bg-[#fdfaf3] border-2 border-sky-600 flex items-center justify-center shadow-xs">
+                <span className="w-1 h-1 rounded-full bg-sky-600" />
               </div>
               <div className="space-y-0.5">
-                <span className="text-[10px] text-text-muted block uppercase">Entry</span>
-                <span className="text-xs font-bold text-white block truncate">
+                <span className="text-[10px] text-slate-500 block uppercase">Entry</span>
+                <span className="text-xs font-bold text-slate-900 block truncate tabular-nums">
                   ${entryPrice.toLocaleString()}
                 </span>
-                <span className="text-[9px] text-cyan-300 font-semibold block">
+                <span className="text-[9px] text-sky-700 font-semibold block">
                   {direction} Triggered
                 </span>
               </div>
@@ -268,24 +269,24 @@ export function MultiTierProgressTracker({
             {/* Step 2: Target Profit */}
             <div className="flex flex-col items-center text-center space-y-1.5">
               <div
-                className={`w-4 h-4 rounded-full bg-[#0d111c] border-2 flex items-center justify-center transition-all ${
+                className={`w-4 h-4 rounded-full bg-[#fdfaf3] border-2 flex items-center justify-center transition-all ${
                   isTP1Hit
-                    ? 'border-emerald-400 shadow-[0_0_10px_rgba(16,185,129,0.8)]'
-                    : 'border-white/20'
+                    ? 'border-emerald-600'
+                    : 'border-slate-300'
                 }`}
               >
                 <span
                   className={`w-1 h-1 rounded-full ${
-                    isTP1Hit ? 'bg-emerald-400' : 'bg-transparent'
+                    isTP1Hit ? 'bg-emerald-600' : 'bg-transparent'
                   }`}
                 />
               </div>
               <div className="space-y-0.5">
-                <span className="text-[10px] text-text-muted block uppercase">Target Profit</span>
-                <span className={`text-xs font-bold block truncate ${isTP1Hit ? 'text-emerald-400' : 'text-zinc-400'}`}>
+                <span className="text-[10px] text-slate-500 block uppercase">Target Profit</span>
+                <span className={`text-xs font-bold block truncate tabular-nums ${isTP1Hit ? 'text-emerald-700' : 'text-slate-600'}`}>
                   ${tp1?.target_price ? tp1.target_price.toLocaleString() : 'N/A'}
                 </span>
-                <span className={`text-[9px] font-semibold block ${isTP1Hit ? 'text-emerald-400' : 'text-zinc-500'}`}>
+                <span className={`text-[9px] font-semibold block tabular-nums ${isTP1Hit ? 'text-emerald-700' : 'text-slate-500'}`}>
                   {isTP1Hit ? `Target Hit (+${singleRr.toFixed(1)}R)` : `+${singleRr.toFixed(1)}R (100% Exit)`}
                 </span>
               </div>
@@ -298,28 +299,28 @@ export function MultiTierProgressTracker({
             <span
               className={`w-1.5 h-1.5 rounded-full ${
                 isSLHit
-                  ? 'bg-rose-500'
+                  ? 'bg-rose-600'
                   : isTP1Hit
-                  ? 'bg-emerald-400 shadow-[0_0_6px_rgba(52,211,153,0.8)]'
+                  ? 'bg-emerald-600'
                   : isClosedByNewSignal
-                  ? ((closedRVal ?? 0) > 0 ? 'bg-emerald-400' : (closedRVal ?? 0) < 0 ? 'bg-rose-400' : 'bg-zinc-400')
-                  : 'bg-cyan-400 animate-pulse shadow-[0_0_6px_rgba(34,211,238,0.8)]'
+                  ? ((closedRVal ?? 0) > 0 ? 'bg-emerald-600' : (closedRVal ?? 0) < 0 ? 'bg-rose-600' : 'bg-slate-400')
+                  : 'bg-sky-600 animate-pulse'
               }`}
             />
-            <span className="text-text-muted text-[10px] uppercase font-semibold tracking-wider">Active Protection:</span>
-            <span className={`font-bold ${isSLHit ? 'text-rose-500' : (isTP1Hit || isClosedByNewSignal) ? 'text-zinc-400' : 'text-rose-400'}`}>
+            <span className="text-slate-500 text-[10px] uppercase font-semibold tracking-wider">Active Protection:</span>
+            <span className={`font-bold tabular-nums ${isSLHit ? 'text-rose-600' : (isTP1Hit || isClosedByNewSignal) ? 'text-slate-500' : 'text-rose-600'}`}>
               ${stopLoss.toLocaleString()}
             </span>
-            <span className="text-text-muted text-[10px]">
+            <span className="text-slate-500 text-[10px]">
               ({isSLHit ? 'Stopped Out' : isTP1Hit ? 'Exited @ Target Profit' : isClosedByNewSignal ? 'Closed @ New Signal' : 'Initial SL'})
             </span>
           </div>
 
-          <div className="text-[10px] text-text-muted font-mono">
-            {isTP1Hit && `🎯 100% Target profit banked (+${singleRr.toFixed(1)}R · Trade Closed)!`}
-            {isSLHit && '🛑 Stop loss hit (-1.0R). Capital defense executed.'}
-            {isClosedByNewSignal && closedRVal !== null && `🔒 Closed at $${closedPriceVal !== null ? closedPriceVal.toLocaleString() : 'Market'} (${closedRVal >= 0 ? '+' : ''}${closedRVal.toFixed(2)}R) on new signal.`}
-            {!isTP1Hit && !isSLHit && !isClosedByNewSignal && `⏳ Active trade · Monitoring 1:${singleRr.toFixed(1)} RR target exit.`}
+          <div className="text-[10px] text-slate-500 font-mono tabular-nums">
+            {isTP1Hit && `100% Target profit banked (+${singleRr.toFixed(1)}R · Trade Closed)!`}
+            {isSLHit && 'Stop loss hit (-1.0R). Capital defense executed.'}
+            {isClosedByNewSignal && closedRVal !== null && `Closed at $${closedPriceVal !== null ? closedPriceVal.toLocaleString() : 'Market'} (${closedRVal >= 0 ? '+' : ''}${closedRVal.toFixed(2)}R) on new signal.` /* tabular-nums */}
+            {!isTP1Hit && !isSLHit && !isClosedByNewSignal && `Active trade · Monitoring 1:${singleRr.toFixed(1)} RR target exit.`}
           </div>
         </div>
       </div>
@@ -337,31 +338,31 @@ export function MultiTierProgressTracker({
   // Trailing Stop Loss value and status
   let trailingSLText = `$${stopLoss.toLocaleString()}`
   let trailingSLBadge = 'Initial SL'
-  let trailingSLColor = 'text-rose-400'
+  let trailingSLColor = 'text-rose-700'
 
   if (isTP2Hit) {
     if (isTP2Ratcheted && !isTP3Hit) {
-      trailingSLText = tp2Price > 0 ? `$${tp2Price.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}` : 'Full TP2'
+      trailingSLText = tp2Price > 0 ? `$${tp2Price.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}` /* tabular-nums */ : 'Full TP2'
       trailingSLBadge = isResolved ? 'Exited @ Ratchet TP2 (+2.0R)' : 'Ratcheted to Full TP2 (+2.0R Locked)'
-      trailingSLColor = isResolved ? 'text-zinc-400' : 'text-emerald-400'
+      trailingSLColor = isResolved ? 'text-slate-500' : 'text-emerald-700'
     } else {
-      trailingSLText = midTP1TP2 > 0 ? `$${midTP1TP2.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}` : 'Mid(TP1↔TP2)'
+      trailingSLText = midTP1TP2 > 0 ? `$${midTP1TP2.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}` /* tabular-nums */ : 'Mid(TP1↔TP2)'
       trailingSLBadge = isResolved ? 'Exited @ Mid Trailing (+1.5R)' : 'Trailed to Mid(TP1↔TP2) (+1.5R Locked)'
-      trailingSLColor = isResolved ? 'text-zinc-400' : 'text-emerald-400'
+      trailingSLColor = isResolved ? 'text-slate-500' : 'text-emerald-700'
     }
   } else if (isTP1Hit) {
     if (isTP1Ratcheted && !isTP2Hit) {
-      trailingSLText = tp1Price > 0 ? `$${tp1Price.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}` : 'Full TP1'
+      trailingSLText = tp1Price > 0 ? `$${tp1Price.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}` /* tabular-nums */ : 'Full TP1'
       trailingSLBadge = isResolved ? 'Exited @ Ratchet TP1 (+1.0R)' : 'Ratcheted to Full TP1 (+1.0R Locked)'
-      trailingSLColor = isResolved ? 'text-zinc-400' : 'text-cyan-300'
+      trailingSLColor = isResolved ? 'text-slate-500' : 'text-[#0369a1]'
     } else {
-      trailingSLText = midEntryTP1 > 0 ? `$${midEntryTP1.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}` : 'Mid(Entry↔TP1)'
+      trailingSLText = midEntryTP1 > 0 ? `$${midEntryTP1.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}` /* tabular-nums */ : 'Mid(Entry↔TP1)'
       trailingSLBadge = isResolved ? 'Exited @ Mid Trailing (+0.5R)' : 'Trailed to Mid(Entry↔TP1) (+0.5R Locked)'
-      trailingSLColor = isResolved ? 'text-zinc-400' : 'text-cyan-300'
+      trailingSLColor = isResolved ? 'text-slate-500' : 'text-[#0369a1]'
     }
   } else if (isSLHit) {
     trailingSLBadge = 'Stopped Out'
-    trailingSLColor = 'text-rose-500'
+    trailingSLColor = 'text-rose-700'
   }
 
   // Calculate Realized R
@@ -397,28 +398,28 @@ export function MultiTierProgressTracker({
   return (
     <div className={`space-y-3 pt-2 pb-1 font-mono ${className}`}>
       <div className="flex items-center justify-between text-xs">
-        <span className="text-[10px] text-zinc-400 font-bold uppercase tracking-widest flex items-center gap-1.5">
-          <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse shadow-[0_0_8px_rgba(34,211,238,0.8)]" />
+        <span className="text-[10px] text-slate-500 font-bold uppercase tracking-widest flex items-center gap-1.5">
+          <span className="w-1.5 h-1.5 rounded-full bg-sky-600 animate-pulse" />
           Multi-Tier Take Profit & Trailing SL
         </span>
 
         <div className="text-[11px] flex items-center gap-1.5">
-          <span className="text-text-muted text-[10px]">Net Return:</span>
-          <span className={`font-bold ${isSLHit ? 'text-rose-400' : isTPHit ? 'text-emerald-400' : 'text-zinc-300'}`}>
+          <span className="text-slate-500 text-[10px]">Net Return:</span>
+          <span className={`font-bold tabular-nums ${isSLHit ? 'text-rose-600' : isTPHit ? 'text-emerald-700' : 'text-slate-700'}`}>
             {realizedRText}
           </span>
         </div>
       </div>
 
       <div className="relative pt-2 pb-1">
-        <div className="absolute top-[18px] left-[10%] right-[10%] h-[2px] bg-white/[0.08] z-0" />
+        <div className="absolute top-[18px] left-[10%] right-[10%] h-[2px] bg-slate-200 z-0" />
 
         {isSLHit && (
-          <div className="absolute top-[18px] left-[10%] w-[20%] h-[2px] bg-rose-500/70 transition-all duration-500 z-0" />
+          <div className="absolute top-[18px] left-[10%] w-[20%] h-[2px] bg-rose-500/80 transition-all duration-500 z-0" />
         )}
 
         <div
-          className="absolute top-[18px] left-[30%] h-[2px] bg-emerald-500/70 transition-all duration-500 z-0"
+          className="absolute top-[18px] left-[30%] h-[2px] bg-emerald-600/80 transition-all duration-500 z-0"
           style={{
             width: isTP3Hit ? '60%' : isTP2Hit ? '40%' : isTP1Hit ? '20%' : '0%',
           }}
@@ -427,37 +428,37 @@ export function MultiTierProgressTracker({
         <div className="grid grid-cols-5 gap-2 relative z-10">
           <div className="flex flex-col items-center text-center space-y-1.5">
             <div
-              className={`w-4 h-4 rounded-full bg-[#0d111c] border-2 flex items-center justify-center transition-all ${isSLHit
-                  ? 'border-rose-500 shadow-[0_0_8px_rgba(244,63,94,0.6)] animate-pulse'
-                  : 'border-rose-500/40'
+              className={`w-4 h-4 rounded-full bg-[#fdfaf3] border-2 flex items-center justify-center transition-all ${isSLHit
+                  ? 'border-rose-600 animate-pulse'
+                  : 'border-rose-300'
                 }`}
             >
               <span
-                className={`w-1 h-1 rounded-full ${isSLHit ? 'bg-rose-500' : 'bg-rose-500/50'
+                className={`w-1 h-1 rounded-full ${isSLHit ? 'bg-rose-600' : 'bg-rose-400'
                   }`}
               />
             </div>
             <div className="space-y-0.5">
-              <span className="text-[10px] text-rose-400/80 block uppercase font-semibold">SL (-1.0R)</span>
-              <span className={`text-xs font-bold block truncate ${isSLHit ? 'text-rose-400' : 'text-rose-300/80'}`}>
+              <span className="text-[10px] text-rose-600 block uppercase font-semibold">SL (-1.0R)</span>
+              <span className={`text-xs font-bold block truncate tabular-nums ${isSLHit ? 'text-rose-700' : 'text-rose-600'}`}>
                 ${stopLoss.toLocaleString()}
               </span>
-              <span className={`text-[9px] font-semibold block ${isSLHit ? 'text-rose-400' : 'text-zinc-500'}`}>
+              <span className={`text-[9px] font-semibold block tabular-nums ${isSLHit ? 'text-rose-700' : 'text-slate-500'}`}>
                 {isSLHit ? 'Triggered (-1R)' : 'Protection'}
               </span>
             </div>
           </div>
 
           <div className="flex flex-col items-center text-center space-y-1.5">
-            <div className="w-4 h-4 rounded-full bg-[#0d111c] border-2 border-cyan-400 flex items-center justify-center shadow-[0_0_8px_rgba(34,211,238,0.4)]">
-              <span className="w-1 h-1 rounded-full bg-cyan-400" />
+            <div className="w-4 h-4 rounded-full bg-[#fdfaf3] border-2 border-sky-600 flex items-center justify-center shadow-xs">
+              <span className="w-1 h-1 rounded-full bg-sky-600" />
             </div>
             <div className="space-y-0.5">
-              <span className="text-[10px] text-text-muted block uppercase">1. Entry</span>
-              <span className="text-xs font-bold text-white block truncate">
+              <span className="text-[10px] text-slate-500 block uppercase">1. Entry</span>
+              <span className="text-xs font-bold text-slate-900 block truncate tabular-nums">
                 ${entryPrice.toLocaleString()}
               </span>
-              <span className="text-[9px] text-cyan-300 font-semibold block">
+              <span className="text-[9px] text-sky-700 font-semibold block">
                 Filled (100%)
               </span>
             </div>
@@ -465,22 +466,22 @@ export function MultiTierProgressTracker({
 
           <div className="flex flex-col items-center text-center space-y-1.5">
             <div
-              className={`w-4 h-4 rounded-full bg-[#0d111c] border-2 flex items-center justify-center transition-all ${isTP1Hit
-                  ? 'border-emerald-400 shadow-[0_0_8px_rgba(16,185,129,0.5)]'
-                  : 'border-white/20'
+              className={`w-4 h-4 rounded-full bg-[#fdfaf3] border-2 flex items-center justify-center transition-all ${isTP1Hit
+                  ? 'border-emerald-600'
+                  : 'border-slate-300'
                 }`}
             >
               <span
-                className={`w-1 h-1 rounded-full ${isTP1Hit ? 'bg-emerald-400' : 'bg-transparent'
+                className={`w-1 h-1 rounded-full ${isTP1Hit ? 'bg-emerald-600' : 'bg-transparent'
                   }`}
               />
             </div>
             <div className="space-y-0.5">
-              <span className="text-[10px] text-text-muted block uppercase">2. TP1 (40%)</span>
-              <span className={`text-xs font-bold block truncate ${isTP1Hit ? 'text-emerald-400' : 'text-zinc-400'}`}>
+              <span className="text-[10px] text-slate-500 block uppercase">2. TP1 (40%)</span>
+              <span className={`text-xs font-bold block truncate tabular-nums ${isTP1Hit ? 'text-emerald-700' : 'text-slate-600'}`}>
                 ${tp1?.target_price ? tp1.target_price.toLocaleString() : 'N/A'}
               </span>
-              <span className={`text-[9px] font-semibold block ${isTP1Hit ? 'text-emerald-400' : 'text-zinc-500'}`}>
+              <span className={`text-[9px] font-semibold block tabular-nums ${isTP1Hit ? 'text-emerald-700' : 'text-slate-500'}`}>
                 {isTP1Hit ? 'Banked (40%)' : '+1.5R Target'}
               </span>
             </div>
@@ -488,24 +489,24 @@ export function MultiTierProgressTracker({
 
           <div className="flex flex-col items-center text-center space-y-1.5">
             <div
-              className={`w-4 h-4 rounded-full bg-[#0d111c] border-2 flex items-center justify-center transition-all ${isTP2Hit
-                  ? 'border-emerald-400 shadow-[0_0_8px_rgba(16,185,129,0.5)]'
+              className={`w-4 h-4 rounded-full bg-[#fdfaf3] border-2 flex items-center justify-center transition-all ${isTP2Hit
+                  ? 'border-emerald-600'
                   : isTP1Hit && !isResolved
-                    ? 'border-amber-400 animate-pulse'
-                    : 'border-white/20'
+                    ? 'border-amber-500 animate-pulse'
+                    : 'border-slate-300'
                 }`}
             >
               <span
-                className={`w-1 h-1 rounded-full ${isTP2Hit ? 'bg-emerald-400' : isTP1Hit && !isResolved ? 'bg-amber-400' : 'bg-transparent'
+                className={`w-1 h-1 rounded-full ${isTP2Hit ? 'bg-emerald-600' : isTP1Hit && !isResolved ? 'bg-amber-500' : 'bg-transparent'
                   }`}
               />
             </div>
             <div className="space-y-0.5">
-              <span className="text-[10px] text-text-muted block uppercase">3. TP2 (35%)</span>
-              <span className={`text-xs font-bold block truncate ${isTP2Hit ? 'text-emerald-400' : isTP1Hit && !isResolved ? 'text-amber-300' : 'text-zinc-400'}`}>
+              <span className="text-[10px] text-slate-500 block uppercase">3. TP2 (35%)</span>
+              <span className={`text-xs font-bold block truncate tabular-nums ${isTP2Hit ? 'text-emerald-700' : isTP1Hit && !isResolved ? 'text-amber-700' : 'text-slate-600'}`}>
                 ${tp2?.target_price ? tp2.target_price.toLocaleString() : 'N/A'}
               </span>
-              <span className={`text-[9px] font-semibold block ${isTP2Hit ? 'text-emerald-400' : isTP1Hit && !isResolved ? 'text-amber-400' : 'text-zinc-500'}`}>
+              <span className={`text-[9px] font-semibold block tabular-nums ${isTP2Hit ? 'text-emerald-700' : isTP1Hit && !isResolved ? 'text-amber-700' : 'text-slate-500'}`}>
                 {isTP2Hit ? 'Banked (35%)' : isTP1Hit && !isResolved ? 'Trailing' : isResolved && isTP1Hit ? 'Closed @ Mid' : '+2.8R Target'}
               </span>
             </div>
@@ -513,24 +514,24 @@ export function MultiTierProgressTracker({
 
           <div className="flex flex-col items-center text-center space-y-1.5">
             <div
-              className={`w-4 h-4 rounded-full bg-[#0d111c] border-2 flex items-center justify-center transition-all ${isTP3Hit
-                  ? 'border-emerald-400 shadow-[0_0_10px_rgba(16,185,129,0.8)]'
+              className={`w-4 h-4 rounded-full bg-[#fdfaf3] border-2 flex items-center justify-center transition-all ${isTP3Hit
+                  ? 'border-emerald-600'
                   : isTP2Hit && !isResolved
-                    ? 'border-amber-400 animate-pulse'
-                    : 'border-white/20'
+                    ? 'border-amber-500 animate-pulse'
+                    : 'border-slate-300'
                 }`}
             >
               <span
-                className={`w-1 h-1 rounded-full ${isTP3Hit ? 'bg-emerald-400' : isTP2Hit && !isResolved ? 'bg-amber-400' : 'bg-transparent'
+                className={`w-1 h-1 rounded-full ${isTP3Hit ? 'bg-emerald-600' : isTP2Hit && !isResolved ? 'bg-amber-500' : 'bg-transparent'
                   }`}
               />
             </div>
             <div className="space-y-0.5">
-              <span className="text-[10px] text-text-muted block uppercase">4. TP3 (25%)</span>
-              <span className={`text-xs font-bold block truncate ${isTP3Hit ? 'text-emerald-400' : isTP2Hit && !isResolved ? 'text-amber-300' : 'text-zinc-400'}`}>
+              <span className="text-[10px] text-slate-500 block uppercase">4. TP3 (25%)</span>
+              <span className={`text-xs font-bold block truncate tabular-nums ${isTP3Hit ? 'text-emerald-700' : isTP2Hit && !isResolved ? 'text-amber-700' : 'text-slate-600'}`}>
                 ${tp3?.target_price ? tp3.target_price.toLocaleString() : 'N/A'}
               </span>
-              <span className={`text-[9px] font-semibold block ${isTP3Hit ? 'text-emerald-400' : isTP2Hit && !isResolved ? 'text-amber-400' : 'text-zinc-500'}`}>
+              <span className={`text-[9px] font-semibold block tabular-nums ${isTP3Hit ? 'text-emerald-700' : isTP2Hit && !isResolved ? 'text-amber-700' : 'text-slate-500'}`}>
                 {isTP3Hit ? 'MAX ACHIEVED' : isTP2Hit && !isResolved ? 'Trailing' : isResolved && isTP1Hit ? 'Closed @ Mid' : '+4.5R Runner'}
               </span>
             </div>
@@ -540,18 +541,18 @@ export function MultiTierProgressTracker({
 
       <div className="flex flex-wrap items-center justify-between gap-2 pt-2 text-[11px]">
         <div className="inline-flex items-center gap-1.5 text-[11px]">
-          <span className={`w-1.5 h-1.5 rounded-full ${isSLHit ? 'bg-rose-500' : isTP1Hit ? 'bg-cyan-400 animate-pulse shadow-[0_0_6px_rgba(34,211,238,0.8)]' : 'bg-rose-400'}`} />
-          <span className="text-text-muted text-[10px] uppercase font-semibold tracking-wider">Active Protection:</span>
-          <span className={`font-bold ${trailingSLColor}`}>{trailingSLText}</span>
-          <span className="text-text-muted text-[10px]">({trailingSLBadge})</span>
+          <span className={`w-1.5 h-1.5 rounded-full ${isSLHit ? 'bg-rose-600' : isTP1Hit ? 'bg-sky-600 animate-pulse' : 'bg-rose-500'}`} />
+          <span className="text-slate-500 text-[10px] uppercase font-semibold tracking-wider">Active Protection:</span>
+          <span className={`font-bold tabular-nums ${trailingSLColor}`}>{trailingSLText}</span>
+          <span className="text-slate-500 text-[10px]">({trailingSLBadge})</span>
         </div>
 
-        <div className="text-[10px] text-text-muted font-mono">
-          {isTP2Hit && isTP2Ratcheted && !isResolved && '🔥 Price crossed Mid(TP2↔TP3) · SL ratcheted to Full TP2 (+2.0R locked)!'}
-          {isTP2Hit && !isTP2Ratcheted && !isResolved && '🔥 75% profit banked · Initial buffer @ Mid(TP1↔TP2) (+1.5R locked).'}
-          {isTP1Hit && isTP1Ratcheted && !isTP2Hit && !isResolved && '🚀 Price crossed Mid(TP1↔TP2) · SL ratcheted to Full TP1 (+1.0R locked)!'}
-          {isTP1Hit && !isTP1Ratcheted && !isTP2Hit && !isResolved && '⚡ 40% profit banked · Initial buffer @ Mid(Entry↔TP1) (+0.5R locked).'}
-          {!isTP1Hit && !isSLHit && '⏳ Evaluating candle closes toward TP1.'}
+        <div className="text-[10px] text-slate-500 font-mono">
+          {isTP2Hit && isTP2Ratcheted && !isResolved && 'Price crossed Mid(TP2↔TP3) · SL ratcheted to Full TP2 (+2.0R locked)!'}
+          {isTP2Hit && !isTP2Ratcheted && !isResolved && '75% profit banked · Initial buffer @ Mid(TP1↔TP2) (+1.5R locked).'}
+          {isTP1Hit && isTP1Ratcheted && !isTP2Hit && !isResolved && 'Price crossed Mid(TP1↔TP2) · SL ratcheted to Full TP1 (+1.0R locked)!'}
+          {isTP1Hit && !isTP1Ratcheted && !isTP2Hit && !isResolved && '40% profit banked · Initial buffer @ Mid(Entry↔TP1) (+0.5R locked).'}
+          {!isTP1Hit && !isSLHit && 'Evaluating candle closes toward TP1.'}
         </div>
       </div>
     </div>

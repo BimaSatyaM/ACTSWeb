@@ -119,22 +119,21 @@ function MiniChart({ points }: { points: number[] }) {
     <svg viewBox={`0 0 ${w} ${h}`} className="w-full h-full" preserveAspectRatio="none">
       <defs>
         <linearGradient id="actsTerminalChartGrad" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#ff2e54" stopOpacity="0.4" />
-          <stop offset="65%" stopColor="#ff2e54" stopOpacity="0.08" />
-          <stop offset="100%" stopColor="#ff2e54" stopOpacity="0" />
+          <stop offset="0%" stopColor="#0369a1" stopOpacity="0.22" />
+          <stop offset="65%" stopColor="#0369a1" stopOpacity="0.04" />
+          <stop offset="100%" stopColor="#0369a1" stopOpacity="0" />
         </linearGradient>
       </defs>
       <path d={areaPath} fill="url(#actsTerminalChartGrad)" />
       <polyline
         points={pts}
         fill="none"
-        stroke="#ff2e54"
-        strokeWidth="2.5"
+        stroke="#0369a1"
+        strokeWidth="2.4"
         strokeLinejoin="round"
         strokeLinecap="round"
       />
-      <circle cx={lastX} cy={lastY} r="10" fill="#ff2e54" opacity="0.25" className="animate-ping" />
-      <circle cx={lastX} cy={lastY} r="5" fill="#ff2e54" stroke="#ffffff" strokeWidth="1.5" />
+      <circle cx={lastX} cy={lastY} r="4.5" fill="#0369a1" stroke="#faf2df" strokeWidth="1.5" />
     </svg>
   )
 }
@@ -152,7 +151,7 @@ function TickerBar() {
         minimumFractionDigits: t.price < 2 ? 4 : 2,
         maximumFractionDigits: t.price < 2 ? 4 : 2,
       }),
-      change: `${t.change24h >= 0 ? '+' : ''}${t.change24h.toFixed(2)}%`,
+      change: `${t.change24h >= 0 ? '+' : ''}${t.change24h.toFixed(2)}%`, // tabular-nums
       up: t.change24h >= 0,
     }))
   }
@@ -160,22 +159,18 @@ function TickerBar() {
   const doubled = [...items, ...items]
 
   return (
-    <div className="w-full overflow-hidden border-b border-[#1c2438] bg-[#070b14]/95 backdrop-blur z-20">
-      <div className="animate-ticker-slide flex items-center gap-0 whitespace-nowrap">
+    <div className="w-full overflow-hidden border-b border-slate-900/10 bg-transparent z-20">
+      <div className="animate-ticker-slide flex items-center whitespace-nowrap">
         {doubled.map((item, i) => (
           <div
             key={i}
-            className="flex items-center gap-3 px-6 py-2.5 border-r border-[#1c2438] transition-colors hover:bg-white/[0.03]"
+            className="flex items-center gap-3 px-6 py-2.5 border-r border-slate-900/8 font-mono tabular-nums"
           >
-            <span className="font-mono text-xs font-bold text-[#94a3b8] tracking-wider uppercase">
+            <span className="text-[11px] font-bold text-slate-500 tracking-wider uppercase">
               {item.sym}
             </span>
-            <span className="font-mono text-xs font-semibold text-[#f8fafc]">{item.price}</span>
-            <span
-              className={`font-mono text-xs font-bold ${
-                item.up ? 'text-[#10b981]' : 'text-[#ff2e54]'
-              }`}
-            >
+            <span className="text-xs font-semibold text-slate-900">{item.price}</span>
+            <span className={`text-[11px] font-bold ${item.up ? 'text-emerald-700' : 'text-rose-700'}`}>
               {item.change}
             </span>
           </div>
@@ -191,233 +186,165 @@ function Hero() {
   const preview = PAIR_PREVIEWS[selectedPair]
 
   return (
-    <section className="relative min-h-[88vh] flex flex-col justify-center overflow-hidden bg-[#070b14] pt-12 pb-24 border-b border-[#1c2438]">
-      <div
-        className="absolute inset-0 opacity-[0.04] pointer-events-none"
-        style={{
-          backgroundImage:
-            'linear-gradient(#f8fafc 1px, transparent 1px), linear-gradient(90deg, #f8fafc 1px, transparent 1px)',
-          backgroundSize: '60px 60px',
-        }}
-      />
-      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-[#ff2e54] opacity-[0.06] blur-[140px] pointer-events-none" />
+    <section className="relative bg-[#edf7fe] pt-14 pb-20 border-b border-slate-900/10">
+      <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-12 items-start w-full">
+        <div className="lg:col-span-7 flex flex-col justify-between pt-2">
+          <div>
+            <div className="flex items-center gap-2.5 mb-7">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse" />
+              <span className="font-mono text-[11px] font-bold text-slate-600 uppercase tracking-widest">
+                QUANTITATIVE EXECUTION ENGINE · MULTI-REGIME TELEMETRY
+              </span>
+            </div>
 
-      <div className="relative max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center w-full">
-        <div>
-          <div className="flex items-center gap-3 mb-8">
-            <span className="w-2.5 h-2.5 rounded-full bg-[#ff2e54] block shadow-[0_0_10px_#ff2e54] animate-pulse" />
-            <span className="font-mono text-xs font-bold text-[#94a3b8] uppercase tracking-widest">
-              Live Engine: Telemetry Synced
-            </span>
+            <h1
+              className="font-sans font-black text-slate-950 leading-[0.94] mb-6 tracking-tight select-none"
+              style={{ fontSize: 'clamp(2.85rem, 5.8vw, 4.75rem)' }}
+            >
+              Systematic Confluence.
+              <br />
+              <span className="text-[#0369a1]">Zero Heuristics.</span>
+            </h1>
+
+            <p className="text-slate-600 text-base sm:text-lg leading-relaxed max-w-xl mb-9 font-normal">
+              Adaptive Confluence Trading System combines autonomous 4-regime classification, orthogonal
+              factor convergence, isotonic probability calibration, and automated bracket execution.
+            </p>
+
+            <div className="flex flex-wrap items-center gap-6 mb-14">
+              <button
+                onClick={() => router.push('/dashboard')}
+                className="bg-[#0369a1] hover:bg-[#0284c7] text-white font-sans font-bold tracking-wide text-sm px-7 py-3.5 rounded-xl transition-colors duration-150 inline-flex items-center gap-2.5 cursor-pointer"
+              >
+                <span>Launch Terminal</span>
+                <span>→</span>
+              </button>
+
+              <Link
+                href="/dashboard/signals"
+                className="font-mono text-xs font-bold uppercase tracking-wider text-slate-800 hover:text-[#0369a1] transition-colors inline-flex items-center gap-1.5"
+              >
+                <span>Inspect Signal Matrix</span>
+                <span>→</span>
+              </Link>
+
+              <Link
+                href="/about"
+                className="font-mono text-xs font-semibold uppercase tracking-wider text-slate-500 hover:text-slate-900 transition-colors"
+              >
+                Read Architecture Spec
+              </Link>
+            </div>
           </div>
 
-          <h1
-            className="font-sans font-black text-white leading-[0.92] uppercase mb-6 tracking-tight select-none"
-            style={{ fontSize: 'clamp(3.5rem, 7.5vw, 6.5rem)' }}
-          >
-            Trade
-            <br />
-            <span className="text-[#ff2e54]">Without</span>
-            <br />
-            Limits.
-          </h1>
-
-          <p className="text-[#94a3b8] text-lg leading-relaxed max-w-lg mb-10 font-normal">
-            Adaptive Confluence Trading System. Autonomous multi-regime classification, mathematical
-            factor convergence, and automated paper execution for digital assets.
-          </p>
-
-          <div className="flex flex-wrap gap-4 mb-12">
-            <button
-              onClick={() => router.push('/dashboard')}
-              className="bg-[#ff2e54] hover:bg-[#e11d48] text-white font-sans font-bold uppercase tracking-wider text-sm px-8 py-4 transition-all duration-150 flex items-center gap-3 shadow-[0_0_25px_-5px_rgba(255,46,84,0.4)] cursor-pointer"
-            >
-              Launch Terminal
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                <path
-                  d="M3 8h10M9 4l4 4-4 4"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="square"
-                />
-              </svg>
-            </button>
-            <Link
-              href="/dashboard/signals"
-              className="border border-[#1c2438] hover:border-[#ff2e54]/50 text-[#94a3b8] hover:text-white font-sans font-semibold uppercase tracking-wider text-sm px-8 py-4 transition-all duration-150 flex items-center justify-center bg-white/[0.02]"
-            >
-              Signal Matrix
-            </Link>
-            <Link
-              href="/about"
-              className="border border-transparent hover:border-[#1c2438] text-[#64748b] hover:text-[#94a3b8] font-sans font-medium uppercase tracking-wider text-sm px-6 py-4 transition-all duration-150 flex items-center justify-center"
-            >
-              System Architecture
-            </Link>
-          </div>
-
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-6 border-t border-[#1c2438]">
-            <div>
-              <div className="font-sans font-extrabold text-white text-lg leading-tight">4 Regimes</div>
-              <div className="font-mono text-[10px] text-[#64748b] uppercase tracking-wider">
+          <div className="grid grid-cols-2 sm:grid-cols-4 border-t border-slate-900/10 pt-6 gap-y-5 sm:divide-x sm:divide-slate-900/10">
+            <div className="sm:pr-5">
+              <div className="font-mono font-black text-slate-950 text-lg tabular-nums">4 Regimes</div>
+              <div className="font-mono text-[10px] text-slate-500 uppercase tracking-wider mt-0.5">
                 Bull / Bear / Chop / Comp
               </div>
             </div>
-            <div>
-              <div className="font-sans font-extrabold text-white text-lg leading-tight">5 Engines</div>
-              <div className="font-mono text-[10px] text-[#64748b] uppercase tracking-wider">
+            <div className="sm:px-5">
+              <div className="font-mono font-black text-slate-950 text-lg tabular-nums">5 Engines</div>
+              <div className="font-mono text-[10px] text-slate-500 uppercase tracking-wider mt-0.5">
                 Factor Convergence
               </div>
             </div>
-            <div>
-              <div className="font-sans font-extrabold text-[#10b981] text-lg leading-tight">15s Cycle</div>
-              <div className="font-mono text-[10px] text-[#64748b] uppercase tracking-wider">
+            <div className="sm:px-5">
+              <div className="font-mono font-black text-emerald-700 text-lg tabular-nums">15s Cycle</div>
+              <div className="font-mono text-[10px] text-slate-500 uppercase tracking-wider mt-0.5">
                 Telemetry Polling
               </div>
             </div>
-            <div>
-              <div className="font-sans font-extrabold text-[#ff2e54] text-lg leading-tight">Paper Mode</div>
-              <div className="font-mono text-[10px] text-[#64748b] uppercase tracking-wider">
-                Zero Capital Risk
+            <div className="sm:pl-5">
+              <div className="font-mono font-black text-[#0369a1] text-lg tabular-nums">0 Risk</div>
+              <div className="font-mono text-[10px] text-slate-500 uppercase tracking-wider mt-0.5">
+                Paper Sandbox Mode
               </div>
             </div>
           </div>
         </div>
 
-        <div className="relative">
-          <div className="bg-[#0b101c] border border-[#1c2438] p-6 shadow-2xl relative">
-            <div className="flex items-center justify-between mb-4 border-b border-[#1c2438] pb-3">
-              <div className="flex items-center gap-2">
+        <div className="lg:col-span-5">
+          <div className="rounded-2xl border border-slate-900/10 bg-[#faf2df] p-6 space-y-5">
+            <div className="flex items-center justify-between border-b border-slate-900/10 pb-3">
+              <div className="flex items-center gap-5">
                 {(['BTC', 'ETH', 'SOL'] as const).map((pair) => (
                   <button
                     key={pair}
                     onClick={() => setSelectedPair(pair)}
-                    className={`font-mono text-xs px-3 py-1 font-bold transition-colors cursor-pointer ${
+                    className={`font-mono text-xs font-bold pb-2 -mb-[13px] border-b-2 transition-colors cursor-pointer ${
                       selectedPair === pair
-                        ? 'bg-[#ff2e54] text-white'
-                        : 'text-[#64748b] hover:text-white bg-white/[0.03]'
+                        ? 'border-[#0369a1] text-slate-950'
+                        : 'border-transparent text-slate-500 hover:text-slate-900'
                     }`}
                   >
                     {pair}/USDT
                   </button>
                 ))}
               </div>
-              <div className="flex items-center gap-2 font-mono text-[10px] text-[#64748b]">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#10b981] inline-block animate-pulse" />
+              <div className="flex items-center gap-1.5 font-mono text-[10px] text-slate-600 uppercase tracking-wider">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse" />
                 <span>BINANCE STREAM</span>
               </div>
             </div>
 
-            <div className="flex items-center justify-between mb-4">
+            <div className="flex items-baseline justify-between gap-4">
               <div>
-                <div className="font-mono text-xs text-[#64748b] uppercase tracking-wider mb-1">
+                <div className="font-mono text-[10px] text-slate-500 uppercase tracking-wider mb-1">
                   {preview.name} Reference Price
                 </div>
-                <div className="font-sans font-black text-white text-3xl tracking-tight">
+                <div className="font-mono font-black text-slate-950 text-3xl tracking-tight tabular-nums">
                   ${preview.price}
                 </div>
               </div>
               <div className="text-right">
-                <div className="font-mono text-xs text-[#64748b] mb-1">24h Change</div>
-                <div
-                  className={`font-mono font-bold text-xl ${
-                    preview.up ? 'text-[#10b981]' : 'text-[#ff2e54]'
-                  }`}
-                >
+                <div className="font-mono text-[10px] text-slate-500 uppercase tracking-wider mb-1">24h Change</div>
+                <div className={`font-mono font-bold text-lg tabular-nums ${preview.up ? 'text-emerald-700' : 'text-rose-700'}`}>
                   {preview.change}
                 </div>
               </div>
             </div>
 
-            <div className="h-[150px] mb-4">
+            <div className="h-[145px]">
               <MiniChart points={preview.chartPoints} />
             </div>
 
-            <div className="grid grid-cols-3 gap-0 border-t border-[#1c2438] pt-4">
-              {[
-                { label: '24h Volume', val: preview.volume },
-                { label: '24h High', val: `$${preview.high}` },
-                { label: '24h Low', val: `$${preview.low}` },
-              ].map((s) => (
-                <div key={s.label} className="text-center border-r border-[#1c2438] last:border-r-0">
-                  <div className="font-mono text-[10px] text-[#64748b] uppercase tracking-wider mb-1">
-                    {s.label}
-                  </div>
-                  <div className="font-mono text-sm font-bold text-[#f8fafc]">{s.val}</div>
+            <div className="border-t border-slate-900/10 pt-4 space-y-3 font-mono tabular-nums text-xs">
+              <div className="grid grid-cols-3 gap-4 pb-3 border-b border-slate-900/10">
+                <div>
+                  <span className="text-[10px] text-slate-500 uppercase block">24h Vol</span>
+                  <span className="font-bold text-slate-900">{preview.volume}</span>
                 </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="mt-4 bg-[#101726] border border-[#1c2438] p-4 shadow-xl">
-            <div className="flex items-center justify-between border-b border-[#1c2438] pb-2 mb-3">
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 rounded-full bg-[#10b981] animate-pulse" />
-                <span className="font-mono text-[10px] text-[#94a3b8] uppercase tracking-wider font-semibold">
-                  Autonomous Engine Telemetry
-                </span>
+                <div>
+                  <span className="text-[10px] text-slate-500 uppercase block">24h High</span>
+                  <span className="font-bold text-slate-900">${preview.high}</span>
+                </div>
+                <div>
+                  <span className="text-[10px] text-slate-500 uppercase block">24h Low</span>
+                  <span className="font-bold text-slate-900">${preview.low}</span>
+                </div>
               </div>
-              <span className="font-mono text-[10px] text-[#ff2e54] font-bold">
-                SCORE {preview.score}
-              </span>
-            </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
-              <div>
-                <span className="font-mono text-[10px] text-[#64748b] block uppercase">
-                  Regime Detection
-                </span>
-                <span className="font-sans font-bold text-white">
-                  {preview.regime}{' '}
-                  <span className="text-[#10b981] font-mono text-[11px]">
-                    ({preview.confidence})
+              <div className="grid grid-cols-3 gap-4 text-[11px]">
+                <div>
+                  <span className="text-[10px] text-slate-500 uppercase block">Active Regime</span>
+                  <span className="font-sans font-bold text-slate-900">
+                    {preview.regime} <span className="font-mono text-emerald-700">{preview.confidence}</span>
                   </span>
-                </span>
+                </div>
+                <div>
+                  <span className="text-[10px] text-slate-500 uppercase block">Confluence</span>
+                  <span className="font-bold text-[#0369a1]">{preview.score}</span>
+                </div>
+                <div>
+                  <span className="text-[10px] text-slate-500 uppercase block">Kelly Mult</span>
+                  <span className="font-bold text-slate-900">{preview.kelly}</span>
+                </div>
               </div>
-              <div>
-                <span className="font-mono text-[10px] text-[#64748b] block uppercase">
-                  Position Sizing
-                </span>
-                <span className="font-mono font-bold text-[#f8fafc]">
-                  Kelly Multiplier: {preview.kelly}
-                </span>
-              </div>
-            </div>
-
-            <div className="mt-3 pt-2.5 border-t border-[#1c2438] flex items-center justify-between font-mono text-[10px] text-[#64748b]">
-              <span>Execution Signals & Brackets</span>
-              <span className="text-[#94a3b8] flex items-center gap-1.5 font-semibold">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#ff2e54]" />
-                Token Protected
-              </span>
             </div>
           </div>
         </div>
-      </div>
-    </section>
-  )
-}
-
-const STATS = [
-  { val: '4 REGIMES', label: 'Market Classification', sub: 'Bull, Bear, Volatile Chop, Compression' },
-  { val: '5 ENGINES', label: 'Confluence Convergence', sub: 'Order Flow, Momentum, Vol, VWAP, Macro' },
-  { val: '15s CYCLE', label: 'Telemetry Polling', sub: 'Low-latency Binance and CoinGecko feed' },
-  { val: '0 RISK', label: 'Paper Trading Sandbox', sub: 'Simulated quantitative risk modeling' },
-]
-
-function Stats() {
-  return (
-    <section className="border-b border-[#1c2438] bg-[#090d18]">
-      <div className="max-w-7xl mx-auto px-6 grid grid-cols-2 lg:grid-cols-4 divide-x divide-y lg:divide-y-0 divide-[#1c2438]">
-        {STATS.map((s) => (
-          <div key={s.label} className="px-8 py-10 transition-colors hover:bg-white/[0.015]">
-            <div className="font-sans font-black text-[#ff2e54] text-3xl sm:text-4xl mb-2 uppercase tracking-tight">
-              {s.val}
-            </div>
-            <div className="font-sans font-bold text-[#f8fafc] text-sm mb-1">{s.label}</div>
-            <div className="font-mono text-[11px] text-[#64748b] uppercase tracking-wider">{s.sub}</div>
-          </div>
-        ))}
       </div>
     </section>
   )
@@ -488,111 +415,103 @@ function Capabilities() {
   const current = CAPABILITIES[active]
 
   return (
-    <section className="py-24 bg-[#070b14] border-b border-[#1c2438]">
+    <section className="py-20 bg-[#edf7fe] border-b border-slate-900/10">
       <div className="max-w-7xl mx-auto px-6">
-        <div className="mb-16">
-          <div className="font-mono text-xs text-[#ff2e54] uppercase tracking-widest mb-4 font-bold">
-            // Architecture & Core Engines
+        <div className="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6">
+          <div>
+            <div className="font-mono text-xs text-[#0369a1] uppercase tracking-widest mb-3 font-bold">
+              CORE ARCHITECTURE
+            </div>
+            <h2 className="font-sans font-black text-slate-950 text-4xl md:text-5xl leading-[0.95] tracking-tight">
+              Built for <span className="text-slate-500">Systematic Traders.</span>
+            </h2>
           </div>
-          <h2 className="font-sans font-black text-white uppercase text-5xl md:text-7xl leading-[0.92] tracking-tight">
-            Built for
-            <br />
-            <span className="text-[#64748b]">Systematic</span> Traders.
-          </h2>
+          <p className="text-xs font-mono text-slate-600 max-w-sm">
+            Select a module to inspect its live quantitative model and calibration tolerances.
+          </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 border border-[#1c2438]">
-          <div className="border-b lg:border-b-0 lg:border-r border-[#1c2438]">
-            {CAPABILITIES.map((c, i) => (
-              <button
-                key={i}
-                onClick={() => setActive(i)}
-                className={`w-full text-left p-8 border-b border-[#1c2438] last:border-b-0 transition-colors duration-150 group cursor-pointer ${
-                  active === i ? 'bg-[#0c1220]' : 'hover:bg-[#0a0e1a]'
-                }`}
-              >
-                <div className="flex items-start gap-5">
-                  <span
-                    className={`font-mono text-xs font-bold ${
-                      active === i ? 'text-[#ff2e54]' : 'text-[#475569]'
-                    } mt-1 transition-colors`}
-                  >
-                    {c.num}
-                  </span>
-                  <div className="flex-1">
-                    <div className="font-mono text-[10px] text-[#64748b] uppercase tracking-widest mb-2 font-semibold">
-                      {c.tag}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+          <div className="lg:col-span-5 divide-y divide-slate-900/10 border-y border-slate-900/10">
+            {CAPABILITIES.map((c, i) => {
+              const isSelected = active === i
+              return (
+                <button
+                  key={c.num}
+                  onClick={() => setActive(i)}
+                  className={`w-full text-left py-5 px-4 border-l-2 transition-colors duration-150 group cursor-pointer ${
+                    isSelected
+                      ? 'border-[#0369a1] bg-[#faf2df]/70'
+                      : 'border-transparent hover:bg-[#faf2df]/40'
+                  }`}
+                >
+                  <div className="flex items-start gap-4">
+                    <span className={`font-mono text-xs font-bold tabular-nums mt-1 ${isSelected ? 'text-[#0369a1]' : 'text-slate-600'}`}>
+                      {c.num}
+                    </span>
+                    <div className="flex-1">
+                      <div className="font-mono text-[10px] text-slate-500 uppercase tracking-widest mb-1 font-semibold">
+                        {c.tag}
+                      </div>
+                      <div className={`font-sans font-bold text-lg tracking-tight ${isSelected ? 'text-slate-950' : 'text-slate-600 group-hover:text-slate-900'}`}>
+                        {c.title}
+                      </div>
+                      {isSelected && (
+                        <p className="text-xs text-slate-600 leading-relaxed mt-2">
+                          {c.desc}
+                        </p>
+                      )}
                     </div>
-                    <div
-                      className={`font-sans font-bold text-xl uppercase mb-2 transition-colors ${
-                        active === i ? 'text-white' : 'text-[#94a3b8] group-hover:text-white'
-                      }`}
-                    >
-                      {c.title}
-                    </div>
-                    {active === i && (
-                      <p className="text-sm text-[#94a3b8] leading-relaxed animate-in fade-in duration-200">
-                        {c.desc}
-                      </p>
-                    )}
                   </div>
-                  <div
-                    className={`ml-3 transition-all duration-200 ${
-                      active === i ? 'translate-x-0 opacity-100' : 'opacity-0 -translate-x-1'
-                    }`}
-                  >
-                    <div className="w-1.5 h-8 bg-[#ff2e54] shadow-[0_0_8px_#ff2e54]" />
-                  </div>
-                </div>
-              </button>
-            ))}
+                </button>
+              )
+            })}
           </div>
 
-          <div className="bg-[#090d18] p-8 sm:p-12 flex flex-col justify-between">
+          <div className="lg:col-span-7 rounded-2xl border border-slate-900/10 bg-[#faf2df] p-7 sm:p-9 space-y-6">
+            <div className="flex items-center justify-between border-b border-slate-900/10 pb-4">
+              <div className="font-mono text-xs text-[#0369a1] uppercase tracking-widest font-bold">
+                {current.num} · {current.tag}
+              </div>
+              <div className="font-mono text-[11px] text-emerald-700 uppercase font-bold flex items-center gap-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-600" />
+                <span>Engine Active</span>
+              </div>
+            </div>
+
             <div>
-              <div className="flex items-center justify-between border-b border-[#1c2438] pb-4 mb-6">
-                <div className="font-mono text-xs text-[#ff2e54] uppercase tracking-widest font-bold">
-                  // {current.tag}
-                </div>
-                <div className="font-mono text-[11px] text-[#64748b] uppercase">
-                  Engine Status: Active
-                </div>
-              </div>
-
-              <div className="font-sans font-black text-white text-2xl sm:text-3xl uppercase mb-4 tracking-tight">
+              <h3 className="font-sans font-black text-slate-950 text-2xl sm:text-3xl tracking-tight mb-4">
                 {current.title}
+              </h3>
+              <div className="border-y border-slate-900/10 py-4 font-mono text-xs overflow-x-auto">
+                <div className="text-slate-500 text-[10px] uppercase tracking-wider mb-1">Mathematical Formulation</div>
+                <div className="text-slate-950 font-bold text-sm">{current.formula}</div>
               </div>
+            </div>
 
-              <div className="bg-[#05080f] border border-[#1c2438] p-4 font-mono text-xs text-[#94a3b8] mb-8 overflow-x-auto">
-                <div className="text-[#64748b] text-[10px] uppercase mb-1">Mathematical Model:</div>
-                <div className="text-[#f8fafc] font-semibold">{current.formula}</div>
+            <div className="space-y-1">
+              <div className="font-mono text-[10px] text-slate-500 uppercase tracking-wider pb-1">
+                Live Engine Parameters
               </div>
-
-              <div className="space-y-4">
-                <div className="font-mono text-[10px] text-[#64748b] uppercase tracking-wider">
-                  Live Engine Parameters:
-                </div>
+              <div className="divide-y divide-slate-900/10">
                 {current.metrics.map((m, idx) => (
-                  <div
-                    key={idx}
-                    className="flex items-center justify-between p-3 border border-[#1c2438] bg-[#0c1220]"
-                  >
-                    <span className="font-mono text-xs text-[#94a3b8]">{m.label}</span>
-                    <span className="font-mono text-xs font-bold text-[#10b981]">{m.val}</span>
+                  <div key={idx} className="flex items-center justify-between py-3 text-xs font-mono">
+                    <span className="text-slate-600">{m.label}</span>
+                    <span className="font-bold text-emerald-700 tabular-nums">{m.val}</span>
                   </div>
                 ))}
               </div>
             </div>
 
-            <div className="pt-8 mt-8 border-t border-[#1c2438] flex items-center justify-between">
-              <span className="font-mono text-xs text-[#64748b]">
+            <div className="pt-4 border-t border-slate-900/10 flex flex-wrap items-center justify-between gap-3">
+              <span className="font-mono text-[11px] text-slate-500">
                 Telemetry verification: Supabase heartbeat synced
               </span>
               <Link
                 href="/dashboard/signals"
-                className="font-mono text-xs text-[#ff2e54] hover:text-[#e11d48] uppercase tracking-wider font-bold transition-colors"
+                className="font-mono text-xs text-[#0369a1] hover:text-slate-950 uppercase tracking-wider font-bold transition-colors"
               >
-                Inspect Live Matrix &rarr;
+                Inspect Live Matrix →
               </Link>
             </div>
           </div>
@@ -640,80 +559,73 @@ const AUDIT_SIGNALS = [
 
 function SignalAudit() {
   return (
-    <section className="py-24 bg-[#070b14] border-b border-[#1c2438]">
+    <section className="py-20 bg-[#edf7fe] border-b border-slate-900/10">
       <div className="max-w-7xl mx-auto px-6">
-        <div className="mb-16 flex flex-col md:flex-row md:items-end justify-between gap-8">
+        <div className="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-6">
           <div>
-            <div className="font-mono text-xs text-[#ff2e54] uppercase tracking-widest mb-4 font-bold">
-              // Real-Time Signal Audit
+            <div className="font-mono text-xs text-[#0369a1] uppercase tracking-widest mb-3 font-bold">
+              SIGNAL VERIFICATION LEDGER
             </div>
-            <h2 className="font-sans font-black text-white uppercase text-5xl md:text-6xl leading-[0.92] tracking-tight">
-              Confluence
-              <br />
-              <span className="text-[#64748b]">In Action.</span>
+            <h2 className="font-sans font-black text-slate-950 text-4xl md:text-5xl leading-[0.95] tracking-tight">
+              Confluence <span className="text-slate-500">In Action.</span>
             </h2>
           </div>
-          <div className="flex flex-col sm:flex-row sm:items-center gap-4">
-            <div className="font-mono text-xs text-[#64748b] uppercase tracking-wider font-semibold">
-              Simulated In Paper Sandbox
-            </div>
+
+          <div className="flex items-center gap-5">
+            <span className="font-mono text-xs text-slate-500 uppercase tracking-wider">
+              Paper Sandbox Ledger
+            </span>
             <Link
               href="/dashboard/signals"
-              className="border border-[#1c2438] hover:border-[#ff2e54]/50 text-white font-mono text-xs uppercase px-4 py-2 bg-white/[0.02] transition-colors"
+              className="font-mono text-xs font-bold uppercase tracking-wider text-[#0369a1] hover:text-slate-950 transition-colors"
             >
-              Full Signal Ledger &rarr;
+              Full Signal Ledger →
             </Link>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-0 border border-[#1c2438]">
-          {AUDIT_SIGNALS.map((s, i) => (
-            <div
-              key={i}
-              className="p-8 border-b md:border-b-0 md:border-r border-[#1c2438] last:border-r-0 flex flex-col justify-between gap-6 hover:bg-[#0c1220] transition-colors"
-            >
-              <div>
-                <div className="flex items-center justify-between mb-4">
-                  <span className="font-mono text-sm font-bold text-white uppercase tracking-wider">
-                    {s.pair}
-                  </span>
-                  <span className="font-mono text-xs font-extrabold text-[#10b981] bg-[#10b981]/10 px-2.5 py-1 border border-[#10b981]/20">
-                    {s.result}
-                  </span>
-                </div>
-
-                <div className="font-sans font-bold text-white text-lg mb-1 uppercase tracking-tight">
-                  {s.type}
-                </div>
-                <div className="font-mono text-xs text-[#64748b] uppercase mb-4">
-                  Regime: <span className="text-[#94a3b8]">{s.regime}</span>
-                </div>
-
-                <div className="bg-[#05080f] border border-[#1c2438] p-3 mb-4 space-y-1.5 font-mono text-xs">
-                  <div className="flex justify-between text-[#94a3b8]">
-                    <span>Entry: {s.entry}</span>
-                    <span>Exit: {s.exit}</span>
-                  </div>
-                  <div className="flex justify-between text-[#64748b]">
-                    <span>Confluence: {s.score}</span>
-                    <span>{s.kelly}</span>
-                  </div>
-                </div>
-
-                <p className="text-[#94a3b8] text-xs leading-relaxed">
-                  <span className="text-[#64748b] font-mono uppercase block text-[10px] mb-1">
-                    Convergence Factors:
-                  </span>
-                  {s.factors}
-                </p>
-              </div>
-
-              <div className="pt-4 border-t border-[#1c2438] flex items-center justify-between font-mono text-[10px] text-[#64748b] uppercase">
-                <span>Execution: Paper Sandbox</span>
-                <span className="text-[#10b981]">Verified Outcome</span>
-              </div>
-            </div>
-          ))}
+        <div className="rounded-2xl border border-slate-900/10 bg-[#faf2df] overflow-hidden">
+          <div className="overflow-x-auto">
+            <table className="w-full text-left border-collapse">
+              <thead>
+                <tr className="border-b border-slate-900/10 text-[10px] font-mono uppercase tracking-wider text-slate-500">
+                  <th className="py-3.5 px-5 font-bold">ASSET &amp; STRATEGY</th>
+                  <th className="py-3.5 px-4 font-bold">MARKET REGIME</th>
+                  <th className="py-3.5 px-4 font-bold">CONVERGENCE FACTORS</th>
+                  <th className="py-3.5 px-4 font-bold">EXECUTION BRACKET</th>
+                  <th className="py-3.5 px-4 font-bold">KELLY SIZING</th>
+                  <th className="py-3.5 px-5 font-bold text-right">VERIFIED OUTCOME</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-slate-900/10 text-xs">
+                {AUDIT_SIGNALS.map((s) => (
+                  <tr key={s.pair} className="hover:bg-[#f3ead2]/50 transition-colors">
+                    <td className="py-4 px-5 align-top">
+                      <div className="font-mono font-black text-slate-950 text-sm">{s.pair}</div>
+                      <div className="font-mono text-[10px] text-slate-500 uppercase mt-0.5">{s.type}</div>
+                    </td>
+                    <td className="py-4 px-4 align-top font-mono">
+                      <div className="font-semibold text-slate-900">{s.regime}</div>
+                      <div className="text-[11px] text-[#0369a1] font-bold tabular-nums mt-0.5">Score {s.score}</div>
+                    </td>
+                    <td className="py-4 px-4 align-top text-slate-600 max-w-xs leading-relaxed">
+                      {s.factors}
+                    </td>
+                    <td className="py-4 px-4 align-top font-mono tabular-nums">
+                      <div className="text-slate-700">Entry {s.entry}</div>
+                      <div className="text-slate-900 font-semibold mt-0.5">Exit {s.exit}</div>
+                    </td>
+                    <td className="py-4 px-4 align-top font-mono font-semibold text-slate-800 tabular-nums">
+                      {s.kelly}
+                    </td>
+                    <td className="py-4 px-5 align-top text-right font-mono font-bold text-emerald-700 tabular-nums">
+                      {s.result}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </section>
@@ -722,17 +634,17 @@ function SignalAudit() {
 
 const HOW_STEPS = [
   {
-    n: '1',
+    phase: 'PHASE 01 // STREAM',
     title: 'Launch the Terminal',
     desc: 'Open the autonomous trading dashboard to view real-time candle streaming, orderbook telemetry, and regime status with zero registration friction.',
   },
   {
-    n: '2',
+    phase: 'PHASE 02 // CONFLUENCE',
     title: 'Inspect Regime Confluence',
     desc: 'Analyze multi-engine convergence scores across order flow imbalance, ATR volatility, session VWAP, and algorithmic momentum indicators.',
   },
   {
-    n: '3',
+    phase: 'PHASE 03 // EXECUTION',
     title: 'Simulate in Paper Sandbox',
     desc: 'Simulate trading strategies using automated Kelly Criterion position sizing, dynamic risk controls, and automated outcome resolution.',
   },
@@ -740,38 +652,27 @@ const HOW_STEPS = [
 
 function HowItWorks() {
   return (
-    <section className="py-24 bg-[#090d18] border-b border-[#1c2438]">
+    <section className="py-20 bg-[#edf7fe] border-b border-slate-900/10">
       <div className="max-w-7xl mx-auto px-6">
-        <div className="mb-16">
-          <div className="font-mono text-xs text-[#ff2e54] uppercase tracking-widest mb-4 font-bold">
-            // Execution Workflow
+        <div className="mb-12">
+          <div className="font-mono text-xs text-[#0369a1] uppercase tracking-widest mb-3 font-bold">
+            EXECUTION PIPELINE
           </div>
-          <h2 className="font-sans font-black text-white uppercase text-5xl md:text-6xl leading-[0.92] tracking-tight">
-            Three Steps.
-            <br />
-            <span className="text-[#64748b]">Zero Capital Risk.</span>
+          <h2 className="font-sans font-black text-slate-950 text-4xl md:text-5xl leading-[0.95] tracking-tight">
+            Three Phases. <span className="text-slate-500">Zero Capital Risk.</span>
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-0 border border-[#1c2438]">
-          {HOW_STEPS.map((s, i) => (
-            <div
-              key={i}
-              className="p-10 border-b md:border-b-0 md:border-r border-[#1c2438] last:border-r-0 relative overflow-hidden group hover:bg-[#0c1322] transition-colors duration-200"
-            >
-              <div
-                className="absolute top-0 right-3 font-sans font-black text-[#151e33] group-hover:text-[#1c2844] transition-colors pointer-events-none select-none"
-                style={{ fontSize: 'clamp(6rem, 12vw, 9rem)', lineHeight: 0.9 }}
-              >
-                {s.n}
+        <div className="grid grid-cols-1 lg:grid-cols-3 border-y border-slate-900/10 divide-y lg:divide-y-0 lg:divide-x divide-slate-900/10">
+          {HOW_STEPS.map((s) => (
+            <div key={s.phase} className="py-8 lg:py-10 lg:px-8 lg:first:pl-0 lg:last:pr-0 space-y-3">
+              <div className="font-mono text-[11px] font-bold text-[#0369a1] tracking-wider uppercase">
+                {s.phase}
               </div>
-              <div className="relative z-10">
-                <div className="w-8 h-1 bg-[#ff2e54] mb-8 shadow-[0_0_8px_#ff2e54]" />
-                <div className="font-sans font-black text-white text-2xl uppercase mb-4 tracking-tight">
-                  {s.title}
-                </div>
-                <p className="text-sm text-[#94a3b8] leading-relaxed">{s.desc}</p>
-              </div>
+              <h3 className="font-sans font-black text-slate-950 text-xl tracking-tight">
+                {s.title}
+              </h3>
+              <p className="text-sm text-slate-600 leading-relaxed">{s.desc}</p>
             </div>
           ))}
         </div>
@@ -784,81 +685,42 @@ function CTA() {
   const router = useRouter()
 
   return (
-    <section className="relative overflow-hidden bg-[#ff2e54] py-24 text-white">
-      <div
-        className="absolute inset-0 opacity-[0.08] pointer-events-none"
-        style={{
-          backgroundImage:
-            'linear-gradient(#ffffff 1px, transparent 1px), linear-gradient(90deg, #ffffff 1px, transparent 1px)',
-          backgroundSize: '40px 40px',
-        }}
-      />
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-[#ff5978] blur-[120px] opacity-40 pointer-events-none" />
-
-      <div className="relative max-w-7xl mx-auto px-6 text-center">
-        <div className="font-mono text-xs text-white/80 uppercase tracking-widest mb-6 font-bold">
-          // Autonomous Quantitative Trading
+    <section className="bg-[#faf2df] border-b border-slate-900/10 py-16">
+      <div className="max-w-7xl mx-auto px-6 flex flex-col lg:flex-row lg:items-center justify-between gap-8">
+        <div className="max-w-2xl space-y-3">
+          <div className="font-mono text-xs text-[#0369a1] uppercase tracking-widest font-bold">
+            AUTONOMOUS QUANTITATIVE TRADING
+          </div>
+          <h2 className="font-sans font-black text-slate-950 text-3xl sm:text-5xl leading-[0.95] tracking-tight">
+            Execute With Mathematical Confluence.
+          </h2>
+          <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
+            Access the institutional web terminal, evaluate real-time market regimes, and track calibrated outcomes.
+          </p>
         </div>
-        <h2
-          className="font-sans font-black text-white uppercase leading-[0.88] mb-8 tracking-tight select-none"
-          style={{ fontSize: 'clamp(3rem, 8.5vw, 7.5rem)' }}
-        >
-          Execute With
-          <br />
-          Mathematical Confluence.
-        </h2>
-        <p className="text-white/90 text-lg max-w-xl mx-auto mb-12 leading-relaxed">
-          Access the institutional web terminal, evaluate real-time market regimes, and simulate
-          strategies with zero capital risk.
-        </p>
 
-        <div className="flex flex-wrap items-center justify-center gap-4">
+        <div className="flex flex-wrap items-center gap-5 flex-shrink-0">
           <button
             onClick={() => router.push('/dashboard')}
-            className="bg-white text-[#ff2e54] hover:bg-[#f8fafc] font-sans font-black uppercase tracking-wider text-base px-10 py-4 transition-all duration-150 flex items-center gap-3 shadow-2xl cursor-pointer"
+            className="bg-[#0369a1] hover:bg-[#0284c7] text-white font-sans font-bold tracking-wide text-sm px-7 py-3.5 rounded-xl transition-colors duration-150 inline-flex items-center gap-2.5 cursor-pointer"
           >
-            Launch Terminal
-            <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-              <path
-                d="M3 9h12M11 5l4 4-4 4"
-                stroke="currentColor"
-                strokeWidth="2.5"
-                strokeLinecap="square"
-              />
-            </svg>
+            <span>Launch Terminal</span>
+            <span>→</span>
           </button>
           <Link
             href="/dashboard/signals"
-            className="border-2 border-white/60 hover:border-white text-white font-sans font-bold uppercase tracking-wider text-base px-10 py-4 transition-all duration-150"
+            className="font-mono text-xs font-bold uppercase tracking-wider text-slate-800 hover:text-[#0369a1] transition-colors"
           >
-            Explore Signal Matrix
+            Signal Matrix →
           </Link>
           <a
             href="https://t.me/AytasATbot"
             target="_blank"
             rel="noopener noreferrer"
-            className="border-2 border-white/20 hover:border-white text-white/80 hover:text-white font-sans font-bold uppercase tracking-wider text-base px-8 py-4 transition-all duration-150"
+            className="font-mono text-xs font-semibold uppercase tracking-wider text-slate-500 hover:text-slate-900 transition-colors"
           >
             Telegram Bot
           </a>
-        </div>
-
-        <div className="mt-16 flex flex-wrap items-center justify-center gap-8 sm:gap-12 pt-8 border-t border-white/20">
-          {[
-            { tag: 'STREAM', label: 'Real-Time Binance Feed' },
-            { tag: 'SAFETY', label: 'Zero Capital Risk Paper Mode' },
-            { tag: 'CONFLUENCE', label: 'Multi-Engine Weighting' },
-            { tag: 'ALERTS', label: 'Telegram Notification Bot' },
-          ].map((badge) => (
-            <div key={badge.label} className="flex items-center gap-2">
-              <span className="font-mono text-[10px] bg-white/20 px-1.5 py-0.5 font-bold">
-                {badge.tag}
-              </span>
-              <span className="font-mono text-xs text-white/90 uppercase tracking-wider font-semibold">
-                {badge.label}
-              </span>
-            </div>
-          ))}
         </div>
       </div>
     </section>
@@ -867,23 +729,22 @@ function CTA() {
 
 function Footer() {
   return (
-    <footer className="bg-[#05080f] border-t border-[#1c2438] py-14">
+    <footer className="bg-[#edf7fe] py-12">
       <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
         <div>
-          <div className="flex items-center gap-2.5 mb-3">
-            <div className="w-6 h-6 bg-[#ff2e54] flex items-center justify-center shadow-[0_0_10px_#ff2e54]">
-              <span className="font-sans text-white font-black text-xs leading-none">A</span>
-            </div>
-            <span className="font-sans text-white font-black text-lg tracking-wider uppercase">
-              ACTS
+          <div className="flex items-center gap-2.5 mb-2">
+            <span className="font-sans text-slate-950 font-black text-lg tracking-tight">ACTS</span>
+            <span className="font-mono text-[10px] text-slate-500 uppercase tracking-widest border-l border-slate-900/15 pl-2.5">
+              QUANT v2.4
             </span>
           </div>
-          <p className="font-mono text-[11px] text-[#64748b] uppercase tracking-wider max-w-md leading-relaxed">
+          <p className="font-mono text-[11px] text-slate-600 max-w-md leading-relaxed">
             Adaptive Confluence Trading System: Algorithmic trading research, paper execution, and
-            multi-regime confluence telemetry for digital assets. Educational and research simulation platform.
+            multi-regime confluence telemetry for digital assets.
           </p>
         </div>
-        <div className="flex flex-wrap gap-8">
+
+        <div className="flex flex-wrap gap-6">
           {[
             { label: 'Terminal', href: '/dashboard' },
             { label: 'Signal Matrix', href: '/dashboard/signals' },
@@ -895,14 +756,15 @@ function Footer() {
             <Link
               key={l.label}
               href={l.href}
-              className="font-mono text-xs text-[#64748b] hover:text-[#f8fafc] uppercase tracking-wider transition-colors"
+              className="font-mono text-xs text-slate-600 hover:text-[#0369a1] uppercase tracking-wider transition-colors"
             >
               {l.label}
             </Link>
           ))}
         </div>
-        <div className="font-mono text-[11px] text-[#475569] uppercase tracking-wider">
-          &copy; {new Date().getFullYear()} ACTS Engine. Open Telemetry.
+
+        <div className="font-mono text-[11px] text-slate-500 uppercase tracking-wider">
+          &copy; {new Date().getFullYear()} ACTS Engine
         </div>
       </div>
     </footer>
@@ -911,10 +773,9 @@ function Footer() {
 
 export default function Home() {
   return (
-    <div className="min-h-full bg-[#070b14] text-[#f8fafc] flex flex-col">
+    <div className="min-h-full bg-[#edf7fe] text-slate-900 flex flex-col">
       <TickerBar />
       <Hero />
-      <Stats />
       <Capabilities />
       <SignalAudit />
       <HowItWorks />

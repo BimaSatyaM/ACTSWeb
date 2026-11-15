@@ -389,32 +389,32 @@ export function ChartSimulator({
       width: container.clientWidth,
       height,
       layout: {
-        background: { type: ColorType.Solid, color: '#070b14' },
-        textColor: '#94a3b8',
+        background: { type: ColorType.Solid, color: '#fdfaf3' },
+        textColor: '#475569',
         fontFamily: 'Inter, system-ui, sans-serif',
         fontSize: 11,
       },
       grid: {
-        vertLines: { color: 'rgba(255, 255, 255, 0.04)' },
-        horzLines: { color: 'rgba(255, 255, 255, 0.04)' },
+        vertLines: { color: 'rgba(15, 23, 42, 0.05)' },
+        horzLines: { color: 'rgba(15, 23, 42, 0.05)' },
       },
       crosshair: {
         mode: CrosshairMode.Normal,
         vertLine: {
-          color: 'rgba(255, 255, 255, 0.25)',
+          color: 'rgba(15, 23, 42, 0.25)',
           width: 1,
           style: LineStyle.Dashed,
-          labelBackgroundColor: '#181b2a',
+          labelBackgroundColor: '#f3ead2',
         },
         horzLine: {
-          color: 'rgba(255, 255, 255, 0.25)',
+          color: 'rgba(15, 23, 42, 0.25)',
           width: 1,
           style: LineStyle.Dashed,
-          labelBackgroundColor: '#181b2a',
+          labelBackgroundColor: '#f3ead2',
         },
       },
       timeScale: {
-        borderColor: 'rgba(255, 255, 255, 0.08)',
+        borderColor: 'rgba(15, 23, 42, 0.08)',
         timeVisible: true,
         secondsVisible: false,
         barSpacing: 8,
@@ -422,7 +422,7 @@ export function ChartSimulator({
         rightOffset: 6,
       },
       rightPriceScale: {
-        borderColor: 'rgba(255, 255, 255, 0.08)',
+        borderColor: 'rgba(15, 23, 42, 0.08)',
         scaleMargins: { top: 0.08, bottom: 0.20 },
       },
     })
@@ -436,13 +436,13 @@ export function ChartSimulator({
     })
 
     const candleSeries = chart.addSeries(CandlestickSeries, {
-      upColor: '#3fc07a',
-      downColor: '#e5566f',
+      upColor: '#059669',
+      downColor: '#e11d48',
       borderVisible: true,
-      borderUpColor: '#3fc07a',
-      borderDownColor: '#e5566f',
-      wickUpColor: '#3fc07a',
-      wickDownColor: '#e5566f',
+      borderUpColor: '#059669',
+      borderDownColor: '#e11d48',
+      wickUpColor: '#059669',
+      wickDownColor: '#e11d48',
     })
 
     const ema20Series = chart.addSeries(LineSeries, {
@@ -548,7 +548,7 @@ export function ChartSimulator({
           lineWidth: 1,
           lineStyle: LineStyle.Solid,
           axisLabelVisible: true,
-          title: `${isRes ? 'Resistance' : 'Support'} ${z.price.toLocaleString()} (${isRes ? 'R' : 'S'} ${z.touches}x)`,
+          title: `${isRes ? 'Resistance' : 'Support'} ${z.price.toLocaleString()} (${isRes ? 'R' : 'S'} ${z.touches}x)`, // tabular-nums
         })
         srPriceLinesRef.current.push(line)
       }
@@ -792,10 +792,10 @@ export function ChartSimulator({
   if (!isMounted) {
     return (
       <div
-        className="w-full rounded-lg bg-[#070b14] border border-[#1a2030] flex items-center justify-center"
+        className="w-full rounded-xl bg-[#faf2df] border border-slate-900/10 flex items-center justify-center"
         style={{ height }}
       >
-        <span className="text-xs text-[#64748b]">Loading chart...</span>
+        <span className="text-xs text-slate-500 font-medium">Loading chart...</span>
       </div>
     )
   }
@@ -803,11 +803,11 @@ export function ChartSimulator({
   if (errorMessage && candles.length === 0) {
     return (
       <div
-        className="w-full rounded-lg bg-[#070b14] border border-[#2c1a20] flex flex-col items-center justify-center p-6 text-center"
+        className="w-full rounded-xl bg-[#faf2df] border border-rose-600/30 flex flex-col items-center justify-center p-6 text-center"
         style={{ height }}
       >
-        <span className="text-sm text-[#e5566f] font-medium mb-1">Chart data unavailable</span>
-        <span className="text-xs text-[#94a3b8] max-w-md">{errorMessage}</span>
+        <span className="text-sm text-rose-700 font-bold mb-1">Chart data unavailable</span>
+        <span className="text-xs text-slate-600 max-w-md">{errorMessage}</span>
       </div>
     )
   }
@@ -818,58 +818,58 @@ export function ChartSimulator({
   const recentMacd = macdSeriesData.slice(-subPaneCount)
 
   return (
-    <div data-ui className="flex flex-col rounded-lg bg-[#070b14] border border-[#1a2030] overflow-hidden">
-      <div className="flex flex-wrap items-center justify-between gap-3 px-4 py-2.5 bg-[#0a0f1a] border-b border-[#1a2030] text-xs">
+    <div data-ui className="flex flex-col rounded-xl bg-[#faf2df] border border-slate-900/10 overflow-hidden">
+      <div className="flex flex-wrap items-center justify-between gap-3 px-4 py-2.5 bg-[#f3ead2]/50 border-b border-slate-900/10 text-xs">
         <div className="flex items-center gap-3">
-          <span className="font-semibold text-white text-sm">{symbol}</span>
-          <span className="text-[#94a3b8]">{timeframe}</span>
-          <span className="text-[#64748b]">·</span>
+          <span className="font-bold text-slate-900 text-sm">{symbol}</span>
+          <span className="text-slate-600">{timeframe}</span>
+          <span className="text-slate-500">·</span>
           {isFallback ? (
             <span
-              className="text-[#cbd5e1]"
+              className="text-slate-600 font-medium"
               title="Curated 500-bar historical replay dataset"
             >
               Historical replay dataset (500 bars)
             </span>
           ) : (
-            <span className="text-[#3fc07a]">Live feed</span>
+            <span className="text-emerald-700 font-semibold">Live feed</span>
           )}
-          {loading && <span className="text-[#64748b]">Updating...</span>}
+          {loading && <span className="text-slate-500">Updating...</span>}
         </div>
 
-        <div className="flex flex-wrap items-center gap-4 text-xs text-[#94a3b8] [font-variant-numeric:tabular-nums]">
+        <div className="flex flex-wrap items-center gap-4 text-xs text-slate-600 font-mono tabular-nums">
           <span>
-            Close <strong className="text-white font-medium">${hudValues.close.toLocaleString()}</strong>
+            Close <strong className="text-slate-900 font-bold">${hudValues.close.toLocaleString()}</strong>
           </span>
           {srZones.map((z, i) => (
             <span
               key={i}
-              className={z.type === 'RESISTANCE' ? 'text-[#e5566f]' : 'text-[#3fc07a]'}
+              className={`tabular-nums ${z.type === 'RESISTANCE' ? 'text-rose-700' : 'text-emerald-700'}`}
             >
               {z.type === 'RESISTANCE' ? 'Res' : 'Sup'}{' '}
-              <strong className="font-semibold">${z.price.toLocaleString()}</strong> ({z.type === 'RESISTANCE' ? 'R' : 'S'} {z.touches}x)
+              <strong className="font-bold tabular-nums">${z.price.toLocaleString()}</strong> ({z.type === 'RESISTANCE' ? 'R' : 'S'} {z.touches}x)
             </span>
           ))}
           {hudValues.rsi !== undefined && (
             <span>
-              RSI(14) <strong className="text-[#38bdf8] font-medium">{hudValues.rsi}</strong>
+              RSI(14) <strong className="text-[#0369a1] font-bold">{hudValues.rsi}</strong>
             </span>
           )}
           {hudValues.macd && (
             <span>
-              MACD <strong className="text-[#38bdf8] font-medium">{hudValues.macd.macd}</strong> /{' '}
-              <span className="text-[#e2a84b]">{hudValues.macd.signal}</span>
+              MACD <strong className="text-[#0369a1] font-bold">{hudValues.macd.macd}</strong> /{' '}
+              <span className="text-amber-700">{hudValues.macd.signal}</span>
             </span>
           )}
           {hudValues.atr !== undefined && (
             <span>
-              ATR(14) <strong className="text-white font-medium">${hudValues.atr}</strong>
+              ATR(14) <strong className="text-slate-900 font-bold">${hudValues.atr}</strong>
             </span>
           )}
         </div>
       </div>
 
-      <div className="flex flex-wrap items-center justify-between gap-3 px-4 py-2 bg-[#070b14] border-b border-[#1a2030] text-xs">
+      <div className="flex flex-wrap items-center justify-between gap-3 px-4 py-2 bg-[#fdfaf3] border-b border-slate-900/10 text-xs">
         <div className="flex items-center gap-2">
           <button
             onClick={() => {
@@ -879,7 +879,7 @@ export function ChartSimulator({
               setIsPlaying(false)
             }}
             type="button"
-            className="h-7 px-2.5 rounded border border-[#262f45] bg-[#0a0f1a] text-[#cbd5e1] hover:text-white transition-colors"
+            className="h-7 px-2.5 rounded-lg border border-slate-900/15 bg-[#faf2df] text-slate-800 hover:bg-[#f3ead2] hover:text-slate-900 transition-colors font-medium cursor-pointer"
             aria-label="Reset Replay"
           >
             Reset
@@ -887,10 +887,10 @@ export function ChartSimulator({
           <button
             onClick={() => setIsPlaying(!isPlaying)}
             type="button"
-            className={`h-7 px-3 rounded font-medium border transition-colors ${
+            className={`h-7 px-3 rounded-lg font-semibold border transition-colors cursor-pointer ${
               isPlaying
-                ? 'border-[#ff2e54] bg-[#141b29] text-white'
-                : 'border-[#262f45] bg-white text-[#070b14] hover:bg-[#e2e8f0]'
+                ? 'border-[#0369a1] bg-[#e0f2fe] text-[#0369a1]'
+                : 'border-transparent bg-[#0369a1] text-white hover:bg-[#0284c7]'
             }`}
             aria-label={isPlaying ? 'Pause Replay' : 'Play Replay'}
           >
@@ -900,22 +900,22 @@ export function ChartSimulator({
             onClick={() => setReplayIndex((prev) => Math.min(prev + 1, candles.length))}
             disabled={replayIndex >= candles.length}
             type="button"
-            className="h-7 px-2.5 rounded border border-[#262f45] bg-[#0a0f1a] text-[#cbd5e1] hover:text-white disabled:opacity-40 transition-colors"
+            className="h-7 px-2.5 rounded-lg border border-slate-900/15 bg-[#faf2df] text-slate-800 hover:bg-[#f3ead2] hover:text-slate-900 disabled:opacity-40 transition-colors font-medium cursor-pointer"
             aria-label="Next Bar"
           >
             Next bar
           </button>
 
-          <div className="flex items-center gap-1 ml-2 pl-3 border-l border-[#1a2030] [font-variant-numeric:tabular-nums]">
+          <div className="flex items-center gap-1 ml-2 pl-3 border-l border-slate-900/10 font-mono tabular-nums">
             {[1500, 800, 300].map((ms, idx) => (
               <button
                 key={ms}
                 type="button"
                 onClick={() => setPlaySpeed(ms)}
-                className={`px-1.5 py-0.5 text-xs transition-colors ${
+                className={`px-1.5 py-0.5 text-xs transition-colors cursor-pointer ${
                   playSpeed === ms
-                    ? 'border-b border-[#ff2e54] text-white font-medium'
-                    : 'text-[#64748b] hover:text-[#cbd5e1]'
+                    ? 'border-b-2 border-[#0369a1] text-[#0369a1] font-bold'
+                    : 'text-slate-500 hover:text-slate-800'
                 }`}
               >
                 {idx === 0 ? '1x' : idx === 1 ? '2x' : '5x'}
@@ -923,8 +923,8 @@ export function ChartSimulator({
             ))}
           </div>
 
-          <span className="text-xs text-[#64748b] pl-2 [font-variant-numeric:tabular-nums]">
-            Bar <span className="text-[#cbd5e1]">{replayIndex}</span> of {candles.length}
+          <span className="text-xs text-slate-500 pl-2 font-mono tabular-nums">
+            Bar <span className="text-slate-900 font-semibold">{replayIndex}</span> of {candles.length}
           </span>
         </div>
 
@@ -948,10 +948,10 @@ export function ChartSimulator({
                 key={key}
                 type="button"
                 onClick={() => setIndicators((prev) => ({ ...prev, [key]: !prev[key] }))}
-                className={`py-1 text-xs transition-colors ${
+                className={`py-1 text-xs transition-colors cursor-pointer ${
                   active
-                    ? 'border-b border-[#ff2e54] text-white font-medium'
-                    : 'text-[#64748b] hover:text-[#cbd5e1]'
+                    ? 'border-b-2 border-[#0369a1] text-[#0369a1] font-bold'
+                    : 'text-slate-500 hover:text-slate-800 font-medium'
                 }`}
                 aria-pressed={active}
               >
@@ -966,22 +966,22 @@ export function ChartSimulator({
         <div ref={containerRef} className="w-full h-full" />
 
         {indicators.srZones && srZones.length > 0 && (
-          <div className="absolute top-3 left-3 z-10 flex flex-wrap items-center gap-1.5 pointer-events-none [font-variant-numeric:tabular-nums]">
+          <div className="absolute top-3 left-3 z-10 flex flex-wrap items-center gap-1.5 pointer-events-none font-mono tabular-nums">
             {srZones.map((z, idx) => {
               const isRes = z.type === 'RESISTANCE'
               return (
                 <div
                   key={idx}
-                  className={`px-2 py-0.5 rounded border text-[11px] font-medium flex items-center gap-1.5 ${
+                  className={`px-2 py-0.5 rounded-md border text-[11px] font-semibold flex items-center gap-1.5 ${
                     isRes
-                      ? 'bg-[#2c1620]/90 border-[#e5566f]/50 text-[#fda4af]'
-                      : 'bg-[#122b20]/90 border-[#3fc07a]/50 text-[#86efac]'
+                      ? 'bg-rose-500/10 border-rose-600/30 text-rose-800'
+                      : 'bg-emerald-500/10 border-emerald-600/30 text-emerald-800'
                   }`}
                 >
                   <span>
                     {isRes ? 'Resistance' : 'Support'} {z.price.toLocaleString()}
                   </span>
-                  <span className="px-1 rounded bg-[#070b14]/70 text-white font-semibold">
+                  <span className="px-1 rounded bg-[#faf2df] text-slate-800 font-bold border border-slate-900/15 font-mono tabular-nums">
                     {isRes ? 'R' : 'S'} {z.touches}x
                   </span>
                 </div>
@@ -991,32 +991,32 @@ export function ChartSimulator({
         )}
 
         {tradeState && (
-          <div className="absolute top-3 right-20 z-10 flex flex-col gap-1.5 items-end [font-variant-numeric:tabular-nums]">
+          <div className="absolute top-3 right-20 z-10 flex flex-col gap-1.5 items-end font-mono tabular-nums">
             <div
-              className={`px-3 py-1.5 rounded border flex items-center gap-2 text-xs ${
+              className={`px-3 py-1.5 rounded-lg border flex items-center gap-2 text-xs ${
                 tradeState.isClosed
                   ? tradeState.realizedR > 0
-                    ? 'bg-[#172a1d] text-[#3fc07a] border-[#3fc07a]/40'
-                    : 'bg-[#2c1a20] text-[#e5566f] border-[#e5566f]/40'
-                  : 'bg-[#0a0f1a] text-white border-[#262f45]'
+                    ? 'bg-emerald-500/10 text-emerald-800 border-emerald-600/30 font-bold'
+                    : 'bg-rose-500/10 text-rose-800 border-rose-600/30 font-bold'
+                  : 'bg-[#faf2df] text-slate-900 border-slate-900/15 font-semibold'
               }`}
             >
-              <span className="font-medium">{tradeState.exitReason}</span>
-              <span className="font-semibold">
+              <span className="font-semibold">{tradeState.exitReason}</span>
+              <span className="font-bold">
                 {tradeState.realizedR > 0 ? `+${tradeState.realizedR}R` : `${tradeState.realizedR}R`}
               </span>
             </div>
 
-            <div className="flex items-center gap-1.5 text-[11px] bg-[#0a0f1a] border border-[#1a2030] rounded px-2 py-1">
-              <span className={tradeState.tp1Hit ? 'text-[#3fc07a]' : 'text-[#64748b]'}>
+            <div className="flex items-center gap-1.5 text-[11px] bg-[#faf2df] border border-slate-900/15 rounded-md px-2 py-1 font-mono tabular-nums">
+              <span className={tradeState.tp1Hit ? 'text-emerald-700 font-bold' : 'text-slate-500'}>
                 TP1 40% @ 1.0R
               </span>
-              <span className="text-[#262f45]">·</span>
-              <span className={tradeState.tp2Hit ? 'text-[#3fc07a]' : 'text-[#64748b]'}>
+              <span className="text-slate-500">·</span>
+              <span className={tradeState.tp2Hit ? 'text-emerald-700 font-bold' : 'text-slate-500'}>
                 TP2 35% @ 2.0R
               </span>
-              <span className="text-[#262f45]">·</span>
-              <span className={tradeState.tp3Hit ? 'text-[#3fc07a]' : 'text-[#64748b]'}>
+              <span className="text-slate-500">·</span>
+              <span className={tradeState.tp3Hit ? 'text-emerald-700 font-bold' : 'text-slate-500'}>
                 TP3 25% @ 3.5R
               </span>
             </div>
@@ -1025,26 +1025,26 @@ export function ChartSimulator({
       </div>
 
       {indicators.rsi && recentRsi.length > 1 && (
-        <div className="border-t border-[#1a2030] bg-[#070b14] px-4 py-2.5">
-          <div className="flex items-center justify-between text-[11px] text-[#94a3b8] mb-1.5 [font-variant-numeric:tabular-nums]">
-            <span className="font-medium text-white">RSI (14) Momentum Oscillator Sub-Pane (75 bars)</span>
+        <div className="border-t border-slate-900/10 bg-[#fdfaf3] px-4 py-2.5">
+          <div className="flex items-center justify-between text-[11px] text-slate-600 mb-1.5 font-mono tabular-nums">
+            <span className="font-bold text-slate-900">RSI (14) Momentum Oscillator Sub-Pane (75 bars)</span>
             <div className="flex items-center gap-3">
-              <span className="text-[#e5566f]">Overbought 70</span>
-              <span className="text-[#94a3b8]">Midline 50</span>
-              <span className="text-[#3fc07a]">Oversold 30</span>
-              <span className="text-[#38bdf8] font-semibold">
+              <span className="text-rose-700 font-semibold">Overbought 70</span>
+              <span className="text-slate-500">Midline 50</span>
+              <span className="text-emerald-700 font-semibold">Oversold 30</span>
+              <span className="text-sky-700 font-bold">
                 Current: {recentRsi[recentRsi.length - 1].value}
               </span>
             </div>
           </div>
           <svg viewBox="0 0 780 92" className="w-full h-24 select-none" role="img" aria-label="RSI 14 Sub-Pane">
-            <rect x="0" y="18" width="740" height="52" fill="#1e293b" fillOpacity="0.28" />
-            <line x1="0" y1="18" x2="740" y2="18" stroke="#e5566f" strokeDasharray="3 3" strokeWidth="0.9" />
-            <line x1="0" y1="44" x2="740" y2="44" stroke="#475569" strokeDasharray="2 2" strokeWidth="0.8" />
-            <line x1="0" y1="70" x2="740" y2="70" stroke="#3fc07a" strokeDasharray="3 3" strokeWidth="0.9" />
+            <rect x="0" y="18" width="740" height="52" fill="#e2e8f0" fillOpacity="0.4" />
+            <line x1="0" y1="18" x2="740" y2="18" stroke="#e11d48" strokeDasharray="3 3" strokeWidth="0.9" />
+            <line x1="0" y1="44" x2="740" y2="44" stroke="#94a3b8" strokeDasharray="2 2" strokeWidth="0.8" />
+            <line x1="0" y1="70" x2="740" y2="70" stroke="#059669" strokeDasharray="3 3" strokeWidth="0.9" />
             <polyline
               fill="none"
-              stroke="#38bdf8"
+              stroke="#0284c7"
               strokeWidth="2.0"
               points={recentRsi
                 .map((pt, idx) => {
@@ -1054,13 +1054,13 @@ export function ChartSimulator({
                 })
                 .join(' ')}
             />
-            <text x="746" y="21" fill="#e5566f" fontSize="10" fontWeight="600">
+            <text x="746" y="21" fill="#e11d48" fontSize="10" fontWeight="600">
               70
             </text>
             <text x="746" y="47" fill="#64748b" fontSize="9.5">
               50
             </text>
-            <text x="746" y="73" fill="#3fc07a" fontSize="10" fontWeight="600">
+            <text x="746" y="73" fill="#059669" fontSize="10" fontWeight="600">
               30
             </text>
           </svg>
@@ -1068,21 +1068,21 @@ export function ChartSimulator({
       )}
 
       {indicators.macd && recentMacd.length > 1 && (
-        <div className="border-t border-[#1a2030] bg-[#070b14] px-4 py-2.5">
-          <div className="flex items-center justify-between text-[11px] text-[#94a3b8] mb-1.5 [font-variant-numeric:tabular-nums]">
-            <span className="font-medium text-white">MACD (12, 26, 9) Momentum Sub-Pane (75 bars)</span>
+        <div className="border-t border-slate-900/10 bg-[#fdfaf3] px-4 py-2.5">
+          <div className="flex items-center justify-between text-[11px] text-slate-600 mb-1.5 font-mono tabular-nums">
+            <span className="font-bold text-slate-900">MACD (12, 26, 9) Momentum Sub-Pane (75 bars)</span>
             <div className="flex items-center gap-3">
-              <span className="text-[#38bdf8]">
+              <span className="text-[#0369a1] font-semibold">
                 MACD: {recentMacd[recentMacd.length - 1].macd}
               </span>
-              <span className="text-[#e2a84b]">
+              <span className="text-amber-700 font-semibold">
                 Signal: {recentMacd[recentMacd.length - 1].signal}
               </span>
               <span
                 className={
                   recentMacd[recentMacd.length - 1].histogram >= 0
-                    ? 'text-[#3fc07a] font-semibold'
-                    : 'text-[#e5566f] font-semibold'
+                    ? 'text-emerald-700 font-bold'
+                    : 'text-rose-700 font-bold'
                 }
               >
                 Hist: {recentMacd[recentMacd.length - 1].histogram}
@@ -1100,7 +1100,7 @@ export function ChartSimulator({
             const stepW = 735 / Math.max(recentMacd.length, 1)
             return (
               <svg viewBox="0 0 780 92" className="w-full h-24 select-none" role="img" aria-label="MACD Sub-Pane">
-                <line x1="0" y1={zeroY} x2="740" y2={zeroY} stroke="#475569" strokeDasharray="3 3" strokeWidth="0.9" />
+                <line x1="0" y1={zeroY} x2="740" y2={zeroY} stroke="#94a3b8" strokeDasharray="3 3" strokeWidth="0.9" />
                 {recentMacd.map((m, idx) => {
                   const x = idx * stepW + 1.5
                   const yVal = toY(m.histogram)
@@ -1113,14 +1113,14 @@ export function ChartSimulator({
                       y={top}
                       width={Math.max(stepW - 2.2, 2.5)}
                       height={bh}
-                      fill={m.histogram >= 0 ? '#3fc07a' : '#e5566f'}
+                      fill={m.histogram >= 0 ? '#059669' : '#e11d48'}
                       fillOpacity="0.6"
                     />
                   )
                 })}
                 <polyline
                   fill="none"
-                  stroke="#e2a84b"
+                  stroke="#d97706"
                   strokeWidth="1.6"
                   points={recentMacd
                     .map((m, idx) => `${(idx * stepW + stepW / 2).toFixed(1)},${toY(m.signal).toFixed(1)}`)
@@ -1128,13 +1128,13 @@ export function ChartSimulator({
                 />
                 <polyline
                   fill="none"
-                  stroke="#38bdf8"
+                  stroke="#0284c7"
                   strokeWidth="1.9"
                   points={recentMacd
                     .map((m, idx) => `${(idx * stepW + stepW / 2).toFixed(1)},${toY(m.macd).toFixed(1)}`)
                     .join(' ')}
                 />
-                <text x="746" y={zeroY + 3} fill="#94a3b8" fontSize="10">
+                <text x="746" y={zeroY + 3} fill="#64748b" fontSize="10">
                   0.0
                 </text>
               </svg>
@@ -1144,47 +1144,47 @@ export function ChartSimulator({
       )}
 
       {activeBracket && (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 divide-y sm:divide-y-0 sm:divide-x divide-[#1a2030] border-t border-[#1a2030] bg-[#080d18] text-xs [font-variant-numeric:tabular-nums]">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 divide-y sm:divide-y-0 sm:divide-x divide-slate-900/10 border-t border-slate-900/10 bg-[#f3ead2]/50 text-xs font-mono tabular-nums">
           <div className="px-3.5 py-2.5 space-y-0.5">
-            <span className="block text-[11px] font-semibold text-white">1. Staged Setup Direction</span>
-            <span className="block text-[#94a3b8]">
-              <strong className={direction === 'LONG' ? 'text-[#3fc07a]' : 'text-[#e5566f]'}>
+            <span className="block text-[11px] font-bold text-slate-900">1. Staged Setup Direction</span>
+            <span className="block text-slate-600">
+              <strong className={direction === 'LONG' ? 'text-emerald-700' : 'text-rose-700'}>
                 {direction}
               </strong>{' '}
               setup on {symbol} ({timeframe})
             </span>
           </div>
           <div className="px-3.5 py-2.5 space-y-0.5">
-            <span className="block text-[11px] font-semibold text-[#38bdf8]">2. Where to Enter (Cyan Line)</span>
-            <span className="block text-[#cbd5e1]">
+            <span className="block text-[11px] font-bold text-[#0369a1]">2. Where to Enter (Cyan Line)</span>
+            <span className="block text-slate-700 font-medium">
               Entry at <strong>${activeBracket.entry.toLocaleString()}</strong> on bar #{replayIndex} close
             </span>
           </div>
           <div className="px-3.5 py-2.5 space-y-0.5">
-            <span className="block text-[11px] font-semibold text-[#e5566f]">3. Stop-Loss Invalidation (-1.0R)</span>
-            <span className="block text-[#cbd5e1]">
+            <span className="block text-[11px] font-bold text-rose-700">3. Stop-Loss Invalidation (-1.0R)</span>
+            <span className="block text-slate-700 font-medium">
               SL at <strong>${activeBracket.sl.toLocaleString()}</strong> (1R risk = ${activeBracket.risk.toFixed(2)})
             </span>
           </div>
           <div className="px-3.5 py-2.5 space-y-0.5">
-            <span className="block text-[11px] font-semibold text-[#3fc07a]">4. Scale-Out Targets (+{FULL_TP3_R_MULTIPLE}R)</span>
-            <span className="block text-[#cbd5e1]">
+            <span className="block text-[11px] font-bold text-emerald-700">4. Scale-Out Targets (+{FULL_TP3_R_MULTIPLE}R)</span>
+            <span className="block text-slate-700 font-medium">
               TP1 ${activeBracket.tp1.toLocaleString()} · TP2 ${activeBracket.tp2.toLocaleString()} · TP3 ${activeBracket.tp3.toLocaleString()}
             </span>
           </div>
         </div>
       )}
 
-      <div className="flex flex-wrap items-center justify-between gap-3 px-4 py-3 bg-[#0a0f1a] border-t border-[#1a2030] text-xs">
+      <div className="flex flex-wrap items-center justify-between gap-3 px-4 py-3 bg-[#f3ead2]/50 border-t border-slate-900/10 text-xs">
         <div className="flex flex-wrap items-center gap-3">
-          <div className="flex items-center gap-3 border-r border-[#1a2030] pr-3">
+          <div className="flex items-center gap-3 border-r border-slate-900/10 pr-3">
             <button
               type="button"
               onClick={() => setDirection('LONG')}
-              className={`py-1 text-xs transition-colors ${
+              className={`py-1 text-xs transition-colors cursor-pointer ${
                 direction === 'LONG'
-                  ? 'border-b border-[#3fc07a] text-[#3fc07a] font-semibold'
-                  : 'text-[#64748b] hover:text-white'
+                  ? 'border-b-2 border-emerald-600 text-emerald-800 font-bold'
+                  : 'text-slate-500 hover:text-slate-900'
               }`}
             >
               Long
@@ -1192,10 +1192,10 @@ export function ChartSimulator({
             <button
               type="button"
               onClick={() => setDirection('SHORT')}
-              className={`py-1 text-xs transition-colors ${
+              className={`py-1 text-xs transition-colors cursor-pointer ${
                 direction === 'SHORT'
-                  ? 'border-b border-[#e5566f] text-[#e5566f] font-semibold'
-                  : 'text-[#64748b] hover:text-white'
+                  ? 'border-b-2 border-rose-600 text-rose-800 font-bold'
+                  : 'text-slate-500 hover:text-slate-900'
               }`}
             >
               Short
@@ -1203,7 +1203,7 @@ export function ChartSimulator({
           </div>
 
           <div className="flex items-center gap-1.5">
-            <label htmlFor="bracket-entry" className="text-[#94a3b8]">
+            <label htmlFor="bracket-entry" className="text-slate-600 font-medium">
               Entry
             </label>
             <input
@@ -1212,13 +1212,13 @@ export function ChartSimulator({
               step="any"
               value={entryPrice}
               onChange={(e) => setEntryPrice(e.target.value)}
-              className="h-7 w-24 px-2 rounded bg-[#070b14] border border-[#262f45] text-white text-xs [font-variant-numeric:tabular-nums] focus:outline-none focus:border-[#ff2e54]"
+              className="h-7 w-24 px-2 rounded-lg bg-[#fdfaf3] border border-slate-900/15 text-slate-900 text-xs font-mono tabular-nums focus:outline-none focus:border-[#0369a1]"
               placeholder="Entry"
             />
           </div>
 
           <div className="flex items-center gap-1.5">
-            <label htmlFor="bracket-sl" className="text-[#94a3b8]">
+            <label htmlFor="bracket-sl" className="text-slate-600 font-medium">
               Stop loss
             </label>
             <input
@@ -1227,7 +1227,7 @@ export function ChartSimulator({
               step="any"
               value={slPrice}
               onChange={(e) => setSlPrice(e.target.value)}
-              className="h-7 w-24 px-2 rounded bg-[#070b14] border border-[#262f45] text-white text-xs [font-variant-numeric:tabular-nums] focus:outline-none focus:border-[#ff2e54]"
+              className="h-7 w-24 px-2 rounded-lg bg-[#fdfaf3] border border-slate-900/15 text-slate-900 text-xs font-mono tabular-nums focus:outline-none focus:border-[#0369a1]"
               placeholder="Stop loss"
             />
           </div>
@@ -1235,7 +1235,7 @@ export function ChartSimulator({
           <button
             type="button"
             onClick={handleApplyBracket}
-            className="h-7 px-3 rounded bg-white hover:bg-[#e2e8f0] text-[#070b14] font-medium transition-colors"
+            className="h-7 px-3 rounded-lg bg-[#0369a1] hover:bg-[#0284c7] text-white font-semibold transition-colors cursor-pointer"
           >
             Place bracket
           </button>
@@ -1243,16 +1243,16 @@ export function ChartSimulator({
             <button
               type="button"
               onClick={handleClearBracket}
-              className="h-7 px-2.5 rounded border border-[#262f45] bg-[#070b14] hover:bg-[#141b29] text-[#cbd5e1] transition-colors"
+              className="h-7 px-2.5 rounded-lg border border-slate-900/15 bg-[#faf2df] hover:bg-[#f3ead2] text-slate-800 transition-colors font-medium cursor-pointer"
             >
               Clear
             </button>
           )}
         </div>
 
-        <span className="text-xs text-[#94a3b8]">
-          Click <strong className="text-white font-medium">Play</strong> or{' '}
-          <strong className="text-white font-medium">Next bar</strong> to step the chart forward and test the bracket
+        <span className="text-xs text-slate-600">
+          Click <strong className="text-slate-900 font-bold">Play</strong> or{' '}
+          <strong className="text-slate-900 font-bold">Next bar</strong> to step the chart forward and test the bracket
         </span>
       </div>
     </div>

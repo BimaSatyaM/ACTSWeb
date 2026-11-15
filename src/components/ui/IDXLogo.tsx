@@ -30,7 +30,7 @@ export function IDXLogo({
     <div className={`inline-flex items-center gap-2.5 flex-shrink-0 ${className}`}>
       {variant === 'badge' ? (
         <div
-          className={`${currentSize.box} ${currentSize.rounded} ${currentSize.p} bg-gradient-to-br from-red-600/20 via-red-500/10 to-transparent border border-red-500/30 flex items-center justify-center shadow-[0_0_12px_rgba(239,68,68,0.2)] flex-shrink-0`}
+          className={`${currentSize.box} ${currentSize.rounded} ${currentSize.p} bg-rose-500/10 border border-rose-500/20 flex items-center justify-center flex-shrink-0`}
         >
           <Image
             src="/assets/idx-emblem.png"
@@ -67,9 +67,9 @@ export function IDXLogo({
 
       {withText && (
         <div className="flex flex-col">
-          <span className="font-sans font-extrabold tracking-tight text-white uppercase text-sm leading-none flex items-center gap-1">
+          <span className="font-sans font-extrabold tracking-tight text-slate-900 uppercase text-sm leading-none flex items-center gap-1">
             <span>IDX</span>
-            <span className="text-[10px] text-red-400 font-bold tracking-wider">BEI</span>
+            <span className="text-[10px] text-rose-600 font-bold tracking-wider">BEI</span>
           </span>
           {subtitle && (
             <span className="text-[9px] text-text-muted font-medium tracking-wide uppercase mt-0.5">

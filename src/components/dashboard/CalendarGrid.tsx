@@ -125,18 +125,39 @@ export function CalendarGrid() {
     setPickerOpen(false)
   }
 
+  const dayEntries = Object.values(monthData?.days || {})
+  const activeDaysCount = dayEntries.filter((d) => (d.signal_count || 0) + (d.watchlist_count || 0) > 0).length
+  const totalSetupsMonth = dayEntries.reduce((acc, d) => acc + (d.signal_count || 0) + (d.watchlist_count || 0), 0)
+  const totalWinsMonth = dayEntries.reduce((acc, d) => acc + (d.profit_count || 0), 0)
+  const totalLossesMonth = dayEntries.reduce((acc, d) => acc + (d.loss_count || 0), 0)
+
   return (
-    <GlassCard className="flex flex-col space-y-4 p-5 sm:p-6 relative overflow-visible">
-      
-      <div className="flex items-center justify-between relative">
-        <div>
-          <h3 className="text-lg font-bold text-white tracking-tight">Performance Calendar</h3>
+    <GlassCard className="flex flex-col space-y-5 p-5 sm:p-6 relative overflow-visible">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-900/10 pb-4 relative">
+        <div className="flex flex-wrap items-center gap-6 text-xs font-mono tabular-nums">
+          <div>
+            <span className="text-[10px] uppercase tracking-wider text-slate-500 block">Active Days</span>
+            <span className="font-bold text-slate-900 text-sm">{activeDaysCount}</span>
+          </div>
+          <div className="border-l border-slate-900/10 pl-6">
+            <span className="text-[10px] uppercase tracking-wider text-slate-500 block">Total Setups</span>
+            <span className="font-bold text-slate-900 text-sm">{totalSetupsMonth}</span>
+          </div>
+          <div className="border-l border-slate-900/10 pl-6">
+            <span className="text-[10px] uppercase tracking-wider text-slate-500 block">Target Hits</span>
+            <span className="font-bold text-emerald-700 text-sm">{totalWinsMonth}W</span>
+          </div>
+          <div className="border-l border-slate-900/10 pl-6">
+            <span className="text-[10px] uppercase tracking-wider text-slate-500 block">Stop Losses</span>
+            <span className="font-bold text-rose-700 text-sm">{totalLossesMonth}L</span>
+          </div>
         </div>
 
         <div className="flex items-center gap-2 relative">
           <button
+            type="button"
             onClick={handlePrevMonth}
-            className="p-1.5 rounded-lg bg-white/[0.03] hover:bg-white/[0.08] border border-white/[0.08] text-text-secondary hover:text-white transition-all cursor-pointer"
+            className="p-1.5 rounded-lg bg-[#fdfaf3] hover:bg-[#f3ead2] border border-slate-900/15 text-slate-700 hover:text-slate-900 transition-colors cursor-pointer"
             aria-label="Previous Month"
           >
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -145,18 +166,19 @@ export function CalendarGrid() {
           </button>
 
           <button
+            type="button"
             onClick={() => setPickerOpen(!pickerOpen)}
-            className="group flex items-center justify-center gap-1.5 text-xs font-bold text-white px-3 py-1.5 rounded-lg bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.08] hover:border-white/20 min-w-[130px] transition-all cursor-pointer shadow-sm active:scale-95"
+            className="group flex items-center justify-center gap-1.5 text-xs font-mono font-bold text-slate-900 px-3 py-1.5 rounded-lg bg-[#fdfaf3] hover:bg-[#f3ead2] border border-slate-900/15 min-w-[130px] transition-colors cursor-pointer"
             aria-label="Open month and year picker"
           >
             <span>{MONTH_NAMES[currentMonth - 1]} {currentYear}</span>
             {loading ? (
-              <span className="w-3 h-3 border-2 border-accent-theme border-t-transparent rounded-full animate-spin" />
+              <span className="w-3 h-3 border-2 border-[#0284c7] border-t-transparent rounded-full animate-spin" />
             ) : (
-              <svg 
-                className={`w-3.5 h-3.5 text-text-muted group-hover:text-white transition-transform duration-200 ${pickerOpen ? 'rotate-180 text-accent-theme' : ''}`} 
-                fill="none" 
-                stroke="currentColor" 
+              <svg
+                className={`w-3.5 h-3.5 text-slate-500 group-hover:text-slate-900 transition-transform duration-200 ${pickerOpen ? 'rotate-180 text-[#0369a1]' : ''}`}
+                fill="none"
+                stroke="currentColor"
                 viewBox="0 0 24 24"
               >
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M19 9l-7 7-7-7" />
@@ -165,8 +187,9 @@ export function CalendarGrid() {
           </button>
 
           <button
+            type="button"
             onClick={handleNextMonth}
-            className="p-1.5 rounded-lg bg-white/[0.03] hover:bg-white/[0.08] border border-white/[0.08] text-text-secondary hover:text-white transition-all cursor-pointer"
+            className="p-1.5 rounded-lg bg-[#fdfaf3] hover:bg-[#f3ead2] border border-slate-900/15 text-slate-700 hover:text-slate-900 transition-colors cursor-pointer"
             aria-label="Next Month"
           >
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -176,18 +199,18 @@ export function CalendarGrid() {
 
           {pickerOpen && (
             <>
-              <div 
-                className="fixed inset-0 z-40" 
-                onClick={() => setPickerOpen(false)} 
-                aria-hidden="true" 
+              <div
+                className="fixed inset-0 z-40"
+                onClick={() => setPickerOpen(false)}
+                aria-hidden="true"
               />
 
-              <div className="absolute right-0 top-11 z-50 w-64 p-4 rounded-2xl bg-[#0c0e18]/95 border border-white/15 backdrop-blur-2xl shadow-[0_16px_50px_rgba(0,0,0,0.8),inset_0_1px_1px_rgba(255,255,255,0.15)] animate-in fade-in zoom-in-95 duration-150 space-y-3">
-                
-                <div className="flex items-center justify-between border-b border-white/[0.08] pb-2.5">
+              <div className="absolute right-0 top-11 z-50 w-64 p-4 rounded-2xl bg-[#fdfaf3] border border-slate-900/15 shadow-xl space-y-3">
+                <div className="flex items-center justify-between border-b border-slate-900/10 pb-2.5">
                   <button
+                    type="button"
                     onClick={() => setPickerYear((y) => y - 1)}
-                    className="p-1 rounded-md text-text-secondary hover:text-white bg-white/[0.04] hover:bg-white/[0.1] transition-all cursor-pointer"
+                    className="p-1 rounded-md text-slate-600 hover:text-slate-900 bg-[#f3ead2]/60 hover:bg-[#f3ead2] transition-colors cursor-pointer"
                     aria-label="Previous Year"
                   >
                     <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -195,13 +218,14 @@ export function CalendarGrid() {
                     </svg>
                   </button>
 
-                  <span className="text-sm font-extrabold text-white tracking-wide font-mono">
+                  <span className="text-sm font-extrabold text-slate-900 tracking-wide font-mono tabular-nums">
                     {pickerYear}
                   </span>
 
                   <button
+                    type="button"
                     onClick={() => setPickerYear((y) => y + 1)}
-                    className="p-1 rounded-md text-text-secondary hover:text-white bg-white/[0.04] hover:bg-white/[0.1] transition-all cursor-pointer"
+                    className="p-1 rounded-md text-slate-600 hover:text-slate-900 bg-[#f3ead2]/60 hover:bg-[#f3ead2] transition-colors cursor-pointer"
                     aria-label="Next Year"
                   >
                     <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -216,11 +240,12 @@ export function CalendarGrid() {
                     return (
                       <button
                         key={name}
+                        type="button"
                         onClick={() => selectMonthYear(idx, pickerYear)}
-                        className={`px-2 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+                        className={`px-2 py-1.5 rounded-lg text-xs font-semibold transition-colors cursor-pointer ${
                           isSelected
-                            ? 'bg-accent-theme text-white shadow-[0_0_12px_rgba(255,46,84,0.35)] font-bold'
-                            : 'bg-white/[0.03] hover:bg-white/[0.08] text-text-secondary hover:text-white border border-white/[0.04]'
+                            ? 'bg-[#0369a1] text-white font-bold'
+                            : 'bg-[#faf2df] hover:bg-[#f3ead2] text-slate-700 border border-slate-900/10'
                         }`}
                       >
                         {name.slice(0, 3)}
@@ -229,14 +254,15 @@ export function CalendarGrid() {
                   })}
                 </div>
 
-                <div className="border-t border-white/[0.06] pt-2 text-center">
+                <div className="border-t border-slate-900/10 pt-2 text-center">
                   <button
+                    type="button"
                     onClick={() => {
                       setCurrentMonth(today.getUTCMonth() + 1)
                       setCurrentYear(today.getUTCFullYear())
                       setPickerOpen(false)
                     }}
-                    className="text-[10px] uppercase font-bold tracking-wider text-accent-blue hover:text-accent-blue/80 cursor-pointer"
+                    className="text-[10px] font-mono uppercase font-bold tracking-wider text-[#0369a1] hover:text-slate-900 cursor-pointer"
                   >
                     Jump to Today
                   </button>
@@ -249,7 +275,7 @@ export function CalendarGrid() {
 
       <div className="grid grid-cols-7 gap-1.5 text-center">
         {WEEKDAY_NAMES.map((day) => (
-          <div key={day} className="text-[10px] font-bold text-text-muted/80 tracking-wider py-1">
+          <div key={day} className="text-[10px] font-mono font-bold text-slate-500 tracking-wider py-1">
             {day}
           </div>
         ))}
@@ -257,7 +283,7 @@ export function CalendarGrid() {
 
       <div className="grid grid-cols-7 gap-1.5">
         {Array.from({ length: startDayOfWeek }).map((_, i) => (
-          <div key={`empty-${i}`} className="min-h-[64px] rounded-xl bg-transparent opacity-0 pointer-events-none" />
+          <div key={`empty-${i}`} className="min-h-[64px] rounded-lg bg-transparent opacity-0 pointer-events-none" />
         ))}
 
         {Array.from({ length: daysInMonth }).map((_, i) => {
@@ -276,59 +302,60 @@ export function CalendarGrid() {
           return (
             <button
               key={dateStr}
+              type="button"
               onClick={() => handleDayClick(dateStr)}
-              className={`group min-h-[68px] p-2.5 rounded-xl border flex flex-col justify-between items-start text-left transition-all duration-200 cursor-pointer ${
+              className={`group min-h-[68px] p-2.5 rounded-lg border flex flex-col justify-between items-start text-left transition-colors duration-150 cursor-pointer ${
                 isToday
-                  ? 'bg-accent-theme/10 border-accent-theme/40 shadow-[0_0_14px_rgba(255,46,84,0.2)]'
+                  ? 'bg-[#e0f2fe] border-[#0284c7]'
                   : isPositive
-                  ? 'bg-emerald-500/[0.03] border-emerald-500/15 hover:bg-emerald-500/[0.07] hover:border-emerald-500/30 hover:-translate-y-0.5'
+                  ? 'bg-emerald-500/10 border-emerald-600/30 hover:bg-emerald-500/15'
                   : isNegative
-                  ? 'bg-rose-500/[0.03] border-rose-500/15 hover:bg-rose-500/[0.07] hover:border-rose-500/30 hover:-translate-y-0.5'
-                  : 'bg-white/[0.02] border-white/[0.05] hover:bg-white/[0.06] hover:border-white/[0.12] hover:-translate-y-0.5'
+                  ? 'bg-rose-500/10 border-rose-600/30 hover:bg-rose-500/15'
+                  : 'bg-[#fdfaf3] border-slate-900/10 hover:bg-[#f3ead2]'
               }`}
             >
-              <div className="flex items-center justify-between w-full">
-                <span className={`text-xs font-mono font-bold ${isToday ? 'text-accent-theme' : 'text-white/80 group-hover:text-white'}`}>
+              <div className="flex items-center justify-between w-full font-mono tabular-nums">
+                <span className={`text-xs font-bold ${isToday ? 'text-[#0369a1]' : 'text-slate-800 group-hover:text-slate-900'}`}>
                   {dayNum}
                 </span>
                 {totalSetups > 0 && (
-                  <span className="text-[9px] font-mono text-text-muted/60">
+                  <span className="text-[9px] text-slate-500">
                     {totalSetups} set
                   </span>
                 )}
               </div>
 
-              <div className="w-full mt-1">
+              <div className="w-full mt-1 font-mono tabular-nums">
                 {hasTrades ? (
-                  <div className={`inline-flex items-center gap-1 text-[10px] font-bold font-mono ${
+                  <div className={`inline-flex items-center gap-1 text-[10px] font-bold ${
                     isPositive
-                      ? 'text-emerald-400'
+                      ? 'text-emerald-700'
                       : isNegative
-                      ? 'text-rose-400'
-                      : 'text-zinc-300'
+                      ? 'text-rose-700'
+                      : 'text-slate-600'
                   }`}>
                     {isPositive ? (
-                      <svg className="w-2.5 h-2.5 text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                      <svg className="w-2.5 h-2.5 text-emerald-700" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                         <polyline points="22 7 13.5 15.5 8.5 10.5 2 17" />
                         <polyline points="16 7 22 7 22 13" />
                       </svg>
                     ) : isNegative ? (
-                      <svg className="w-2.5 h-2.5 text-rose-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                      <svg className="w-2.5 h-2.5 text-rose-700" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                         <polyline points="22 17 13.5 8.5 8.5 13.5 2 7" />
                         <polyline points="16 17 22 17 22 11" />
                       </svg>
                     ) : (
-                      <span className="w-1.5 h-1.5 rounded-full bg-zinc-400" />
+                      <span className="w-1.5 h-1.5 rounded-full bg-slate-500" />
                     )}
                     <span>{profitCount}W {lossCount}L</span>
                   </div>
                 ) : totalSetups > 0 ? (
-                  <span className="text-[9px] font-mono font-medium text-cyan-300/80 block truncate">
+                  <span className="text-[9px] font-medium text-[#0369a1] block truncate">
                     {totalSetups} Setups
                   </span>
                 ) : (
-                  <span className="text-[9px] text-text-muted/30 font-mono block h-4">
-                    —
+                  <span className="text-[9px] text-slate-600 block h-4">
+                    -
                   </span>
                 )}
               </div>
@@ -337,24 +364,24 @@ export function CalendarGrid() {
         })}
       </div>
 
-      <div className="flex items-center justify-between border-t border-white/[0.04] pt-3 text-[10px] text-text-muted">
+      <div className="flex items-center justify-between border-t border-slate-900/10 pt-3 text-[10px] font-mono text-slate-500">
         <div className="flex items-center gap-3">
-          <span className="inline-flex items-center gap-1.5 text-text-secondary">
-            <svg className="w-3 h-3 text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+          <span className="inline-flex items-center gap-1.5 text-slate-600">
+            <svg className="w-3 h-3 text-emerald-700" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
               <polyline points="22 7 13.5 15.5 8.5 10.5 2 17" />
               <polyline points="16 7 22 7 22 13" />
             </svg>
             <span>Net Profitable</span>
           </span>
-          <span className="inline-flex items-center gap-1.5 text-text-secondary">
-            <svg className="w-3 h-3 text-rose-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+          <span className="inline-flex items-center gap-1.5 text-slate-600">
+            <svg className="w-3 h-3 text-rose-700" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
               <polyline points="22 17 13.5 8.5 8.5 13.5 2 7" />
               <polyline points="16 17 22 17 22 11" />
             </svg>
             <span>Net Loss</span>
           </span>
         </div>
-        <span className="text-[10px] text-text-muted/70">Click day for full drilldown</span>
+        <span className="text-[10px] text-slate-600">Click day for full drilldown</span>
       </div>
 
       <DayDetailModal

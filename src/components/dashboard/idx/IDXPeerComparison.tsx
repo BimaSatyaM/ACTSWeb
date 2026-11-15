@@ -28,17 +28,17 @@ export function IDXPeerComparison({
   }
 
   return (
-    <div className="rounded-xl bg-[#0d121f] border border-white/[0.08] p-5 sm:p-6 space-y-4">
+    <div className="rounded-xl bg-[#fdfaf3] border border-slate-900/10 p-5 sm:p-6 space-y-4 shadow-xs">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
         <div>
-          <h3 className="text-xs sm:text-sm font-bold uppercase tracking-wider text-white flex items-center gap-2 font-mono">
-            <span className="w-2 h-2 rounded-full bg-brand-primary" />
+          <h3 className="text-xs sm:text-sm font-bold uppercase tracking-wider text-slate-900 flex items-center gap-2 font-mono">
+            <span className="w-2 h-2 rounded-full bg-sky-600" />
             <span>Sector Peer Benchmarking</span>
-            <span className="text-xs font-normal text-slate-400">
+            <span className="text-xs font-normal text-slate-500 font-sans">
               ({sectorName} Sector)
             </span>
           </h3>
-          <p className="text-xs text-slate-400 mt-0.5 font-mono">
+          <p className="text-xs text-slate-500 mt-0.5 font-mono">
             Compare valuation multiples, capital returns, and balance sheet risk against direct industry rivals.
           </p>
         </div>
@@ -48,9 +48,9 @@ export function IDXPeerComparison({
       </div>
 
       <div className="overflow-x-auto">
-        <table className="w-full text-left border-collapse text-xs font-mono">
+        <table className="w-full text-left border-collapse text-xs font-mono tabular-nums">
           <thead>
-            <tr className="border-b border-white/[0.08] text-slate-400 uppercase tracking-wider text-[10px] bg-[#070b14]/50">
+            <tr className="border-b border-slate-900/10 text-slate-600 uppercase tracking-wider text-[10px] bg-[#faf2df]/80 font-bold">
               <th className="py-2.5 px-3">Ticker / Company</th>
               <th className="py-2.5 px-3 text-right">Price (IDR)</th>
               <th className="py-2.5 px-3 text-right">Market Cap</th>
@@ -62,7 +62,7 @@ export function IDXPeerComparison({
               <th className="py-2.5 px-3 text-right">52w High / Low</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-white/[0.04]">
+          <tbody className="divide-y divide-slate-900/10">
             {peers.map((peer) => {
               const isActive = peer.symbol.toUpperCase() === currentSymbol.toUpperCase()
 
@@ -72,8 +72,8 @@ export function IDXPeerComparison({
                   onClick={() => onSelectPeer(peer.symbol)}
                   className={`cursor-pointer transition-colors group ${
                     isActive
-                      ? 'bg-white/[0.04] border-l-2 border-[#ff2e54] font-semibold text-white'
-                      : 'hover:bg-white/[0.02] text-slate-300'
+                      ? 'bg-sky-50/70 border-l-2 border-sky-600 font-semibold text-slate-900'
+                      : 'hover:bg-[#f3ead2]/40 text-slate-700'
                   }`}
                 >
                   <td className="py-3 px-3">
@@ -82,28 +82,28 @@ export function IDXPeerComparison({
                       <span
                         className={`px-2 py-0.5 rounded font-black text-xs ${
                           isActive
-                            ? 'bg-[#ff2e54] text-white'
-                            : 'bg-white/[0.06] text-white group-hover:bg-white/[0.1]'
+                            ? 'bg-sky-600 text-white'
+                            : 'bg-[#fdfaf3] text-slate-800 border border-slate-900/10 group-hover:bg-[#f3ead2]'
                         }`}
                       >
                         {peer.symbol}
                       </span>
-                      <span className="truncate max-w-[160px] sm:max-w-[220px] text-slate-400 text-[11px]">
+                      <span className="truncate max-w-[160px] sm:max-w-[220px] text-slate-500 text-[11px] font-sans">
                         {peer.name}
                       </span>
                       {isActive && (
-                        <span className="text-[9px] uppercase tracking-wider px-1.5 py-0.5 rounded bg-cyan-500/20 text-cyan-400 border border-cyan-500/30">
+                        <span className="text-[10px] uppercase tracking-wider font-bold text-sky-800 font-mono">
                           Active
                         </span>
                       )}
                     </div>
                   </td>
 
-                  <td className="py-3 px-3 text-right font-bold text-white">
+                  <td className="py-3 px-3 text-right font-bold text-slate-900">
                     {formatIDR(peer.price)}
                   </td>
 
-                  <td className="py-3 px-3 text-right text-cyan-400 font-bold">
+                  <td className="py-3 px-3 text-right text-sky-800 font-bold">
                     {formatTrillion(peer.marketCapTrillion)}
                   </td>
 
@@ -111,13 +111,13 @@ export function IDXPeerComparison({
                     <span
                       className={`font-semibold ${
                         peer.peRatio !== null && peer.peRatio < 12
-                          ? 'text-emerald-400'
+                          ? 'text-emerald-700'
                           : peer.peRatio !== null && peer.peRatio > 25
-                          ? 'text-rose-400'
-                          : 'text-white'
+                          ? 'text-rose-700'
+                          : 'text-slate-900'
                       }`}
                     >
-                      {peer.peRatio !== null ? formatRatio(peer.peRatio) : '—'}
+                      {peer.peRatio !== null ? formatRatio(peer.peRatio) : '-'}
                     </span>
                   </td>
 
@@ -125,13 +125,13 @@ export function IDXPeerComparison({
                     <span
                       className={`font-semibold ${
                         peer.pbvRatio !== null && peer.pbvRatio < 1.0
-                          ? 'text-emerald-400'
+                          ? 'text-emerald-700'
                           : peer.pbvRatio !== null && peer.pbvRatio > 3.0
-                          ? 'text-rose-400'
-                          : 'text-white'
+                          ? 'text-rose-700'
+                          : 'text-slate-900'
                       }`}
                     >
-                      {peer.pbvRatio !== null ? formatRatio(peer.pbvRatio) : '—'}
+                      {peer.pbvRatio !== null ? formatRatio(peer.pbvRatio) : '-'}
                     </span>
                   </td>
 
@@ -139,13 +139,13 @@ export function IDXPeerComparison({
                     <span
                       className={`font-semibold ${
                         peer.roe !== null && peer.roe >= 18
-                          ? 'text-emerald-400'
+                          ? 'text-emerald-700'
                           : peer.roe !== null && peer.roe < 8
-                          ? 'text-text-muted'
-                          : 'text-white'
+                          ? 'text-slate-500'
+                          : 'text-slate-900'
                       }`}
                     >
-                      {peer.roe !== null ? `${peer.roe.toFixed(1)}%` : '—'}
+                      {peer.roe !== null ? `${peer.roe.toFixed(1)}%` : '-'}
                     </span>
                   </td>
 
@@ -153,8 +153,8 @@ export function IDXPeerComparison({
                     <span
                       className={`font-semibold ${
                         peer.dividendYield !== null && peer.dividendYield >= 5
-                          ? 'text-amber-400'
-                          : 'text-text-secondary'
+                          ? 'text-amber-800'
+                          : 'text-slate-600'
                       }`}
                     >
                       {peer.dividendYield !== null ? `${peer.dividendYield.toFixed(1)}%` : '0.0%'}
@@ -165,15 +165,15 @@ export function IDXPeerComparison({
                     <span
                       className={`font-semibold ${
                         peer.der !== null && peer.der > 2.5
-                          ? 'text-rose-400'
-                          : 'text-text-secondary'
+                          ? 'text-rose-700'
+                          : 'text-slate-600'
                       }`}
                     >
-                      {peer.der !== null ? formatRatio(peer.der) : '—'}
+                      {peer.der !== null ? formatRatio(peer.der) : '-'}
                     </span>
                   </td>
 
-                  <td className="py-3 px-3 text-right text-[11px] text-text-muted">
+                  <td className="py-3 px-3 text-right text-[11px] text-slate-500">
                     {formatIDR(peer.week52Low)} - {formatIDR(peer.week52High)}
                   </td>
                 </tr>

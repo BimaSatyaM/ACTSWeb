@@ -164,7 +164,7 @@ function getEventDossier(event: EconomicEvent): MacroDossier {
       indicatorName: 'Federal Funds Target Rate & FOMC Press Conference',
       releaseFrequency: '8 Scheduled Meetings Per Year (Statement 2:00 PM ET, Presser 2:30 PM ET)',
       officialDescription:
-        'The Federal Open Market Committee establishes the target range for the federal funds rate—the benchmark rate at which commercial banks lend reserve balances overnight. The decision is followed immediately by the Fed Chair’s live press conference.',
+        'The Federal Open Market Committee establishes the target range for the federal funds rate, the benchmark rate at which commercial banks lend reserve balances overnight. The decision is followed immediately by the Fed Chair’s live press conference.',
       methodologySummary:
         'Determined by consensus vote of the 12-member committee (7 Board of Governors, President of the NY Fed, and 4 rotating regional Fed Presidents). Accompanied quarterly by the Summary of Economic Projections (SEP "dot plot").',
       marketImplication:
@@ -305,24 +305,23 @@ export function MacroEventModal({ event, onClose, articles = [] }: MacroEventMod
   const dossier = getEventDossier(event)
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/85 backdrop-blur-md animate-fadeIn">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-slate-900/40 backdrop-blur-sm animate-fadeIn">
       <div
-        className="relative w-full max-w-3xl bg-[#0d111c] border border-white/[0.12] shadow-2xl shadow-black/90 overflow-hidden flex flex-col max-h-[92vh] text-left"
+        className="relative w-full max-w-3xl bg-[#fdfaf3] border border-slate-900/15 shadow-2xl overflow-hidden flex flex-col max-h-[92vh] text-left rounded-2xl"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="flex items-center justify-between p-4 sm:p-5 border-b border-white/[0.08] bg-white/[0.02]">
+        <div className="flex items-center justify-between p-4 sm:p-5 border-b border-slate-900/10">
           <div className="flex items-center gap-2.5 min-w-0 pr-4">
-            <span className="text-xl flex-shrink-0">🏛️</span>
             <div className="min-w-0">
               <div className="flex items-center gap-2">
-                <span className="text-[10px] font-mono font-medium text-cyan-400 uppercase tracking-wider block truncate">
+                <span className="text-[10px] font-mono font-medium text-[#0369a1] uppercase tracking-wider block truncate">
                   {dossier.agency}
                 </span>
-                <span className="px-1.5 py-0.2 text-[9px] font-mono bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 flex-shrink-0">
+                <span className="px-1.5 py-0.5 text-[9px] font-mono bg-[#faf2df] text-slate-800 border border-slate-900/10 flex-shrink-0 rounded font-semibold">
                   OFFICIAL GOVERNMENT RELEASE
                 </span>
               </div>
-              <h3 className="text-sm sm:text-base font-bold text-white tracking-tight truncate">
+              <h3 className="text-sm sm:text-base font-bold text-slate-900 tracking-tight truncate">
                 {event.title}
               </h3>
             </div>
@@ -330,7 +329,7 @@ export function MacroEventModal({ event, onClose, articles = [] }: MacroEventMod
 
           <button
             onClick={onClose}
-            className="w-8 h-8 flex-shrink-0 flex items-center justify-center text-text-muted hover:text-white hover:bg-white/[0.08] border border-transparent hover:border-white/[0.1] transition-all font-mono text-sm"
+            className="w-8 h-8 flex-shrink-0 flex items-center justify-center text-slate-500 hover:text-slate-900 hover:bg-[#f3ead2] rounded-lg transition-all font-mono text-sm cursor-pointer"
             aria-label="Close Modal"
           >
             ✕
@@ -339,25 +338,25 @@ export function MacroEventModal({ event, onClose, articles = [] }: MacroEventMod
 
         <div className="p-4 sm:p-6 space-y-5 overflow-y-auto custom-scrollbar">
           {event.image_url && (
-            <div className="w-full h-36 sm:h-44 relative overflow-hidden bg-black/60 border border-white/[0.08]">
+            <div className="w-full h-36 sm:h-44 relative overflow-hidden bg-[#faf2df] border border-slate-900/10 rounded-xl">
               <img
                 src={event.image_url}
                 alt={event.title}
                 className="w-full h-full object-cover object-center"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#0d111c] via-[#0d111c]/50 to-transparent flex flex-col justify-end p-4">
+              <div className="absolute inset-0 bg-gradient-to-t from-[#fdfaf3] via-[#fdfaf3]/60 to-transparent flex flex-col justify-end p-4">
                 <div className="flex items-center gap-2 flex-wrap">
                   <span
-                    className={`text-[10px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 border ${
+                    className={`text-[10px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 border border-slate-900/10 rounded ${
                       isHigh
-                        ? 'bg-rose-500/20 text-rose-300 border-rose-500/30'
-                        : 'bg-amber-500/20 text-amber-300 border-amber-500/30'
+                        ? 'bg-rose-50 text-rose-700'
+                        : 'bg-amber-50 text-amber-800'
                     }`}
                   >
                     {event.impact} IMPACT EVENT
                   </span>
-                  <span className="text-text-muted text-[10px]">·</span>
-                  <span className="text-[10px] font-mono text-cyan-300">
+                  <span className="text-slate-500 text-[10px]">·</span>
+                  <span className="text-[10px] font-mono text-slate-700 font-semibold tabular-nums">
                     {formatFullDate(event.date_time)}
                   </span>
                 </div>
@@ -365,81 +364,75 @@ export function MacroEventModal({ event, onClose, articles = [] }: MacroEventMod
             </div>
           )}
 
-          <div className="grid grid-cols-3 gap-2.5 sm:gap-3">
-            <div className="p-3 bg-white/[0.03] border border-white/[0.08] space-y-0.5">
-              <span className="text-[9px] font-mono font-medium text-text-muted uppercase block">
+          <div className="grid grid-cols-3 divide-x divide-slate-900/10 rounded-xl bg-[#faf2df] border border-slate-900/10 p-3 sm:p-4">
+            <div className="space-y-0.5 pr-2 sm:pr-4">
+              <span className="text-[9px] font-mono font-medium text-slate-500 uppercase tracking-wider block">
                 Forecast (F)
               </span>
-              <span className="text-sm sm:text-base font-bold text-white font-mono block">
+              <span className="text-sm sm:text-base font-bold text-slate-900 font-mono tabular-nums block">
                 {event.forecast || 'N/A'}
               </span>
-              <span className="text-[9px] font-mono text-text-muted block truncate">Market Consensus</span>
+              <span className="text-[9px] font-mono text-slate-500 block truncate">Market Consensus</span>
             </div>
 
-            <div className="p-3 bg-white/[0.03] border border-white/[0.08] space-y-0.5">
-              <span className="text-[9px] font-mono font-medium text-text-muted uppercase block">
+            <div className="space-y-0.5 px-2 sm:px-4">
+              <span className="text-[9px] font-mono font-medium text-slate-500 uppercase tracking-wider block">
                 Previous (P)
               </span>
-              <span className="text-sm sm:text-base font-bold text-zinc-300 font-mono block">
+              <span className="text-sm sm:text-base font-bold text-slate-700 font-mono tabular-nums block">
                 {event.previous || 'N/A'}
               </span>
-              <span className="text-[9px] font-mono text-text-muted block truncate">Prior Release</span>
+              <span className="text-[9px] font-mono text-slate-500 block truncate">Prior Release</span>
             </div>
 
-            <div
-              className={`p-3 border space-y-0.5 ${
-                isPending
-                  ? 'bg-white/[0.02] border-white/[0.06]'
-                  : 'bg-emerald-500/[0.08] border-emerald-500/25'
-              }`}
-            >
-              <span className="text-[9px] font-mono font-medium text-text-muted uppercase block">
+            <div className="space-y-0.5 pl-2 sm:pl-4">
+              <span className="text-[9px] font-mono font-medium text-slate-500 uppercase tracking-wider block">
                 Actual Result
               </span>
               <span
-                className={`text-sm sm:text-base font-bold font-mono block ${
-                  isPending ? 'text-amber-400 animate-pulse' : 'text-emerald-400'
+                className={`text-sm sm:text-base font-bold font-mono tabular-nums block ${
+                  isPending ? 'text-amber-800 animate-pulse' : 'text-emerald-700'
                 }`}
               >
                 {event.actual || (isPending ? 'Pending...' : 'Delivered')}
               </span>
-              <span className="text-[9px] font-mono text-text-muted block truncate">
+              <span className="text-[9px] font-mono text-slate-500 block truncate">
                 {isPending ? 'Awaiting Official Release' : 'Official Bureau Figure'}
               </span>
             </div>
           </div>
 
-          <div className="border border-white/[0.08] bg-white/[0.01] overflow-hidden">
-            <div className="flex border-b border-white/[0.08] bg-black/40">
+          <div className="rounded-2xl border border-slate-900/10 bg-[#faf2df] overflow-hidden">
+            <div className="flex border-b border-slate-900/10">
               <button
                 onClick={() => setActiveTab('narrative')}
-                className={`flex-1 py-2.5 px-3 text-xs font-mono font-semibold transition-all border-b-2 ${
+                className={`flex-1 py-2.5 px-3 text-xs font-mono font-semibold transition-all border-b-2 cursor-pointer ${
                   activeTab === 'narrative'
-                    ? 'border-cyan-400 text-white bg-white/[0.04]'
-                    : 'border-transparent text-text-muted hover:text-white'
+                    ? 'border-[#0369a1] text-slate-900 bg-[#fdfaf3] font-bold'
+                    : 'border-transparent text-slate-500 hover:text-slate-900'
                 }`}
               >
-                📋 Official Release Intelligence
+                Official Release Intelligence
               </button>
               <button
                 onClick={() => setActiveTab('wires')}
-                className={`flex-1 py-2.5 px-3 text-xs font-mono font-semibold transition-all border-b-2 ${
+                className={`flex-1 py-2.5 px-3 text-xs font-mono font-semibold transition-all border-b-2 cursor-pointer ${
                   activeTab === 'wires'
-                    ? 'border-cyan-400 text-white bg-white/[0.04]'
-                    : 'border-transparent text-text-muted hover:text-white'
+                    ? 'border-[#0369a1] text-slate-900 bg-[#fdfaf3] font-bold'
+                    : 'border-transparent text-slate-500 hover:text-slate-900'
                 }`}
               >
-                📰 Live Wires & Official Coverage ({macroArticles.length})
+                Live Wires & Coverage ({macroArticles.length})
               </button>
               <button
                 onClick={() => setActiveTab('impact')}
-                className={`flex-1 py-2.5 px-3 text-xs font-mono font-semibold transition-all border-b-2 ${
+                className={`flex-1 py-2.5 px-3 text-xs font-mono font-semibold transition-all border-b-2 cursor-pointer ${
                   activeTab === 'impact'
-                    ? 'border-cyan-400 text-white bg-white/[0.04]'
-                    : 'border-transparent text-text-muted hover:text-white'
+                    ? 'border-[#0369a1] text-slate-900 bg-[#fdfaf3] font-bold'
+                    : 'border-transparent text-slate-500 hover:text-slate-900'
                 }`}
               >
-                ⚡ Market Transmission
+                Market Transmission
               </button>
             </div>
 
@@ -447,33 +440,33 @@ export function MacroEventModal({ event, onClose, articles = [] }: MacroEventMod
               <div className="p-4 sm:p-5 space-y-4">
                 <div className="space-y-1">
                   <div className="flex items-center justify-between">
-                    <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-cyan-400 block">
+                    <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-[#0369a1] block">
                       Indicator Scope & Economic Definition
                     </span>
-                    <span className="text-[10px] font-mono text-text-muted">
+                    <span className="text-[10px] font-mono text-slate-500">
                       Cadence: {dossier.releaseFrequency}
                     </span>
                   </div>
-                  <p className="text-xs text-zinc-200 leading-relaxed font-medium">
+                  <p className="text-xs text-slate-800 leading-relaxed font-medium">
                     {dossier.officialDescription}
                   </p>
                 </div>
 
-                <div className="space-y-2 pt-2 border-t border-white/[0.06]">
-                  <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-text-muted block">
+                <div className="space-y-2 pt-2 border-t border-slate-900/10">
+                  <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-slate-500 block">
                     Official Agency Methodology
                   </span>
-                  <div className="text-xs text-text-secondary leading-relaxed space-y-2 whitespace-pre-line">
+                  <div className="text-xs text-slate-600 leading-relaxed space-y-2 whitespace-pre-line">
                     {dossier.methodologySummary}
                   </div>
                 </div>
 
-                <div className="p-3 bg-white/[0.02] border border-white/[0.06] flex items-center justify-between">
+                <div className="p-3.5 bg-[#fdfaf3] border border-slate-900/10 rounded-xl flex items-center justify-between">
                   <div className="space-y-0.5">
-                    <span className="text-[9px] font-mono uppercase text-text-muted block">
+                    <span className="text-[9px] font-mono uppercase text-slate-500 block">
                       Issuing Agency Telemetry Portal
                     </span>
-                    <span className="text-xs font-semibold text-white">
+                    <span className="text-xs font-semibold text-slate-900">
                       {dossier.agency}
                     </span>
                   </div>
@@ -481,7 +474,7 @@ export function MacroEventModal({ event, onClose, articles = [] }: MacroEventMod
                     href={dossier.agencyUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="px-2.5 py-1 text-[10px] font-mono font-semibold bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 transition-colors flex items-center gap-1"
+                    className="px-2.5 py-1 text-[10px] font-mono font-semibold bg-[#faf2df] hover:bg-[#f3ead2] text-[#0369a1] border border-slate-900/15 rounded transition-colors flex items-center gap-1"
                   >
                     <span>Visit Agency</span>
                     <span>↗</span>
@@ -493,68 +486,68 @@ export function MacroEventModal({ event, onClose, articles = [] }: MacroEventMod
             {activeTab === 'wires' && (
               <div className="p-4 sm:p-5 space-y-3.5">
                 <div className="flex items-center justify-between">
-                  <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-cyan-400 block">
+                  <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-[#0369a1] block">
                     {directlyRelatedArticles.length > 0
                       ? `Directly Matched Market Wire Stories (${directlyRelatedArticles.length})`
                       : 'Live Macroeconomic & Digital Asset Wires'}
                   </span>
-                  <span className="text-[9px] font-mono text-emerald-400 flex items-center gap-1">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                  <span className="text-[9px] font-mono text-emerald-700 flex items-center gap-1">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse" />
                     <span>Live RSS Feeds</span>
                   </span>
                 </div>
 
-                <div className="space-y-2">
+                <div className="divide-y divide-slate-900/10">
                   {macroArticles.map((art, idx) => (
                     <a
                       key={idx}
                       href={art.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center justify-between p-3 bg-white/[0.02] hover:bg-white/[0.05] border border-white/[0.06] hover:border-white/[0.12] transition-all group"
+                      className="flex items-center justify-between py-3 first:pt-0 last:pb-0 hover:bg-[#f3ead2]/50 -mx-2 px-2 rounded-lg transition-colors group"
                     >
                       <div className="space-y-0.5 min-w-0 pr-3">
-                        <div className="flex items-center gap-1.5 text-[10px] font-mono text-text-muted">
-                          <span className="font-bold text-cyan-300 uppercase">{art.source}</span>
+                        <div className="flex items-center gap-1.5 text-[10px] font-mono tabular-nums text-slate-500">
+                          <span className="font-bold text-slate-800 uppercase">{art.source}</span>
                           <span>·</span>
-                          <span className="text-zinc-400">
+                          <span className="text-slate-500">
                             {new Date(art.published_at).toLocaleTimeString('en-US', {
                               hour: '2-digit',
                               minute: '2-digit',
                             })}
                           </span>
                           <span>·</span>
-                          <span className="px-1 py-0.2 bg-white/[0.06] text-zinc-300 uppercase text-[9px]">
+                          <span className="px-1 py-0.2 bg-slate-900/5 text-slate-700 uppercase text-[9px] rounded font-semibold">
                             {art.category}
                           </span>
                         </div>
-                        <h5 className="text-xs font-semibold text-white group-hover:text-cyan-400 truncate transition-colors">
+                        <h5 className="text-xs font-semibold text-slate-900 group-hover:text-[#0369a1] truncate transition-colors">
                           {art.title}
                         </h5>
                       </div>
 
-                      <span className="text-xs text-text-muted group-hover:text-white transition-colors flex-shrink-0 font-mono">
+                      <span className="text-xs text-slate-500 group-hover:text-slate-900 transition-colors flex-shrink-0 font-mono">
                         Read ↗
                       </span>
                     </a>
                   ))}
                 </div>
 
-                <div className="p-3 bg-cyan-500/[0.04] border border-cyan-500/20 space-y-1">
+                <div className="p-3.5 bg-[#fdfaf3] border border-slate-900/10 rounded-xl space-y-1">
                   <div className="flex items-center justify-between">
-                    <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-cyan-300">
+                    <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-slate-900">
                       Direct Official Source Feed
                     </span>
                     <a
                       href={dossier.agencyUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-[10px] font-mono text-cyan-400 hover:underline"
+                      className="text-[10px] font-mono text-[#0369a1] hover:underline font-semibold"
                     >
                       Open {dossier.agency.split('·')[0].trim()} ↗
                     </a>
                   </div>
-                  <p className="text-[11px] text-text-secondary leading-relaxed">
+                  <p className="text-[11px] text-slate-600 leading-relaxed">
                     Official statistical data is ingested directly from U.S. government releases and calendar feeds. Verifiable release bulletins and schedules are maintained directly on official dot-gov agency websites.
                   </p>
                 </div>
@@ -564,22 +557,20 @@ export function MacroEventModal({ event, onClose, articles = [] }: MacroEventMod
             {activeTab === 'impact' && (
               <div className="p-4 sm:p-5 space-y-3.5">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  <div className="p-3 bg-cyan-500/[0.05] border border-cyan-500/20 space-y-1">
-                    <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-cyan-300 flex items-center gap-1.5">
-                      <span>₿</span>
-                      <span>Bitcoin & Crypto (BTC/USDT)</span>
+                  <div className="p-3.5 bg-[#fdfaf3] border border-slate-900/10 border-l-2 border-l-[#0369a1] rounded-xl space-y-1">
+                    <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-[#0369a1] block">
+                      Bitcoin & Crypto (BTC/USDT)
                     </span>
-                    <p className="text-xs text-zinc-200 leading-relaxed">
+                    <p className="text-xs text-slate-700 leading-relaxed">
                       {dossier.cryptoImpact}
                     </p>
                   </div>
 
-                  <div className="p-3 bg-amber-500/[0.05] border border-amber-500/20 space-y-1">
-                    <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-amber-300 flex items-center gap-1.5">
-                      <span>🥇</span>
-                      <span>Gold & Commodities (XAU/USD)</span>
+                  <div className="p-3.5 bg-[#fdfaf3] border border-slate-900/10 border-l-2 border-l-amber-600 rounded-xl space-y-1">
+                    <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-amber-800 block">
+                      Gold & Commodities (XAU/USD)
                     </span>
-                    <p className="text-xs text-zinc-200 leading-relaxed">
+                    <p className="text-xs text-slate-700 leading-relaxed">
                       {event.impact === 'HIGH'
                         ? 'High Sensitivity: Moves inversely to real yields and sovereign dollar strength. Easing signals fuel strong institutional safe-haven demand.'
                         : 'Moderate Sensitivity: Responds to inflation expectations and long-duration Treasury term premiums.'}
@@ -587,27 +578,26 @@ export function MacroEventModal({ event, onClose, articles = [] }: MacroEventMod
                   </div>
                 </div>
 
-                <div className="p-3 bg-white/[0.02] border border-white/[0.06] space-y-1">
-                  <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-text-muted flex items-center gap-1.5">
-                    <span>💵</span>
-                    <span>Global Currency & Sovereign Debt (DXY & 10Y Yield)</span>
+                <div className="p-3.5 bg-[#fdfaf3] border border-slate-900/10 border-l-2 border-l-slate-400 rounded-xl space-y-1">
+                  <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-slate-700 block">
+                    Global Currency & Sovereign Debt (DXY & 10Y Yield)
                   </span>
-                  <p className="text-xs text-zinc-300 leading-relaxed">
+                  <p className="text-xs text-slate-600 leading-relaxed">
                     {dossier.marketImplication}
                   </p>
                 </div>
 
                 <div className="space-y-1.5 pt-1">
-                  <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-text-muted block">
+                  <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-slate-500 block">
                     Institutional Transmission Channels
                   </span>
                   <div className="space-y-1.5">
                     {dossier.transmissionMechanism.map((mech, idx) => (
                       <div
                         key={idx}
-                        className="flex items-start gap-2 text-xs text-text-secondary bg-white/[0.02] p-2.5 border border-white/[0.04]"
+                        className="flex items-start gap-2 text-xs text-slate-600 bg-[#fdfaf3] p-2.5 border border-slate-900/10 rounded-lg"
                       >
-                        <span className="text-cyan-400 font-mono font-bold text-xs mt-0.5">▸</span>
+                        <span className="text-[#0369a1] font-mono font-bold text-xs mt-0.5">▸</span>
                         <span>{mech}</span>
                       </div>
                     ))}
@@ -617,34 +607,34 @@ export function MacroEventModal({ event, onClose, articles = [] }: MacroEventMod
             )}
           </div>
 
-          <div className="p-3.5 sm:p-4 bg-white/[0.02] border border-white/[0.06] space-y-2">
+          <div className="p-3.5 sm:p-4 bg-[#faf2df] border border-slate-900/10 rounded-xl space-y-2">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-semibold text-white flex items-center gap-1.5 font-mono">
-                <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
+              <span className="text-xs font-semibold text-slate-900 flex items-center gap-1.5 font-mono">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#0284c7]" />
                 <span>ACTS Factor 9: Confluence Strategy Impact</span>
               </span>
-              <span className="text-[10px] font-mono text-cyan-300">Max +10.0 pts</span>
+              <span className="text-[10px] font-mono text-[#0369a1] font-bold">Max +10.0 pts</span>
             </div>
 
-            <div className="text-xs text-text-secondary space-y-1 leading-relaxed">
+            <div className="text-xs text-slate-600 space-y-1 leading-relaxed">
               <p>
-                • <strong className="text-zinc-200">Dovish / Stimulative Policy:</strong> Evaluates as risk-on liquidity expansion, awarding up to <strong className="text-emerald-400">+10.0 pts</strong> for bullish BTC/USDT momentum.
+                • <strong className="text-slate-900">Dovish / Stimulative Policy:</strong> Evaluates as risk-on liquidity expansion, awarding up to <strong className="text-emerald-700">+10.0 pts</strong> for bullish BTC/USDT momentum.
               </p>
               <p>
-                • <strong className="text-zinc-200">Hawkish / Restrictive Policy:</strong> Awards <strong className="text-amber-400">0.0 pts</strong> and activates capital defense protocols to shield against volatility sweeps.
+                • <strong className="text-slate-900">Hawkish / Restrictive Policy:</strong> Awards <strong className="text-amber-800">0.0 pts</strong> and activates capital defense protocols to shield against volatility sweeps.
               </p>
             </div>
           </div>
         </div>
 
-        <div className="p-3.5 sm:p-4 border-t border-white/[0.08] bg-white/[0.02] flex items-center justify-between">
-          <span className="text-[11px] font-mono text-text-muted">
-            Press <kbd className="px-1.5 py-0.5 bg-white/[0.08] text-white text-[10px]">Esc</kbd> to return
+        <div className="p-3.5 sm:p-4 border-t border-slate-900/10 bg-[#fdfaf3] flex items-center justify-between">
+          <span className="text-[11px] font-mono text-slate-500">
+            Press <kbd className="px-1.5 py-0.5 bg-[#faf2df] border border-slate-900/10 text-slate-700 text-[10px] rounded font-mono">Esc</kbd> to return
           </span>
 
           <button
             onClick={onClose}
-            className="px-4 py-2 text-xs font-semibold bg-white/[0.08] hover:bg-white/[0.15] text-white border border-white/[0.12] transition-colors"
+            className="px-4 py-2 text-xs font-semibold bg-[#0369a1] hover:bg-[#0284c7] text-white rounded-lg transition-colors cursor-pointer"
           >
             Close Window
           </button>

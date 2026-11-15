@@ -18,46 +18,46 @@ export function IDXDisclosuresCard({ disclosures }: Props) {
   const getImpactBadge = (impact: IDXDisclosureItem['impact']) => {
     switch (impact) {
       case 'HIGH_ALERT':
-        return 'bg-amber-500/20 text-amber-300 border-amber-500/40 animate-pulse'
+        return 'bg-amber-50 text-amber-900 border-amber-300 animate-pulse'
       case 'BULLISH':
-        return 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30'
+        return 'bg-emerald-50 text-emerald-800 border-emerald-200'
       case 'BEARISH':
-        return 'bg-rose-500/10 text-rose-400 border-rose-500/30'
+        return 'bg-rose-50 text-rose-800 border-rose-200'
       default:
-        return 'bg-white/[0.06] text-text-secondary border-white/[0.1]'
+        return 'bg-slate-100 text-slate-700 border-slate-200'
     }
   }
 
   const getTypeBadge = (type: IDXDisclosureItem['type']) => {
     switch (type) {
       case 'UMA':
-        return 'bg-amber-500/15 text-amber-400 border-amber-500/30'
+        return 'bg-amber-50 text-amber-900 border-amber-300'
       case 'SUSPENSI':
-        return 'bg-rose-500/15 text-rose-400 border-rose-500/30'
+        return 'bg-rose-50 text-rose-800 border-rose-200'
       case 'UNFREEZE':
-        return 'bg-cyan-500/15 text-cyan-400 border-cyan-500/30'
+        return 'bg-sky-50 text-sky-800 border-sky-200'
       case 'BUYBACK':
       case 'AKUISISI':
-        return 'bg-emerald-500/15 text-emerald-400 border-emerald-500/30'
+        return 'bg-emerald-50 text-emerald-800 border-emerald-200'
       default:
-        return 'bg-purple-500/15 text-purple-400 border-purple-500/30'
+        return 'bg-purple-50 text-purple-800 border-purple-200'
     }
   }
 
   return (
-    <div className="rounded-xl bg-[#0d121f] border border-white/[0.08] p-5 sm:p-6 space-y-5">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-white/[0.08]">
+    <div className="rounded-xl bg-[#fdfaf3] border border-slate-900/10 p-5 sm:p-6 space-y-5 shadow-xs">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-900/10">
         <div>
           <div className="flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-amber-400" />
-            <h3 className="text-xs sm:text-sm font-bold uppercase tracking-wider text-white font-mono">
+            <span className="w-2 h-2 rounded-full bg-amber-500" />
+            <h3 className="text-xs sm:text-sm font-bold uppercase tracking-wider text-slate-900 font-mono">
               Official BEI Regulatory Disclosures
             </h3>
-            <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-amber-500/10 text-amber-400 border border-amber-500/20">
+            <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-amber-50 text-amber-800 border border-amber-200 font-bold">
               idx.co.id Feed
             </span>
           </div>
-          <p className="text-xs text-slate-400 mt-0.5 font-mono">
+          <p className="text-xs text-slate-500 mt-0.5 font-mono">
             Official announcements from Bursa Efek Indonesia: UMA warnings, Trading Suspensions, and M&amp;A Filings.
           </p>
         </div>
@@ -69,8 +69,8 @@ export function IDXDisclosuresCard({ disclosures }: Props) {
               onClick={() => setFilterType(t)}
               className={`px-3 py-1 rounded-lg text-xs font-mono font-bold transition-all shrink-0 cursor-pointer ${
                 filterType === t
-                  ? 'bg-[#ff2e54] text-white'
-                  : 'bg-[#070b14] text-slate-400 hover:text-white border border-white/[0.06]'
+                  ? 'bg-sky-600 text-white shadow-xs'
+                  : 'bg-[#faf2df]/80 text-slate-600 hover:text-slate-900 hover:bg-[#faf2df] border border-slate-900/10'
               }`}
             >
               {t}
@@ -79,18 +79,18 @@ export function IDXDisclosuresCard({ disclosures }: Props) {
         </div>
       </div>
 
-      <div className="space-y-3">
+      <div className="divide-y divide-slate-900/10">
         {filtered.map((item) => (
           <div
             key={item.id}
-            className="p-4 rounded-xl bg-[#070b14] border border-white/[0.08] hover:border-white/[0.14] transition-all space-y-2.5 group"
+            className="py-4 space-y-2.5 group first:pt-0 last:pb-0"
           >
             <div className="flex flex-wrap items-center justify-between gap-2 text-xs font-mono">
               <div className="flex items-center gap-2">
-                <span className="font-black text-white px-2 py-0.5 rounded bg-white/[0.06] border border-white/[0.08]">
+                <span className="font-black text-slate-900 px-2 py-0.5 rounded bg-slate-100 border border-slate-900/10">
                   {item.ticker}
                 </span>
-                <span className="text-slate-400 text-[11px] truncate max-w-xs">
+                <span className="text-slate-500 text-[11px] truncate max-w-xs font-sans">
                   {item.companyName}
                 </span>
                 <span
@@ -103,7 +103,7 @@ export function IDXDisclosuresCard({ disclosures }: Props) {
               </div>
 
               <div className="flex items-center gap-2">
-                <span className="text-slate-500 text-[11px]">
+                <span className="text-slate-500 text-[11px] tabular-nums">
                   {item.date} • {item.timeWIB}
                 </span>
                 <span
@@ -116,21 +116,21 @@ export function IDXDisclosuresCard({ disclosures }: Props) {
               </div>
             </div>
 
-            <h4 className="text-xs sm:text-sm font-bold text-white group-hover:text-amber-300 transition-colors leading-snug">
+            <h4 className="text-xs sm:text-sm font-bold text-slate-900 group-hover:text-sky-800 transition-colors leading-snug">
               {item.title}
             </h4>
 
-            <p className="text-xs font-mono text-slate-400 leading-relaxed">
+            <p className="text-xs font-mono text-slate-600 leading-relaxed">
               {item.details}
             </p>
 
-            <div className="pt-2 border-t border-white/[0.06] flex items-center justify-between text-[11px] font-mono">
+            <div className="pt-2 flex items-center justify-between text-[11px] font-mono">
               <span className="text-slate-500">Divisi Penilaian &amp; Pengawasan Perusahaan BEI</span>
               <a
                 href={item.filingUrl || 'https://www.idx.co.id'}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-amber-400 hover:text-white transition-colors flex items-center gap-1 font-semibold"
+                className="text-xs font-semibold text-[#0369a1] hover:text-slate-900 hover:underline flex items-center gap-1"
               >
                 <span>Lihat Pengumuman Resmi BEI</span>
                 <span>↗</span>

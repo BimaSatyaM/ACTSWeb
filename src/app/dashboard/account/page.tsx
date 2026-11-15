@@ -73,15 +73,14 @@ export default function AccountPage() {
 
   return (
     <div className="max-w-4xl space-y-6">
-      <div className="space-y-1 border-b border-white/[0.06] pb-4">
-        <h1 className="text-xl sm:text-2xl font-bold text-white tracking-tight">Account Configuration</h1>
-        <p className="text-xs text-text-secondary">Manage your public profile identity and audit your activation parameters.</p>
+      <div className="space-y-1 border-b border-slate-900/10 pb-4">
+        <h1 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">Account Configuration</h1>
+        <p className="text-xs text-slate-600">Manage your public profile identity and audit your activation parameters.</p>
       </div>
 
       <div className="grid md:grid-cols-3 gap-6">
-        
         <div className="md:col-span-1 space-y-6">
-          <GlassCard className="text-center space-y-4 hover:border-white/10 transition-all duration-300">
+          <GlassCard className="text-center space-y-4 bg-[#faf2df] border-slate-900/10">
             <div className="flex justify-center">
               <UserAvatar
                 src={user.photoURL}
@@ -91,88 +90,85 @@ export default function AccountPage() {
             </div>
 
             <div className="space-y-1">
-              <h3 className="text-sm font-bold text-white leading-snug">
+              <h3 className="text-sm font-bold text-slate-900 leading-snug">
                 {profile?.displayName || user.displayName || 'Trader'}
               </h3>
-              <p className="text-[10px] text-text-muted select-all leading-normal truncate px-2">
+              <p className="text-[11px] font-mono text-slate-500 select-all leading-normal truncate px-2">
                 {user.email}
               </p>
             </div>
 
-            <div className="h-[1px] bg-white/[0.04]" />
+            <div className="h-[1px] bg-slate-900/10" />
 
-            <div className="space-y-1.5">
-              <span className="text-[9px] uppercase font-bold text-text-muted block">Account Standing</span>
-              <Badge 
-                variant={badgeVariant} 
-                className="text-[10px] font-black uppercase tracking-wider py-1 px-3"
-              >
+            <div className="space-y-1">
+              <span className="text-[10px] font-mono uppercase font-bold text-slate-500 block">Account Standing</span>
+              <Badge variant={badgeVariant} className="text-[11px] font-bold uppercase tracking-wider">
                 {statusLabel}
               </Badge>
             </div>
 
             {profile?.tokenUsed && (
-              <div className="pt-2 text-left">
-                <span className="text-[9px] uppercase font-bold text-text-muted block">Claimed Key</span>
-                <span className="text-[10px] font-mono text-white/50 select-all block mt-0.5 truncate bg-white/[0.01] p-1.5 rounded border border-white/[0.03]">
+              <div className="pt-2 text-left border-t border-slate-900/10">
+                <span className="text-[10px] font-mono uppercase font-bold text-slate-500 block">Claimed Key</span>
+                <span className="text-xs font-mono font-bold text-[#0369a1] select-all block mt-1 truncate">
                   {profile.tokenUsed}
                 </span>
               </div>
             )}
 
-            <div className="pt-3 border-t border-white/[0.04]">
-              <Button
-                variant="secondary"
+            <div className="pt-3 border-t border-slate-900/10">
+              <button
                 type="button"
                 onClick={logout}
-                className="w-full justify-center text-xs py-2.5 text-rose-400 border-rose-500/20 hover:bg-rose-500/10 hover:border-rose-500/40 cursor-pointer flex items-center gap-2"
+                className="w-full justify-center text-xs font-semibold py-2 text-rose-700 hover:text-rose-900 hover:underline cursor-pointer flex items-center gap-2"
               >
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9" />
                 </svg>
-                Sign Out
-              </Button>
+                <span>Sign Out</span>
+              </button>
             </div>
           </GlassCard>
         </div>
 
         <div className="md:col-span-2">
-          <GlassCard className="space-y-6">
-            <h3 className="text-sm uppercase font-black tracking-widest text-text-muted border-b border-white/[0.04] pb-4">
+          <GlassCard className="space-y-6 bg-[#faf2df] border-slate-900/10">
+            <h3 className="text-xs font-mono uppercase font-bold tracking-wider text-slate-700 border-b border-slate-900/10 pb-3.5">
               Edit Details
             </h3>
 
-            {errorMsg && <p className="text-xs text-accent-red bg-accent-red/10 p-3 rounded-lg border border-accent-red/20">{errorMsg}</p>}
-            {successMsg && <p className="text-xs text-accent-green bg-accent-green/10 p-3 rounded-lg border border-accent-green/20">{successMsg}</p>}
+            {errorMsg && <p className="text-xs text-rose-700 border-l-2 border-rose-600 pl-3 py-1">{errorMsg}</p>}
+            {successMsg && <p className="text-xs text-emerald-700 border-l-2 border-emerald-600 pl-3 py-1">{successMsg}</p>}
 
             <form onSubmit={handleSave} className="space-y-6">
               <div className="space-y-2">
-                <label className="text-[10px] uppercase font-bold text-text-muted block">Display Name</label>
-                <input 
-                  type="text" 
+                <label htmlFor="account-display-name" className="text-[10px] font-mono uppercase font-bold text-slate-600 block">Display Name</label>
+                <input
+                  id="account-display-name"
+                  type="text"
                   value={nameInput}
                   onChange={(e) => setNameInput(e.target.value)}
-                  placeholder="e.g. Satoshi"
-                  className="w-full px-4 py-2.5 rounded-lg bg-white/[0.04] border border-white/[0.08] text-white text-sm focus:outline-none focus:border-accent-theme/50"
+                  placeholder="Your display name"
+                  className="w-full px-4 py-2.5 rounded-lg bg-[#fdfaf3] border border-slate-900/15 text-slate-900 text-sm focus:outline-none focus:border-[#0284c7]"
                   required
                 />
-                <p className="text-[10px] text-text-muted leading-relaxed">
-                  This is your public name displayed inside the live dashboard and chat panels.
+                <p className="text-[11px] text-slate-500 leading-relaxed">
+                  This is your public name displayed inside the live dashboard and account panels.
                 </p>
               </div>
 
               <div className="flex justify-end gap-3 pt-2">
-                <Button 
-                  variant="secondary" 
-                  type="button" 
+                <Button
+                  variant="secondary"
+                  type="button"
                   onClick={handleReset}
                   className="px-5 py-2 font-semibold cursor-pointer"
                 >
                   Reset changes
                 </Button>
-                <Button 
-                  variant="primary" 
-                  type="submit" 
+                <Button
+                  variant="primary"
+                  type="submit"
                   className="px-5 py-2 font-semibold cursor-pointer"
                   disabled={saving}
                 >
@@ -182,7 +178,6 @@ export default function AccountPage() {
             </form>
           </GlassCard>
         </div>
-
       </div>
     </div>
   )

@@ -482,7 +482,7 @@ export function ModernAutoTradingTerminal() {
         localStorage.setItem('acts_binance_account', JSON.stringify(updated))
         if (!silent) {
           setStatusMsg({
-            text: `Synced: $${data.availableBalance.toFixed(2)} USDT available (${data.latencyMs}ms)`,
+            text: `Synced: $${data.availableBalance.toFixed(2)} USDT available (${data.latencyMs}ms)`, // tabular-nums
             type: 'success',
           })
         }
@@ -764,7 +764,7 @@ export function ModernAutoTradingTerminal() {
                   return {
                     id: ev.event_id,
                     time: timeStr,
-                    msg: `[24/7 CLOUD 🛡️] Same-direction ${p.direction} signal: Preserved active trade @ $${Number(p.entry_price).toFixed(1)}. Redundant entry skipped.`,
+                    msg: `[24/7 CLOUD 🛡️] Same-direction ${p.direction} signal: Preserved active trade @ $${Number(p.entry_price).toFixed(1)}. Redundant entry skipped.`, // tabular-nums
                     type: 'info' as const,
                   }
                 }
@@ -780,7 +780,7 @@ export function ModernAutoTradingTerminal() {
                 return {
                   id: ev.event_id,
                   time: timeStr,
-                  msg: `[24/7 CLOUD${viaStr}] ${p.direction} ${p.symbol} Executed #${p.entry_order_id} @ $${Number(p.entry_price).toFixed(1)} | SL: $${Number(p.sl_price).toFixed(1)} | TP1: $${Number(p.tp1_price || 0).toFixed(1)} (Score: ${Number(p.confluence_score || 0).toFixed(1)})`,
+                  msg: `[24/7 CLOUD${viaStr}] ${p.direction} ${p.symbol} Executed #${p.entry_order_id} @ $${Number(p.entry_price).toFixed(1)} | SL: $${Number(p.sl_price).toFixed(1)} | TP1: $${Number(p.tp1_price || 0).toFixed(1)} (Score: ${Number(p.confluence_score || 0).toFixed(1)})`, // tabular-nums
                   type: 'success' as const,
                 }
               })
@@ -827,7 +827,7 @@ export function ModernAutoTradingTerminal() {
   // 24/7 CLOUD AUTOPILOT MONITORING:
   // Heroku executes all signals autonomously 24/7 in the cloud.
   // The browser terminal operates strictly as a real-time monitor
-  // and dashboard — it NEVER dispatches automatic orders to prevent
+  // and dashboard - it NEVER dispatches automatic orders to prevent
   // double-execution race conditions.
   // ─────────────────────────────────────────────────────────────
   const lastCloudEventIdRef = useRef<string | null>(null)
@@ -870,28 +870,28 @@ export function ModernAutoTradingTerminal() {
           const p = typeof evt.payload === 'string' ? JSON.parse(evt.payload) : evt.payload
           if (evt.event_type === 'BinanceTradeExecutedEvent') {
             addExecutionLog(
-              `[CLOUD 24/7 🚀] ${p.direction} Executed @ ~$${Number(p.entry_price || 0).toLocaleString()} | SL: $${Number(p.sl_price || 0).toLocaleString()} | TP1: $${Number(p.tp1_price || 0).toLocaleString()} (Order #${p.entry_order_id || 'N/A'})`,
+              `[CLOUD 24/7 🚀] ${p.direction} Executed @ ~$${Number(p.entry_price || 0).toLocaleString()} | SL: $${Number(p.sl_price || 0).toLocaleString()} | TP1: $${Number(p.tp1_price || 0).toLocaleString()} (Order #${p.entry_order_id || 'N/A'})`, // tabular-nums
               'success'
             )
             handleRefreshBalance(account, true)
             handleFetchOpenOrders(account)
           } else if (evt.event_type === 'BinanceTradePreservedEvent') {
             addExecutionLog(
-              `[CLOUD 24/7 🛡️] Same-direction ${p.direction} signal: Preserved active trade @ $${Number(p.entry_price || 0).toLocaleString()}. Redundant entry skipped.`,
+              `[CLOUD 24/7 🛡️] Same-direction ${p.direction} signal: Preserved active trade @ $${Number(p.entry_price || 0).toLocaleString()}. Redundant entry skipped.`, // tabular-nums
               'info'
             )
           } else if (evt.event_type === 'BinanceTradeFailedEvent') {
             addExecutionLog(`[CLOUD 24/7 ⚠️] Execution failed: ${p.error || 'Unknown error'}`, 'warn')
           } else if (evt.event_type === 'BreakoutShadowSignalEvent') {
             addExecutionLog(
-              `[PLAYBOOK B SHADOW 🚀] 1H Trend Breakout: ${p.direction} @ ~$${Number(p.entry_price || 0).toLocaleString()} | SL: $${Number(p.stop_loss || 0).toLocaleString()} | Exit: $${Number(p.channel_exit_price || 0).toLocaleString()} (Macro: ${p.macro_trend})`,
+              `[PLAYBOOK B SHADOW 🚀] 1H Trend Breakout: ${p.direction} @ ~$${Number(p.entry_price || 0).toLocaleString()} | SL: $${Number(p.stop_loss || 0).toLocaleString()} | Exit: $${Number(p.channel_exit_price || 0).toLocaleString()} (Macro: ${p.macro_trend})`, // tabular-nums
               'info'
             )
           } else if (evt.event_type === 'BreakoutShadowTradeClosedEvent') {
             const rVal = Number(p.realized_r || 0)
             const rText = `${rVal >= 0 ? '+' : ''}${rVal.toFixed(2)}R`
             addExecutionLog(
-              `[PLAYBOOK B SHADOW 🏁] Trade Closed (${p.status}) @ ~$${Number(p.exit_price || 0).toLocaleString()} | ${rText} | Held: ${p.bars_held || 0}h`,
+              `[PLAYBOOK B SHADOW 🏁] Trade Closed (${p.status}) @ ~$${Number(p.exit_price || 0).toLocaleString()} | ${rText} | Held: ${p.bars_held || 0}h`, // tabular-nums
               rVal > 0 ? 'success' : 'warn'
             )
           }
@@ -957,7 +957,7 @@ export function ModernAutoTradingTerminal() {
           'success'
         )
         setStatusMsg({
-          text: `Binance Connected! AES-256 Encrypted & Autopilot ACTIVE ($${data.availableBalance.toFixed(2)} USDT)`,
+          text: `Binance Connected! AES-256 Encrypted & Autopilot ACTIVE ($${data.availableBalance.toFixed(2)} USDT)`, // tabular-nums
           type: 'success',
         })
         setTimeout(() => setStatusMsg(null), 5000)
@@ -1294,19 +1294,19 @@ export function ModernAutoTradingTerminal() {
     <div className="space-y-6 max-w-7xl mx-auto">
       {statusMsg && (
         <div
-          className={`p-3.5 rounded-xl text-xs font-mono flex items-center justify-between shadow-lg transition-all ${
+          className={`p-3.5 rounded-xl text-xs font-mono flex items-center justify-between shadow-sm transition-all ${
             statusMsg.type === 'success'
-              ? 'bg-[#F0B90B]/10 border border-[#F0B90B]/30 text-[#F0B90B]'
+              ? 'bg-emerald-50 border border-emerald-200 text-emerald-900'
               : statusMsg.type === 'error'
-              ? 'bg-rose-500/10 border border-rose-500/30 text-rose-300'
-              : 'bg-zinc-800 border border-zinc-700 text-zinc-300'
+              ? 'bg-rose-50 border border-rose-200 text-rose-900'
+              : 'bg-[#faf2df] border border-slate-900/10 text-slate-800'
           }`}
         >
           <span>{statusMsg.text}</span>
           <button
             type="button"
             onClick={() => setStatusMsg(null)}
-            className="text-white hover:opacity-75 font-bold ml-4"
+            className="text-slate-500 hover:text-slate-900 font-bold ml-4 cursor-pointer"
           >
             ✕
           </button>
@@ -1314,33 +1314,30 @@ export function ModernAutoTradingTerminal() {
       )}
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-        <div className="lg:col-span-8 rounded-2xl bg-[#090d18] border border-white/[0.07] shadow-2xl overflow-hidden flex flex-col justify-between">
-          <div className="flex flex-wrap items-center justify-between gap-4 px-6 py-4 border-b border-white/[0.05] bg-white/[0.01]">
+        <div className="lg:col-span-8 rounded-2xl bg-[#fdfaf3] border border-slate-900/10 shadow-sm overflow-hidden flex flex-col justify-between">
+          <div className="flex flex-wrap items-center justify-between gap-4 px-6 py-4 border-b border-slate-900/10 bg-[#faf2df]/50">
             <div className="flex items-center gap-3">
               <span className="relative flex h-2.5 w-2.5">
-                {isAutoTrading && isConnected && (
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#00e676] opacity-75" />
-                )}
                 <span
                   className={`relative inline-flex rounded-full h-2.5 w-2.5 ${
                     isAutoTrading && isConnected
-                      ? 'bg-[#00e676] shadow-[0_0_8px_#00e676]'
+                      ? 'bg-emerald-600'
                       : isConnected
-                      ? 'bg-[#F0B90B] shadow-[0_0_8px_#F0B90B]'
-                      : 'bg-zinc-600'
+                      ? 'bg-amber-600'
+                      : 'bg-slate-400'
                   }`}
                 />
               </span>
               <div className="flex items-center gap-2">
-                <span className="font-mono text-xs font-bold tracking-[0.15em] uppercase text-white">
+                <span className="font-mono text-xs font-bold tracking-[0.15em] uppercase text-slate-900">
                   {isAutoTrading && isConnected
                     ? 'BOT ACTIVE'
                     : isConnected
                     ? 'BOT STANDBY (CONNECTED)'
                     : 'AUTONOMOUS RADAR (OFFLINE)'}
                 </span>
-                <span className="text-zinc-500 text-xs hidden sm:inline">•</span>
-                <span className="text-xs text-zinc-400 hidden sm:inline font-mono">
+                <span className="text-slate-500 text-xs hidden sm:inline">•</span>
+                <span className="text-xs text-slate-600 hidden sm:inline font-mono">
                   Playbook A: 15m S/R (Live) • Playbook B: 1H Breakout (Shadow)
                 </span>
               </div>
@@ -1353,10 +1350,10 @@ export function ModernAutoTradingTerminal() {
                   onClick={() => handleRefreshBalance(account, false)}
                   disabled={isRefreshing}
                   title="Sync balance from Binance"
-                  className="p-2 rounded-lg bg-white/[0.03] hover:bg-white/[0.07] text-zinc-400 hover:text-white transition-all cursor-pointer disabled:opacity-50"
+                  className="p-2 rounded-lg bg-[#faf2df] hover:bg-[#f3ead2] border border-slate-900/10 text-slate-700 hover:text-slate-900 transition-all cursor-pointer disabled:opacity-50"
                 >
                   <svg
-                    className={`w-3.5 h-3.5 ${isRefreshing ? 'animate-spin text-[#F0B90B]' : ''}`}
+                    className={`w-3.5 h-3.5 ${isRefreshing ? 'animate-spin text-amber-600' : ''}`}
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
@@ -1372,8 +1369,8 @@ export function ModernAutoTradingTerminal() {
                 onClick={handleToggleBot}
                 className={`flex items-center gap-2 px-3 py-1.5 rounded-lg border transition-all cursor-pointer select-none ${
                   isAutoTrading && isConnected
-                    ? 'border-[#00e676]/40 bg-[#00e676]/10 text-[#00e676]'
-                    : 'border-white/10 bg-black/40 text-zinc-400 hover:border-white/20'
+                    ? 'border-emerald-300 bg-emerald-50 text-emerald-800'
+                    : 'border-slate-900/15 bg-[#faf2df] text-slate-700 hover:bg-[#f3ead2]'
                 }`}
               >
                 <span className="text-xs font-mono font-bold tracking-wider">
@@ -1381,7 +1378,7 @@ export function ModernAutoTradingTerminal() {
                 </span>
                 <span
                   className={`w-2 h-2 rounded-full ${
-                    isAutoTrading && isConnected ? 'bg-[#00e676] shadow-[0_0_8px_#00e676]' : 'bg-zinc-600'
+                    isAutoTrading && isConnected ? 'bg-emerald-500 shadow-sm' : 'bg-slate-400'
                   }`}
                 />
               </button>
@@ -1391,38 +1388,38 @@ export function ModernAutoTradingTerminal() {
           <div className="px-6 pt-6 pb-2">
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
               <div>
-                <span className="text-[11px] font-mono tracking-wider uppercase text-zinc-400 block mb-1">
+                <span className="text-[11px] font-mono tracking-wider uppercase text-slate-500 block mb-1">
                   Wallet Equity
                 </span>
                 <div className="flex items-baseline gap-1.5">
-                  <span className="text-2xl sm:text-3xl font-mono font-bold text-white tracking-tight">
+                  <span className="text-2xl sm:text-3xl font-mono font-bold text-slate-900 tracking-tight tabular-nums">
                     {isConnected ? `$${account!.totalWalletBalance.toFixed(2)}` : '--'}
                   </span>
-                  {isConnected && <span className="text-xs font-mono text-zinc-500">USDT</span>}
+                  {isConnected && <span className="text-xs font-mono text-slate-500">USDT</span>}
                 </div>
-                <span className="text-[11px] font-mono text-zinc-500 block mt-0.5">
+                <span className="text-[11px] font-mono text-slate-500 block mt-0.5 tabular-nums">
                   {isConnected ? `≈ Rp ${capitalIdr.toLocaleString('id-ID')}` : 'Link account to track'}
                 </span>
               </div>
 
               <div>
-                <span className="text-[11px] font-mono tracking-wider uppercase text-zinc-400 block mb-1">
+                <span className="text-[11px] font-mono tracking-wider uppercase text-slate-500 block mb-1">
                   Available Margin
                 </span>
                 <div className="flex items-baseline gap-1.5">
-                  <span className="text-2xl sm:text-3xl font-mono font-bold text-[#F0B90B] tracking-tight">
+                  <span className="text-2xl sm:text-3xl font-mono font-bold text-amber-700 tracking-tight tabular-nums">
                     {isConnected ? `$${account!.availableBalance.toFixed(2)}` : '--'}
                   </span>
-                  {isConnected && <span className="text-xs font-mono text-zinc-500">USDT</span>}
+                  {isConnected && <span className="text-xs font-mono text-slate-500">USDT</span>}
                 </div>
-                <span className="text-[11px] font-mono text-zinc-500 block mt-0.5">
+                <span className="text-[11px] font-mono text-slate-500 block mt-0.5">
                   {isConnected ? 'Ready for bracket orders' : 'Zero collateral active'}
                 </span>
               </div>
 
               <div>
                 <div className="flex items-center justify-between gap-1 mb-1">
-                  <span className="text-[11px] font-mono tracking-wider uppercase text-zinc-400">
+                  <span className="text-[11px] font-mono tracking-wider uppercase text-slate-500">
                     Session P&L
                   </span>
                 </div>
@@ -1437,51 +1434,45 @@ export function ModernAutoTradingTerminal() {
                     <div>
                       <div className="flex items-baseline gap-1.5">
                         {isConnected && displayPnl !== null ? (
-                          <span
-                            className={`text-2xl sm:text-3xl font-mono font-bold tracking-tight ${
-                              displayPnl >= 0 ? 'text-[#00e676]' : 'text-rose-400'
-                            }`}
-                          >
-                            {displayPnl >= 0
-                              ? `+$${displayPnl.toFixed(2)}`
-                              : `-$${Math.abs(displayPnl).toFixed(2)}`}
+                          <span className={`text-2xl sm:text-3xl font-mono font-bold tracking-tight tabular-nums ${displayPnl >= 0 ? 'text-emerald-700' : 'text-rose-700'}`}>
+                            {displayPnl >= 0 ? `+$${displayPnl.toFixed(2)}` : `-$${Math.abs(displayPnl).toFixed(2)}`}
                           </span>
                         ) : (
-                          <span className="text-2xl sm:text-3xl font-mono font-bold text-zinc-600">
+                          <span className="text-2xl sm:text-3xl font-mono font-bold text-slate-500 tabular-nums">
                             --
                           </span>
                         )}
                         {isConnected && displayPnl !== null && (
-                          <span className="text-xs font-mono text-zinc-500">USDT</span>
+                          <span className="text-xs font-mono text-slate-500 tabular-nums">USDT</span>
                         )}
                       </div>
 
-                      <div className="mt-1 flex flex-wrap items-center gap-1.5 text-[10px] font-mono text-zinc-400">
+                      <div className="mt-1 flex flex-wrap items-center gap-1.5 text-[10px] font-mono text-slate-600 tabular-nums">
                         {isConnected && displayPnl !== null ? (
                           <>
-                            <span className="text-zinc-500">{displayFills} fills</span>
-                            <span className="text-zinc-600">•</span>
+                            <span className="text-slate-500">{displayFills} fills</span>
+                            <span className="text-slate-300">•</span>
                             <span>
                               Gross:{' '}
                               <strong
-                                className={
+                                className={`tabular-nums ${
                                   displayGross !== null && displayGross >= 0
-                                    ? 'text-[#00e676]'
-                                    : 'text-rose-400'
-                                }
+                                    ? 'text-emerald-700'
+                                    : 'text-rose-700'
+                                }`}
                               >
                                 {displayGross !== null
                                   ? `${displayGross >= 0 ? '+' : ''}$${displayGross.toFixed(2)}`
                                   : '--'}
                               </strong>
                             </span>
-                            <span className="text-zinc-600">•</span>
-                            <span className="text-amber-400/90 font-medium">
+                            <span className="text-slate-300">•</span>
+                            <span className="text-amber-700 font-medium tabular-nums">
                               Fees: -${(displayFees ?? 0).toFixed(2)}
                             </span>
                           </>
                         ) : (
-                          <span className="text-zinc-500">Awaiting live trades</span>
+                          <span className="text-slate-500">Awaiting live trades</span>
                         )}
                       </div>
                     </div>
@@ -1498,8 +1489,8 @@ export function ModernAutoTradingTerminal() {
               >
                 <defs>
                   <linearGradient id="modernTerminalGrad" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#F0B90B" stopOpacity={isConnected ? 0.25 : 0.04} />
-                    <stop offset="100%" stopColor="#F0B90B" stopOpacity={0.0} />
+                    <stop offset="0%" stopColor="#0284c7" stopOpacity={isConnected ? 0.25 : 0.05} />
+                    <stop offset="100%" stopColor="#0284c7" stopOpacity={0.0} />
                   </linearGradient>
                 </defs>
 
@@ -1511,7 +1502,7 @@ export function ModernAutoTradingTerminal() {
                 <path
                   d={ambientCurve.linePath}
                   fill="none"
-                  stroke={isConnected ? '#F0B90B' : '#27272a'}
+                  stroke={isConnected ? '#0284c7' : '#cbd5e1'}
                   strokeWidth={isConnected ? 2.5 : 1.5}
                   strokeDasharray={isConnected && userTrades.length > 0 ? undefined : '4 4'}
                   strokeLinecap="round"
@@ -1520,28 +1511,28 @@ export function ModernAutoTradingTerminal() {
             </div>
           </div>
 
-          <div className="px-6 py-3 border-t border-white/[0.05] bg-white/[0.01] flex flex-wrap items-center justify-between gap-3 text-xs font-mono">
+          <div className="px-6 py-3 border-t border-slate-900/10 bg-[#f3ead2]/50 flex flex-wrap items-center justify-between gap-3 text-xs font-mono">
             <div className="flex items-center gap-3">
-              <div className="flex items-center gap-2 text-[#F0B90B]">
+              <div className="flex items-center gap-2 text-amber-800">
                 <BinanceLogo size="xs" />
-                <span className="font-semibold text-zinc-200">
+                <span className="font-semibold text-slate-800">
                   {isConnected ? 'Binance Futures Connected' : 'Binance Futures Standby'}
                 </span>
               </div>
-              <span className="text-zinc-600 hidden sm:inline">•</span>
-              <span className="text-zinc-400 hidden sm:inline">
-                Playbook A: 15m S/R (Live) | Playbook B: 1H Breakout (Shadow)
+              <span className="text-slate-300 hidden sm:inline">·</span>
+              <span className="text-slate-600 hidden sm:inline">
+                Playbook A: 15m S/R (Live) · Playbook B: 1H Breakout (Shadow)
               </span>
             </div>
 
-            <div className="flex items-center gap-3 text-zinc-500">
+            <div className="flex items-center gap-3 text-slate-500 tabular-nums">
               {isConnected ? (
                 <>
                   <span>
                     Key: {account!.apiKey.slice(0, 6)}••••{account!.apiKey.slice(-4)}
                   </span>
-                  <span>•</span>
-                  <span className="text-emerald-400">{account!.latencyMs}ms</span>
+                  <span>·</span>
+                  <span className="text-emerald-700 font-bold">{account!.latencyMs}ms</span>
                 </>
               ) : (
                 <span>Not Connected</span>
@@ -1564,15 +1555,15 @@ export function ModernAutoTradingTerminal() {
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
         <div className="lg:col-span-7 space-y-6">
-          <div className="rounded-2xl bg-[#090d18] border border-white/[0.07] p-6 shadow-xl space-y-5">
-          <div className="flex items-center justify-between border-b border-white/[0.05] pb-4">
+          <div className="rounded-2xl bg-[#faf2df] border border-slate-900/10 p-6 space-y-5">
+          <div className="flex items-center justify-between border-b border-slate-900/10 pb-4">
             <div className="flex items-center gap-3">
               <BinanceLogo size="sm" variant="badge" />
               <div>
-                <h2 className="text-sm font-bold text-white tracking-wide">
+                <h2 className="text-sm font-bold text-slate-900 tracking-tight">
                   Binance Futures Connection
                 </h2>
-                <p className="text-xs text-text-muted">
+                <p className="text-xs text-slate-600">
                   Non-custodial trading API (funds remain 100% on Binance)
                 </p>
               </div>
@@ -1582,7 +1573,7 @@ export function ModernAutoTradingTerminal() {
               <button
                 type="button"
                 onClick={handleDisconnect}
-                className="px-3 py-1.5 rounded-lg bg-white/[0.03] hover:bg-rose-500/10 border border-white/[0.08] hover:border-rose-500/30 text-xs font-mono text-zinc-400 hover:text-rose-400 transition-all cursor-pointer"
+                className="text-xs font-mono font-bold text-rose-700 hover:text-rose-900 hover:underline transition-colors cursor-pointer"
               >
                 Disconnect
               </button>
@@ -1590,43 +1581,16 @@ export function ModernAutoTradingTerminal() {
           </div>
 
           {isConnected ? (
-            <div className="space-y-4">
-              <div className="grid grid-cols-3 gap-3">
-                <div className="p-3.5 rounded-xl bg-white/[0.02]">
-                  <span className="text-[10px] font-mono uppercase text-zinc-500 block mb-1">
-                    Wallet Equity
-                  </span>
-                  <span className="text-base font-bold font-mono text-white">
-                    ${account!.totalWalletBalance.toFixed(2)}
-                  </span>
-                </div>
-                <div className="p-3.5 rounded-xl bg-white/[0.02]">
-                  <span className="text-[10px] font-mono uppercase text-zinc-500 block mb-1">
-                    Available Margin
-                  </span>
-                  <span className="text-base font-bold font-mono text-[#F0B90B]">
-                    ${account!.availableBalance.toFixed(2)}
-                  </span>
-                </div>
-                <div className="p-3.5 rounded-xl bg-white/[0.02]">
-                  <span className="text-[10px] font-mono uppercase text-zinc-500 block mb-1">
-                    Environment
-                  </span>
-                  <span className="text-base font-bold font-mono text-emerald-400">
-                    {account!.isTestnet ? 'Testnet' : account!.accountType === 'SPOT' ? 'Live Spot' : 'Live Futures'}
-                  </span>
-                </div>
-              </div>
-
+            <div className="space-y-5">
               {positions.length > 0 ? (
-                <div className="space-y-2 pt-2">
-                  <span className="text-xs font-mono font-bold text-zinc-400 uppercase tracking-wider block">
+                <div className="space-y-2">
+                  <span className="text-xs font-mono font-bold text-slate-900 uppercase tracking-wider block">
                     Open Futures Contracts ({positions.length})
                   </span>
                   <div className="overflow-x-auto">
-                    <table className="w-full text-left text-xs font-mono">
+                    <table className="w-full text-left text-xs font-mono tabular-nums">
                       <thead>
-                        <tr className="text-zinc-500 border-b border-white/[0.05]">
+                        <tr className="text-slate-500 border-b border-slate-900/10">
                           <th className="py-2">Symbol</th>
                           <th className="py-2">Side</th>
                           <th className="py-2">Entry</th>
@@ -1635,26 +1599,26 @@ export function ModernAutoTradingTerminal() {
                           <th className="py-2 text-right">Action</th>
                         </tr>
                       </thead>
-                      <tbody className="divide-y divide-white/[0.03]">
+                      <tbody className="divide-y divide-slate-900/10">
                         {positions.map((p, idx) => {
                           const displayMark = p.markPrice > 0 ? p.markPrice : (BTC_PRICE > 0 ? BTC_PRICE : p.entryPrice)
                           const livePnl = p.unRealizedProfit !== 0 ? p.unRealizedProfit : (displayMark - p.entryPrice) * p.positionAmt * (p.side === 'LONG' ? 1 : -1)
                           return (
-                            <tr key={idx} className="text-zinc-300">
-                              <td className="py-2 font-bold text-white">{p.symbol}</td>
+                            <tr key={idx} className="text-slate-800">
+                              <td className="py-2 font-bold text-slate-900">{p.symbol}</td>
                               <td className="py-2">
                                 <span
-                                  className={`px-1.5 py-0.5 rounded text-[10px] font-bold ${
-                                    p.side === 'LONG' ? 'text-emerald-400 bg-emerald-500/10' : 'text-rose-400 bg-rose-500/10'
+                                  className={`text-[11px] font-bold ${
+                                    p.side === 'LONG' ? 'text-emerald-700' : 'text-rose-700'
                                   }`}
                                 >
                                   {p.side} {p.leverage}x
                                 </span>
                               </td>
-                              <td className="py-2">${p.entryPrice.toLocaleString()}</td>
-                              <td className="py-2">${displayMark.toLocaleString()}</td>
-                              <td className="py-2 text-right font-bold">
-                                <span className={livePnl >= 0 ? 'text-emerald-400' : 'text-rose-400'}>
+                              <td className="py-2 tabular-nums">${p.entryPrice.toLocaleString()}</td>
+                              <td className="py-2 tabular-nums">${displayMark.toLocaleString()}</td>
+                              <td className="py-2 text-right font-bold tabular-nums">
+                                <span className={livePnl >= 0 ? 'text-emerald-700' : 'text-rose-700'}>
                                   {livePnl >= 0 ? `+$${livePnl.toFixed(2)}` : `-$${Math.abs(livePnl).toFixed(2)}`}
                                 </span>
                               </td>
@@ -1663,7 +1627,7 @@ export function ModernAutoTradingTerminal() {
                                   type="button"
                                   onClick={() => handleClosePosition(p)}
                                   disabled={isClosingPosition}
-                                  className="px-2 py-0.5 rounded bg-rose-500/10 hover:bg-rose-500/20 text-rose-300 hover:text-rose-200 border border-rose-500/30 text-[10px] font-mono cursor-pointer disabled:opacity-50 transition-all"
+                                  className="text-rose-700 hover:text-rose-900 hover:underline text-[11px] font-mono font-bold cursor-pointer disabled:opacity-50"
                                 >
                                   {isClosingPosition ? 'Closing...' : 'Close'}
                                 </button>
@@ -1676,44 +1640,45 @@ export function ModernAutoTradingTerminal() {
                   </div>
                 </div>
               ) : (
-                <div className="p-4 rounded-xl bg-white/[0.02] flex items-center justify-between text-xs font-mono text-zinc-400">
+                <div className="py-3 border-b border-slate-900/10 flex items-center justify-between text-xs font-mono text-slate-600">
                   <div className="flex items-center gap-2">
-                    <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                    <span>Engine standby • Monitoring 15m candles for Score ≥ 52.0</span>
+                    <span className="w-2 h-2 rounded-full bg-emerald-600" />
+                    <span>Engine standby · Monitoring 15m candles for Score ≥ 52.0</span>
                   </div>
-                  <span className="text-zinc-500">{openOrders.length} Open Orders</span>
+                  <span className="text-slate-500 tabular-nums">{openOrders.length} Open Orders</span>
                 </div>
               )}
 
               {userTrades.length > 0 && (
-                <div className="space-y-2 pt-2 border-t border-white/[0.05]">
+                <div className="space-y-2 pt-1">
                   <div className="flex flex-wrap items-center justify-between gap-2">
-                    <span className="text-xs font-mono font-bold text-zinc-400 uppercase tracking-wider block">
+                    <span className="text-xs font-mono font-bold text-slate-900 uppercase tracking-wider block">
                       Recent Trade Fills (Binance Futures)
                     </span>
-                    <div className="flex items-center gap-2 text-[11px] font-mono">
-                      <span className="text-zinc-400">
+                    <div className="flex items-center gap-2.5 text-[11px] font-mono tabular-nums">
+                      <span className="text-slate-600">
                         Today Net:{' '}
                         {(() => {
                           const todayVal = localTodayStats ? localTodayStats.netPnl : sessionNetPnl
                           return (
-                            <strong className={todayVal !== null && todayVal >= 0 ? 'text-[#00e676]' : 'text-rose-400'}>
+                            <strong className={todayVal !== null && todayVal >= 0 ? 'text-emerald-700' : 'text-rose-700'}>
                               {todayVal !== null ? `${todayVal >= 0 ? '+' : ''}$${todayVal.toFixed(2)}` : '--'}
                             </strong>
                           )
                         })()}
                       </span>
-                      <span className="text-zinc-600">•</span>
-                      <span className="text-zinc-400">
+                      <span className="text-slate-500">·</span>
+                      <span className="text-slate-600 tabular-nums">
                         All-Time:{' '}
-                        <strong className={netRealizedPnl !== null && netRealizedPnl >= 0 ? 'text-[#00e676]' : 'text-rose-400'}>
+                        <strong className={netRealizedPnl !== null && netRealizedPnl >= 0 ? 'text-emerald-700 tabular-nums' : 'text-rose-700 tabular-nums'}>
                           {netRealizedPnl !== null ? `${netRealizedPnl >= 0 ? '+' : ''}$${netRealizedPnl.toFixed(2)}` : '--'}
                         </strong>
                       </span>
                       <button
+                        type="button"
                         onClick={handleResetStats}
                         disabled={isResettingStats}
-                        className="px-2 py-0.5 ml-1 text-[10px] font-mono text-zinc-400 hover:text-amber-300 border border-white/10 hover:border-amber-500/30 rounded transition-colors"
+                        className="ml-1 text-[10px] font-mono font-bold text-[#0369a1] hover:text-slate-900 hover:underline transition-colors cursor-pointer"
                         title="Reset trade performance history and calendar to start fresh"
                       >
                         {isResettingStats ? 'Resetting...' : 'Reset Stats'}
@@ -1721,9 +1686,9 @@ export function ModernAutoTradingTerminal() {
                     </div>
                   </div>
                   <div className="overflow-x-auto max-h-56 overflow-y-auto">
-                    <table className="w-full text-left text-xs font-mono">
+                    <table className="w-full text-left text-xs font-mono tabular-nums">
                       <thead>
-                        <tr className="text-zinc-500 border-b border-white/[0.05]">
+                        <tr className="text-slate-500 border-b border-slate-900/10">
                           <th className="py-1.5">Time</th>
                           <th className="py-1.5">Side</th>
                           <th className="py-1.5">Price</th>
@@ -1733,7 +1698,7 @@ export function ModernAutoTradingTerminal() {
                           <th className="py-1.5 text-right">Net Return</th>
                         </tr>
                       </thead>
-                      <tbody className="divide-y divide-white/[0.03]">
+                      <tbody className="divide-y divide-slate-900/10">
                         {userTrades
                           .slice(0, 30)
                           .map((t) => {
@@ -1744,53 +1709,53 @@ export function ModernAutoTradingTerminal() {
                             let sideClass = ''
                             if (isEntry) {
                               if (t.side === 'BUY') {
-                                sideBadge = 'BUY (Entry)'
-                                sideClass = 'text-emerald-400 bg-emerald-500/10 border border-emerald-500/20'
+                                sideBadge = 'BUY · Entry'
+                                sideClass = 'text-emerald-700'
                               } else {
-                                sideBadge = 'SELL (Entry)'
-                                sideClass = 'text-rose-400 bg-rose-500/10 border border-rose-500/20'
+                                sideBadge = 'SELL · Entry'
+                                sideClass = 'text-rose-700'
                               }
                             } else {
                               if (t.side === 'BUY') {
-                                sideBadge = 'BUY (Cover)'
-                                sideClass = 'text-emerald-400 bg-emerald-500/10'
+                                sideBadge = 'BUY · Cover'
+                                sideClass = 'text-emerald-700'
                               } else {
-                                sideBadge = 'SELL (Exit)'
-                                sideClass = 'text-amber-400 bg-amber-500/10'
+                                sideBadge = 'SELL · Exit'
+                                sideClass = 'text-amber-800'
                               }
                             }
 
                             return (
-                              <tr key={t.id} className="text-zinc-300 hover:bg-white/[0.02] transition-colors">
-                                <td className="py-1.5 text-zinc-400 text-[11px]">
+                              <tr key={t.id} className="text-slate-800 hover:bg-[#f3ead2]/50 transition-colors">
+                                <td className="py-1.5 text-slate-500 text-[11px]">
                                   {new Date(t.time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })}
                                 </td>
                                 <td className="py-1.5">
-                                  <span className={`px-1.5 py-0.5 rounded text-[10px] font-bold ${sideClass}`}>
+                                  <span className={`text-[11px] font-bold ${sideClass}`}>
                                     {sideBadge}
                                   </span>
                                 </td>
-                                <td className="py-1.5">${t.price.toLocaleString(undefined, { minimumFractionDigits: 1, maximumFractionDigits: 2 })}</td>
-                                <td className="py-1.5">{t.qty} BTC</td>
-                                <td className="py-1.5 text-right font-medium">
+                                <td className="py-1.5 tabular-nums">${t.price.toLocaleString(undefined, { minimumFractionDigits: 1, maximumFractionDigits: 2 })}</td>
+                                <td className="py-1.5 tabular-nums">{t.qty} BTC</td>
+                                <td className="py-1.5 text-right font-medium tabular-nums">
                                   {isEntry ? (
-                                    <span className="text-zinc-500 font-mono text-[11px]">--</span>
+                                    <span className="text-slate-500 font-mono text-[11px]">--</span>
                                   ) : (
-                                    <span className={t.realizedPnl >= 0 ? 'text-[#00e676]' : 'text-rose-400'}>
+                                    <span className={t.realizedPnl >= 0 ? 'text-emerald-700 font-bold tabular-nums' : 'text-rose-700 font-bold tabular-nums'}>
                                       {t.realizedPnl >= 0 ? `+$${t.realizedPnl.toFixed(2)}` : `-$${Math.abs(t.realizedPnl).toFixed(2)}`}
                                     </span>
                                   )}
                                 </td>
-                                <td className="py-1.5 text-right text-amber-400/90 text-[11px]">
+                                <td className="py-1.5 text-right text-amber-800 text-[11px]">
                                   -${(t.commission || 0).toFixed(4)}
                                 </td>
                                 <td className="py-1.5 text-right font-bold">
                                   {isEntry ? (
-                                    <span className="text-zinc-500 text-[11px]">
+                                    <span className="text-slate-500 text-[11px]">
                                       -${(t.commission || 0).toFixed(4)}
                                     </span>
                                   ) : (
-                                    <span className={fillNet >= 0 ? 'text-[#00e676]' : 'text-rose-400'}>
+                                    <span className={fillNet >= 0 ? 'text-emerald-700' : 'text-rose-700'}>
                                       {fillNet >= 0 ? `+$${fillNet.toFixed(2)}` : `-$${Math.abs(fillNet).toFixed(2)}`}
                                     </span>
                                   )}
@@ -1804,25 +1769,23 @@ export function ModernAutoTradingTerminal() {
                 </div>
               )}
 
-
-
-              <div className="space-y-2 pt-2">
+              <div className="space-y-2 pt-2 border-t border-slate-900/10">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <span className="text-xs font-mono font-bold text-zinc-300 uppercase tracking-wider">
+                    <span className="text-xs font-mono font-bold text-slate-900 uppercase tracking-wider">
                       Active Binance Open Orders ({openOrders.length})
                     </span>
                     {isLoadingOrders && (
-                      <span className="text-[10px] font-mono text-zinc-500 animate-pulse">Syncing...</span>
+                      <span className="text-[10px] font-mono text-slate-500">Syncing...</span>
                     )}
                   </div>
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-3">
                     {openOrders.length > 0 && (
                       <button
                         type="button"
                         onClick={handleCancelAllOrders}
                         disabled={isCancellingAll}
-                        className="px-2.5 py-1 rounded-lg bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/30 text-[11px] font-mono text-rose-300 hover:text-rose-200 transition-all cursor-pointer disabled:opacity-50"
+                        className="text-[11px] font-mono font-bold text-rose-700 hover:text-rose-900 hover:underline transition-colors cursor-pointer disabled:opacity-50"
                       >
                         {isCancellingAll ? 'Flushing...' : 'Flush All Orders'}
                       </button>
@@ -1831,7 +1794,7 @@ export function ModernAutoTradingTerminal() {
                       type="button"
                       onClick={() => handleFetchOpenOrders()}
                       disabled={isLoadingOrders}
-                      className="text-[11px] font-mono text-zinc-400 hover:text-white transition-colors cursor-pointer"
+                      className="text-[11px] font-mono font-semibold text-[#0369a1] hover:text-slate-900 hover:underline transition-colors cursor-pointer"
                     >
                       Refresh
                     </button>
@@ -1839,58 +1802,58 @@ export function ModernAutoTradingTerminal() {
                 </div>
 
                 {openOrders.length > 0 ? (
-                  <div className="overflow-x-auto rounded-xl border border-white/[0.05] bg-white/[0.01]">
-                    <table className="w-full text-left text-xs font-mono">
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-left text-xs font-mono tabular-nums">
                       <thead>
-                        <tr className="text-zinc-500 border-b border-white/[0.05] bg-white/[0.02]">
-                          <th className="py-2.5 px-3">Type</th>
-                          <th className="py-2.5 px-3">Side</th>
-                          <th className="py-2.5 px-3">Trigger / Stop</th>
-                          <th className="py-2.5 px-3">Amount</th>
-                          <th className="py-2.5 px-3 text-right">Action</th>
+                        <tr className="text-slate-500 border-b border-slate-900/10">
+                          <th className="py-2">Type</th>
+                          <th className="py-2">Side</th>
+                          <th className="py-2">Trigger / Stop</th>
+                          <th className="py-2">Amount</th>
+                          <th className="py-2 text-right">Action</th>
                         </tr>
                       </thead>
-                      <tbody className="divide-y divide-white/[0.03]">
+                      <tbody className="divide-y divide-slate-900/10">
                         {openOrders.map((ord) => {
                           const isSl = ord.type === 'STOP_MARKET' || ord.type.includes('STOP')
                           const isTp = ord.type === 'TAKE_PROFIT_MARKET' || ord.type.includes('TAKE_PROFIT')
                           return (
-                            <tr key={ord.orderId} className="text-zinc-300 hover:bg-white/[0.02] transition-colors">
-                              <td className="py-2.5 px-3">
+                            <tr key={ord.orderId} className="text-slate-800 hover:bg-[#f3ead2]/50 transition-colors">
+                              <td className="py-2">
                                 <span
-                                  className={`px-1.5 py-0.5 rounded text-[10px] font-bold ${
+                                  className={`text-[11px] font-bold ${
                                     isSl
-                                      ? 'text-rose-400 bg-rose-500/10 border border-rose-500/20'
+                                      ? 'text-rose-700'
                                       : isTp
-                                      ? 'text-emerald-400 bg-emerald-500/10 border border-emerald-500/20'
-                                      : 'text-amber-400 bg-amber-500/10 border border-amber-500/20'
+                                      ? 'text-emerald-700'
+                                      : 'text-amber-800'
                                   }`}
                                 >
                                   {ord.type}
                                 </span>
                               </td>
-                              <td className="py-2.5 px-3 font-semibold">
-                                <span className={ord.side === 'BUY' ? 'text-emerald-400' : 'text-rose-400'}>
+                              <td className="py-2 font-semibold">
+                                <span className={ord.side === 'BUY' ? 'text-emerald-700' : 'text-rose-700'}>
                                   {ord.side}
                                 </span>
                               </td>
-                              <td className="py-2.5 px-3 text-white font-bold">
+                              <td className="py-2 text-slate-900 font-bold tabular-nums">
                                 {ord.stopPrice > 0 ? `$${ord.stopPrice.toLocaleString()}` : `$${ord.price.toLocaleString()}`}
                               </td>
-                              <td className="py-2.5 px-3 text-zinc-400">
+                              <td className="py-2 text-slate-600">
                                 {ord.closePosition || ord.origQty === 0
                                   ? 'Full Position '
                                   : `${ord.origQty} BTC `}
-                                <span className="text-[10px] text-zinc-500">
+                                <span className="text-[10px] text-slate-500">
                                   ({ord.closePosition ? 'Close' : 'Reduce'})
                                 </span>
                               </td>
-                              <td className="py-2.5 px-3 text-right">
+                              <td className="py-2 text-right">
                                 <button
                                   type="button"
                                   onClick={() => handleCancelOrder(ord.orderId)}
                                   disabled={cancellingOrderId === ord.orderId}
-                                  className="px-2 py-0.5 rounded bg-white/[0.05] hover:bg-rose-500/20 text-[10px] font-mono text-zinc-400 hover:text-rose-300 border border-white/[0.08] hover:border-rose-500/30 transition-all cursor-pointer disabled:opacity-50"
+                                  className="text-[11px] font-mono font-bold text-rose-700 hover:text-rose-900 hover:underline transition-colors cursor-pointer disabled:opacity-50"
                                 >
                                   {cancellingOrderId === ord.orderId ? '...' : 'Cancel'}
                                 </button>
@@ -1902,7 +1865,7 @@ export function ModernAutoTradingTerminal() {
                     </table>
                   </div>
                 ) : (
-                  <div className="p-3.5 rounded-xl bg-white/[0.01] border border-dashed border-white/[0.06] text-center text-xs font-mono text-zinc-500">
+                  <div className="py-3 border-b border-slate-900/10 text-xs font-mono text-slate-500">
                     No pending orders on Binance. Orders trigger automatically on score ≥ 52.0.
                   </div>
                 )}
@@ -1910,7 +1873,7 @@ export function ModernAutoTradingTerminal() {
 
               <div className="space-y-1.5 pt-1">
                 <div className="flex items-center justify-between">
-                  <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-zinc-500 block">
+                  <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-slate-500 block">
                     Execution Bridge Log ({executionLogs.length}/20)
                   </span>
                   {executionLogs.length > 0 && (
@@ -1923,23 +1886,23 @@ export function ModernAutoTradingTerminal() {
                           localStorage.setItem('acts_logs_cleared_at', Date.now().toString())
                         } catch {}
                       }}
-                      className="text-[10px] font-mono text-zinc-500 hover:text-zinc-300 transition-colors cursor-pointer"
+                      className="text-[10px] font-mono text-slate-500 hover:text-slate-900 hover:underline transition-colors cursor-pointer"
                     >
                       Clear Log
                     </button>
                   )}
                 </div>
-                <div className="p-3 rounded-xl bg-black/50 border border-white/[0.05] font-mono text-[11px] max-h-28 overflow-y-auto space-y-1">
+                <div className="border-l-2 border-[#0369a1] pl-3 py-1 font-mono text-[11px] max-h-28 overflow-y-auto space-y-1 text-slate-700">
                   {executionLogs.map((log) => (
                     <div key={log.id} className="flex items-start gap-2">
-                      <span className="text-zinc-600 shrink-0">[{log.time}]</span>
+                      <span className="text-slate-500 shrink-0 tabular-nums">[{log.time}]</span>
                       <span
                         className={
                           log.type === 'success'
-                            ? 'text-emerald-400'
+                            ? 'text-emerald-700 font-semibold'
                             : log.type === 'warn'
-                            ? 'text-rose-400'
-                            : 'text-zinc-300'
+                            ? 'text-rose-700 font-semibold'
+                            : 'text-slate-800'
                         }
                       >
                         {log.msg}
@@ -1949,24 +1912,23 @@ export function ModernAutoTradingTerminal() {
                 </div>
               </div>
 
-              <div className="p-3 rounded-xl bg-white/[0.02] flex items-start gap-2.5 text-xs text-zinc-400 leading-relaxed">
-                <span className="text-[#F0B90B] font-bold text-sm">✓</span>
+              <div className="pt-3 border-t border-slate-900/10 flex items-start gap-2.5 text-xs text-slate-600 leading-relaxed">
+                <span className="text-emerald-700 font-bold text-sm">✓</span>
                 <span>
-                  <strong>Non-custodial active:</strong> Withdrawals are disabled on your API key. ACTS only issues algorithmic bracket orders directly via Binance Futures.
+                  <strong className="text-slate-900">Non-custodial active:</strong> Withdrawals are disabled on your API key. ACTS only issues algorithmic bracket orders directly via Binance Futures.
                 </span>
               </div>
             </div>
           ) : (
-            // Disconnected Form (Clean, Modern, Anti-Slop)
             <form onSubmit={handleConnect} className="space-y-4">
               <div className="flex items-center justify-between">
-                <label className="text-xs font-semibold text-zinc-300">Account Type</label>
-                <div className="flex items-center p-1 rounded-lg bg-black/40 border border-white/[0.06]">
+                <label className="text-xs font-semibold text-slate-700">Account Type</label>
+                <div className="flex items-center gap-4 text-xs font-mono font-bold">
                   <button
                     type="button"
                     onClick={() => setIsTestnet(false)}
-                    className={`px-3 py-1 rounded-md text-xs font-mono font-bold transition-all cursor-pointer ${
-                      !isTestnet ? 'bg-[#F0B90B] text-black shadow-md' : 'text-zinc-400 hover:text-white'
+                    className={`pb-0.5 border-b-2 transition-colors cursor-pointer ${
+                      !isTestnet ? 'border-[#0369a1] text-slate-900' : 'border-transparent text-slate-500 hover:text-slate-900'
                     }`}
                   >
                     Live Futures
@@ -1974,8 +1936,8 @@ export function ModernAutoTradingTerminal() {
                   <button
                     type="button"
                     onClick={() => setIsTestnet(true)}
-                    className={`px-3 py-1 rounded-md text-xs font-mono font-bold transition-all cursor-pointer ${
-                      isTestnet ? 'bg-[#F0B90B] text-black shadow-md' : 'text-zinc-400 hover:text-white'
+                    className={`pb-0.5 border-b-2 transition-colors cursor-pointer ${
+                      isTestnet ? 'border-[#0369a1] text-slate-900' : 'border-transparent text-slate-500 hover:text-slate-900'
                     }`}
                   >
                     Testnet
@@ -1984,38 +1946,40 @@ export function ModernAutoTradingTerminal() {
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-xs font-semibold text-zinc-300">API Key</label>
+                <label htmlFor="binance-api-key" className="text-xs font-semibold text-slate-700 block">API Key</label>
                 <input
+                  id="binance-api-key"
                   type="text"
                   value={inputApiKey}
                   onChange={(e) => setInputApiKey(e.target.value)}
                   placeholder="Paste your Binance API key"
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-black/50 border border-white/[0.08] focus:border-[#F0B90B] focus:ring-1 focus:ring-[#F0B90B] text-xs font-mono text-white placeholder:text-zinc-600 outline-none transition-all"
+                  className="w-full px-3.5 py-2.5 rounded-lg bg-[#fdfaf3] border border-slate-900/15 focus:border-[#0284c7] focus:ring-1 focus:ring-[#0284c7] text-xs font-mono text-slate-900 placeholder:text-slate-500 outline-none transition-colors"
                 />
               </div>
 
               <div className="space-y-1.5">
                 <div className="flex items-center justify-between">
-                  <label className="text-xs font-semibold text-zinc-300">API Secret</label>
+                  <label htmlFor="binance-api-secret" className="text-xs font-semibold text-slate-700">API Secret</label>
                   <button
                     type="button"
                     onClick={() => setShowSecret(!showSecret)}
-                    className="text-[11px] font-mono text-zinc-500 hover:text-[#F0B90B] cursor-pointer"
+                    className="text-[11px] font-mono text-slate-500 hover:text-[#0369a1] cursor-pointer"
                   >
                     {showSecret ? 'Hide' : 'Show'}
                   </button>
                 </div>
                 <input
+                  id="binance-api-secret"
                   type={showSecret ? 'text' : 'password'}
                   value={inputApiSecret}
                   onChange={(e) => setInputApiSecret(e.target.value)}
                   placeholder="Paste your Binance API secret"
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-black/50 border border-white/[0.08] focus:border-[#F0B90B] focus:ring-1 focus:ring-[#F0B90B] text-xs font-mono text-white placeholder:text-zinc-600 outline-none transition-all"
+                  className="w-full px-3.5 py-2.5 rounded-lg bg-[#fdfaf3] border border-slate-900/15 focus:border-[#0284c7] focus:ring-1 focus:ring-[#0284c7] text-xs font-mono text-slate-900 placeholder:text-slate-500 outline-none transition-colors"
                 />
               </div>
 
               {connectError && (
-                <p className="text-xs font-mono text-rose-400 bg-rose-500/10 p-2.5 rounded-lg border border-rose-500/20">
+                <p className="text-xs font-mono text-rose-700 border-l-2 border-rose-600 pl-3 py-1">
                   {connectError}
                 </p>
               )}
@@ -2023,7 +1987,7 @@ export function ModernAutoTradingTerminal() {
               <button
                 type="submit"
                 disabled={isConnecting}
-                className="w-full py-3 rounded-xl bg-[#F0B90B] hover:bg-[#dca409] text-black font-bold text-xs uppercase tracking-wider font-mono transition-all shadow-lg hover:shadow-[#F0B90B]/20 flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+                className="w-full py-3 rounded-lg bg-[#F0B90B] hover:bg-[#dca409] text-slate-950 font-bold text-xs uppercase tracking-wider font-mono transition-colors flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
               >
                 {isConnecting ? (
                   <>
@@ -2040,14 +2004,14 @@ export function ModernAutoTradingTerminal() {
                 )}
               </button>
 
-              <div className="pt-2 text-xs text-zinc-400 space-y-1.5 border-t border-white/[0.05]">
+              <div className="pt-3 text-xs text-slate-600 space-y-1.5 border-t border-slate-900/10">
                 <p className="flex items-center gap-2">
-                  <span className="text-[#F0B90B] font-bold">✓</span>
-                  <span><strong>Trade-Only Access:</strong> Enable Futures only. Never enable Withdrawals.</span>
+                  <span className="text-amber-800 font-bold">✓</span>
+                  <span><strong className="text-slate-900">Trade-Only Access:</strong> Enable Futures only. Never enable Withdrawals.</span>
                 </p>
                 <p className="flex items-center gap-2">
-                  <span className="text-[#00e676] font-bold">✓</span>
-                  <span><strong>AES-256-GCM Encrypted:</strong> Credentials safely encrypted in Supabase under your account for 24/7 cloud execution.</span>
+                  <span className="text-emerald-700 font-bold">✓</span>
+                  <span><strong className="text-slate-900">AES-256-GCM Encrypted:</strong> Credentials safely encrypted in Supabase under your account for 24/7 cloud execution.</span>
                 </p>
               </div>
             </form>
@@ -2062,25 +2026,25 @@ export function ModernAutoTradingTerminal() {
         </div>
 
         <div className="lg:col-span-5 space-y-6">
-          <div className="rounded-2xl bg-[#090d18] border border-white/[0.07] p-6 shadow-xl space-y-5">
-          <div className="flex items-center justify-between border-b border-white/[0.05] pb-4">
+          <div className="rounded-2xl bg-[#faf2df] border border-slate-900/10 p-6 space-y-5">
+          <div className="flex items-center justify-between border-b border-slate-900/10 pb-4">
             <div>
-              <h2 className="text-sm font-bold text-white tracking-wide">
+              <h2 className="text-sm font-bold text-slate-900 tracking-tight">
                 Risk Engine &amp; Sizing
               </h2>
-              <p className="text-xs text-text-muted">
+              <p className="text-xs text-slate-600">
                 Strict guardrails to protect capital on Bitcoin Futures
               </p>
             </div>
-            <span className="px-2 py-0.5 rounded bg-white/[0.04] text-zinc-400 font-mono text-[10px]">
+            <span className="text-[11px] font-mono text-slate-500">
               V2.4 Guardrails
             </span>
           </div>
 
           <div className="space-y-2">
             <div className="flex items-center justify-between text-xs">
-              <span className="text-zinc-400 font-semibold">Risk Per Trade</span>
-              <span className="font-mono font-bold text-[#F0B90B]">{riskPct.toFixed(1)}% of Equity</span>
+              <span className="text-slate-700 font-semibold">Risk Per Trade</span>
+              <span className="font-mono font-bold tabular-nums text-amber-800">{riskPct.toFixed(1)}% of Equity</span>
             </div>
             <div className="grid grid-cols-3 gap-2">
               {[
@@ -2092,10 +2056,10 @@ export function ModernAutoTradingTerminal() {
                   key={item.val}
                   type="button"
                   onClick={() => setRiskPct(item.val)}
-                  className={`py-2 rounded-xl text-xs font-mono font-semibold transition-all cursor-pointer text-center ${
+                  className={`py-2 rounded-lg text-xs font-mono font-semibold transition-colors cursor-pointer text-center border ${
                     riskPct === item.val
-                      ? 'bg-[#F0B90B] text-black font-bold shadow-md'
-                      : 'bg-white/[0.03] text-zinc-400 hover:text-white'
+                      ? 'bg-[#F0B90B] border-[#d9a300] text-slate-950 font-bold'
+                      : 'bg-[#fdfaf3] border-slate-900/15 text-slate-700 hover:text-slate-900 hover:bg-[#f3ead2]'
                   }`}
                 >
                   {item.label}
@@ -2106,8 +2070,8 @@ export function ModernAutoTradingTerminal() {
 
           <div className="space-y-2">
             <div className="flex items-center justify-between text-xs">
-              <span className="text-zinc-400 font-semibold">Max Leverage Safety Cap</span>
-              <span className="font-mono font-bold text-white">{maxLeverage}x Isolated</span>
+              <span className="text-slate-700 font-semibold">Max Leverage Safety Cap</span>
+              <span className="font-mono font-bold tabular-nums text-slate-900">{maxLeverage}x Isolated</span>
             </div>
             <div className="grid grid-cols-3 gap-2">
               {[2, 3, 5].map((lev) => (
@@ -2115,10 +2079,10 @@ export function ModernAutoTradingTerminal() {
                   key={lev}
                   type="button"
                   onClick={() => setMaxLeverage(lev)}
-                  className={`py-2 rounded-xl text-xs font-mono font-semibold transition-all cursor-pointer text-center ${
+                  className={`py-2 rounded-lg text-xs font-mono font-semibold transition-colors cursor-pointer text-center border ${
                     maxLeverage === lev
-                      ? 'bg-white/[0.12] text-white font-bold border border-white/20'
-                      : 'bg-white/[0.03] text-zinc-400 hover:text-white'
+                      ? 'bg-[#0369a1] border-[#0369a1] text-white font-bold'
+                      : 'bg-[#fdfaf3] border-slate-900/15 text-slate-700 hover:text-slate-900 hover:bg-[#f3ead2]'
                   }`}
                 >
                   {lev}x Leverage
@@ -2129,8 +2093,8 @@ export function ModernAutoTradingTerminal() {
 
           <div className="space-y-2">
             <div className="flex items-center justify-between text-xs">
-              <span className="text-zinc-400 font-semibold">Take Profit Strategy</span>
-              <span className="font-mono font-bold text-[#F0B90B]">
+              <span className="text-slate-700 font-semibold">Take Profit Strategy</span>
+              <span className="font-mono font-bold text-amber-800">
                 {tpStrategy === 'bank_and_trail' ? 'Single TP (1:1.5 RR Default)' : 'Quick Bank (Single 1:1.5 TP)'}
               </span>
             </div>
@@ -2138,19 +2102,19 @@ export function ModernAutoTradingTerminal() {
               <button
                 type="button"
                 onClick={() => handleTpStrategyChange('bank_and_trail')}
-                className={`p-3 rounded-xl text-left transition-all cursor-pointer border ${
+                className={`p-3 rounded-xl text-left transition-colors cursor-pointer border ${
                   tpStrategy === 'bank_and_trail'
-                    ? 'border-[#F0B90B]/50 bg-[#F0B90B]/10 text-white shadow-md'
-                    : 'border-white/[0.05] bg-white/[0.02] text-zinc-400 hover:border-white/10 hover:text-white'
+                    ? 'border-[#0369a1] bg-[#fdfaf3] text-slate-900'
+                    : 'border-slate-900/15 bg-transparent text-slate-600 hover:bg-[#f3ead2]/50 hover:text-slate-900'
                 }`}
               >
                 <div className="flex items-center justify-between mb-1">
-                  <span className="text-xs font-mono font-bold text-white">System Default (1:1.5 RR)</span>
+                  <span className="text-xs font-mono font-bold text-slate-900">System Default (1:1.5 RR)</span>
                   {tpStrategy === 'bank_and_trail' && (
-                    <span className="w-2 h-2 rounded-full bg-[#F0B90B] shadow-[0_0_6px_#F0B90B]" />
+                    <span className="w-2 h-2 rounded-full bg-[#0369a1]" />
                   )}
                 </div>
-                <p className="text-[11px] text-zinc-400 leading-snug">
+                <p className="text-[11px] text-slate-600 leading-snug">
                   Follows system signal TP structure (100% full exit at 1:1.5 RR target).
                 </p>
               </button>
@@ -2158,51 +2122,51 @@ export function ModernAutoTradingTerminal() {
               <button
                 type="button"
                 onClick={() => handleTpStrategyChange('quick_bank')}
-                className={`p-3 rounded-xl text-left transition-all cursor-pointer border ${
+                className={`p-3 rounded-xl text-left transition-colors cursor-pointer border ${
                   tpStrategy === 'quick_bank'
-                    ? 'border-[#00e676]/50 bg-[#00e676]/10 text-white shadow-md'
-                    : 'border-white/[0.05] bg-white/[0.02] text-zinc-400 hover:border-white/10 hover:text-white'
+                    ? 'border-emerald-600 bg-[#fdfaf3] text-slate-900'
+                    : 'border-slate-900/15 bg-transparent text-slate-600 hover:bg-[#f3ead2]/50 hover:text-slate-900'
                 }`}
               >
                 <div className="flex items-center justify-between mb-1">
-                  <span className="text-xs font-mono font-bold text-white">Quick Bank (1:1.5 TP)</span>
+                  <span className="text-xs font-mono font-bold text-slate-900">Quick Bank (1:1.5 TP)</span>
                   {tpStrategy === 'quick_bank' && (
-                    <span className="w-2 h-2 rounded-full bg-[#00e676] shadow-[0_0_6px_#00e676]" />
+                    <span className="w-2 h-2 rounded-full bg-emerald-600" />
                   )}
                 </div>
-                <p className="text-[11px] text-zinc-400 leading-snug">
+                <p className="text-[11px] text-slate-600 leading-snug">
                   Forces 100% single Take Profit order at 1:1.5 RR for instant compounding.
                 </p>
               </button>
             </div>
           </div>
 
-          <div className="p-4 rounded-xl bg-white/[0.02] space-y-2.5 text-xs font-mono">
-            <div className="flex items-center justify-between">
-              <span className="text-zinc-400">Effective Capital:</span>
-              <span className="font-bold text-white">${effectiveCapital.toFixed(2)} USDT (≈ Rp {capitalIdr.toLocaleString('id-ID')})</span>
+          <div className="divide-y divide-slate-900/10 border-y border-slate-900/10 text-xs font-mono tabular-nums">
+            <div className="flex items-center justify-between py-2">
+              <span className="text-slate-600">Effective Capital</span>
+              <span className="font-bold text-slate-900">${effectiveCapital.toFixed(2)} USDT (≈ Rp {capitalIdr.toLocaleString('id-ID')})</span>
             </div>
 
-            <div className="flex items-center justify-between">
-              <span className="text-zinc-400">Max Dollar Loss per SL (-1.0R):</span>
-              <span className="font-bold text-rose-400">-${riskAmountUsdt.toFixed(2)} USDT (Rp {riskAmountIdr.toLocaleString('id-ID')})</span>
+            <div className="flex items-center justify-between py-2">
+              <span className="text-slate-600">Max Dollar Loss per SL (-1.0R)</span>
+              <span className="font-bold text-rose-700 tabular-nums">-${riskAmountUsdt.toFixed(2)} USDT (Rp {riskAmountIdr.toLocaleString('id-ID')})</span>
             </div>
 
-            <div className="flex items-center justify-between">
-              <span className="text-zinc-400">Binance Order Value:</span>
-              <span className="font-bold text-white">${positionValueUsdt.toFixed(0)} USDT ({positionBtc} BTC)</span>
+            <div className="flex items-center justify-between py-2">
+              <span className="text-slate-600">Binance Order Value</span>
+              <span className="font-bold text-slate-900">${positionValueUsdt.toFixed(0)} USDT ({positionBtc} BTC)</span>
             </div>
 
-            <div className="flex items-center justify-between pt-1 border-t border-white/[0.05]">
-              <span className="text-white font-semibold">Net Monthly Edge (after fees):</span>
-              <span className="font-bold text-[#00e676]">+{estMonthlyGainPct}% (+Rp {netMonthlyIdr.toLocaleString('id-ID')})</span>
+            <div className="flex items-center justify-between py-2">
+              <span className="text-slate-900 font-semibold">Net Monthly Edge (after fees)</span>
+              <span className="font-bold text-emerald-700">+{estMonthlyGainPct}% (+Rp {netMonthlyIdr.toLocaleString('id-ID')})</span>
             </div>
           </div>
 
           {!isConnected && (
             <div className="space-y-1.5 pt-1">
-              <span className="text-[11px] text-zinc-500 font-mono uppercase block">
-                Quick Simulation Presets:
+              <span className="text-[11px] text-slate-500 font-mono uppercase block">
+                Simulation Capital Presets
               </span>
               <div className="grid grid-cols-2 gap-2">
                 {[
@@ -2216,10 +2180,10 @@ export function ModernAutoTradingTerminal() {
                       setCapitalUsdt(p.val)
                       setSelectedPreset(idx)
                     }}
-                    className={`py-1.5 px-2.5 rounded-lg text-xs font-mono font-semibold transition-all cursor-pointer ${
+                    className={`py-1.5 px-2.5 rounded-lg text-xs font-mono font-semibold transition-colors cursor-pointer border ${
                       capitalUsdt === p.val
-                        ? 'bg-[#F0B90B]/15 text-[#F0B90B] border border-[#F0B90B]/30'
-                        : 'bg-white/[0.03] text-zinc-400 hover:text-white'
+                        ? 'bg-[#f3ead2] text-slate-900 border-amber-700/40 font-bold'
+                        : 'bg-[#fdfaf3] border-slate-900/15 text-slate-700 hover:text-slate-900 hover:bg-[#f3ead2]'
                     }`}
                   >
                     {p.label}
@@ -2229,9 +2193,9 @@ export function ModernAutoTradingTerminal() {
             </div>
           )}
 
-          <div className="p-3 rounded-xl bg-white/[0.02] text-xs text-zinc-400 leading-relaxed">
-            <span className="text-white font-semibold">Hybrid Execution Framework: </span>
-            Setups with <strong>Score ≥ 52.0</strong> are auto-executed 24/7 with zero screen time. Setups between <strong>45.0 – 51.9</strong> are sent live to your Telegram as discretionary manual scalp signals.
+          <div className="border-l-2 border-[#0369a1] pl-3.5 py-0.5 text-xs text-slate-600 leading-relaxed">
+            <span className="text-slate-900 font-semibold">Hybrid Execution Framework: </span>
+            Setups with <strong>Score ≥ 52.0</strong> are auto-executed 24/7 with zero screen time. Setups between <strong>45.0 to 51.9</strong> are sent live to your Telegram as discretionary manual scalp signals.
           </div>
           </div>
 

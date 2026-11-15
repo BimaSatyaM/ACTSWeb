@@ -10,14 +10,14 @@ export default function AutoTradingPage() {
     <div className="space-y-6 max-w-7xl mx-auto">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
-          <div className="flex items-center gap-2 text-xs text-text-muted font-mono mb-1">
-            <Link href="/dashboard" className="hover:text-white transition-colors">
+          <div className="flex items-center gap-2 text-xs text-slate-500 font-mono mb-1">
+            <Link href="/dashboard" className="hover:text-slate-900 transition-colors">
               Dashboard
             </Link>
             <span>/</span>
-            <span className="text-white font-semibold">Auto Trading</span>
+            <span className="text-slate-900 font-semibold">Auto Trading</span>
           </div>
-          <h1 className="text-xl sm:text-2xl font-black text-white tracking-tight flex items-center gap-3">
+          <h1 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight flex items-center gap-3">
             <BinanceLogo size="lg" />
             <span>Binance Futures Auto-Pilot</span>
           </h1>
@@ -26,7 +26,7 @@ export default function AutoTradingPage() {
         <div className="flex items-center gap-2">
           <Link
             href="/dashboard/signals"
-            className="px-3.5 py-2 rounded-xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.08] text-xs font-semibold text-zinc-300 hover:text-white transition-all flex items-center gap-1.5"
+            className="text-xs font-semibold text-[#0369a1] hover:text-slate-900 hover:underline flex items-center gap-1.5 transition-colors"
           >
             <span>Live Signals &amp; Telemetry</span>
             <span>→</span>

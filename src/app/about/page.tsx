@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation'
 
 interface MathPillar {
   id: string
+  num: string
   title: string
   tag: string
   formula: string
@@ -17,8 +18,9 @@ interface MathPillar {
 const MATH_PILLARS: MathPillar[] = [
   {
     id: 'confluence',
+    num: '01',
     title: 'Composite Factor Convergence',
-    tag: 'SYSTEM MATHEMATICS // 01',
+    tag: 'FACTOR LINEAR COMBINATION',
     formula: 'C(t) = SUM [ w_i(R_t) * f_i(x_t) ]  for i = 1 to K',
     summary:
       'Rather than relying on single lagging indicators that decay under regime changes, ACTS computes a dynamic linear combination of orthogonal market factors. Weights are strictly parameterized by the active market regime.',
@@ -33,8 +35,9 @@ const MATH_PILLARS: MathPillar[] = [
   },
   {
     id: 'isotonic',
+    num: '02',
     title: 'Isotonic Probability Calibration',
-    tag: 'SYSTEM MATHEMATICS // 02',
+    tag: 'MONOTONIC MAPPING',
     formula: 'min SUM [ (y_j - P_cal(C_j))^2 ]  subject to P_cal(C_a) <= P_cal(C_b) for C_a <= C_b',
     summary:
       'Raw indicator scores do not represent true win probabilities. ACTS applies non-parametric isotonic regression to map heuristic scores directly to empirical resolution frequencies without imposing arbitrary parametric assumptions.',
@@ -49,8 +52,9 @@ const MATH_PILLARS: MathPillar[] = [
   },
   {
     id: 'wald',
+    num: '03',
     title: 'Wald Statistical Rigor',
-    tag: 'SYSTEM MATHEMATICS // 03',
+    tag: 'CONFIDENCE BOUNDING',
     formula: 'CI_95% = p_hat +/- 1.96 * SQRT[ (p_hat * (1 - p_hat)) / N ]',
     summary:
       'To prevent the system from overfitting to small-sample lucky streaks, model parameter adjustments and factor validation require 95% Wald confidence interval validation over historical sample size N.',
@@ -65,8 +69,9 @@ const MATH_PILLARS: MathPillar[] = [
   },
   {
     id: 'kelly',
+    num: '04',
     title: 'Fractional Kelly Risk Sizing',
-    tag: 'SYSTEM MATHEMATICS // 04',
+    tag: 'GEOMETRIC CAPITAL DEFENSE',
     formula: 'f* = lambda * [ (b * p - q) / b ]  where q = 1 - p and lambda = 0.50',
     summary:
       'Position sizing is calculated mathematically via the continuous Kelly Criterion with a conservative fractional multiplier (lambda = 0.50). Trade size scales with edge and drops during uncertainty.',
@@ -141,7 +146,7 @@ const REGIMES: RegimeDetail[] = [
   {
     code: 'REGIME 01',
     name: 'Trending Bull',
-    color: '#10b981',
+    color: '#059669',
     characteristics: 'ADX > 25, EMA20 > EMA50 > EMA200 alignment, positive cumulative volume delta, sustained bid depth.',
     favoredEngines: 'Trend Confluence Momentum, Volume-Weighted Pullback Entries, Breakout Continuation.',
     riskPosture: 'Aggressive Kelly Sizing (0.50x), trailing stop loss brackets anchored to EMA20 dynamic band.',
@@ -149,15 +154,15 @@ const REGIMES: RegimeDetail[] = [
   {
     code: 'REGIME 02',
     name: 'Trending Bear',
-    color: '#ff2e54',
+    color: '#e11d48',
     characteristics: 'Structural lower-highs, ADX > 25, EMA alignment reversed, heavy ask wall dominance, elevated downside realized volatility.',
     favoredEngines: 'Short Momentum Confluence, Resistance Rejection, Volatility Expansion Breakdown.',
-    riskPosture: 'Standard Kelly Sizing (0.40x), tight ATR trailing stops to defend against violent counter-trend short squeezes.',
+    riskPosture: 'Standard Kelly Sizing (0.40x), tight ATR trailing stops to defend against counter-trend squeezes.',
   },
   {
     code: 'REGIME 03',
     name: 'Volatile Choppy',
-    color: '#f59e0b',
+    color: '#d97706',
     characteristics: 'Choppiness Index > 60, low directional ADX (< 20), mean-reverting price swings across wide Bollinger Bands.',
     favoredEngines: 'Session VWAP Band Reversion, Bollinger Dynamic Band Extremes, RSI Divergence Oscillators.',
     riskPosture: 'Defensive Kelly Sizing (0.25x), rapid profit-taking brackets, breakout engines strictly muted.',
@@ -165,7 +170,7 @@ const REGIMES: RegimeDetail[] = [
   {
     code: 'REGIME 04',
     name: 'Low-Vol Compression',
-    color: '#06b6d4',
+    color: '#0284c7',
     characteristics: 'Narrowing Bollinger Bandwidth, ATR compression to rolling multi-day lows, dry orderbook volume.',
     favoredEngines: 'Pre-Breakout Volatility Squeeze Detectors, Range Boundary Compression Scanners.',
     riskPosture: 'Selective Exposure (0.35x), asymmetric payoff targets (>= 3:1) anticipating volatility expansion.',
@@ -178,116 +183,95 @@ export default function About() {
   const currentMath = MATH_PILLARS[activeMath]
 
   return (
-    <main className="min-h-full bg-[#070b14] text-[#f8fafc] flex flex-col">
-      <div className="w-full overflow-hidden border-b border-[#1c2438] bg-[#070b14]/95 backdrop-blur py-2.5 px-6">
-        <div className="max-w-7xl mx-auto flex items-center justify-between text-xs font-mono">
-          <div className="flex items-center gap-3">
-            <span className="w-2 h-2 rounded-full bg-[#ff2e54] block shadow-[0_0_8px_#ff2e54] animate-pulse" />
-            <span className="text-[#94a3b8] uppercase tracking-wider font-bold">
-              ACTS Quantitative Specification: Architecture & Mathematical Modeling
+    <main className="min-h-full bg-[#edf7fe] text-slate-900 flex flex-col">
+      <div className="w-full border-b border-slate-900/10 py-2.5 px-6">
+        <div className="max-w-7xl mx-auto flex items-center justify-between text-[11px] font-mono">
+          <div className="flex items-center gap-2.5">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#0369a1]" />
+            <span className="text-slate-700 uppercase tracking-wider font-bold">
+              ACTS QUANTITATIVE SPECIFICATION · SYSTEM ARCHITECTURE
             </span>
           </div>
-          <div className="hidden sm:flex items-center gap-4 text-[#64748b]">
+          <div className="hidden sm:flex items-center gap-5 text-slate-600 font-semibold">
             <span>ENGINE: MULTI-REGIME CONFLUENCE</span>
             <span>VERIFICATION: PAPER SANDBOX</span>
           </div>
         </div>
       </div>
 
-      <section className="relative overflow-hidden bg-[#070b14] pt-16 pb-20 border-b border-[#1c2438]">
-        <div
-          className="absolute inset-0 opacity-[0.04] pointer-events-none"
-          style={{
-            backgroundImage:
-              'linear-gradient(#f8fafc 1px, transparent 1px), linear-gradient(90deg, #f8fafc 1px, transparent 1px)',
-            backgroundSize: '60px 60px',
-          }}
-        />
-        <div className="absolute top-0 right-1/4 w-[500px] h-[500px] bg-[#ff2e54] opacity-[0.05] blur-[140px] pointer-events-none" />
-
-        <div className="relative max-w-7xl mx-auto px-6">
+      <section className="pt-14 pb-16 border-b border-slate-900/10">
+        <div className="max-w-7xl mx-auto px-6">
           <div className="max-w-4xl">
-            <div className="flex items-center gap-3 mb-6">
-              <span className="font-mono text-xs font-bold text-[#ff2e54] uppercase tracking-widest">
-                // System Architecture & Quantitative Theory
-              </span>
+            <div className="font-mono text-xs font-bold text-[#0369a1] uppercase tracking-widest mb-5">
+              QUANTITATIVE THEORY &amp; SYSTEM DESIGN
             </div>
 
             <h1
-              className="font-sans font-black text-white leading-[0.92] uppercase mb-8 tracking-tight select-none"
-              style={{ fontSize: 'clamp(2.75rem, 6.5vw, 5.25rem)' }}
+              className="font-sans font-black text-slate-950 leading-[0.94] mb-7 tracking-tight"
+              style={{ fontSize: 'clamp(2.75rem, 6vw, 4.75rem)' }}
             >
-              Mathematical
-              <br />
-              <span className="text-[#ff2e54]">Confluence.</span>
+              Mathematical <span className="text-[#0369a1]">Confluence.</span>
               <br />
               Zero Heuristics.
             </h1>
 
-            <p className="text-[#94a3b8] text-lg sm:text-xl leading-relaxed max-w-3xl mb-12 font-normal">
+            <p className="text-slate-600 text-base sm:text-lg leading-relaxed max-w-3xl mb-10 font-normal">
               Financial markets are non-stationary, multi-fractal systems where isolated indicators
               decay rapidly. ACTS replaces subjective interpretation with deterministic factor convergence,
               isotonic probability calibration, and continuous regime-adaptive risk sizing.
             </p>
 
-            <div className="flex flex-wrap gap-4">
+            <div className="flex flex-wrap items-center gap-6">
               <button
                 onClick={() => router.push('/dashboard')}
-                className="bg-[#ff2e54] hover:bg-[#e11d48] text-white font-sans font-bold uppercase tracking-wider text-sm px-8 py-4 transition-all duration-150 flex items-center gap-3 shadow-[0_0_25px_-5px_rgba(255,46,84,0.4)] cursor-pointer"
+                className="bg-[#0369a1] hover:bg-[#0284c7] text-white font-sans font-bold tracking-wide text-sm px-7 py-3.5 rounded-xl transition-colors duration-150 inline-flex items-center gap-2.5 cursor-pointer"
               >
-                Launch Terminal
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                  <path
-                    d="M3 8h10M9 4l4 4-4 4"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="square"
-                  />
-                </svg>
+                <span>Launch Terminal</span>
+                <span>→</span>
               </button>
               <Link
                 href="/dashboard/signals"
-                className="border border-[#1c2438] hover:border-[#ff2e54]/50 text-[#94a3b8] hover:text-white font-sans font-semibold uppercase tracking-wider text-sm px-8 py-4 transition-all duration-150 flex items-center justify-center bg-white/[0.02]"
+                className="font-mono text-xs font-bold uppercase tracking-wider text-slate-800 hover:text-[#0369a1] transition-colors"
               >
-                Inspect Signal Matrix
+                Inspect Signal Matrix →
               </Link>
             </div>
           </div>
 
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-0 border border-[#1c2438] mt-16 bg-[#090d18]">
-            <div className="p-6 border-r border-[#1c2438]">
-              <div className="font-mono text-2xl sm:text-3xl font-black text-[#ff2e54] mb-1">
+          <div className="grid grid-cols-2 lg:grid-cols-4 border-y border-slate-900/10 mt-14 py-8 gap-y-6 lg:divide-x lg:divide-slate-900/10">
+            <div className="lg:pr-6">
+              <div className="font-mono text-2xl sm:text-3xl font-black text-[#0369a1] mb-1 tabular-nums">
                 K = 5
               </div>
-              <div className="font-sans font-bold text-white text-sm">Orthogonal Factors</div>
-              <div className="font-mono text-[10px] text-[#64748b] uppercase tracking-wider mt-1">
+              <div className="font-sans font-bold text-slate-900 text-sm">Orthogonal Factors</div>
+              <div className="font-mono text-[10px] text-slate-500 uppercase tracking-wider mt-1">
                 Trend, Vol, Book, VWAP, Mom
               </div>
             </div>
-            <div className="p-6 border-r border-[#1c2438]">
-              <div className="font-mono text-2xl sm:text-3xl font-black text-[#10b981] mb-1">
+            <div className="lg:px-6">
+              <div className="font-mono text-2xl sm:text-3xl font-black text-emerald-700 mb-1 tabular-nums">
                 P_cal
               </div>
-              <div className="font-sans font-bold text-white text-sm">Isotonic Calibration</div>
-              <div className="font-mono text-[10px] text-[#64748b] uppercase tracking-wider mt-1">
+              <div className="font-sans font-bold text-slate-900 text-sm">Isotonic Calibration</div>
+              <div className="font-mono text-[10px] text-slate-500 uppercase tracking-wider mt-1">
                 Brier-Optimized Mapping
               </div>
             </div>
-            <div className="p-6 border-r border-[#1c2438]">
-              <div className="font-mono text-2xl sm:text-3xl font-black text-white mb-1">
+            <div className="lg:px-6">
+              <div className="font-mono text-2xl sm:text-3xl font-black text-slate-950 mb-1 tabular-nums">
                 95% CI
               </div>
-              <div className="font-sans font-bold text-white text-sm">Wald Statistical Rigor</div>
-              <div className="font-mono text-[10px] text-[#64748b] uppercase tracking-wider mt-1">
+              <div className="font-sans font-bold text-slate-900 text-sm">Wald Statistical Rigor</div>
+              <div className="font-mono text-[10px] text-slate-500 uppercase tracking-wider mt-1">
                 Sample-Size Drift Defense
               </div>
             </div>
-            <div className="p-6">
-              <div className="font-mono text-2xl sm:text-3xl font-black text-[#06b6d4] mb-1">
+            <div className="lg:pl-6">
+              <div className="font-mono text-2xl sm:text-3xl font-black text-[#0369a1] mb-1 tabular-nums">
                 f* &lt;= 0.50x
               </div>
-              <div className="font-sans font-bold text-white text-sm">Fractional Kelly Sizing</div>
-              <div className="font-mono text-[10px] text-[#64748b] uppercase tracking-wider mt-1">
+              <div className="font-sans font-bold text-slate-900 text-sm">Fractional Kelly Sizing</div>
+              <div className="font-mono text-[10px] text-slate-500 uppercase tracking-wider mt-1">
                 Geometric Ruin Protection
               </div>
             </div>
@@ -295,155 +279,135 @@ export default function About() {
         </div>
       </section>
 
-      <section className="py-24 bg-[#090d18] border-b border-[#1c2438]">
+      <section className="py-20 border-b border-slate-900/10">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="mb-16">
-            <div className="font-mono text-xs text-[#ff2e54] uppercase tracking-widest mb-4 font-bold">
-              // Mathematical Foundation
+          <div className="mb-12">
+            <div className="font-mono text-xs text-[#0369a1] uppercase tracking-widest mb-3 font-bold">
+              MATHEMATICAL FOUNDATION
             </div>
-            <h2 className="font-sans font-black text-white uppercase text-4xl sm:text-6xl leading-[0.92] tracking-tight">
-              The Engine
-              <br />
-              <span className="text-[#64748b]">Mathematics.</span>
+            <h2 className="font-sans font-black text-slate-950 text-4xl sm:text-5xl leading-[0.95] tracking-tight">
+              The Engine <span className="text-slate-500">Mathematics.</span>
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-0 border border-[#1c2438]">
-            <div className="lg:col-span-5 border-b lg:border-b-0 lg:border-r border-[#1c2438] bg-[#070b14]">
-              {MATH_PILLARS.map((p, idx) => (
-                <button
-                  key={p.id}
-                  onClick={() => setActiveMath(idx)}
-                  className={`w-full text-left p-6 sm:p-8 border-b border-[#1c2438] last:border-b-0 transition-colors cursor-pointer ${
-                    activeMath === idx ? 'bg-[#0c1220]' : 'hover:bg-[#0a0e1a]'
-                  }`}
-                >
-                  <div className="flex items-start justify-between">
-                    <div>
-                      <div className="font-mono text-[10px] text-[#64748b] uppercase tracking-wider mb-2">
-                        {p.tag}
-                      </div>
-                      <div
-                        className={`font-sans font-bold text-lg sm:text-xl uppercase transition-colors ${
-                          activeMath === idx ? 'text-white' : 'text-[#94a3b8]'
-                        }`}
-                      >
-                        {p.title}
-                      </div>
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+            <div className="lg:col-span-4 divide-y divide-slate-900/10 border-y border-slate-900/10">
+              {MATH_PILLARS.map((p, idx) => {
+                const isSelected = activeMath === idx
+                return (
+                  <button
+                    key={p.id}
+                    onClick={() => setActiveMath(idx)}
+                    className={`w-full text-left py-5 px-4 border-l-2 transition-colors cursor-pointer ${
+                      isSelected
+                        ? 'border-[#0369a1] bg-[#faf2df]/75'
+                        : 'border-transparent hover:bg-[#faf2df]/40'
+                    }`}
+                  >
+                    <div className="font-mono text-[10px] text-slate-500 uppercase tracking-wider mb-1 font-semibold">
+                      {p.num} · {p.tag}
                     </div>
-                    <div
-                      className={`w-1.5 h-8 bg-[#ff2e54] shadow-[0_0_8px_#ff2e54] transition-opacity ${
-                        activeMath === idx ? 'opacity-100' : 'opacity-0'
-                      }`}
-                    />
-                  </div>
-                </button>
-              ))}
+                    <div className={`font-sans font-bold text-lg tracking-tight ${isSelected ? 'text-slate-950' : 'text-slate-600'}`}>
+                      {p.title}
+                    </div>
+                  </button>
+                )
+              })}
             </div>
 
-            <div className="lg:col-span-7 bg-[#0b101c] p-8 sm:p-12 flex flex-col justify-between">
-              <div>
-                <div className="flex items-center justify-between border-b border-[#1c2438] pb-4 mb-6">
-                  <span className="font-mono text-xs text-[#ff2e54] uppercase tracking-widest font-bold">
-                    {currentMath.tag}
-                  </span>
-                  <span className="font-mono text-[11px] text-[#10b981] uppercase font-bold">
-                    Rigorous Verification
-                  </span>
-                </div>
+            <div className="lg:col-span-8 rounded-2xl border border-slate-900/10 bg-[#faf2df] p-7 sm:p-10 space-y-6">
+              <div className="flex items-center justify-between border-b border-slate-900/10 pb-4">
+                <span className="font-mono text-xs text-[#0369a1] uppercase tracking-widest font-bold">
+                  {currentMath.num} · {currentMath.tag}
+                </span>
+                <span className="font-mono text-[11px] text-emerald-700 uppercase font-bold">
+                  Rigorous Verification
+                </span>
+              </div>
 
-                <h3 className="font-sans font-black text-white text-2xl sm:text-3xl uppercase tracking-tight mb-4">
+              <div>
+                <h3 className="font-sans font-black text-slate-950 text-2xl sm:text-3xl tracking-tight mb-3">
                   {currentMath.title}
                 </h3>
-
-                <p className="text-[#94a3b8] text-sm leading-relaxed mb-6">
+                <p className="text-slate-600 text-sm leading-relaxed">
                   {currentMath.summary}
                 </p>
+              </div>
 
-                <div className="bg-[#05080f] border border-[#1c2438] p-5 font-mono text-sm text-[#f8fafc] mb-8 overflow-x-auto">
-                  <div className="text-[#64748b] text-[10px] uppercase tracking-wider mb-2">
-                    Mathematical Formulation:
-                  </div>
-                  <div className="text-[#10b981] font-bold text-base sm:text-lg">
-                    {currentMath.formula}
-                  </div>
+              <div className="border-y border-slate-900/10 py-4 font-mono overflow-x-auto">
+                <div className="text-slate-500 text-[10px] uppercase tracking-wider mb-1.5 font-bold">
+                  Mathematical Formulation
                 </div>
+                <div className="text-[#0369a1] font-bold text-sm sm:text-base">
+                  {currentMath.formula}
+                </div>
+              </div>
 
-                <div className="space-y-3 mb-8">
-                  <div className="font-mono text-[10px] text-[#64748b] uppercase tracking-wider">
-                    Variable Specifications:
-                  </div>
+              <div>
+                <div className="font-mono text-[10px] text-slate-500 uppercase tracking-wider font-semibold pb-2">
+                  Variable Specifications
+                </div>
+                <div className="divide-y divide-slate-900/10">
                   {currentMath.variables.map((v, i) => (
-                    <div
-                      key={i}
-                      className="p-3 border border-[#1c2438] bg-[#070b14] flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 text-xs"
-                    >
-                      <span className="font-mono font-bold text-[#ff2e54] min-w-[90px]">
+                    <div key={i} className="py-3 flex flex-col sm:flex-row sm:items-center gap-1.5 sm:gap-5 text-xs">
+                      <span className="font-mono font-bold text-slate-950 min-w-[96px]">
                         {v.sym}
                       </span>
-                      <span className="text-[#94a3b8] font-sans">{v.desc}</span>
+                      <span className="text-slate-600 font-sans">{v.desc}</span>
                     </div>
                   ))}
                 </div>
               </div>
 
-              <div className="pt-6 border-t border-[#1c2438] bg-[#05080f]/50 p-4 border border-[#1c2438]">
-                <div className="font-mono text-[10px] text-[#ff2e54] uppercase tracking-wider mb-1 font-bold">
-                  Engineering Rationale:
+              <div className="pt-5 border-t border-slate-900/10">
+                <div className="font-mono text-[10px] text-[#0369a1] uppercase tracking-wider mb-1 font-bold">
+                  Engineering Rationale
                 </div>
-                <div className="text-xs text-[#94a3b8] leading-relaxed">
+                <p className="text-xs text-slate-700 leading-relaxed">
                   {currentMath.engineeringRationale}
-                </div>
+                </p>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      <section className="py-24 bg-[#070b14] border-b border-[#1c2438]">
+      <section className="py-20 border-b border-slate-900/10">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="mb-16">
-            <div className="font-mono text-xs text-[#ff2e54] uppercase tracking-widest mb-4 font-bold">
-              // Robustness Engineering
+          <div className="mb-12">
+            <div className="font-mono text-xs text-[#0369a1] uppercase tracking-widest mb-3 font-bold">
+              ROBUSTNESS ENGINEERING
             </div>
-            <h2 className="font-sans font-black text-white uppercase text-4xl sm:text-6xl leading-[0.92] tracking-tight">
-              Why Our System
-              <br />
-              <span className="text-[#64748b]">Is Strong.</span>
+            <h2 className="font-sans font-black text-slate-950 text-4xl sm:text-5xl leading-[0.95] tracking-tight">
+              Why Our System <span className="text-slate-500">Is Strong.</span>
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-0 border border-[#1c2438]">
-            {STRENGTH_PILLARS.map((s, idx) => (
-              <div
-                key={s.num}
-                className="p-8 sm:p-12 border-b md:border-b-0 border-[#1c2438] last:border-b-0 md:even:border-l border-t md:first:border-t-0 md:[&:nth-child(2)]:border-t-0 hover:bg-[#0c1220] transition-colors"
-              >
-                <div className="flex items-center justify-between mb-6">
-                  <span className="font-mono text-xs font-bold text-[#ff2e54]">{s.num}</span>
-                  <span className="font-mono text-[10px] text-[#10b981] bg-[#10b981]/10 px-2.5 py-1 border border-[#10b981]/20 uppercase">
-                    {s.metric}
-                  </span>
+          <div className="divide-y divide-slate-900/10 border-y border-slate-900/10">
+            {STRENGTH_PILLARS.map((s) => (
+              <div key={s.num} className="py-8 grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+                <div className="lg:col-span-4 space-y-1.5">
+                  <div className="flex items-center gap-3 font-mono text-xs">
+                    <span className="font-bold text-[#0369a1] tabular-nums">{s.num}</span>
+                    <span className="text-emerald-700 font-bold uppercase tracking-wider">{s.metric}</span>
+                  </div>
+                  <h3 className="font-sans font-black text-slate-950 text-xl tracking-tight">
+                    {s.title}
+                  </h3>
                 </div>
 
-                <h3 className="font-sans font-bold text-white text-2xl uppercase mb-6 tracking-tight">
-                  {s.title}
-                </h3>
+                <div className="lg:col-span-4">
+                  <span className="font-mono text-[10px] text-rose-700 uppercase block mb-1.5 font-bold tracking-wider">
+                    Industry Failure Mode
+                  </span>
+                  <p className="text-xs text-slate-600 leading-relaxed">{s.problem}</p>
+                </div>
 
-                <div className="space-y-4 text-xs leading-relaxed">
-                  <div>
-                    <span className="font-mono text-[10px] text-[#ff2e54] uppercase block mb-1">
-                      The Industry Failure Mode:
-                    </span>
-                    <p className="text-[#94a3b8]">{s.problem}</p>
-                  </div>
-
-                  <div className="pt-4 border-t border-[#1c2438]">
-                    <span className="font-mono text-[10px] text-[#10b981] uppercase block mb-1">
-                      The ACTS Solution:
-                    </span>
-                    <p className="text-[#f8fafc]">{s.solution}</p>
-                  </div>
+                <div className="lg:col-span-4">
+                  <span className="font-mono text-[10px] text-emerald-700 uppercase block mb-1.5 font-bold tracking-wider">
+                    ACTS Solution
+                  </span>
+                  <p className="text-xs text-slate-800 font-medium leading-relaxed">{s.solution}</p>
                 </div>
               </div>
             ))}
@@ -451,213 +415,161 @@ export default function About() {
         </div>
       </section>
 
-      <section className="py-24 bg-[#090d18] border-b border-[#1c2438]">
+      <section className="py-20 border-b border-slate-900/10">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="mb-16 flex flex-col md:flex-row md:items-end justify-between gap-8">
+          <div className="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-6">
             <div>
-              <div className="font-mono text-xs text-[#ff2e54] uppercase tracking-widest mb-4 font-bold">
-                // Macro Environment Modeling
+              <div className="font-mono text-xs text-[#0369a1] uppercase tracking-widest mb-3 font-bold">
+                MACRO ENVIRONMENT MODELING
               </div>
-              <h2 className="font-sans font-black text-white uppercase text-4xl sm:text-6xl leading-[0.92] tracking-tight">
-                4-Regime
-                <br />
-                <span className="text-[#64748b]">Classification.</span>
+              <h2 className="font-sans font-black text-slate-950 text-4xl sm:text-5xl leading-[0.95] tracking-tight">
+                4-Regime <span className="text-slate-500">Classification.</span>
               </h2>
             </div>
-            <div className="font-mono text-xs text-[#94a3b8] max-w-sm">
-              Continuous classification ensures strategy compatibility. Incompatible vectors are automatically muted during hostile regimes.
-            </div>
+            <p className="font-mono text-xs text-slate-600 max-w-sm">
+              Continuous classification ensures strategy compatibility. Incompatible vectors are muted during hostile regimes.
+            </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-0 border border-[#1c2438]">
-            {REGIMES.map((r, i) => (
-              <div
-                key={r.code}
-                className="p-8 border-b lg:border-b-0 border-[#1c2438] last:border-b-0 lg:border-r lg:last:border-r-0 bg-[#070b14] flex flex-col justify-between gap-6 hover:bg-[#0c1220] transition-colors"
-              >
-                <div>
-                  <div className="flex items-center justify-between mb-4">
-                    <span className="font-mono text-xs font-bold text-[#64748b]">{r.code}</span>
-                    <span
-                      className="w-2.5 h-2.5 rounded-full shadow-[0_0_8px]"
-                      style={{ backgroundColor: r.color, boxShadow: `0 0 8px ${r.color}` }}
-                    />
-                  </div>
-
-                  <div className="font-sans font-black text-white text-2xl uppercase tracking-tight mb-4">
-                    {r.name}
-                  </div>
-
-                  <div className="space-y-4 text-xs">
-                    <div>
-                      <span className="font-mono text-[10px] text-[#64748b] uppercase block mb-1">
-                        Quantitative Signatures:
-                      </span>
-                      <p className="text-[#94a3b8] leading-relaxed">{r.characteristics}</p>
-                    </div>
-
-                    <div className="pt-3 border-t border-[#1c2438]">
-                      <span className="font-mono text-[10px] text-[#64748b] uppercase block mb-1">
-                        Favored Strategies:
-                      </span>
-                      <p className="text-[#f8fafc] font-medium leading-relaxed">{r.favoredEngines}</p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="pt-4 border-t border-[#1c2438]">
-                  <span className="font-mono text-[10px] text-[#ff2e54] uppercase block mb-1">
-                    Risk Posture:
-                  </span>
-                  <span className="font-mono text-[11px] text-[#94a3b8]">{r.riskPosture}</span>
-                </div>
-              </div>
-            ))}
+          <div className="rounded-2xl border border-slate-900/10 bg-[#faf2df] overflow-hidden">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left border-collapse">
+                <thead>
+                  <tr className="border-b border-slate-900/10 text-[10px] font-mono uppercase tracking-wider text-slate-500">
+                    <th className="py-4 px-5 font-bold">REGIME</th>
+                    <th className="py-4 px-4 font-bold">QUANTITATIVE SIGNATURES</th>
+                    <th className="py-4 px-4 font-bold">FAVORED ENGINES</th>
+                    <th className="py-4 px-5 font-bold">RISK POSTURE</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-900/10 text-xs">
+                  {REGIMES.map((r) => (
+                    <tr key={r.code} className="hover:bg-[#f3ead2]/50 transition-colors">
+                      <td className="py-5 px-5 align-top min-w-[175px]">
+                        <div className="flex items-center gap-2 font-mono text-[10px] font-bold text-slate-500">
+                          <span className="w-2 h-2 rounded-full" style={{ backgroundColor: r.color }} />
+                          <span>{r.code}</span>
+                        </div>
+                        <div className="font-sans font-black text-slate-950 text-base tracking-tight mt-1">
+                          {r.name}
+                        </div>
+                      </td>
+                      <td className="py-5 px-4 align-top text-slate-600 leading-relaxed max-w-xs">
+                        {r.characteristics}
+                      </td>
+                      <td className="py-5 px-4 align-top text-slate-800 font-medium leading-relaxed max-w-xs">
+                        {r.favoredEngines}
+                      </td>
+                      <td className="py-5 px-5 align-top font-mono text-[11px] text-[#0369a1] leading-relaxed max-w-xs">
+                        {r.riskPosture}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </section>
 
-      <section className="py-24 bg-[#070b14] border-b border-[#1c2438]">
+      <section className="py-20 border-b border-slate-900/10">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="mb-16">
-            <div className="font-mono text-xs text-[#ff2e54] uppercase tracking-widest mb-4 font-bold">
-              // Multi-Agent Pipeline
+          <div className="mb-12">
+            <div className="font-mono text-xs text-[#0369a1] uppercase tracking-widest mb-3 font-bold">
+              MULTI-AGENT PIPELINE
             </div>
-            <h2 className="font-sans font-black text-white uppercase text-4xl sm:text-6xl leading-[0.92] tracking-tight">
-              Three-Agent
-              <br />
-              <span className="text-[#64748b]">Validation Loop.</span>
+            <h2 className="font-sans font-black text-slate-950 text-4xl sm:text-5xl leading-[0.95] tracking-tight">
+              Three-Agent <span className="text-slate-500">Validation Loop.</span>
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-0 border border-[#1c2438]">
-            <div className="p-10 border-b md:border-b-0 md:border-r border-[#1c2438] bg-[#090d18] hover:bg-[#0c1220] transition-colors">
-              <div className="font-mono text-xs font-bold text-[#ff2e54] mb-3">// AGENT 01</div>
-              <div className="font-sans font-black text-white text-2xl uppercase tracking-tight mb-4">
-                The Analyst
-              </div>
-              <p className="text-xs text-[#94a3b8] leading-relaxed mb-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 border-y border-slate-900/10 divide-y md:divide-y-0 md:divide-x divide-slate-900/10">
+            <div className="py-8 md:pr-8 space-y-3">
+              <div className="font-mono text-xs font-bold text-[#0369a1]">01 · HYPOTHESIS &amp; GENERATION</div>
+              <h3 className="font-sans font-black text-slate-950 text-2xl tracking-tight">The Analyst</h3>
+              <p className="text-xs text-slate-600 leading-relaxed">
                 Ingests high-frequency tick data, computes rolling orderbook imbalances, and scans multi-timeframe EMA matrices on candle close to propose candidate entries.
               </p>
-              <div className="border-t border-[#1c2438] pt-4 font-mono text-[10px] text-[#64748b] uppercase">
-                Role: Hypothesis & Signal Generation
-              </div>
             </div>
 
-            <div className="p-10 border-b md:border-b-0 md:border-r border-[#1c2438] bg-[#090d18] hover:bg-[#0c1220] transition-colors">
-              <div className="font-mono text-xs font-bold text-[#10b981] mb-3">// AGENT 02</div>
-              <div className="font-sans font-black text-white text-2xl uppercase tracking-tight mb-4">
-                The Critic
-              </div>
-              <p className="text-xs text-[#94a3b8] leading-relaxed mb-6">
+            <div className="py-8 md:px-8 space-y-3">
+              <div className="font-mono text-xs font-bold text-emerald-700">02 · ADVERSARIAL VETO</div>
+              <h3 className="font-sans font-black text-slate-950 text-2xl tracking-tight">The Critic</h3>
+              <p className="text-xs text-slate-600 leading-relaxed">
                 Applies counterfactual stress-testing against the proposed signal. Verifies that the regime classification is valid and that liquidity depth is sufficient to absorb the order.
               </p>
-              <div className="border-t border-[#1c2438] pt-4 font-mono text-[10px] text-[#64748b] uppercase">
-                Role: Adversarial Signal Veto
-              </div>
             </div>
 
-            <div className="p-10 bg-[#090d18] hover:bg-[#0c1220] transition-colors">
-              <div className="font-mono text-xs font-bold text-[#06b6d4] mb-3">// AGENT 03</div>
-              <div className="font-sans font-black text-white text-2xl uppercase tracking-tight mb-4">
-                The Optimizer
-              </div>
-              <p className="text-xs text-[#94a3b8] leading-relaxed mb-6">
+            <div className="py-8 md:pl-8 space-y-3">
+              <div className="font-mono text-xs font-bold text-slate-900">03 · SIZING &amp; EXECUTION</div>
+              <h3 className="font-sans font-black text-slate-950 text-2xl tracking-tight">The Optimizer</h3>
+              <p className="text-xs text-slate-600 leading-relaxed">
                 Runs isotonic probability calibration, calculates dynamic Kelly sizing, and locks in deterministic ATR bracket targets into the paper execution ledger.
               </p>
-              <div className="border-t border-[#1c2438] pt-4 font-mono text-[10px] text-[#64748b] uppercase">
-                Role: Calibrated Sizing & Execution
-              </div>
             </div>
           </div>
-        </div>
-      </section>
 
-      <section className="py-20 bg-[#070b14] border-b border-[#1c2438]">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="border border-[#1c2438] bg-[#0b101c] p-8 sm:p-12">
-            <div className="flex items-center gap-3 mb-4">
-              <span className="w-2.5 h-2.5 rounded-full bg-[#ff2e54] block" />
-              <span className="font-mono text-xs font-bold text-[#ff2e54] uppercase tracking-widest">
-                Research Disclosure & Simulation Framework
-              </span>
-            </div>
-            <p className="text-xs sm:text-sm text-[#94a3b8] leading-relaxed max-w-4xl font-normal">
+          <div className="mt-14 pt-8 border-t border-slate-900/10 flex flex-col md:flex-row md:items-start justify-between gap-6">
+            <span className="font-mono text-xs font-bold text-slate-500 uppercase tracking-widest whitespace-nowrap">
+              Research Disclosure
+            </span>
+            <p className="text-xs sm:text-sm text-slate-600 leading-relaxed max-w-4xl">
               ACTS (Adaptive Confluence Trading System) is an autonomous algorithmic research and paper
               trading execution framework. All signals, trade simulations, and confluence scores are
               generated exclusively within a paper sandbox environment for educational and quantitative
-              exploration. No live capital is accepted, solicited, or committed. Historical paper outcomes
-              and counterfactual modeling do not guarantee future live market results. Not financial advice.
+              exploration. No live capital is accepted, solicited, or committed. Not financial advice.
             </p>
           </div>
         </div>
       </section>
 
-      <section className="relative overflow-hidden bg-[#ff2e54] py-20 text-white">
-        <div
-          className="absolute inset-0 opacity-[0.08] pointer-events-none"
-          style={{
-            backgroundImage:
-              'linear-gradient(#ffffff 1px, transparent 1px), linear-gradient(90deg, #ffffff 1px, transparent 1px)',
-            backgroundSize: '40px 40px',
-          }}
-        />
-        <div className="relative max-w-7xl mx-auto px-6 text-center">
-          <div className="font-mono text-xs text-white/80 uppercase tracking-widest mb-4 font-bold">
-            // Ready for Systematic Execution
+      <section className="bg-[#faf2df] border-b border-slate-900/10 py-16">
+        <div className="max-w-7xl mx-auto px-6 flex flex-col lg:flex-row lg:items-center justify-between gap-8">
+          <div className="max-w-xl space-y-2.5">
+            <div className="font-mono text-xs text-[#0369a1] uppercase tracking-widest font-bold">
+              READY FOR SYSTEMATIC EXECUTION
+            </div>
+            <h2 className="font-sans font-black text-slate-950 text-3xl sm:text-4xl leading-tight tracking-tight">
+              Explore The Live Terminal.
+            </h2>
+            <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
+              Inspect real-time market regimes, examine factor confluence convergence, and track automated paper executions.
+            </p>
           </div>
-          <h2
-            className="font-sans font-black text-white uppercase leading-[0.88] mb-8 tracking-tight select-none"
-            style={{ fontSize: 'clamp(2.5rem, 6vw, 5rem)' }}
-          >
-            Explore The Live Terminal.
-          </h2>
-          <p className="text-white/90 text-base sm:text-lg max-w-xl mx-auto mb-10 leading-relaxed">
-            Inspect real-time market regimes, examine factor confluence convergence, and track automated paper executions.
-          </p>
 
-          <div className="flex flex-wrap items-center justify-center gap-4">
+          <div className="flex flex-wrap items-center gap-6">
             <button
               onClick={() => router.push('/dashboard')}
-              className="bg-white text-[#ff2e54] hover:bg-[#f8fafc] font-sans font-black uppercase tracking-wider text-sm px-8 py-4 transition-all duration-150 flex items-center gap-3 shadow-2xl cursor-pointer"
+              className="bg-[#0369a1] hover:bg-[#0284c7] text-white font-sans font-bold tracking-wide text-sm px-7 py-3.5 rounded-xl transition-colors duration-150 inline-flex items-center gap-2.5 cursor-pointer"
             >
-              Launch Terminal
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                <path
-                  d="M3 8h10M9 4l4 4-4 4"
-                  stroke="currentColor"
-                  strokeWidth="2.5"
-                  strokeLinecap="square"
-                />
-              </svg>
+              <span>Launch Terminal</span>
+              <span>→</span>
             </button>
             <Link
               href="/dashboard/signals"
-              className="border-2 border-white/60 hover:border-white text-white font-sans font-bold uppercase tracking-wider text-sm px-8 py-4 transition-all duration-150"
+              className="font-mono text-xs font-bold uppercase tracking-wider text-slate-800 hover:text-[#0369a1] transition-colors"
             >
-              Signal Matrix
+              Signal Matrix →
             </Link>
           </div>
         </div>
       </section>
 
-      <footer className="bg-[#05080f] border-t border-[#1c2438] py-14">
+      <footer className="bg-[#edf7fe] py-12">
         <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
           <div>
-            <div className="flex items-center gap-2.5 mb-3">
-              <div className="w-6 h-6 bg-[#ff2e54] flex items-center justify-center shadow-[0_0_10px_#ff2e54]">
-                <span className="font-sans text-white font-black text-xs leading-none">A</span>
-              </div>
-              <span className="font-sans text-white font-black text-lg tracking-wider uppercase">
-                ACTS
+            <div className="flex items-center gap-2.5 mb-2">
+              <span className="font-sans text-slate-950 font-black text-lg tracking-tight">ACTS</span>
+              <span className="font-mono text-[10px] text-slate-500 uppercase tracking-widest border-l border-slate-900/15 pl-2.5">
+                QUANT v2.4
               </span>
             </div>
-            <p className="font-mono text-[11px] text-[#64748b] uppercase tracking-wider max-w-md leading-relaxed">
+            <p className="font-mono text-[11px] text-slate-600 max-w-md leading-relaxed">
               Adaptive Confluence Trading System: Algorithmic trading research, paper execution, and
-              multi-regime confluence telemetry for digital assets. Educational and research simulation platform.
+              multi-regime confluence telemetry for digital assets.
             </p>
           </div>
-          <div className="flex flex-wrap gap-8">
+          <div className="flex flex-wrap gap-6">
             {[
               { label: 'Terminal', href: '/dashboard' },
               { label: 'Signal Matrix', href: '/dashboard/signals' },
@@ -669,14 +581,14 @@ export default function About() {
               <Link
                 key={l.label}
                 href={l.href}
-                className="font-mono text-xs text-[#64748b] hover:text-[#f8fafc] uppercase tracking-wider transition-colors"
+                className="font-mono text-xs text-slate-600 hover:text-[#0369a1] uppercase tracking-wider transition-colors font-medium"
               >
                 {l.label}
               </Link>
             ))}
           </div>
-          <div className="font-mono text-[11px] text-[#475569] uppercase tracking-wider">
-            &copy; {new Date().getFullYear()} ACTS Engine. Open Telemetry.
+          <div className="font-mono text-[11px] text-slate-500 uppercase tracking-wider">
+            &copy; {new Date().getFullYear()} ACTS Engine
           </div>
         </div>
       </footer>

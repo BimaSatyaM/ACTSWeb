@@ -113,48 +113,48 @@ export function NotificationPopover() {
   const getTagColor = (color: NotificationItem['badgeColor']) => {
     switch (color) {
       case 'emerald':
-        return 'text-emerald-400'
+        return 'text-emerald-700'
       case 'rose':
-        return 'text-rose-400'
+        return 'text-rose-700'
       case 'amber':
-        return 'text-amber-400'
+        return 'text-amber-700'
       case 'indigo':
-        return 'text-indigo-400'
+        return 'text-indigo-700'
       case 'blue':
-        return 'text-sky-400'
+        return 'text-sky-700'
       case 'purple':
-        return 'text-[#c084fc]'
+        return 'text-purple-700'
       case 'zinc':
-        return 'text-zinc-400'
+        return 'text-slate-700'
       case 'cyan':
-        return 'text-cyan-400'
+        return 'text-cyan-700'
       case 'accent':
       default:
-        return 'text-[#ff3b69]'
+        return 'text-rose-700'
     }
   }
 
   const getDotBgColor = (color: NotificationItem['badgeColor']) => {
     switch (color) {
       case 'emerald':
-        return 'bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.8)]'
+        return 'bg-emerald-600'
       case 'rose':
-        return 'bg-rose-500 shadow-[0_0_8px_rgba(244,63,94,0.8)]'
+        return 'bg-rose-600'
       case 'amber':
-        return 'bg-amber-400 shadow-[0_0_8px_rgba(251,191,36,0.8)]'
+        return 'bg-amber-500'
       case 'indigo':
-        return 'bg-indigo-400 shadow-[0_0_8px_rgba(129,140,248,0.8)]'
+        return 'bg-indigo-600'
       case 'blue':
-        return 'bg-sky-400 shadow-[0_0_8px_rgba(56,189,248,0.8)]'
+        return 'bg-sky-600'
       case 'purple':
-        return 'bg-[#c084fc] shadow-[0_0_8px_rgba(192,132,252,0.85)]'
+        return 'bg-purple-600'
       case 'zinc':
-        return 'bg-zinc-400 shadow-[0_0_6px_rgba(255,255,255,0.4)]'
+        return 'bg-slate-500'
       case 'cyan':
-        return 'bg-cyan-400 shadow-[0_0_8px_rgba(34,211,238,0.8)]'
+        return 'bg-cyan-600'
       case 'accent':
       default:
-        return 'bg-[#ff3b69] shadow-[0_0_8px_rgba(255,59,105,0.85)]'
+        return 'bg-rose-600'
     }
   }
 
@@ -286,7 +286,7 @@ export function NotificationPopover() {
       {latestItem && (
         <div
           onClick={toggleOpen}
-          className="hidden sm:flex items-center gap-2 px-2 py-1 rounded-md hover:bg-white/[0.04] transition-all duration-150 cursor-pointer group max-w-[200px] md:max-w-[320px] lg:max-w-[440px] select-none"
+          className="hidden sm:flex items-center gap-2 px-2 py-1 rounded-md hover:bg-sky-100/60 transition-all duration-150 cursor-pointer group max-w-[200px] md:max-w-[320px] lg:max-w-[440px] select-none"
           title={`Click to view notifications • Latest: ${latestItem.title}`}
         >
           <span className="relative flex h-2 w-2 shrink-0 items-center justify-center">
@@ -300,13 +300,13 @@ export function NotificationPopover() {
             {latestItem.tag}
           </span>
 
-          <span className="text-zinc-600 text-[10px] shrink-0 hidden md:inline">•</span>
+          <span className="text-slate-500 text-[10px] shrink-0 hidden md:inline">•</span>
 
-          <span className="text-[11px] font-mono font-medium text-zinc-300 group-hover:text-white transition-colors truncate">
+          <span className="text-[11px] font-mono font-medium text-slate-700 group-hover:text-slate-900 transition-colors truncate">
             {latestItem.title}
           </span>
 
-          <span className="text-[10px] font-mono text-zinc-500 shrink-0 hidden lg:inline">
+          <span className="text-[10px] font-mono text-slate-500 shrink-0 hidden lg:inline">
             {formatRelativeTime(latestItem.timestamp)}
           </span>
         </div>
@@ -314,7 +314,7 @@ export function NotificationPopover() {
 
       <button
         onClick={toggleOpen}
-        className="relative p-1.5 rounded-lg text-text-secondary hover:text-white hover:bg-white/[0.04] transition-all duration-150 cursor-pointer flex items-center justify-center shrink-0"
+        className="relative p-1.5 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-sky-100/60 transition-all duration-150 cursor-pointer flex items-center justify-center shrink-0"
         aria-label="Notifications"
         title="Notifications: News, Signals & Updates"
       >
@@ -324,20 +324,20 @@ export function NotificationPopover() {
         </svg>
 
         {hasUnread && (
-          <span className="absolute top-1 right-1 w-2 h-2 rounded-full bg-[#00e676] ring-2 ring-[#070b14] animate-pulse" />
+          <span className="absolute top-1 right-1 w-2 h-2 rounded-full bg-emerald-500 ring-2 ring-white animate-pulse" />
         )}
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 top-full mt-2 w-[calc(100vw-24px)] sm:w-[410px] max-w-[410px] max-h-[calc(100vh-4.5rem)] rounded-xl bg-[#080d1a]/95 border border-white/[0.12] shadow-[0_25px_60px_rgba(0,0,0,0.95)] backdrop-blur-3xl z-50 overflow-hidden flex flex-col animate-in fade-in zoom-in-95 duration-150">
-          <div className="p-3.5 pb-2.5 border-b border-white/[0.07] bg-white/[0.02] shrink-0">
+        <div className="absolute right-0 top-full mt-2 w-[calc(100vw-24px)] sm:w-[410px] max-w-[410px] max-h-[calc(100vh-4.5rem)] rounded-xl bg-[#fdfaf3] border border-slate-900/10 shadow-lg z-50 overflow-hidden flex flex-col animate-in fade-in zoom-in-95 duration-150">
+          <div className="p-3.5 pb-0 border-b border-slate-900/10 bg-[#faf2df]/60 shrink-0">
             <div className="flex items-center justify-between gap-2 mb-2.5">
               <div className="flex items-center gap-2">
-                <span className="text-xs font-bold text-white tracking-tight uppercase font-mono">
+                <span className="text-xs font-bold text-slate-900 tracking-tight uppercase font-mono">
                   Notifications
                 </span>
                 {items.length > 0 && (
-                  <span className="px-1.5 py-0.2 rounded text-[10px] font-mono font-bold bg-white/[0.06] text-zinc-300">
+                  <span className="px-1.5 py-0.5 rounded text-[10px] font-mono font-bold bg-slate-900/5 text-slate-700">
                     {items.length}
                   </span>
                 )}
@@ -348,7 +348,7 @@ export function NotificationPopover() {
                   type="button"
                   onClick={() => fetchNotifications(true)}
                   disabled={isRefreshing}
-                  className="text-[10px] font-mono text-zinc-400 hover:text-white transition-colors cursor-pointer flex items-center gap-1 disabled:opacity-50"
+                  className="text-[10px] font-mono text-slate-600 hover:text-slate-900 transition-colors cursor-pointer flex items-center gap-1 disabled:opacity-50"
                   title="Refresh notifications"
                 >
                   <svg className={`w-3 h-3 ${isRefreshing ? 'animate-spin' : ''}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -361,7 +361,7 @@ export function NotificationPopover() {
                   <button
                     type="button"
                     onClick={markAllAsRead}
-                    className="text-[10px] font-mono text-emerald-400 hover:text-emerald-300 transition-colors cursor-pointer"
+                    className="text-[10px] font-mono text-emerald-700 hover:text-emerald-800 font-semibold transition-colors cursor-pointer"
                   >
                     Mark read
                   </button>
@@ -369,37 +369,29 @@ export function NotificationPopover() {
               </div>
             </div>
 
-            <div className="grid grid-cols-3 gap-1 p-0.5 rounded-lg bg-black/40 border border-white/[0.06]">
+            <div className="flex items-center gap-4 pt-1">
               <button
                 type="button"
                 onClick={() => setActiveTab('all')}
-                className={`py-1.5 px-2 text-center rounded-md text-[11px] font-mono font-medium transition-all cursor-pointer flex items-center justify-center gap-1.5 ${
+                className={`pb-2 text-xs font-mono font-medium transition-colors cursor-pointer border-b-2 flex items-center gap-1.5 ${
                   activeTab === 'all'
-                    ? 'bg-white/10 text-white font-bold shadow-sm'
-                    : 'text-zinc-400 hover:text-zinc-200'
+                    ? 'border-[#0369a1] text-slate-950 font-bold'
+                    : 'border-transparent text-slate-500 hover:text-slate-900'
                 }`}
               >
-                <svg className="w-3.5 h-3.5 text-zinc-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <rect x="3" y="3" width="7" height="7" />
-                  <rect x="14" y="3" width="7" height="7" />
-                  <rect x="14" y="14" width="7" height="7" />
-                  <rect x="3" y="14" width="7" height="7" />
-                </svg>
-                <span>All ({items.length})</span>
+                <span>All</span>
+                <span className="text-[10px] font-mono opacity-70">({items.length})</span>
               </button>
 
               <button
                 type="button"
                 onClick={() => setActiveTab('news')}
-                className={`py-1.5 px-2 text-center rounded-md text-[11px] font-mono font-medium transition-all cursor-pointer flex items-center justify-center gap-1.5 ${
+                className={`pb-2 text-xs font-mono font-medium transition-colors cursor-pointer border-b-2 flex items-center gap-1.5 ${
                   activeTab === 'news'
-                    ? 'bg-white/10 text-emerald-400 font-semibold shadow-sm'
-                    : 'text-zinc-400 hover:text-zinc-200'
+                    ? 'border-emerald-600 text-emerald-800 font-bold'
+                    : 'border-transparent text-slate-500 hover:text-slate-900'
                 }`}
               >
-                <svg className="w-3.5 h-3.5 text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
-                </svg>
                 <span>News</span>
                 {newsCount > 0 && <span className="text-[10px] opacity-80 font-bold">({newsCount})</span>}
               </button>
@@ -407,42 +399,38 @@ export function NotificationPopover() {
               <button
                 type="button"
                 onClick={() => setActiveTab('system')}
-                className={`py-1.5 px-2 text-center rounded-md text-[11px] font-mono font-medium transition-all cursor-pointer flex items-center justify-center gap-1.5 ${
+                className={`pb-2 text-xs font-mono font-medium transition-colors cursor-pointer border-b-2 flex items-center gap-1.5 ${
                   activeTab === 'system'
-                    ? 'bg-white/10 text-[#ff3b69] font-semibold shadow-sm'
-                    : 'text-zinc-400 hover:text-zinc-200'
+                    ? 'border-sky-600 text-sky-800 font-bold'
+                    : 'border-transparent text-slate-500 hover:text-slate-900'
                 }`}
               >
-                <svg className="w-3.5 h-3.5 text-[#ff3b69]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <circle cx="12" cy="12" r="3" />
-                  <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" />
-                </svg>
                 <span>System</span>
                 {systemCount > 0 && <span className="text-[10px] opacity-80 font-bold">({systemCount})</span>}
               </button>
             </div>
           </div>
 
-          <div className="flex-1 overflow-y-auto max-h-[380px] custom-scrollbar divide-y divide-white/[0.05] p-1">
+          <div className="flex-1 overflow-y-auto max-h-[380px] custom-scrollbar divide-y divide-slate-900/10 p-1">
             {loading ? (
-              <div className="p-8 text-center text-xs font-mono text-zinc-400 flex flex-col items-center justify-center gap-2">
-                <svg className="w-5 h-5 animate-spin text-accent-theme" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <div className="p-8 text-center text-xs font-mono text-slate-500 flex flex-col items-center justify-center gap-2">
+                <svg className="w-5 h-5 animate-spin text-sky-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" className="opacity-25" />
                   <path fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" className="opacity-75" />
                 </svg>
                 <span>Syncing live notifications...</span>
               </div>
             ) : filteredItems.length === 0 ? (
-              <div className="p-8 text-center text-xs font-mono text-zinc-400 space-y-1">
-                <p className="text-zinc-300 font-medium">No notifications in this view.</p>
-                <p className="text-[11px] text-zinc-500">Live signals and updates appear automatically here.</p>
+              <div className="p-8 text-center text-xs font-mono text-slate-500 space-y-1">
+                <p className="text-slate-800 font-medium">No notifications in this view.</p>
+                <p className="text-[11px] text-slate-500">Live signals and updates appear automatically here.</p>
               </div>
             ) : (
               filteredItems.map((item) => (
                 <div
                   key={item.id}
                   onClick={() => handleItemClick(item)}
-                  className="p-3 hover:bg-white/[0.04] transition-all duration-150 rounded-lg space-y-1.5 cursor-pointer group"
+                  className="p-3 hover:bg-[#f3ead2]/50 transition-all duration-150 rounded-lg space-y-1.5 cursor-pointer group"
                 >
                   <div className="flex items-center justify-between gap-2">
                     <div
@@ -453,20 +441,20 @@ export function NotificationPopover() {
                       {renderTagIcon(item.tag)}
                       <span>{item.tag}</span>
                     </div>
-                    <span className="text-[10px] font-mono text-zinc-500 group-hover:text-zinc-400 transition-colors">
+                    <span className="text-[10px] font-mono text-slate-500 group-hover:text-slate-700 transition-colors">
                       {formatRelativeTime(item.timestamp)}
                     </span>
                   </div>
 
-                  <p className="text-xs text-white leading-snug font-semibold group-hover:text-emerald-300 transition-colors flex items-center justify-between gap-2">
+                  <p className="text-xs text-slate-900 leading-snug font-semibold group-hover:text-[#0369a1] transition-colors flex items-center justify-between gap-2">
                     <span>{item.title}</span>
-                    <svg className="w-3.5 h-3.5 text-zinc-500 group-hover:text-white transition-transform group-hover:translate-x-0.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <svg className="w-3.5 h-3.5 text-slate-500 group-hover:text-slate-700 transition-transform group-hover:translate-x-0.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                       <line x1="5" y1="12" x2="19" y2="12" />
                       <polyline points="12 5 19 12 12 19" />
                     </svg>
                   </p>
 
-                  <p className="text-[11px] text-zinc-400 leading-relaxed font-mono line-clamp-2">
+                  <p className="text-[11px] text-slate-600 leading-relaxed font-mono line-clamp-2">
                     {item.message}
                   </p>
                 </div>
@@ -474,11 +462,11 @@ export function NotificationPopover() {
             )}
           </div>
 
-          <div className="p-2.5 px-3.5 bg-black/40 border-t border-white/[0.07] flex items-center justify-between text-[11px] font-mono text-zinc-400 shrink-0">
+          <div className="p-2.5 px-3.5 bg-[#faf2df] border-t border-slate-900/10 flex items-center justify-between text-[11px] font-mono text-slate-600 shrink-0">
             <Link
               href="/dashboard/signals"
               onClick={() => setIsOpen(false)}
-              className="hover:text-white transition-colors flex items-center gap-1.5 text-[11px]"
+              className="hover:text-[#0369a1] transition-colors flex items-center gap-1.5 text-[11px] font-semibold"
             >
               <span>Live Signals</span>
               <svg className="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -489,9 +477,9 @@ export function NotificationPopover() {
             </Link>
 
             <Link
-              href="/dashboard/live-news"
+              href="/dashboard/news"
               onClick={() => setIsOpen(false)}
-              className="hover:text-white transition-colors flex items-center gap-1.5 text-[11px]"
+              className="hover:text-[#0369a1] transition-colors flex items-center gap-1.5 text-[11px] font-semibold"
             >
               <span>Macro News Wire</span>
               <svg className="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

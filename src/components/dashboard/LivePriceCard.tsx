@@ -304,30 +304,30 @@ export function LivePriceCard({
     <GlassCard
       className={`${
         compact ? 'p-4 sm:p-5 space-y-3' : 'p-5 sm:p-6 space-y-4'
-      } border-white/[0.09] ${className}`}
+      } border-slate-900/10 ${className}`}
     >
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2.5">
           <AssetIcon symbol={ticker.symbol} size={compact ? 'sm' : 'md'} />
           <div>
             <div className="flex items-center gap-1.5">
-              <span className="text-xs font-bold text-white tracking-tight font-mono">
+              <span className="text-xs font-bold text-slate-900 tracking-tight font-mono">
                 {ticker.symbol}USDT Perp
               </span>
             </div>
             <div className="flex items-center gap-1.5">
-              <span className="text-[11px] text-zinc-400 font-mono">
+              <span className="text-[11px] text-slate-500 font-mono">
                 Binance USDⓈ-M • Live Feed
               </span>
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_6px_rgba(52,211,153,0.8)]" />
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
             </div>
           </div>
         </div>
 
         <div className="text-right">
           <span
-            className={`inline-flex items-center gap-1 text-xs font-bold font-mono ${
-              isPositive ? 'text-emerald-400' : 'text-rose-400'
+            className={`inline-flex items-center gap-1 text-xs font-bold font-mono tabular-nums ${
+              isPositive ? 'text-emerald-700' : 'text-rose-700'
             }`}
           >
             <span>{isPositive ? '▲' : '▼'}</span>
@@ -340,59 +340,54 @@ export function LivePriceCard({
         <div
           className={`${
             compact ? 'text-2xl sm:text-[28px]' : 'text-2xl sm:text-3xl'
-          } font-black font-mono tracking-tight transition-colors duration-75 ${
+          } font-black font-mono tracking-tight tabular-nums transition-colors duration-75 ${
             priceFlash === 'up'
-              ? 'text-emerald-400 drop-shadow-[0_0_8px_rgba(52,211,153,0.4)]'
+              ? 'text-emerald-700'
               : priceFlash === 'down'
-              ? 'text-rose-400 drop-shadow-[0_0_8px_rgba(244,63,94,0.4)]'
-              : 'text-white'
+              ? 'text-rose-700'
+              : 'text-slate-900'
           }`}
         >
-          ${ticker.price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+          <span className="font-mono tabular-nums">${ticker.price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
         </div>
 
-        <div className="flex items-center justify-between text-[11px] font-mono text-zinc-300">
+        <div className="flex items-center justify-between text-[11px] font-mono tabular-nums text-slate-600">
           <span className="flex items-center gap-1">
-            <span className="text-zinc-400">Delta:</span>
-            <span className={isPositive ? 'text-emerald-400 font-bold' : 'text-rose-400 font-bold'}>
-              {ticker.changeDollar >= 0
-                ? `+$${ticker.changeDollar.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
-                : `-$${Math.abs(ticker.changeDollar).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`}
+            <span className="text-slate-500">Delta:</span>
+            <span className={`tabular-nums ${isPositive ? 'text-emerald-700 font-bold' : 'text-rose-700 font-bold'}`}>
+              {ticker.changeDollar >= 0 ? `+$${ticker.changeDollar.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}` : `-$${Math.abs(ticker.changeDollar).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`}
             </span>
           </span>
-          <span className="text-[11px] text-zinc-400">
-            {ticker.changePips >= 0
-              ? `+${ticker.changePips.toLocaleString()}`
-              : `-${Math.abs(ticker.changePips).toLocaleString()}`}{' '}
-            pips
+          <span className="text-[11px] text-slate-500 tabular-nums">
+            {ticker.changePips >= 0 ? `+${ticker.changePips.toLocaleString()}` : `-${Math.abs(ticker.changePips).toLocaleString()}`} pips
           </span>
         </div>
       </div>
 
-      <div className="grid grid-cols-2 gap-2 pt-1 border-t border-white/[0.06] text-[11px] font-mono">
+      <div className="grid grid-cols-2 gap-2 pt-1 border-t border-slate-900/10 text-[11px] font-mono tabular-nums">
         <div className="py-1">
-          <span className="text-zinc-400 block text-[10px]">Daily High</span>
-          <span className="font-bold text-white">
+          <span className="text-slate-500 block text-[10px]">Daily High</span>
+          <span className="font-bold text-slate-900">
             ${ticker.high24h.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
           </span>
         </div>
         <div className="py-1">
-          <span className="text-zinc-400 block text-[10px]">Daily Low</span>
-          <span className="font-bold text-white">
+          <span className="text-slate-500 block text-[10px]">Daily Low</span>
+          <span className="font-bold text-slate-900">
             ${ticker.low24h.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
           </span>
         </div>
       </div>
 
       {hasSignalContext && entryPrice && (
-        <div className={`border-t border-white/[0.06] ${compact ? 'pt-2.5 space-y-2' : 'pt-3.5 space-y-2.5'}`}>
+        <div className={`border-t border-slate-900/10 ${compact ? 'pt-2.5 space-y-2' : 'pt-3.5 space-y-2.5'}`}>
           <div className="flex items-center justify-between">
-            <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-zinc-400">
+            <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-slate-500">
               Live Trade Proximity
             </span>
             <span
-              className={`text-[10px] font-mono font-bold ${
-                isInProfit ? 'text-emerald-400' : 'text-rose-400'
+              className={`text-[10px] font-mono font-bold tabular-nums ${
+                isInProfit ? 'text-emerald-700' : 'text-rose-700'
               }`}
             >
               {isInProfit ? 'IN PROFIT' : 'DRAWDOWN'} ({distPct >= 0 ? '+' : ''}
@@ -400,25 +395,25 @@ export function LivePriceCard({
             </span>
           </div>
 
-          <div className="grid grid-cols-2 gap-2 text-[10px] font-mono">
+          <div className="grid grid-cols-2 gap-2 text-[10px] font-mono tabular-nums">
             <div className="py-0.5">
               <div className="flex items-center gap-1.5 mb-0.5">
                 <span
                   className={`w-1.5 h-1.5 rounded-full ${
                     isInProfit
-                      ? 'bg-emerald-400 shadow-[0_0_6px_rgba(52,211,153,0.8)]'
-                      : 'bg-rose-400 shadow-[0_0_6px_rgba(244,63,94,0.8)]'
+                      ? 'bg-emerald-500'
+                      : 'bg-rose-500'
                   }`}
                 />
-                <span className="text-zinc-400 text-[9px] font-semibold uppercase tracking-wider">
+                <span className="text-slate-500 text-[9px] font-semibold uppercase tracking-wider">
                   Entry Distance
                 </span>
               </div>
               <div
-                className={`text-sm font-black tracking-tight ${
+                className={`text-sm font-black tracking-tight tabular-nums ${
                   isInProfit
-                    ? 'text-emerald-400 drop-shadow-[0_0_8px_rgba(52,211,153,0.3)]'
-                    : 'text-rose-400 drop-shadow-[0_0_8px_rgba(244,63,94,0.3)]'
+                    ? 'text-emerald-700'
+                    : 'text-rose-700'
                 }`}
               >
                 {distDollar >= 0 ? `+$${distDollar.toFixed(2)}` : `-$${Math.abs(distDollar).toFixed(2)}`}
@@ -428,24 +423,24 @@ export function LivePriceCard({
             {tp1Price ? (
               <div className="py-0.5">
                 <div className="flex items-center gap-1.5 mb-0.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_6px_rgba(52,211,153,0.8)]" />
-                  <span className="text-zinc-400 text-[9px] font-semibold uppercase tracking-wider">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                  <span className="text-slate-500 text-[9px] font-semibold uppercase tracking-wider">
                     {isTpHit ? 'TP Reached' : 'Dist to TP'}
                   </span>
                 </div>
-                <div className="text-sm font-black tracking-tight text-emerald-400 drop-shadow-[0_0_8px_rgba(52,211,153,0.3)]">
+                <div className="text-sm font-black tracking-tight tabular-nums text-emerald-700">
                   {isTpHit ? `+$${distToTp.toFixed(2)} (HIT)` : `$${distToTp.toFixed(2)}`}
                 </div>
               </div>
             ) : stopLossPrice ? (
               <div className="py-0.5">
                 <div className="flex items-center gap-1.5 mb-0.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-rose-400 shadow-[0_0_6px_rgba(244,63,94,0.8)]" />
-                  <span className="text-zinc-400 text-[9px] font-semibold uppercase tracking-wider">
+                  <span className="w-1.5 h-1.5 rounded-full bg-rose-500" />
+                  <span className="text-slate-500 text-[9px] font-semibold uppercase tracking-wider">
                     Dist to SL
                   </span>
                 </div>
-                <div className="text-sm font-black tracking-tight text-rose-400 drop-shadow-[0_0_8px_rgba(244,63,94,0.3)]">
+                <div className="text-sm font-black tracking-tight tabular-nums text-rose-700">
                   ${Math.abs(ticker.price - stopLossPrice).toFixed(2)}
                 </div>
               </div>

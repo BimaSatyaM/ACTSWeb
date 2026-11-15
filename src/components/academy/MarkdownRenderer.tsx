@@ -7,8 +7,7 @@ interface MarkdownRendererProps {
 }
 
 // Clean Editorial & Technical Markdown Renderer
-// Follows taste-skill house rules: no warning icons, no boxed formula headers,
-// clean typography with tabular numerals and interactive/visual SVG chart embeds.
+// Daylight 2.1 design: clean typography with tabular numerals and interactive/visual SVG chart embeds.
 export function MarkdownRenderer({ content, className = '' }: MarkdownRendererProps) {
   if (!content) return null
 
@@ -49,7 +48,7 @@ export function MarkdownRenderer({ content, className = '' }: MarkdownRendererPr
       elements.push(
         <pre
           key={`code-${blockKey++}`}
-          className="my-4 overflow-x-auto rounded-lg border border-[#1a2030] bg-[#070b14] p-4 text-xs text-[#cbd5e1] leading-relaxed"
+          className="my-4 overflow-x-auto rounded-xl border border-slate-200/90 bg-[#fdfaf3] p-4 text-xs text-slate-800 leading-relaxed shadow-2xs font-mono"
         >
           <code>{codeLines.join('\n')}</code>
         </pre>
@@ -77,7 +76,7 @@ export function MarkdownRenderer({ content, className = '' }: MarkdownRendererPr
       elements.push(
         <pre
           key={`math-${blockKey++}`}
-          className="my-4 overflow-x-auto rounded-lg border border-[#1a2030] bg-[#070b14] px-4 py-3 text-xs sm:text-sm font-medium text-white [font-variant-numeric:tabular-nums]"
+          className="my-4 overflow-x-auto rounded-xl border border-slate-200/90 bg-sky-50/70 px-4 py-3 text-xs sm:text-sm font-semibold text-slate-900 [font-variant-numeric:tabular-nums] shadow-2xs font-mono"
         >
           <code>{formatLatexFormula(mathFormula)}</code>
         </pre>
@@ -100,13 +99,13 @@ export function MarkdownRenderer({ content, className = '' }: MarkdownRendererPr
       elements.push(
         <blockquote
           key={`quote-${blockKey++}`}
-          className="my-4 border-l-2 border-[#2e3852] pl-4 py-1 text-xs sm:text-sm text-[#cbd5e1] leading-relaxed space-y-1.5"
+          className="my-4 border-l-2 border-sky-500 pl-4 py-2 text-xs sm:text-sm text-slate-700 bg-sky-50/40 rounded-r leading-relaxed space-y-1.5"
         >
           {quoteLines.map((qLine, qIdx) => {
             const cleanLine = qLine.replace(/\u26A0\uFE0F?/g, '').trim()
             if (cleanLine.startsWith('###')) {
               return (
-                <p key={`qh-${qIdx}`} className="font-semibold text-white text-sm">
+                <p key={`qh-${qIdx}`} className="font-bold text-slate-900 text-sm">
                   {renderInlineFormatted(cleanLine.replace(/^###\s?/, ''))}
                 </p>
               )
@@ -124,7 +123,7 @@ export function MarkdownRenderer({ content, className = '' }: MarkdownRendererPr
 
     // 4. Horizontal Rule (---)
     if (line.trim() === '---' || line.trim() === '***') {
-      elements.push(<hr key={`hr-${blockKey++}`} className="my-6 border-[#1a2030]" />)
+      elements.push(<hr key={`hr-${blockKey++}`} className="my-6 border-slate-200/80" />)
       i++
       continue
     }
@@ -132,7 +131,7 @@ export function MarkdownRenderer({ content, className = '' }: MarkdownRendererPr
     // 5. Headings (###, ####, ##)
     if (line.startsWith('### ')) {
       elements.push(
-        <h3 key={`h3-${blockKey++}`} className="mt-7 mb-2.5 text-base sm:text-lg font-semibold text-white">
+        <h3 key={`h3-${blockKey++}`} className="mt-7 mb-2.5 text-base sm:text-lg font-bold text-slate-900">
           {renderInlineFormatted(line.replace(/^###\s+/, ''))}
         </h3>
       )
@@ -142,7 +141,7 @@ export function MarkdownRenderer({ content, className = '' }: MarkdownRendererPr
 
     if (line.startsWith('#### ')) {
       elements.push(
-        <h4 key={`h4-${blockKey++}`} className="mt-5 mb-2 text-sm font-semibold text-white">
+        <h4 key={`h4-${blockKey++}`} className="mt-5 mb-2 text-sm font-bold text-slate-900">
           {renderInlineFormatted(line.replace(/^####\s+/, ''))}
         </h4>
       )
@@ -152,7 +151,7 @@ export function MarkdownRenderer({ content, className = '' }: MarkdownRendererPr
 
     if (line.startsWith('## ')) {
       elements.push(
-        <h2 key={`h2-${blockKey++}`} className="mt-8 mb-3 text-lg sm:text-xl font-semibold text-white">
+        <h2 key={`h2-${blockKey++}`} className="mt-8 mb-3 text-lg sm:text-xl font-bold text-slate-900">
           {renderInlineFormatted(line.replace(/^##\s+/, ''))}
         </h2>
       )
@@ -168,7 +167,7 @@ export function MarkdownRenderer({ content, className = '' }: MarkdownRendererPr
         i++
       }
       elements.push(
-        <ol key={`ol-${blockKey++}`} className="my-3 list-decimal list-inside space-y-1.5 text-sm text-[#cbd5e1] leading-relaxed">
+        <ol key={`ol-${blockKey++}`} className="my-3 list-decimal list-inside space-y-1.5 text-sm text-slate-700 leading-relaxed">
           {listItems.map((item, itemIdx) => (
             <li key={`ol-item-${itemIdx}`} className="leading-relaxed">
               <span>{renderInlineFormatted(item)}</span>
@@ -187,7 +186,7 @@ export function MarkdownRenderer({ content, className = '' }: MarkdownRendererPr
         i++
       }
       elements.push(
-        <ul key={`ul-${blockKey++}`} className="my-3 list-disc list-inside space-y-1.5 text-sm text-[#cbd5e1] leading-relaxed">
+        <ul key={`ul-${blockKey++}`} className="my-3 list-disc list-inside space-y-1.5 text-sm text-slate-700 leading-relaxed">
           {listItems.map((item, itemIdx) => (
             <li key={`ul-item-${itemIdx}`} className="leading-relaxed">
               <span>{renderInlineFormatted(item)}</span>
@@ -218,7 +217,7 @@ export function MarkdownRenderer({ content, className = '' }: MarkdownRendererPr
         i++
       }
       elements.push(
-        <p key={`p-${blockKey++}`} className="my-3 text-sm text-[#cbd5e1] leading-relaxed">
+        <p key={`p-${blockKey++}`} className="my-3 text-sm text-slate-800 leading-relaxed">
           {renderInlineFormatted(pLines.join(' '))}
         </p>
       )
@@ -268,7 +267,7 @@ function renderInlineFormatted(text: string): React.ReactNode {
           href={linkMatch[2]}
           target={isExternal ? '_blank' : undefined}
           rel={isExternal ? 'noopener noreferrer' : undefined}
-          className="text-white underline underline-offset-2 hover:text-[#cbd5e1]"
+          className="text-sky-700 underline underline-offset-2 hover:text-sky-900 font-semibold"
         >
           {linkMatch[1]}
         </a>
@@ -277,7 +276,7 @@ function renderInlineFormatted(text: string): React.ReactNode {
 
     if (part.startsWith('**') && part.endsWith('**') && part.length >= 4) {
       return (
-        <strong key={`b-${idx}`} className="font-semibold text-white">
+        <strong key={`b-${idx}`} className="font-bold text-slate-900">
           {part.slice(2, -2)}
         </strong>
       )
@@ -287,7 +286,7 @@ function renderInlineFormatted(text: string): React.ReactNode {
       return (
         <code
           key={`c-${idx}`}
-          className="rounded bg-[#111726] px-1.5 py-0.5 text-xs text-white"
+          className="rounded bg-slate-100 border border-slate-200/80 px-1.5 py-0.5 text-xs text-slate-800 font-mono"
         >
           {part.slice(1, -1)}
         </code>
@@ -298,7 +297,7 @@ function renderInlineFormatted(text: string): React.ReactNode {
       return (
         <code
           key={`m-${idx}`}
-          className="rounded bg-[#111726] px-1.5 py-0.5 text-xs text-white [font-variant-numeric:tabular-nums]"
+          className="rounded bg-sky-50 border border-sky-100 px-1.5 py-0.5 text-xs text-sky-950 font-mono [font-variant-numeric:tabular-nums]"
         >
           {formatLatexFormula(part.slice(1, -1))}
         </code>
@@ -307,7 +306,7 @@ function renderInlineFormatted(text: string): React.ReactNode {
 
     if (part.startsWith('*') && part.endsWith('*') && part.length >= 2) {
       return (
-        <em key={`i-${idx}`} className="italic text-[#e2e8f0]">
+        <em key={`i-${idx}`} className="italic text-slate-700">
           {part.slice(1, -1)}
         </em>
       )

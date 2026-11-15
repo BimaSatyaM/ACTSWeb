@@ -230,61 +230,61 @@ export function AutoTradingProgressionChart({
   }, [hasData, points])
 
   return (
-    <div className="rounded-2xl border border-white/[0.08] bg-[#10141E]/80 backdrop-blur-xl p-5 sm:p-6 shadow-xl space-y-4">
-      <div className="space-y-2 border-b border-white/[0.05] pb-3.5">
+    <div className="rounded-2xl border border-slate-900/10 bg-[#faf2df] p-5 sm:p-6 space-y-4">
+      <div className="space-y-2 border-b border-slate-900/10 pb-3.5">
         <div className="flex items-center justify-between gap-3">
           <div className="flex items-center gap-2">
-            <h2 className="text-sm font-bold text-white tracking-wide">
+            <h2 className="text-sm font-bold text-slate-900 tracking-wide">
               Target Progression Curve
             </h2>
-            <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-[#00e676]/10 text-[#00e676] border border-[#00e676]/20">
+            <span className="text-[10px] font-mono font-bold text-emerald-700">
               Live Executions
             </span>
           </div>
 
-          <span className="text-[11px] font-mono text-zinc-500">
+          <span className="text-[11px] font-mono text-slate-500 tabular-nums">
             {hasData ? `${points.length} trades plotted` : 'Standby'}
           </span>
         </div>
 
-        <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs font-mono pt-0.5">
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs font-mono tabular-nums pt-0.5">
           <div className="flex items-center gap-1.5">
-            <span className="text-zinc-500">Return:</span>
+            <span className="text-slate-500">Return:</span>
             <span
               className={
                 hasData
                   ? netPnl >= 0
-                    ? 'text-[#00e676] font-bold'
-                    : 'text-rose-400 font-bold'
-                  : 'text-zinc-400 font-semibold'
+                    ? 'text-emerald-700 font-bold tabular-nums'
+                    : 'text-rose-700 font-bold tabular-nums'
+                  : 'text-slate-600 font-semibold tabular-nums'
               }
             >
               {hasData ? (netPnl >= 0 ? `+$${netPnl.toFixed(2)}` : `-$${Math.abs(netPnl).toFixed(2)}`) : '--'}
             </span>
-            {hasData && <span className="text-[10px] text-zinc-600">USDT</span>}
+            {hasData && <span className="text-[10px] text-slate-500 tabular-nums">USDT</span>}
           </div>
 
-          <span className="text-zinc-700 hidden sm:inline">•</span>
+          <span className="text-slate-300 hidden sm:inline">•</span>
 
           <div className="flex items-center gap-1.5">
-            <span className="text-zinc-500">Target Hits:</span>
-            <span className="text-white font-semibold">
+            <span className="text-slate-500">Target Hits:</span>
+            <span className="text-slate-900 font-semibold tabular-nums">
               {hasData ? `${totalTpHits} TP (${totalSlHits} SL)` : '--'}
             </span>
           </div>
 
-          <span className="text-zinc-700 hidden sm:inline">•</span>
+          <span className="text-slate-300 hidden sm:inline">•</span>
 
           <div className="flex items-center gap-1.5">
-            <span className="text-zinc-500">Gate:</span>
-            <span className="text-[#F0B90B] font-bold">≥ 52.0</span>
+            <span className="text-slate-500">Gate:</span>
+            <span className="text-amber-800 font-bold tabular-nums">≥ 52.0</span>
           </div>
         </div>
       </div>
 
-      <div className="relative w-full h-48 sm:h-52 rounded-xl bg-black/25 border border-white/[0.04] p-2 flex items-center justify-center overflow-hidden">
+      <div className="relative w-full h-48 sm:h-52 flex items-center justify-center overflow-hidden">
         {!mounted ? (
-          <div className="text-xs font-mono text-zinc-600">Initializing canvas...</div>
+          <div className="text-xs font-mono text-slate-500">Initializing canvas...</div>
         ) : !hasData ? (
           // Subtle, Minimalist Standby State
           <div className="flex flex-col items-center justify-center text-center px-4 space-y-2.5">
@@ -292,20 +292,20 @@ export function AutoTradingProgressionChart({
               <span
                 className={`relative inline-flex rounded-full h-2 w-2 ${
                   isAutoTrading && isConnected
-                    ? 'bg-[#00e676] shadow-[0_0_8px_#00e676]'
+                    ? 'bg-emerald-500 shadow-sm'
                     : isConnected
-                    ? 'bg-[#F0B90B] shadow-[0_0_8px_#F0B90B]'
-                    : 'bg-zinc-600'
+                    ? 'bg-amber-500'
+                    : 'bg-slate-400'
                 }`}
               />
-              <span className="text-xs font-mono font-semibold text-zinc-300">
+              <span className="text-xs font-mono font-semibold text-slate-700">
                 {isAutoTrading && isConnected
                   ? 'Bot Active • Monitoring 15m BTCUSDT'
                   : 'Radar Standby • Awaiting First Execution'}
               </span>
             </div>
 
-            <p className="text-[11px] text-zinc-500 font-mono max-w-sm leading-relaxed">
+            <p className="text-[11px] text-slate-600 font-mono max-w-sm leading-relaxed">
               Progression curve plots each executed target hit automatically as orders close on Binance.
             </p>
           </div>
@@ -319,12 +319,9 @@ export function AutoTradingProgressionChart({
             >
               <defs>
                 <linearGradient id="progressionGrad" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="#00e676" stopOpacity="0.25" />
-                  <stop offset="100%" stopColor="#00e676" stopOpacity="0.0" />
+                  <stop offset="0%" stopColor="#0284c7" stopOpacity={0.25} />
+                  <stop offset="100%" stopColor="#0284c7" stopOpacity={0.0} />
                 </linearGradient>
-                <filter id="curveGlow" x="-10%" y="-10%" width="120%" height="120%">
-                  <feDropShadow dx="0" dy="0" stdDeviation="2" floodColor="#00e676" floodOpacity="0.35" />
-                </filter>
               </defs>
 
               <line
@@ -332,7 +329,7 @@ export function AutoTradingProgressionChart({
                 y1={chartCoords.zeroY}
                 x2={width - padding.right}
                 y2={chartCoords.zeroY}
-                stroke="rgba(255,255,255,0.06)"
+                stroke="rgba(15,23,42,0.1)"
                 strokeDasharray="3 3"
               />
 
@@ -344,11 +341,10 @@ export function AutoTradingProgressionChart({
                 <path
                   d={chartCoords.pathD}
                   fill="none"
-                  stroke="#00e676"
+                  stroke="#0284c7"
                   strokeWidth="2.5"
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  filter="url(#curveGlow)"
                 />
               )}
 
@@ -374,8 +370,8 @@ export function AutoTradingProgressionChart({
                         cx={pt.x}
                         cy={pt.y}
                         r="8"
-                        fill={isTp ? 'rgba(0, 230, 118, 0.25)' : 'rgba(239, 68, 68, 0.25)'}
-                        stroke={isTp ? '#00e676' : '#ef4444'}
+                        fill={isTp ? 'rgba(16, 185, 129, 0.25)' : 'rgba(239, 68, 68, 0.25)'}
+                        stroke={isTp ? '#059669' : '#dc2626'}
                         strokeWidth="1.5"
                       />
                     )}
@@ -384,8 +380,8 @@ export function AutoTradingProgressionChart({
                       cx={pt.x}
                       cy={pt.y}
                       r={isHovered ? 5.5 : 4}
-                      fill={isTp ? '#00e676' : '#ef4444'}
-                      stroke="#0e121d"
+                      fill={isTp ? '#059669' : '#dc2626'}
+                      stroke="#fdfaf3"
                       strokeWidth="2"
                     />
                   </g>
@@ -395,15 +391,15 @@ export function AutoTradingProgressionChart({
 
             {hoveredPoint && (
               <div
-                className={`absolute p-2.5 rounded-xl bg-[#090d18]/95 border border-white/[0.12] shadow-2xl text-xs font-mono space-y-1 backdrop-blur-md animate-fadeIn z-20 pointer-events-none select-none ${
+                className={`absolute p-2.5 rounded-xl bg-[#fdfaf3] border border-slate-900/15 shadow-xl text-xs font-mono space-y-1 backdrop-blur-md animate-fadeIn z-20 pointer-events-none select-none tabular-nums ${
                   hoveredCoord && hoveredCoord.x > width * 0.5 ? 'top-2 left-2' : 'top-2 right-2'
                 }`}
               >
-                <div className="flex items-center justify-between gap-3 border-b border-white/[0.08] pb-1">
-                  <span className="font-bold text-white">{hoveredPoint.label}</span>
+                <div className="flex items-center justify-between gap-3 border-b border-slate-900/10 pb-1">
+                  <span className="font-bold text-slate-900">{hoveredPoint.label}</span>
                   <span
-                    className={`font-bold ${
-                      hoveredPoint.outcome === 'TP_HIT' ? 'text-[#00e676]' : 'text-rose-400'
+                    className={`font-bold tabular-nums ${
+                      hoveredPoint.outcome === 'TP_HIT' ? 'text-emerald-700' : 'text-rose-700'
                     }`}
                   >
                     {hoveredPoint.outcome === 'TP_HIT'
@@ -411,24 +407,18 @@ export function AutoTradingProgressionChart({
                       : 'STOP LOSS'}
                   </span>
                 </div>
-                <div className="text-[11px] text-zinc-400">
+                <div className="text-[11px] text-slate-600">
                   {hoveredPoint.symbol} {hoveredPoint.direction} • {hoveredPoint.date} {hoveredPoint.time}
                 </div>
                 <div className="flex items-center justify-between gap-3 text-[11px]">
-                  <span className="text-zinc-500">P&amp;L:</span>
-                  <span
-                    className={`font-bold ${
-                      hoveredPoint.tradePnl >= 0 ? 'text-[#00e676]' : 'text-rose-400'
-                    }`}
-                  >
-                    {hoveredPoint.tradePnl >= 0
-                      ? `+$${hoveredPoint.tradePnl.toFixed(2)}`
-                      : `-$${Math.abs(hoveredPoint.tradePnl).toFixed(2)}`}
+                  <span className="text-slate-500">P&amp;L:</span>
+                  <span className={`font-bold tabular-nums ${hoveredPoint.tradePnl >= 0 ? 'text-emerald-700' : 'text-rose-700'}`}>
+                    {hoveredPoint.tradePnl >= 0 ? `+$${hoveredPoint.tradePnl.toFixed(2)}` : `-$${Math.abs(hoveredPoint.tradePnl).toFixed(2)}`}
                   </span>
                 </div>
-                <div className="flex items-center justify-between gap-3 text-[11px] pt-0.5 border-t border-white/[0.04]">
-                  <span className="text-zinc-500">Cumulative:</span>
-                  <span className="font-bold text-white">
+                <div className="flex items-center justify-between gap-3 text-[11px] pt-0.5 border-t border-slate-900/10 tabular-nums">
+                  <span className="text-slate-500">Cumulative:</span>
+                  <span className="font-bold text-slate-900 tabular-nums">
                     ${hoveredPoint.cumulativePnl.toFixed(2)} USDT
                   </span>
                 </div>
@@ -438,7 +428,7 @@ export function AutoTradingProgressionChart({
         )}
       </div>
 
-      <div className="flex items-center justify-between text-[11px] font-mono text-zinc-500 pt-0.5">
+      <div className="flex items-center justify-between text-[11px] font-mono text-slate-500 pt-0.5">
         <span>Monitoring 15m closes</span>
         <span>Non-custodial execution</span>
       </div>

@@ -56,115 +56,115 @@ function IDXCorporateActionsPageContent() {
   return (
     <div className="space-y-6 pb-12">
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3.5">
-        <div className="p-4 rounded-xl bg-[#0d121f] border border-white/[0.08] space-y-1">
+        <div className="p-4 rounded-xl bg-[#fdfaf3] border border-slate-900/10 shadow-xs space-y-1">
           <div className="flex items-center justify-between">
             <span className="text-[10px] font-mono text-slate-500 uppercase tracking-wider font-bold">
               e-IPO in Pipeline
             </span>
-            <span className={`w-1.5 h-1.5 rounded-full ${activeIPOs.length > 0 ? 'bg-cyan-400' : 'bg-amber-400'}`} />
+            <span className={`w-1.5 h-1.5 rounded-full ${activeIPOs.length > 0 ? 'bg-sky-600' : 'bg-amber-500'}`} />
           </div>
-          <div className="text-2xl font-black font-mono text-white">
+          <div className="text-2xl font-bold font-mono text-slate-900 tabular-nums">
             {activeIPOs.length}{' '}
-            <span className="text-xs font-normal text-slate-400">Aktif</span>
+            <span className="text-xs font-normal text-slate-500 font-sans">Aktif</span>
           </div>
-          <p className="text-[11px] text-amber-400/90 font-mono">
+          <p className="text-[11px] text-amber-700 font-mono font-medium">
             {activeIPOs.length === 0 ? 'SWAP: Batal (Kosong di Stockbit)' : 'Active Book Building'}
           </p>
         </div>
 
-        <div className="p-4 rounded-xl bg-[#0d121f] border border-white/[0.08] space-y-1">
+        <div className="p-4 rounded-xl bg-[#fdfaf3] border border-slate-900/10 shadow-xs space-y-1">
           <div className="flex items-center justify-between">
             <span className="text-[10px] font-mono text-slate-500 uppercase tracking-wider font-bold">
               Total Target Proceeds
             </span>
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-600" />
           </div>
-          <div className="text-2xl font-black font-mono text-emerald-400">
+          <div className="text-2xl font-bold font-mono text-emerald-700 tabular-nums">
             Rp {(totalProceeds / 1000).toFixed(2)}{' '}
-            <span className="text-xs font-normal text-slate-400">Trillion</span>
+            <span className="text-xs font-normal text-slate-500 font-sans">Trillion</span>
           </div>
           <p className="text-[11px] text-slate-500 font-mono">Target emisi penawaran aktif</p>
         </div>
 
-        <div className="p-4 rounded-xl bg-[#0d121f] border border-white/[0.08] space-y-1">
+        <div className="p-4 rounded-xl bg-[#fdfaf3] border border-slate-900/10 shadow-xs space-y-1">
           <div className="flex items-center justify-between">
             <span className="text-[10px] font-mono text-slate-500 uppercase tracking-wider font-bold">
               Upcoming Dividends
             </span>
-            <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
+            <span className="w-1.5 h-1.5 rounded-full bg-amber-500" />
           </div>
-          <div className="text-2xl font-black font-mono text-white">
+          <div className="text-2xl font-bold font-mono text-slate-900 tabular-nums">
             {upcomingDividendsCount}{' '}
-            <span className="text-xs font-normal text-slate-400">Payouts</span>
+            <span className="text-xs font-normal text-slate-500 font-sans">Payouts</span>
           </div>
           <p className="text-[11px] text-slate-500 font-mono">Cum-dates approaching</p>
         </div>
 
-        <div className="p-4 rounded-xl bg-[#0d121f] border border-white/[0.08] space-y-1">
+        <div className="p-4 rounded-xl bg-[#fdfaf3] border border-slate-900/10 shadow-xs space-y-1">
           <div className="flex items-center justify-between">
             <span className="text-[10px] font-mono text-slate-500 uppercase tracking-wider font-bold">
               Peak Dividend Yield
             </span>
-            <span className="w-1.5 h-1.5 rounded-full bg-purple-400" />
+            <span className="w-1.5 h-1.5 rounded-full bg-sky-600" />
           </div>
-          <div className="text-2xl font-black font-mono text-cyan-400">
+          <div className="text-2xl font-bold font-mono text-sky-800 tabular-nums">
             {maxYield.toFixed(2)}%
           </div>
           <p className="text-[11px] text-slate-500 font-mono">Top annualized yield on board</p>
         </div>
       </div>
 
-      <div className="flex items-center justify-between gap-3 p-3 rounded-xl bg-[#0d121f] border border-white/[0.08]">
+      <div className="flex items-center justify-between gap-3 p-3 rounded-xl bg-[#fdfaf3] border border-slate-900/10 shadow-xs">
         <div className="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0">
           <button
             onClick={() => setView('ALL')}
             className={`px-3 py-1.5 rounded-lg text-xs font-mono font-bold transition-all cursor-pointer ${
               view === 'ALL'
-                ? 'bg-[#ff2e54] text-white border border-[#ff2e54]'
-                : 'bg-[#070b14] text-slate-400 hover:text-white border border-white/[0.06]'
+                ? 'bg-sky-600 text-white shadow-xs'
+                : 'bg-[#faf2df]/80 text-slate-600 hover:text-slate-900 hover:bg-[#faf2df] border border-slate-900/10'
             }`}
           >
-            📋 All Events
+            All Events
           </button>
 
           <button
             onClick={() => setView('IPO')}
             className={`px-3 py-1.5 rounded-lg text-xs font-mono font-bold transition-all cursor-pointer ${
               view === 'IPO'
-                ? 'bg-[#ff2e54] text-white border border-[#ff2e54]'
-                : 'bg-[#070b14] text-slate-400 hover:text-white border border-white/[0.06]'
+                ? 'bg-sky-600 text-white shadow-xs'
+                : 'bg-[#faf2df]/80 text-slate-600 hover:text-slate-900 hover:bg-[#faf2df] border border-slate-900/10'
             }`}
           >
-            🚀 e-IPO Pipeline ({activeIPOs.length} Aktif)
+            e-IPO Pipeline ({activeIPOs.length} Aktif)
           </button>
 
           <button
             onClick={() => setView('DIVIDENDS')}
             className={`px-3 py-1.5 rounded-lg text-xs font-mono font-bold transition-all cursor-pointer ${
               view === 'DIVIDENDS'
-                ? 'bg-[#ff2e54] text-white border border-[#ff2e54]'
-                : 'bg-[#070b14] text-slate-400 hover:text-white border border-white/[0.06]'
+                ? 'bg-sky-600 text-white shadow-xs'
+                : 'bg-[#faf2df]/80 text-slate-600 hover:text-slate-900 hover:bg-[#faf2df] border border-slate-900/10'
             }`}
           >
-            💰 Cash Dividends ({dividends.length})
+            Cash Dividends ({dividends.length})
           </button>
 
           <button
             onClick={() => setView('RUPS')}
             className={`px-3 py-1.5 rounded-lg text-xs font-mono font-bold transition-all cursor-pointer ${
               view === 'RUPS'
-                ? 'bg-[#ff2e54] text-white border border-[#ff2e54]'
-                : 'bg-[#070b14] text-slate-400 hover:text-white border border-white/[0.06]'
+                ? 'bg-sky-600 text-white shadow-xs'
+                : 'bg-[#faf2df]/80 text-slate-600 hover:text-slate-900 hover:bg-[#faf2df] border border-slate-900/10'
             }`}
           >
-            🏛️ RUPS &amp; Disclosures ({rupsEvents.length})
+            RUPS &amp; Disclosures ({rupsEvents.length})
           </button>
         </div>
 
         <button
           onClick={fetchData}
           disabled={loading}
-          className="px-3 py-1.5 rounded-lg bg-[#070b14] hover:bg-white/[0.06] border border-white/[0.08] text-xs font-mono text-slate-400 hover:text-white transition-colors shrink-0 flex items-center gap-1.5 cursor-pointer"
+          className="px-3 py-1.5 rounded-lg bg-[#faf2df]/80 hover:bg-[#faf2df] border border-slate-900/10 text-xs font-mono text-slate-600 hover:text-slate-900 transition-colors shrink-0 flex items-center gap-1.5 cursor-pointer shadow-xs"
         >
           <span className={loading ? 'animate-spin inline-block' : ''}>↻</span>
           <span className="hidden sm:inline">Refresh</span>
@@ -172,19 +172,19 @@ function IDXCorporateActionsPageContent() {
       </div>
 
       {loading ? (
-        <div className="rounded-2xl bg-white/[0.02] border border-white/[0.08] p-12 text-center space-y-3">
-          <div className="inline-block w-7 h-7 rounded-full border-2 border-brand-primary border-t-transparent animate-spin" />
-          <p className="text-xs font-mono text-text-secondary">
+        <div className="rounded-2xl bg-[#fdfaf3] border border-slate-900/10 p-12 text-center space-y-3 shadow-xs">
+          <div className="inline-block w-7 h-7 rounded-full border-2 border-sky-600 border-t-transparent animate-spin" />
+          <p className="text-xs font-mono text-slate-600">
             Syncing corporate actions calendar and e-IPO pipeline...
           </p>
         </div>
       ) : error ? (
-        <div className="rounded-2xl bg-rose-500/10 border border-rose-500/20 p-6 text-center space-y-2">
-          <p className="text-sm font-bold text-rose-400">Failed to sync corporate calendar</p>
-          <p className="text-xs font-mono text-text-muted">{error}</p>
+        <div className="rounded-2xl bg-rose-50 border border-rose-200 p-6 text-center space-y-2">
+          <p className="text-sm font-bold text-rose-700">Failed to sync corporate calendar</p>
+          <p className="text-xs font-mono text-slate-500">{error}</p>
           <button
             onClick={fetchData}
-            className="px-4 py-1.5 rounded-lg bg-white/[0.08] text-xs font-bold text-white hover:bg-white/[0.12] transition-colors"
+            className="px-4 py-1.5 rounded-lg bg-rose-600 text-xs font-bold text-white hover:bg-rose-700 transition-colors cursor-pointer"
           >
             Retry
           </button>
@@ -211,9 +211,9 @@ export default function IDXCorporateActionsPage() {
   return (
     <Suspense
       fallback={
-        <div className="rounded-2xl bg-white/[0.02] border border-white/[0.08] p-12 text-center space-y-3">
-          <div className="inline-block w-7 h-7 rounded-full border-2 border-brand-primary border-t-transparent animate-spin" />
-          <p className="text-xs font-mono text-text-secondary">
+        <div className="rounded-2xl bg-[#fdfaf3] border border-slate-200/90 p-12 text-center space-y-3 shadow-xs">
+          <div className="inline-block w-7 h-7 rounded-full border-2 border-sky-600 border-t-transparent animate-spin" />
+          <p className="text-xs font-mono text-slate-600">
             Loading Corporate Actions Terminal...
           </p>
         </div>

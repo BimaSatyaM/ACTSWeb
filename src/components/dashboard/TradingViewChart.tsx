@@ -37,11 +37,11 @@ function TradingViewChartComponent({
       symbol: resolvedSymbol,
       interval: interval,
       timezone: 'Etc/UTC',
-      theme: 'dark',
+      theme: 'light',
       style: '1',
       locale: 'en',
-      backgroundColor: 'rgba(13, 17, 28, 0.85)',
-      gridColor: 'rgba(255, 255, 255, 0.04)',
+      backgroundColor: 'rgba(253, 250, 243, 1)',
+      gridColor: 'rgba(15, 23, 42, 0.06)',
       hide_side_toolbar: false,
       allow_symbol_change: true,
       save_image: false,
@@ -61,7 +61,7 @@ function TradingViewChartComponent({
   }, [symbol, interval])
 
   return (
-    <div className="w-full h-[520px] rounded-xl overflow-hidden border border-white/[0.08] bg-[#0d111c]/80 backdrop-blur-md">
+    <div className="w-full h-[520px] rounded-xl overflow-hidden border border-slate-900/10 bg-[#fdfaf3] shadow-sm">
       <div 
         ref={containerRef} 
         className="tradingview-widget-container w-full h-full"

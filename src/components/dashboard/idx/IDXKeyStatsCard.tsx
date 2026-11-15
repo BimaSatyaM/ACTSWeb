@@ -82,17 +82,17 @@ export function IDXKeyStatsCard({ stats }: Props) {
   const getBadgeColor = (variant: string) => {
     switch (variant) {
       case 'emerald':
-        return 'bg-emerald-500/10 text-emerald-400 border-emerald-500/25'
+        return 'bg-emerald-50 text-emerald-800 border-emerald-200'
       case 'cyan':
-        return 'bg-cyan-500/10 text-cyan-400 border-cyan-500/25'
+        return 'bg-sky-50 text-sky-800 border-sky-200'
       case 'amber':
-        return 'bg-amber-500/10 text-amber-400 border-amber-500/25'
+        return 'bg-amber-50 text-amber-800 border-amber-200'
       case 'rose':
-        return 'bg-rose-500/10 text-rose-400 border-rose-500/25'
+        return 'bg-rose-50 text-rose-800 border-rose-200'
       case 'purple':
-        return 'bg-purple-500/10 text-purple-400 border-purple-500/25'
+        return 'bg-purple-50 text-purple-800 border-purple-200'
       default:
-        return 'bg-white/10 text-white border-white/20'
+        return 'bg-slate-100 text-slate-700 border-slate-200'
     }
   }
 
@@ -102,7 +102,7 @@ export function IDXKeyStatsCard({ stats }: Props) {
   const high52 = stats.week52High || low52 * 1.5
 
   const formatK = (v: number) => {
-    if (v === null || v === undefined || isNaN(v)) return '—'
+    if (v === null || v === undefined || isNaN(v)) return '-'
     const val = Math.round(v)
     if (val >= 1000000) {
       return `${(val / 1000000).toFixed(1)}M`
@@ -250,12 +250,12 @@ export function IDXKeyStatsCard({ stats }: Props) {
   }
 
   const activeHover = hoverIndex !== null && pts[hoverIndex] ? pts[hoverIndex] : null
-  const strokeColor = isPositive ? '#10b981' : '#f43f5e'
+  const strokeColor = isPositive ? '#059669' : '#e11d48'
   const gradientId = isPositive ? 'areaGradEmerald' : 'areaGradRose'
 
   return (
     <div className="space-y-5">
-      <div className="rounded-xl bg-[#0d121f] border border-white/[0.08] p-5 sm:p-6">
+      <div className="rounded-xl bg-[#fdfaf3] border border-slate-900/10 p-5 sm:p-6 shadow-xs">
         <div className="flex flex-col xl:flex-row xl:items-center justify-between gap-6">
           <div className="flex items-start gap-4 min-w-0">
             <div className="shrink-0">
@@ -268,68 +268,68 @@ export function IDXKeyStatsCard({ stats }: Props) {
             </div>
             <div className="space-y-1.5 min-w-0">
               <div className="flex flex-wrap items-center gap-2">
-                <h1 className="text-2xl sm:text-3xl font-black font-mono tracking-tight text-white">
+                <h1 className="text-2xl sm:text-3xl font-black font-mono tracking-tight text-slate-900">
                   {stats.symbol}
                 </h1>
-                <span className="text-xs font-mono font-bold px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 whitespace-nowrap">
+                <span className="text-xs font-mono font-bold px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 whitespace-nowrap">
                   {stats.marketCapTier}
                 </span>
-                <span className="text-xs font-mono font-medium px-2.5 py-0.5 rounded-full bg-white/[0.04] border border-white/[0.08] text-slate-300 whitespace-nowrap">
+                <span className="text-xs font-mono font-medium px-2.5 py-0.5 rounded-full bg-slate-100 border border-slate-200/80 text-slate-700 whitespace-nowrap">
                   {stats.sector}
                 </span>
                 {stats.industry && stats.industry !== stats.sector && (
-                  <span className="text-xs font-mono font-medium px-2.5 py-0.5 rounded-full bg-white/[0.04] border border-white/[0.08] text-slate-400 whitespace-nowrap hidden sm:inline-block">
+                  <span className="text-xs font-mono font-medium px-2.5 py-0.5 rounded-full bg-slate-100 border border-slate-200/80 text-slate-600 whitespace-nowrap hidden sm:inline-block">
                     {stats.industry}
                   </span>
                 )}
               </div>
 
-              <h2 className="text-lg sm:text-xl font-bold text-white tracking-tight truncate">
+              <h2 className="text-lg sm:text-xl font-bold text-slate-900 tracking-tight truncate">
                 {stats.name}
               </h2>
 
-              <p className="text-xs text-slate-400 font-mono flex items-center gap-1.5 flex-wrap">
-                {stats.group ? <span className="text-slate-300">{stats.group} Group · </span> : null}
+              <p className="text-xs text-slate-500 font-mono flex items-center gap-1.5 flex-wrap">
+                {stats.group ? <span className="text-slate-700">{stats.group} Group · </span> : null}
                 <span>{stats.sector}</span>
-                <span className="text-slate-600">·</span>
+                <span className="text-slate-500">·</span>
                 <span>{stats.industry}</span>
-                <span className="text-slate-600">·</span>
+                <span className="text-slate-500">·</span>
                 <span>Indonesia</span>
               </p>
             </div>
           </div>
 
-          <div className="flex items-center gap-6 sm:gap-8 shrink-0 lg:text-right border-t xl:border-t-0 pt-4 xl:pt-0 border-white/[0.06]">
+          <div className="flex items-center gap-6 sm:gap-8 shrink-0 lg:text-right border-t xl:border-t-0 pt-4 xl:pt-0 border-slate-200/80">
             <div>
-              <div className="text-[11px] text-slate-400 font-mono">
+              <div className="text-[11px] text-slate-500 font-mono">
                 Last Price (IDR)
               </div>
-              <div className="text-2xl sm:text-3xl font-black font-mono text-white mt-0.5 whitespace-nowrap">
+              <div className="text-2xl sm:text-3xl font-black font-mono text-slate-900 mt-0.5 whitespace-nowrap">
                 {formatIDR(stats.price)}
               </div>
-              <div className="text-xs font-mono font-semibold text-rose-400 flex items-center gap-1 lg:justify-end mt-0.5 whitespace-nowrap">
+              <div className="text-xs font-mono font-semibold text-rose-700 flex items-center gap-1 lg:justify-end mt-0.5 whitespace-nowrap">
                 <span>↓</span>
                 <span>{Math.abs(stats.distFrom52wHighPct).toFixed(2)}% (from 52W High)</span>
               </div>
             </div>
 
-            <div className="h-12 sm:h-14 w-px bg-white/[0.08]" />
+            <div className="h-12 sm:h-14 w-px bg-slate-200" />
 
             <div>
-              <div className="text-[11px] text-slate-400 font-mono whitespace-nowrap">
+              <div className="text-[11px] text-slate-500 font-mono whitespace-nowrap">
                 Market Capitalization
               </div>
-              <div className="text-2xl sm:text-3xl font-black font-mono text-white mt-0.5 whitespace-nowrap">
+              <div className="text-2xl sm:text-3xl font-black font-mono text-slate-900 mt-0.5 whitespace-nowrap">
                 {formatTrillion(stats.marketCapTrillion)}
               </div>
-              <div className="space-y-0.5 mt-1 text-[11px] font-mono text-slate-400">
+              <div className="space-y-0.5 mt-1 text-[11px] font-mono text-slate-500">
                 <div className="flex items-center justify-between lg:justify-end gap-3 whitespace-nowrap">
                   <span className="text-slate-500">52-Week High</span>
-                  <span className="text-white font-semibold">{formatIDR(stats.week52High)}</span>
+                  <span className="text-slate-900 font-semibold">{formatIDR(stats.week52High)}</span>
                 </div>
                 <div className="flex items-center justify-between lg:justify-end gap-3 whitespace-nowrap">
                   <span className="text-slate-500">52-Week Low</span>
-                  <span className="text-white font-semibold">{formatIDR(stats.week52Low)}</span>
+                  <span className="text-slate-900 font-semibold">{formatIDR(stats.week52Low)}</span>
                 </div>
               </div>
             </div>
@@ -337,39 +337,33 @@ export function IDXKeyStatsCard({ stats }: Props) {
         </div>
       </div>
 
-      <div className="rounded-xl bg-[#0d121f] border border-white/[0.08] p-5 sm:p-6 space-y-4">
+      <div className="rounded-xl bg-[#fdfaf3] border border-slate-900/10 p-5 sm:p-6 space-y-4 shadow-xs">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div className="flex items-center gap-2">
             <span
               className={`w-2.5 h-2.5 rounded-full ${
-                isPositive ? 'bg-emerald-400' : 'bg-rose-400'
+                isPositive ? 'bg-emerald-500' : 'bg-rose-500'
               } ${isLoadingChart ? 'animate-ping' : ''}`}
             />
-            <h3 className="text-xs sm:text-sm font-bold uppercase tracking-wider text-white font-mono flex items-center gap-2">
+            <h3 className="text-xs sm:text-sm font-bold uppercase tracking-wider text-slate-900 font-mono flex items-center gap-2">
               <span>{selectedTimeframe} Performance</span>
               <span className="text-slate-500 font-normal">·</span>
-              <span className="text-slate-300">{stats.symbol}</span>
+              <span className="text-slate-600">{stats.symbol}</span>
             </h3>
-            <span
-              className={`text-xs font-mono font-bold px-2 py-0.5 rounded ${
-                isPositive
-                  ? 'bg-emerald-500/15 text-emerald-400 border border-emerald-500/25'
-                  : 'bg-rose-500/15 text-rose-400 border border-rose-500/25'
-              }`}
-            >
+            <span className={`text-xs font-mono font-bold tabular-nums px-2 py-0.5 rounded ${isPositive ? 'bg-emerald-50 text-emerald-800 border border-emerald-200' : 'bg-rose-50 text-rose-800 border border-rose-200'}`}>
               {isPositive ? '+' : ''}{formatIDR(priceChange)} ({formatPercent(priceChangePct)})
             </span>
           </div>
 
-          <div className="flex items-center gap-1 bg-[#070b14] p-1 rounded-lg border border-white/[0.06]">
+          <div className="flex items-center gap-1 bg-[#f0ebe1] p-1 rounded-lg border border-slate-200/80">
             {['1D', '1W', '1M', '3M', '1Y'].map((tf) => (
               <button
                 key={tf}
                 onClick={() => setSelectedTimeframe(tf)}
                 className={`px-2.5 py-0.5 rounded text-[11px] font-mono font-bold transition-all cursor-pointer ${
                   selectedTimeframe === tf
-                    ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 shadow-sm'
-                    : 'text-slate-400 hover:text-white'
+                    ? 'bg-[#faf2df] text-sky-950 font-bold shadow-xs border border-slate-900/15'
+                    : 'text-slate-600 hover:text-slate-900 hover:bg-[#faf2df]/60'
                 }`}
               >
                 {tf}
@@ -382,7 +376,7 @@ export function IDXKeyStatsCard({ stats }: Props) {
           <div className="lg:col-span-5 space-y-4 pr-0 lg:pr-4">
             <div className="flex items-baseline justify-between font-mono">
               <div>
-                <span className="text-lg sm:text-xl font-black text-white block">
+                <span className="text-lg sm:text-xl font-black text-slate-900 block">
                   {formatIDR(stats.week52Low)}
                 </span>
                 <span className="text-[11px] text-slate-500 uppercase tracking-wider block font-bold mt-0.5">
@@ -390,7 +384,7 @@ export function IDXKeyStatsCard({ stats }: Props) {
                 </span>
               </div>
               <div className="text-right">
-                <span className="text-lg sm:text-xl font-black text-white block">
+                <span className="text-lg sm:text-xl font-black text-slate-900 block">
                   {formatIDR(stats.week52High)}
                 </span>
                 <span className="text-[11px] text-slate-500 uppercase tracking-wider block font-bold mt-0.5">
@@ -399,23 +393,23 @@ export function IDXKeyStatsCard({ stats }: Props) {
               </div>
             </div>
 
-            <div className="relative h-2 w-full rounded-full bg-slate-800">
+            <div className="relative h-2 w-full rounded-full bg-slate-200">
               <div
                 className="absolute top-0 bottom-0 left-0 bg-slate-600 rounded-full transition-all duration-500"
                 style={{ width: `${rangePos}%` }}
               />
               <div
-                className="absolute top-1/2 -translate-y-1/2 w-3.5 h-3.5 bg-white rounded-full shadow-lg -translate-x-1/2 transition-all duration-500 ring-4 ring-white/20"
+                className="absolute top-1/2 -translate-y-1/2 w-3.5 h-3.5 bg-slate-900 rounded-full shadow-md -translate-x-1/2 transition-all duration-500 ring-4 ring-slate-300"
                 style={{ left: `${rangePos}%` }}
               />
             </div>
 
-            <div className="text-xs text-slate-400 font-mono">
-              Trading at <span className="text-white font-bold">{rangePos}%</span> of 52-week channel
+            <div className="text-xs text-slate-600 font-mono">
+              Trading at <span className="text-slate-900 font-bold">{rangePos}%</span> of 52-week channel
             </div>
           </div>
 
-          <div className="lg:col-span-7 space-y-1.5 border-t lg:border-t-0 lg:border-l border-white/[0.06] pt-4 lg:pt-0 lg:pl-6">
+          <div className="lg:col-span-7 space-y-1.5 border-t lg:border-t-0 lg:border-l border-slate-200/80 pt-4 lg:pt-0 lg:pl-6">
             <div className="flex items-center gap-2">
               <div className="flex flex-col justify-between text-[10px] font-mono text-slate-500 h-28 sm:h-32 text-right shrink-0 pr-1 select-none">
                 <span>{formatK(yMax)}</span>
@@ -426,8 +420,8 @@ export function IDXKeyStatsCard({ stats }: Props) {
 
               <div className="flex-1 h-28 sm:h-32 relative group">
                 {isLoadingChart && (
-                  <div className="absolute inset-0 z-10 flex items-center justify-center bg-[#0d121f]/60 backdrop-blur-[1px] rounded">
-                    <span className="text-[10px] font-mono text-slate-400 animate-pulse">
+                  <div className="absolute inset-0 z-10 flex items-center justify-center bg-[#fdfaf3]/80 backdrop-blur-[1px] rounded">
+                    <span className="text-[10px] font-mono text-slate-500 animate-pulse">
                       Loading market data...
                     </span>
                   </div>
@@ -442,14 +436,14 @@ export function IDXKeyStatsCard({ stats }: Props) {
                 >
                   <defs>
                     <linearGradient id="areaGradEmerald" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stopColor="#10b981" stopOpacity="0.32" />
-                      <stop offset="65%" stopColor="#10b981" stopOpacity="0.08" />
-                      <stop offset="100%" stopColor="#10b981" stopOpacity="0" />
+                      <stop offset="0%" stopColor="#059669" stopOpacity="0.32" />
+                      <stop offset="65%" stopColor="#059669" stopOpacity="0.08" />
+                      <stop offset="100%" stopColor="#059669" stopOpacity="0" />
                     </linearGradient>
                     <linearGradient id="areaGradRose" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stopColor="#f43f5e" stopOpacity="0.32" />
-                      <stop offset="65%" stopColor="#f43f5e" stopOpacity="0.08" />
-                      <stop offset="100%" stopColor="#f43f5e" stopOpacity="0" />
+                      <stop offset="0%" stopColor="#e11d48" stopOpacity="0.32" />
+                      <stop offset="65%" stopColor="#e11d48" stopOpacity="0.08" />
+                      <stop offset="100%" stopColor="#e11d48" stopOpacity="0" />
                     </linearGradient>
                   </defs>
 
@@ -471,7 +465,7 @@ export function IDXKeyStatsCard({ stats }: Props) {
                         y1={0}
                         x2={activeHover.x}
                         y2={120}
-                        stroke="#ffffff"
+                        stroke="#0f172a"
                         strokeOpacity="0.25"
                         strokeDasharray="3 3"
                         strokeWidth="1"
@@ -490,11 +484,11 @@ export function IDXKeyStatsCard({ stats }: Props) {
 
                 {activeHover && (
                   <div
-                    className="absolute -top-7 pointer-events-none z-20 px-2 py-0.5 rounded bg-slate-900/90 border border-white/15 text-[10px] font-mono text-white shadow-xl -translate-x-1/2 whitespace-nowrap"
+                    className="absolute -top-7 pointer-events-none z-20 px-2 py-0.5 rounded bg-slate-900 border border-slate-700 text-[10px] font-mono text-white shadow-md -translate-x-1/2 whitespace-nowrap"
                     style={{ left: `${(activeHover.x / 500) * 100}%` }}
                   >
                     <span className="font-bold text-white">{formatIDR(activeHover.price)}</span>
-                    <span className="text-slate-400 ml-1.5">
+                    <span className="text-slate-300 ml-1.5">
                       {new Date(activeHover.time * 1000).toLocaleTimeString('en-GB', {
                         hour: '2-digit',
                         minute: '2-digit',
@@ -512,14 +506,14 @@ export function IDXKeyStatsCard({ stats }: Props) {
                   <span key={idx}>{lbl}</span>
                 ))}
               </div>
-              <div className="text-slate-400 shrink-0 pl-2">
-                Spread: <strong className="text-white">{formatIDR(tfSpread)}</strong>
-                <span className="text-slate-600 mx-1.5">|</span>
+              <div className="text-slate-500 shrink-0 pl-2">
+                Spread: <strong className="text-slate-900">{formatIDR(tfSpread)}</strong>
+                <span className="text-slate-300 mx-1.5">|</span>
                 <span className="text-slate-500">L:</span>{' '}
-                <strong className="text-slate-300">{formatIDR(minPrice)}</strong>
-                <span className="text-slate-600 mx-1">·</span>
+                <strong className="text-slate-700">{formatIDR(minPrice)}</strong>
+                <span className="text-slate-300 mx-1">·</span>
                 <span className="text-slate-500">H:</span>{' '}
-                <strong className="text-slate-300">{formatIDR(maxPrice)}</strong>
+                <strong className="text-slate-700">{formatIDR(maxPrice)}</strong>
               </div>
             </div>
           </div>
@@ -531,7 +525,7 @@ export function IDXKeyStatsCard({ stats }: Props) {
           {stats.badges.slice(0, 3).map((badge, idx) => (
             <div
               key={idx}
-              className="rounded-xl bg-[#0d121f] border border-white/[0.08] p-3.5 flex items-center gap-3"
+              className="rounded-xl bg-[#fdfaf3] border border-slate-900/10 p-3.5 flex items-center gap-3 shadow-xs"
             >
               <span
                 className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full border text-xs font-mono font-bold whitespace-nowrap shrink-0 ${getBadgeColor(
@@ -541,7 +535,7 @@ export function IDXKeyStatsCard({ stats }: Props) {
                 <span className="w-1.5 h-1.5 rounded-full bg-current" />
                 <span>{badge.label}</span>
               </span>
-              <p className="text-[11px] text-slate-400 font-mono line-clamp-2 leading-relaxed">
+              <p className="text-[11px] text-slate-600 font-mono line-clamp-2 leading-relaxed">
                 {badge.description}
               </p>
             </div>
@@ -550,10 +544,10 @@ export function IDXKeyStatsCard({ stats }: Props) {
       )}
 
       <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
-        <div className="rounded-xl bg-[#0d121f] border border-white/[0.08] p-5 space-y-4 hover:border-white/[0.14] transition-colors">
+        <div className="rounded-xl bg-[#faf2df] border border-slate-900/10 p-5 space-y-4 transition-colors">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-lg bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400 shrink-0">
+              <div className="w-9 h-9 rounded-lg bg-sky-50 border border-sky-200 flex items-center justify-center text-sky-800 shrink-0">
                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                   <path
                     strokeLinecap="round"
@@ -562,48 +556,48 @@ export function IDXKeyStatsCard({ stats }: Props) {
                   />
                 </svg>
               </div>
-              <h3 className="text-xs font-bold uppercase tracking-wider text-white font-mono">
+              <h3 className="text-xs font-bold uppercase tracking-wider text-slate-900 font-mono">
                 Valuation Multiples
               </h3>
             </div>
-            <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 font-bold">
+            <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-sky-50 text-sky-800 border border-sky-200 font-bold">
               Pricing
             </span>
           </div>
 
-          <div className="space-y-3 font-mono">
-            <div className="flex items-center justify-between text-sm py-1.5 border-b border-white/[0.04]">
-              <span className="text-slate-400">P/E Ratio (TTM)</span>
-              <span className="font-bold text-white">
-                {stats.peRatio !== null ? formatRatio(stats.peRatio) : '—'}
+          <div className="space-y-3 font-mono tabular-nums">
+            <div className="flex items-center justify-between text-sm py-1.5 border-b border-slate-900/10">
+              <span className="text-slate-500 font-sans">P/E Ratio (TTM)</span>
+              <span className="font-bold text-slate-900">
+                {stats.peRatio !== null ? formatRatio(stats.peRatio) : '-'}
               </span>
             </div>
 
-            <div className="flex items-center justify-between text-sm py-1.5 border-b border-white/[0.04]">
-              <span className="text-slate-400">P/BV (Price to Book)</span>
-              <span className="font-bold text-white">
-                {stats.pbvRatio !== null ? formatRatio(stats.pbvRatio) : '—'}
+            <div className="flex items-center justify-between text-sm py-1.5 border-b border-slate-900/10">
+              <span className="text-slate-500 font-sans">P/BV (Price to Book)</span>
+              <span className="font-bold text-slate-900">
+                {stats.pbvRatio !== null ? formatRatio(stats.pbvRatio) : '-'}
               </span>
             </div>
 
-            <div className="flex items-center justify-between text-sm py-1.5 border-b border-white/[0.04]">
-              <span className="text-slate-400">Price to Sales (P/S)</span>
-              <span className="font-bold text-white">
-                {stats.psRatio !== null ? formatRatio(stats.psRatio) : '—'}
+            <div className="flex items-center justify-between text-sm py-1.5 border-b border-slate-900/10">
+              <span className="text-slate-500 font-sans">Price to Sales (P/S)</span>
+              <span className="font-bold text-slate-900">
+                {stats.psRatio !== null ? formatRatio(stats.psRatio) : '-'}
               </span>
             </div>
 
             {showExtended && (
               <>
-                <div className="flex items-center justify-between text-sm py-1.5 border-b border-white/[0.04]">
-                  <span className="text-slate-400">EV / EBITDA</span>
-                  <span className="font-bold text-white">
-                    {stats.evEbitda !== null ? formatRatio(stats.evEbitda) : '—'}
+                <div className="flex items-center justify-between text-sm py-1.5 border-b border-slate-900/10">
+                  <span className="text-slate-500 font-sans">EV / EBITDA</span>
+                  <span className="font-bold text-slate-900">
+                    {stats.evEbitda !== null ? formatRatio(stats.evEbitda) : '-'}
                   </span>
                 </div>
                 <div className="flex items-center justify-between text-sm py-1.5">
-                  <span className="text-slate-400">Market Cap</span>
-                  <span className="font-bold text-cyan-400">
+                  <span className="text-slate-500 font-sans">Market Cap</span>
+                  <span className="font-bold text-sky-800">
                     {formatTrillion(stats.marketCapTrillion)}
                   </span>
                 </div>
@@ -612,50 +606,50 @@ export function IDXKeyStatsCard({ stats }: Props) {
           </div>
         </div>
 
-        <div className="rounded-xl bg-[#0d121f] border border-white/[0.08] p-5 space-y-4 hover:border-white/[0.14] transition-colors">
+        <div className="rounded-xl bg-[#faf2df] border border-slate-900/10 p-5 space-y-4 transition-colors">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 shrink-0">
+              <div className="w-9 h-9 rounded-lg bg-emerald-50 border border-emerald-200 flex items-center justify-center text-emerald-800 shrink-0">
                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 18L9 11.25l4.5 4.5L21 8.25M16.5 3.75h4.5v4.5" />
                 </svg>
               </div>
-              <h3 className="text-xs font-bold uppercase tracking-wider text-white font-mono">
+              <h3 className="text-xs font-bold uppercase tracking-wider text-slate-900 font-mono">
                 Profitability & Returns
               </h3>
             </div>
-            <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-bold">
+            <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-200 font-bold">
               Quality
             </span>
           </div>
 
-          <div className="space-y-3 font-mono">
-            <div className="flex items-center justify-between text-sm py-1.5 border-b border-white/[0.04]">
-              <span className="text-slate-400">Return on Equity (ROE)</span>
-              <span className="font-bold text-emerald-400">
-                {stats.roe !== null ? `${stats.roe.toFixed(2)}%` : '—'}
+          <div className="space-y-3 font-mono tabular-nums">
+            <div className="flex items-center justify-between text-sm py-1.5 border-b border-slate-900/10">
+              <span className="text-slate-500 font-sans">Return on Equity (ROE)</span>
+              <span className="font-bold text-emerald-700">
+                {stats.roe !== null ? `${stats.roe.toFixed(2)}%` : '-'}
               </span>
             </div>
 
-            <div className="flex items-center justify-between text-sm py-1.5 border-b border-white/[0.04]">
-              <span className="text-slate-400">Return on Assets (ROA)</span>
-              <span className="font-bold text-white">
-                {stats.roa !== null ? `${stats.roa.toFixed(2)}%` : '—'}
+            <div className="flex items-center justify-between text-sm py-1.5 border-b border-slate-900/10">
+              <span className="text-slate-500 font-sans">Return on Assets (ROA)</span>
+              <span className="font-bold text-slate-900">
+                {stats.roa !== null ? `${stats.roa.toFixed(2)}%` : '-'}
               </span>
             </div>
 
             {showExtended && (
               <>
-                <div className="flex items-center justify-between text-sm py-1.5 border-b border-white/[0.04]">
-                  <span className="text-slate-400">Net Profit Margin</span>
-                  <span className="font-bold text-white">
-                    {stats.netMargin !== null ? `${stats.netMargin.toFixed(2)}%` : '—'}
+                <div className="flex items-center justify-between text-sm py-1.5 border-b border-slate-900/10">
+                  <span className="text-slate-500 font-sans">Net Profit Margin</span>
+                  <span className="font-bold text-slate-900">
+                    {stats.netMargin !== null ? `${stats.netMargin.toFixed(2)}%` : '-'}
                   </span>
                 </div>
                 <div className="flex items-center justify-between text-sm py-1.5">
-                  <span className="text-slate-400">Operating Margin</span>
-                  <span className="font-bold text-white">
-                    {stats.operatingMargin !== null ? `${stats.operatingMargin.toFixed(2)}%` : '—'}
+                  <span className="text-slate-500 font-sans">Operating Margin</span>
+                  <span className="font-bold text-slate-900">
+                    {stats.operatingMargin !== null ? `${stats.operatingMargin.toFixed(2)}%` : '-'}
                   </span>
                 </div>
               </>
@@ -663,10 +657,10 @@ export function IDXKeyStatsCard({ stats }: Props) {
           </div>
         </div>
 
-        <div className="rounded-xl bg-[#0d121f] border border-white/[0.08] p-5 space-y-4 hover:border-white/[0.14] transition-colors">
+        <div className="rounded-xl bg-[#faf2df] border border-slate-900/10 p-5 space-y-4 transition-colors">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-lg bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400 shrink-0">
+              <div className="w-9 h-9 rounded-lg bg-purple-50 border border-purple-200 flex items-center justify-center text-purple-800 shrink-0">
                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                   <path
                     strokeLinecap="round"
@@ -675,41 +669,41 @@ export function IDXKeyStatsCard({ stats }: Props) {
                   />
                 </svg>
               </div>
-              <h3 className="text-xs font-bold uppercase tracking-wider text-white font-mono">
+              <h3 className="text-xs font-bold uppercase tracking-wider text-slate-900 font-mono">
                 Balance Sheet & Solvency
               </h3>
             </div>
-            <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-purple-500/10 text-purple-400 border border-purple-500/20 font-bold">
+            <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-purple-50 text-purple-800 border border-purple-200 font-bold">
               Risk Profile
             </span>
           </div>
 
-          <div className="space-y-3 font-mono">
-            <div className="flex items-center justify-between text-sm py-1.5 border-b border-white/[0.04]">
-              <span className="text-slate-400">Debt to Equity (DER)</span>
-              <span className={`font-bold ${stats.der && stats.der > 2.0 ? 'text-rose-400' : 'text-white'}`}>
-                {stats.der !== null ? formatRatio(stats.der) : '—'}
+          <div className="space-y-3 font-mono tabular-nums">
+            <div className="flex items-center justify-between text-sm py-1.5 border-b border-slate-900/10">
+              <span className="text-slate-500 font-sans">Debt to Equity (DER)</span>
+              <span className={`font-bold ${stats.der && stats.der > 2.0 ? 'text-rose-700' : 'text-slate-900'}`}>
+                {stats.der !== null ? formatRatio(stats.der) : '-'}
               </span>
             </div>
 
-            <div className="flex items-center justify-between text-sm py-1.5 border-b border-white/[0.04]">
-              <span className="text-slate-400">Total Debt (Trillion)</span>
-              <span className="font-bold text-white">
-                {stats.totalDebtTrillion !== null ? formatTrillion(stats.totalDebtTrillion) : '—'}
+            <div className="flex items-center justify-between text-sm py-1.5 border-b border-slate-900/10">
+              <span className="text-slate-500 font-sans">Total Debt (Trillion)</span>
+              <span className="font-bold text-slate-900">
+                {stats.totalDebtTrillion !== null ? formatTrillion(stats.totalDebtTrillion) : '-'}
               </span>
             </div>
 
             {showExtended && (
               <>
-                <div className="flex items-center justify-between text-sm py-1.5 border-b border-white/[0.04]">
-                  <span className="text-slate-400">Current Ratio</span>
-                  <span className="font-bold text-white">
-                    {stats.currentRatio !== null ? formatRatio(stats.currentRatio) : '—'}
+                <div className="flex items-center justify-between text-sm py-1.5 border-b border-slate-900/10">
+                  <span className="text-slate-500 font-sans">Current Ratio</span>
+                  <span className="font-bold text-slate-900">
+                    {stats.currentRatio !== null ? formatRatio(stats.currentRatio) : '-'}
                   </span>
                 </div>
                 <div className="flex items-center justify-between text-sm py-1.5">
-                  <span className="text-slate-400">Solvency Status</span>
-                  <span className={`font-bold ${stats.der && stats.der < 1.0 ? 'text-emerald-400' : 'text-purple-400'}`}>
+                  <span className="text-slate-500 font-sans">Solvency Status</span>
+                  <span className={`font-bold ${stats.der && stats.der < 1.0 ? 'text-emerald-700' : 'text-purple-700'}`}>
                     {stats.der && stats.der < 1.0 ? 'Fortress' : 'Balanced'}
                   </span>
                 </div>
@@ -718,10 +712,10 @@ export function IDXKeyStatsCard({ stats }: Props) {
           </div>
         </div>
 
-        <div className="rounded-xl bg-[#0d121f] border border-white/[0.08] p-5 space-y-4 hover:border-white/[0.14] transition-colors">
+        <div className="rounded-xl bg-[#faf2df] border border-slate-900/10 p-5 space-y-4 transition-colors">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-lg bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400 shrink-0">
+              <div className="w-9 h-9 rounded-lg bg-amber-50 border border-amber-200 flex items-center justify-center text-amber-800 shrink-0">
                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                   <path
                     strokeLinecap="round"
@@ -730,42 +724,42 @@ export function IDXKeyStatsCard({ stats }: Props) {
                   />
                 </svg>
               </div>
-              <h3 className="text-xs font-bold uppercase tracking-wider text-white font-mono">
+              <h3 className="text-xs font-bold uppercase tracking-wider text-slate-900 font-mono">
                 Earnings & Cash Flow
               </h3>
             </div>
-            <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-amber-500/10 text-amber-400 border border-amber-500/20 font-bold">
+            <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-amber-50 text-amber-800 border border-amber-200 font-bold">
               Shareholder Value
             </span>
           </div>
 
-          <div className="space-y-3 font-mono">
-            <div className="flex items-center justify-between text-sm py-1.5 border-b border-white/[0.04]">
-              <span className="text-slate-400">Earnings Per Share (EPS)</span>
-              <span className="font-bold text-white">
-                {stats.eps !== null ? formatIDR(stats.eps) : '—'}
+          <div className="space-y-3 font-mono tabular-nums">
+            <div className="flex items-center justify-between text-sm py-1.5 border-b border-slate-900/10">
+              <span className="text-slate-500 font-sans">Earnings Per Share (EPS)</span>
+              <span className="font-bold text-slate-900">
+                {stats.eps !== null ? formatIDR(stats.eps) : '-'}
               </span>
             </div>
 
-            <div className="flex items-center justify-between text-sm py-1.5 border-b border-white/[0.04]">
-              <span className="text-slate-400">Dividend Yield</span>
-              <span className="font-bold text-amber-400">
-                {stats.dividendYield !== null ? `${stats.dividendYield.toFixed(2)}%` : '—'}
+            <div className="flex items-center justify-between text-sm py-1.5 border-b border-slate-900/10">
+              <span className="text-slate-500 font-sans">Dividend Yield</span>
+              <span className="font-bold text-amber-800">
+                {stats.dividendYield !== null ? `${stats.dividendYield.toFixed(2)}%` : '-'}
               </span>
             </div>
 
             {showExtended && (
               <>
-                <div className="flex items-center justify-between text-sm py-1.5 border-b border-white/[0.04]">
-                  <span className="text-slate-400">Revenue TTM</span>
-                  <span className="font-bold text-white">
-                    {stats.revenueTTMTrillion !== null ? formatTrillion(stats.revenueTTMTrillion) : '—'}
+                <div className="flex items-center justify-between text-sm py-1.5 border-b border-slate-900/10">
+                  <span className="text-slate-500 font-sans">Revenue TTM</span>
+                  <span className="font-bold text-slate-900">
+                    {stats.revenueTTMTrillion !== null ? formatTrillion(stats.revenueTTMTrillion) : '-'}
                   </span>
                 </div>
                 <div className="flex items-center justify-between text-sm py-1.5">
-                  <span className="text-slate-400">Net Income TTM</span>
-                  <span className="font-bold text-emerald-400">
-                    {stats.netIncomeTTMTrillion !== null ? formatTrillion(stats.netIncomeTTMTrillion) : '—'}
+                  <span className="text-slate-500 font-sans">Net Income TTM</span>
+                  <span className="font-bold text-emerald-700">
+                    {stats.netIncomeTTMTrillion !== null ? formatTrillion(stats.netIncomeTTMTrillion) : '-'}
                   </span>
                 </div>
               </>
@@ -777,7 +771,7 @@ export function IDXKeyStatsCard({ stats }: Props) {
       <div className="text-center pt-1">
         <button
           onClick={() => setShowExtended((prev) => !prev)}
-          className="text-xs font-mono text-slate-500 hover:text-slate-300 transition-colors cursor-pointer inline-flex items-center gap-1.5"
+          className="text-xs font-mono text-slate-500 hover:text-slate-800 transition-colors cursor-pointer inline-flex items-center gap-1.5"
         >
           <span>{showExtended ? '▲ Hide Extended Metrics' : '▼ View Extended Fundamental Metrics'}</span>
         </button>
