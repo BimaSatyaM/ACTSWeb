@@ -10,6 +10,7 @@ import { NotificationPopover } from './NotificationPopover'
 import { UserAvatar } from './ui/UserAvatar'
 import { useAuth } from '@/context/AuthContext'
 import { Button } from './ui/Button'
+import { ActsLogo } from './ui/ActsLogo'
 
 const fetcher = (url: string) => {
   const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
@@ -99,14 +100,10 @@ export const Navbar: React.FC = () => {
         <div className="flex items-center gap-6 h-full">
           <Link
             href="/"
+            aria-label="ACTS Home"
             className="flex items-center gap-2.5 group transition-colors duration-150"
           >
-            <span className="text-lg font-black tracking-tight text-slate-950 group-hover:text-[#0369a1] transition-colors">
-              ACTS
-            </span>
-            <span className="text-[10px] font-mono text-slate-500 border-l border-slate-900/10 pl-2.5 uppercase tracking-wider">
-              QUANT v2.4
-            </span>
+            <ActsLogo size="md" />
           </Link>
 
           <nav className="hidden md:flex items-center gap-5 h-full pl-2">
@@ -116,11 +113,10 @@ export const Navbar: React.FC = () => {
                 <Link
                   key={link.path}
                   href={link.path}
-                  className={`h-full inline-flex items-center text-xs tracking-wide border-b-2 transition-colors duration-150 ${
-                    isActive
+                  className={`h-full inline-flex items-center text-xs tracking-wide border-b-2 transition-colors duration-150 ${isActive
                       ? 'border-[#0369a1] text-slate-950 font-bold'
                       : 'border-transparent text-slate-600 hover:text-slate-900 font-medium'
-                  }`}
+                    }`}
                 >
                   {link.name}
                 </Link>
@@ -206,9 +202,14 @@ export const Navbar: React.FC = () => {
           >
             <div className="space-y-6">
               <div className="flex items-center justify-between border-b border-slate-900/10 pb-4">
-                <span className="text-xs font-mono font-bold uppercase tracking-wider text-slate-600">
-                  Navigation
-                </span>
+                <Link
+                  href="/"
+                  onClick={() => setIsOpen(false)}
+                  aria-label="ACTS Home"
+                  className="inline-flex items-center group"
+                >
+                  <ActsLogo size="sm" />
+                </Link>
                 <button
                   onClick={() => setIsOpen(false)}
                   className="text-xs font-mono font-semibold text-slate-600 hover:text-slate-950 transition-colors cursor-pointer flex items-center gap-1.5"
@@ -227,11 +228,10 @@ export const Navbar: React.FC = () => {
                       key={link.path}
                       href={link.path}
                       onClick={() => setIsOpen(false)}
-                      className={`text-sm py-3 pl-3 border-l-2 transition-colors ${
-                        isActive
+                      className={`text-sm py-3 pl-3 border-l-2 transition-colors ${isActive
                           ? 'border-[#0369a1] text-slate-950 font-bold'
                           : 'border-transparent text-slate-600 hover:text-slate-950 font-medium'
-                      }`}
+                        }`}
                     >
                       {link.name}
                     </Link>

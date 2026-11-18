@@ -4,6 +4,7 @@ import React, { useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import useSWR from 'swr'
+import { ActsLogo } from '@/components/ui/ActsLogo'
 
 interface TickerData {
   sym: string
@@ -732,11 +733,10 @@ function Footer() {
     <footer className="bg-[#edf7fe] py-12">
       <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
         <div>
-          <div className="flex items-center gap-2.5 mb-2">
-            <span className="font-sans text-slate-950 font-black text-lg tracking-tight">ACTS</span>
-            <span className="font-mono text-[10px] text-slate-500 uppercase tracking-widest border-l border-slate-900/15 pl-2.5">
-              QUANT v2.4
-            </span>
+          <div className="flex items-center gap-2.5 mb-2.5">
+            <Link href="/" aria-label="ACTS Home" className="inline-flex items-center group">
+              <ActsLogo size="md" />
+            </Link>
           </div>
           <p className="font-mono text-[11px] text-slate-600 max-w-md leading-relaxed">
             Adaptive Confluence Trading System: Algorithmic trading research, paper execution, and

@@ -1,0 +1,50 @@
+import React from 'react'
+
+interface ActsLogoProps {
+  size?: 'sm' | 'md' | 'lg'
+  className?: string
+}
+
+const DIMENSIONS: Record<NonNullable<ActsLogoProps['size']>, { width: number; height: number }> = {
+  sm: { width: 64, height: 26 },
+  md: { width: 74, height: 30 },
+  lg: { width: 94, height: 38 },
+}
+
+export const ActsLogo: React.FC<ActsLogoProps> = ({ size = 'md', className = '' }) => {
+  const { width, height } = DIMENSIONS[size]
+
+  return (
+    <span className={`inline-flex items-center select-none ${className}`}>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 74 30"
+        width={width}
+        height={height}
+        fill="none"
+        aria-hidden="true"
+        className="block flex-shrink-0"
+      >
+        <rect
+          width="74"
+          height="30"
+          rx="6"
+          className="fill-[#0f172a] group-hover:fill-[#0369a1] transition-colors duration-150"
+        />
+        <path
+          fill="#fdfaf3"
+          d="M23.34 21.75 L20.37 21.75 L19.19 18.68 L13.8 18.68 L12.68 21.75 L9.79 21.75 L15.05 8.25 L17.93 8.25 Z M18.32 16.41 L16.46 11.4 L14.63 16.41 Z M32.63 16.79 L35.27 17.62 Q34.67 19.83 33.25 20.91 Q31.84 21.98 29.67 21.98 Q26.98 21.98 25.24 20.14 Q23.51 18.31 23.51 15.12 Q23.51 11.75 25.25 9.88 Q26.99 8.02 29.83 8.02 Q32.31 8.02 33.85 9.48 Q34.78 10.35 35.24 11.97 L32.54 12.61 Q32.3 11.57 31.54 10.96 Q30.78 10.35 29.69 10.35 Q28.19 10.35 27.26 11.43 Q26.32 12.5 26.32 14.92 Q26.32 17.48 27.24 18.56 Q28.16 19.65 29.64 19.65 Q30.72 19.65 31.51 18.96 Q32.29 18.27 32.63 16.79 Z M40.05 21.75 L40.05 10.53 L36.04 10.53 L36.04 8.25 L46.77 8.25 L46.77 10.53 L42.77 10.53 L42.77 21.75 Z M47.23 17.36 L49.88 17.1 Q50.12 18.43 50.85 19.06 Q51.59 19.69 52.83 19.69 Q54.15 19.69 54.81 19.13 Q55.48 18.57 55.48 17.83 Q55.48 17.35 55.2 17.01 Q54.92 16.68 54.22 16.43 Q53.74 16.26 52.04 15.84 Q49.85 15.29 48.96 14.5 Q47.72 13.39 47.72 11.79 Q47.72 10.75 48.3 9.86 Q48.89 8.96 49.99 8.49 Q51.09 8.02 52.65 8.02 Q55.19 8.02 56.47 9.13 Q57.76 10.25 57.82 12.11 L55.1 12.23 Q54.92 11.19 54.34 10.73 Q53.77 10.28 52.62 10.28 Q51.43 10.28 50.76 10.76 Q50.33 11.08 50.33 11.6 Q50.33 12.08 50.73 12.42 Q51.25 12.85 53.24 13.32 Q55.22 13.79 56.18 14.3 Q57.13 14.8 57.67 15.67 Q58.21 16.54 58.21 17.82 Q58.21 18.98 57.56 19.99 Q56.92 21.0 55.74 21.5 Q54.56 21.99 52.8 21.99 Q50.24 21.99 48.87 20.81 Q47.5 19.62 47.23 17.36 Z"
+        />
+        <rect
+          x="60.71"
+          y="18.25"
+          width="3.5"
+          height="3.5"
+          rx="0.5"
+          className="fill-[#38bdf8] group-hover:fill-[#fdfaf3] transition-colors duration-150"
+        />
+      </svg>
+      <span className="sr-only">ACTS</span>
+    </span>
+  )
+}

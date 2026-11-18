@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import { useAuth } from '@/context/AuthContext'
 import { GlassCard } from '@/components/ui/GlassCard'
 import { Button } from '@/components/ui/Button'
+import { ActsLogo } from '@/components/ui/ActsLogo'
 
 export default function Login() {
   const { user, loginWithGoogle, loading } = useAuth()
@@ -31,7 +32,10 @@ export default function Login() {
   return (
     <main className="min-h-screen flex items-center justify-center px-6 py-12">
       <GlassCard className="w-full max-w-md space-y-8 text-center bg-[#faf2df] border-slate-900/10">
-        <div className="space-y-2.5">
+        <div className="space-y-3">
+          <div className="flex justify-center pb-1">
+            <ActsLogo size="lg" />
+          </div>
           <span className="text-[11px] font-mono uppercase tracking-wider text-[#0369a1] font-bold block">
             ACTS Authentication Gateway
           </span>
