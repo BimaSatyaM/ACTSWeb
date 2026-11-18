@@ -12,6 +12,7 @@ import {
 } from 'recharts'
 import { AssetIcon } from '@/components/ui/AssetIcon'
 import { TickerItem } from '@/app/api/market-prices/route'
+import { Skeleton } from '@/components/ui/Skeleton'
 
 interface EquityPoint {
   date: string
@@ -539,9 +540,14 @@ export function PerformanceCurveCard({ className = '' }: { className?: string })
 
           <div className="relative w-full h-[230px] pt-1 select-none overflow-hidden flex-1">
             {isLoading ? (
-              <div className="w-full h-full flex flex-col items-center justify-center gap-2" role="status" aria-live="polite">
-                <div className="w-6 h-6 border-2 border-[#0284c7] border-t-transparent rounded-full animate-spin" aria-hidden="true" />
-                <span className="text-xs text-slate-500 font-mono">Loading performance curve...</span>
+              <div className="w-full h-full flex flex-col justify-between p-2" role="status" aria-live="polite" aria-label="Loading performance curve">
+                <Skeleton className="h-[175px] w-full rounded-xl" />
+                <div className="flex justify-between pt-2">
+                  <Skeleton className="h-3 w-12" />
+                  <Skeleton className="h-3 w-12" />
+                  <Skeleton className="h-3 w-12" />
+                  <Skeleton className="h-3 w-12" />
+                </div>
               </div>
             ) : error ? (
               <div className="w-full h-full flex flex-col items-center justify-center gap-3 text-center p-6" role="alert">

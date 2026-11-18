@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { useAuth } from '@/context/AuthContext'
+import { DashboardWorkspaceSkeleton } from '@/components/ui/Skeleton'
 import { db } from '@/lib/firebase'
 import { 
   collection, 
@@ -142,11 +143,7 @@ export default function AdminPanel() {
   })
 
   if (authLoading || profile?.role !== 'admin') {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <span className="w-8 h-8 border-4 border-accent-theme border-t-transparent rounded-full animate-spin" />
-      </div>
-    )
+    return <DashboardWorkspaceSkeleton />
   }
 
   return (

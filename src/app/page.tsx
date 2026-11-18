@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import useSWR from 'swr'
 import { ActsLogo } from '@/components/ui/ActsLogo'
+import { LiveMarket3DCard } from '@/components/home/LiveMarket3DCard'
 
 interface TickerData {
   sym: string
@@ -25,119 +26,6 @@ const DEFAULT_TICKERS: TickerData[] = [
   { sym: 'OIL/WTI', price: '82.15', change: '+1.03%', up: true },
   { sym: 'EUR/USD', price: '1.0841', change: '+0.09%', up: true },
 ]
-
-interface PairPreview {
-  symbol: string
-  name: string
-  price: string
-  change: string
-  up: boolean
-  high: string
-  low: string
-  volume: string
-  regime: string
-  confidence: string
-  score: string
-  kelly: string
-  chartPoints: number[]
-}
-
-const PAIR_PREVIEWS: Record<string, PairPreview> = {
-  BTC: {
-    symbol: 'BTC/USDT',
-    name: 'Bitcoin',
-    price: '71,704.00',
-    change: '+8.85%',
-    up: true,
-    high: '72,490.00',
-    low: '65,892.00',
-    volume: '$3.19B',
-    regime: 'Trending Bull',
-    confidence: '86%',
-    score: '8.4 / 10',
-    kelly: '1.35x',
-    chartPoints: [62, 58, 65, 60, 72, 70, 85, 80, 88, 92, 90, 96, 94, 108, 104, 116, 112, 122, 118, 134],
-  },
-  ETH: {
-    symbol: 'ETH/USDT',
-    name: 'Ethereum',
-    price: '2,278.50',
-    change: '+15.35%',
-    up: true,
-    high: '2,333.65',
-    low: '1,961.86',
-    volume: '$2.30B',
-    regime: 'Volatile Choppy',
-    confidence: '74%',
-    score: '7.6 / 10',
-    kelly: '0.85x',
-    chartPoints: [45, 52, 48, 64, 58, 76, 70, 84, 80, 94, 88, 104, 98, 115, 108, 120, 114, 128, 122, 138],
-  },
-  SOL: {
-    symbol: 'SOL/USDT',
-    name: 'Solana',
-    price: '86.50',
-    change: '+7.25%',
-    up: true,
-    high: '88.10',
-    low: '80.64',
-    volume: '$441.6M',
-    regime: 'Low-Vol Compression',
-    confidence: '79%',
-    score: '8.1 / 10',
-    kelly: '1.10x',
-    chartPoints: [50, 48, 55, 53, 62, 60, 68, 65, 75, 72, 82, 80, 92, 89, 102, 98, 112, 108, 120, 130],
-  },
-}
-
-function MiniChart({ points }: { points: number[] }) {
-  const w = 560
-  const h = 150
-  const min = Math.min(...points)
-  const max = Math.max(...points)
-  const pad = 12
-
-  const pts = points.map((v, i) => {
-    const x = pad + (i / (points.length - 1)) * (w - pad * 2)
-    const y = h - pad - ((v - min) / (max - min)) * (h - pad * 2)
-    return `${x},${y}`
-  }).join(' ')
-
-  const areaPath =
-    `M${pad},${h - pad} ` +
-    points.map((v, i) => {
-      const x = pad + (i / (points.length - 1)) * (w - pad * 2)
-      const y = h - pad - ((v - min) / (max - min)) * (h - pad * 2)
-      return `L${x},${y}`
-    }).join(' ') +
-    ` L${w - pad},${h - pad} Z`
-
-  const lastIdx = points.length - 1
-  const lastX = pad + (lastIdx / (points.length - 1)) * (w - pad * 2)
-  const lastY = h - pad - ((points[lastIdx] - min) / (max - min)) * (h - pad * 2)
-
-  return (
-    <svg viewBox={`0 0 ${w} ${h}`} className="w-full h-full" preserveAspectRatio="none">
-      <defs>
-        <linearGradient id="actsTerminalChartGrad" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#0369a1" stopOpacity="0.22" />
-          <stop offset="65%" stopColor="#0369a1" stopOpacity="0.04" />
-          <stop offset="100%" stopColor="#0369a1" stopOpacity="0" />
-        </linearGradient>
-      </defs>
-      <path d={areaPath} fill="url(#actsTerminalChartGrad)" />
-      <polyline
-        points={pts}
-        fill="none"
-        stroke="#0369a1"
-        strokeWidth="2.4"
-        strokeLinejoin="round"
-        strokeLinecap="round"
-      />
-      <circle cx={lastX} cy={lastY} r="4.5" fill="#0369a1" stroke="#faf2df" strokeWidth="1.5" />
-    </svg>
-  )
-}
 
 function TickerBar() {
   const fetcher = (url: string) => fetch(url).then((res) => res.json())
@@ -183,8 +71,6 @@ function TickerBar() {
 
 function Hero() {
   const router = useRouter()
-  const [selectedPair, setSelectedPair] = useState<'BTC' | 'ETH' | 'SOL'>('BTC')
-  const preview = PAIR_PREVIEWS[selectedPair]
 
   return (
     <section className="relative bg-[#edf7fe] pt-14 pb-20 border-b border-slate-900/10">
@@ -267,84 +153,7 @@ function Hero() {
         </div>
 
         <div className="lg:col-span-5">
-          <div className="rounded-2xl border border-slate-900/10 bg-[#faf2df] p-6 space-y-5">
-            <div className="flex items-center justify-between border-b border-slate-900/10 pb-3">
-              <div className="flex items-center gap-5">
-                {(['BTC', 'ETH', 'SOL'] as const).map((pair) => (
-                  <button
-                    key={pair}
-                    onClick={() => setSelectedPair(pair)}
-                    className={`font-mono text-xs font-bold pb-2 -mb-[13px] border-b-2 transition-colors cursor-pointer ${
-                      selectedPair === pair
-                        ? 'border-[#0369a1] text-slate-950'
-                        : 'border-transparent text-slate-500 hover:text-slate-900'
-                    }`}
-                  >
-                    {pair}/USDT
-                  </button>
-                ))}
-              </div>
-              <div className="flex items-center gap-1.5 font-mono text-[10px] text-slate-600 uppercase tracking-wider">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse" />
-                <span>BINANCE STREAM</span>
-              </div>
-            </div>
-
-            <div className="flex items-baseline justify-between gap-4">
-              <div>
-                <div className="font-mono text-[10px] text-slate-500 uppercase tracking-wider mb-1">
-                  {preview.name} Reference Price
-                </div>
-                <div className="font-mono font-black text-slate-950 text-3xl tracking-tight tabular-nums">
-                  ${preview.price}
-                </div>
-              </div>
-              <div className="text-right">
-                <div className="font-mono text-[10px] text-slate-500 uppercase tracking-wider mb-1">24h Change</div>
-                <div className={`font-mono font-bold text-lg tabular-nums ${preview.up ? 'text-emerald-700' : 'text-rose-700'}`}>
-                  {preview.change}
-                </div>
-              </div>
-            </div>
-
-            <div className="h-[145px]">
-              <MiniChart points={preview.chartPoints} />
-            </div>
-
-            <div className="border-t border-slate-900/10 pt-4 space-y-3 font-mono tabular-nums text-xs">
-              <div className="grid grid-cols-3 gap-4 pb-3 border-b border-slate-900/10">
-                <div>
-                  <span className="text-[10px] text-slate-500 uppercase block">24h Vol</span>
-                  <span className="font-bold text-slate-900">{preview.volume}</span>
-                </div>
-                <div>
-                  <span className="text-[10px] text-slate-500 uppercase block">24h High</span>
-                  <span className="font-bold text-slate-900">${preview.high}</span>
-                </div>
-                <div>
-                  <span className="text-[10px] text-slate-500 uppercase block">24h Low</span>
-                  <span className="font-bold text-slate-900">${preview.low}</span>
-                </div>
-              </div>
-
-              <div className="grid grid-cols-3 gap-4 text-[11px]">
-                <div>
-                  <span className="text-[10px] text-slate-500 uppercase block">Active Regime</span>
-                  <span className="font-sans font-bold text-slate-900">
-                    {preview.regime} <span className="font-mono text-emerald-700">{preview.confidence}</span>
-                  </span>
-                </div>
-                <div>
-                  <span className="text-[10px] text-slate-500 uppercase block">Confluence</span>
-                  <span className="font-bold text-[#0369a1]">{preview.score}</span>
-                </div>
-                <div>
-                  <span className="text-[10px] text-slate-500 uppercase block">Kelly Mult</span>
-                  <span className="font-bold text-slate-900">{preview.kelly}</span>
-                </div>
-              </div>
-            </div>
-          </div>
+          <LiveMarket3DCard />
         </div>
       </div>
     </section>
@@ -522,117 +331,6 @@ function Capabilities() {
   )
 }
 
-const AUDIT_SIGNALS = [
-  {
-    pair: 'BTC/USDT',
-    type: 'TREND CONFLUENCE LONG',
-    regime: 'Trending Bull',
-    score: '8.4 / 10',
-    entry: '$68,420.00',
-    exit: '$71,020.00',
-    result: '+3.80% Resolved',
-    kelly: '1.35x Size',
-    factors: 'EMA20/50 Cross + Orderbook Imbalance + Volume Delta',
-  },
-  {
-    pair: 'ETH/USDT',
-    type: 'MEAN REVERSION LONG',
-    regime: 'Volatile Choppy',
-    score: '7.6 / 10',
-    entry: '$2,210.00',
-    exit: '$2,263.00',
-    result: '+2.40% Resolved',
-    kelly: '0.85x Size',
-    factors: 'Bollinger Band Lower Touch + Session VWAP Anchor',
-  },
-  {
-    pair: 'SOL/USDT',
-    type: 'BREAKOUT EXPANSION',
-    regime: 'Low-Vol Compression',
-    score: '8.1 / 10',
-    entry: '$81.40',
-    exit: '$85.60',
-    result: '+5.15% Resolved',
-    kelly: '1.10x Size',
-    factors: 'ATR Squeeze Release + ADX > 25 + Bid Depth Surge',
-  },
-]
-
-function SignalAudit() {
-  return (
-    <section className="py-20 bg-[#edf7fe] border-b border-slate-900/10">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-6">
-          <div>
-            <div className="font-mono text-xs text-[#0369a1] uppercase tracking-widest mb-3 font-bold">
-              SIGNAL VERIFICATION LEDGER
-            </div>
-            <h2 className="font-sans font-black text-slate-950 text-4xl md:text-5xl leading-[0.95] tracking-tight">
-              Confluence <span className="text-slate-500">In Action.</span>
-            </h2>
-          </div>
-
-          <div className="flex items-center gap-5">
-            <span className="font-mono text-xs text-slate-500 uppercase tracking-wider">
-              Paper Sandbox Ledger
-            </span>
-            <Link
-              href="/dashboard/signals"
-              className="font-mono text-xs font-bold uppercase tracking-wider text-[#0369a1] hover:text-slate-950 transition-colors"
-            >
-              Full Signal Ledger →
-            </Link>
-          </div>
-        </div>
-
-        <div className="rounded-2xl border border-slate-900/10 bg-[#faf2df] overflow-hidden">
-          <div className="overflow-x-auto">
-            <table className="w-full text-left border-collapse">
-              <thead>
-                <tr className="border-b border-slate-900/10 text-[10px] font-mono uppercase tracking-wider text-slate-500">
-                  <th className="py-3.5 px-5 font-bold">ASSET &amp; STRATEGY</th>
-                  <th className="py-3.5 px-4 font-bold">MARKET REGIME</th>
-                  <th className="py-3.5 px-4 font-bold">CONVERGENCE FACTORS</th>
-                  <th className="py-3.5 px-4 font-bold">EXECUTION BRACKET</th>
-                  <th className="py-3.5 px-4 font-bold">KELLY SIZING</th>
-                  <th className="py-3.5 px-5 font-bold text-right">VERIFIED OUTCOME</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-slate-900/10 text-xs">
-                {AUDIT_SIGNALS.map((s) => (
-                  <tr key={s.pair} className="hover:bg-[#f3ead2]/50 transition-colors">
-                    <td className="py-4 px-5 align-top">
-                      <div className="font-mono font-black text-slate-950 text-sm">{s.pair}</div>
-                      <div className="font-mono text-[10px] text-slate-500 uppercase mt-0.5">{s.type}</div>
-                    </td>
-                    <td className="py-4 px-4 align-top font-mono">
-                      <div className="font-semibold text-slate-900">{s.regime}</div>
-                      <div className="text-[11px] text-[#0369a1] font-bold tabular-nums mt-0.5">Score {s.score}</div>
-                    </td>
-                    <td className="py-4 px-4 align-top text-slate-600 max-w-xs leading-relaxed">
-                      {s.factors}
-                    </td>
-                    <td className="py-4 px-4 align-top font-mono tabular-nums">
-                      <div className="text-slate-700">Entry {s.entry}</div>
-                      <div className="text-slate-900 font-semibold mt-0.5">Exit {s.exit}</div>
-                    </td>
-                    <td className="py-4 px-4 align-top font-mono font-semibold text-slate-800 tabular-nums">
-                      {s.kelly}
-                    </td>
-                    <td className="py-4 px-5 align-top text-right font-mono font-bold text-emerald-700 tabular-nums">
-                      {s.result}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    </section>
-  )
-}
-
 const HOW_STEPS = [
   {
     phase: 'PHASE 01 // STREAM',
@@ -777,7 +475,6 @@ export default function Home() {
       <TickerBar />
       <Hero />
       <Capabilities />
-      <SignalAudit />
       <HowItWorks />
       <CTA />
       <Footer />

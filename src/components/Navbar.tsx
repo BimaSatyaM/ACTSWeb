@@ -79,7 +79,7 @@ export const Navbar: React.FC = () => {
 
   const navLinks = [
     { name: 'Home', path: '/' },
-    { name: 'Dashboard', path: '/dashboard' },
+    { name: 'Terminal', path: '/dashboard' },
     { name: 'About Us', path: '/about' },
   ]
 

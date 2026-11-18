@@ -151,7 +151,7 @@ export function MarketTickerBar({ className = '' }: { className?: string }) {
   }
 
   return (
-    <div className={`flex items-center border-b border-slate-900/10 bg-transparent h-8 overflow-hidden select-none ${className}`}>
+    <div className={`flex items-center bg-transparent h-8 overflow-hidden select-none ${className}`}>
       <div className="flex items-center gap-2 pr-4 border-r border-slate-900/10 flex-shrink-0 text-[10px] font-mono font-bold uppercase tracking-widest text-slate-700 whitespace-nowrap">
         <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
         <span>LIVE TAPE</span>

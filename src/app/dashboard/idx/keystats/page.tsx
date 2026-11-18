@@ -5,6 +5,7 @@ import { useSearchParams, useRouter } from 'next/navigation'
 import { IDXKeyStats, IDXPeerItem } from '@/lib/idxKeystats'
 import { IDXKeyStatsCard } from '@/components/dashboard/idx/IDXKeyStatsCard'
 import { IDXPeerComparison } from '@/components/dashboard/idx/IDXPeerComparison'
+import { Skeleton } from '@/components/ui/Skeleton'
 
 const POPULAR_TICKERS = [
   { symbol: 'BBCA', label: 'BCA (Mega Cap)' },
@@ -133,11 +134,19 @@ function IDXKeyStatsPageContent() {
       </div>
 
       {loading ? (
-        <div className="rounded-2xl bg-[#fdfaf3] border border-slate-900/10 p-12 text-center space-y-4 shadow-xs">
-          <div className="inline-block w-8 h-8 rounded-full border-2 border-sky-600 border-t-transparent animate-spin" />
-          <p className="text-xs font-mono text-slate-600">
-            Fetching institutional fundamentals for <span className="text-slate-900 font-bold">{currentSymbol}</span>...
-          </p>
+        <div className="rounded-2xl bg-[#fdfaf3] border border-slate-900/10 p-6 space-y-5 shadow-xs" aria-busy="true">
+          <div className="flex items-center justify-between">
+            <Skeleton className="h-6 w-48" />
+            <Skeleton className="h-5 w-24" />
+          </div>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+            {[0, 1, 2, 3, 4, 5, 6, 7].map((i) => (
+              <div key={i} className="space-y-2 p-3 rounded-xl border border-slate-900/10">
+                <Skeleton className="h-3 w-20" />
+                <Skeleton className="h-6 w-24" />
+              </div>
+            ))}
+          </div>
         </div>
       ) : error ? (
         <div className="rounded-2xl bg-rose-50 border border-rose-200 p-8 text-center space-y-3">

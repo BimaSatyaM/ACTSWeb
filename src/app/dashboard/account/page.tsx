@@ -7,6 +7,7 @@ import { GlassCard } from '@/components/ui/GlassCard'
 import { Button } from '@/components/ui/Button'
 import { Badge } from '@/components/ui/Badge'
 import { UserAvatar } from '@/components/ui/UserAvatar'
+import { DashboardWorkspaceSkeleton } from '@/components/ui/Skeleton'
 
 export default function AccountPage() {
   const { user, profile, loading: authLoading, updateDisplayName, logout } = useAuth()
@@ -52,11 +53,7 @@ export default function AccountPage() {
   }
 
   if (authLoading || !user) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <span className="w-8 h-8 border-4 border-accent-theme border-t-transparent rounded-full animate-spin" />
-      </div>
-    )
+    return <DashboardWorkspaceSkeleton />
   }
 
   // Determine user level status label

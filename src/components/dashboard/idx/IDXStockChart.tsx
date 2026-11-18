@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useEffect, useRef, useState, useCallback } from 'react'
+import { Skeleton } from '@/components/ui/Skeleton'
 import {
   createChart,
   IChartApi,
@@ -420,8 +421,15 @@ export function IDXStockChart({
 
       <div className="relative w-full" style={{ height: height || 360 }}>
         {loading && (
-          <div className="absolute inset-0 z-20 flex items-center justify-center bg-[#fdfaf3]/80 backdrop-blur-xs">
-            <span className="w-8 h-8 border-2 border-sky-600 border-t-transparent rounded-full animate-spin" />
+          <div className="absolute inset-0 z-20 p-4 bg-[#fdfaf3]/90 flex flex-col justify-between" aria-busy="true">
+            <Skeleton className="h-4 w-32" />
+            <Skeleton className="h-3/4 w-full rounded-xl" />
+            <div className="flex justify-between">
+              <Skeleton className="h-3 w-12" />
+              <Skeleton className="h-3 w-12" />
+              <Skeleton className="h-3 w-12" />
+              <Skeleton className="h-3 w-12" />
+            </div>
           </div>
         )}
         <div ref={chartContainerRef} className="w-full h-full" />

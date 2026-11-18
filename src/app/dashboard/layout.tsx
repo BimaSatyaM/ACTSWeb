@@ -5,6 +5,7 @@ import { usePathname } from 'next/navigation'
 import { useAuth } from '@/context/AuthContext'
 import { DashboardSidebar } from '@/components/dashboard/DashboardSidebar'
 import { DashboardGating } from '@/components/dashboard/DashboardGating'
+import { DashboardWorkspaceSkeleton } from '@/components/ui/Skeleton'
 
 export default function DashboardLayout({
   children,
@@ -16,8 +17,13 @@ export default function DashboardLayout({
 
   if (authLoading) {
     return (
-      <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center">
-        <span className="w-8 h-8 border-2 border-[#0284c7] border-t-transparent rounded-full animate-spin" />
+      <div className="min-h-[calc(100vh-3.5rem)] flex flex-col md:flex-row w-full">
+        <DashboardSidebar />
+        <main className="flex-1 min-w-0">
+          <div className="max-w-[1520px] mx-auto px-4 sm:px-6 lg:px-8 py-5">
+            <DashboardWorkspaceSkeleton />
+          </div>
+        </main>
       </div>
     )
   }

@@ -5,6 +5,7 @@ import { createPortal } from 'react-dom'
 import { Badge } from '@/components/ui/Badge'
 import { AssetIcon } from '@/components/ui/AssetIcon'
 import { formatUtcTime } from '@/lib/time'
+import { Skeleton } from '@/components/ui/Skeleton'
 
 interface SignalOutcome {
   system_outcome: string | null
@@ -341,9 +342,14 @@ export function DayDetailModal({ date, isOpen, onClose }: DayDetailModalProps) {
 
         <div className="flex-1 overflow-y-auto pr-1 space-y-6 custom-scrollbar">
           {loading ? (
-            <div className="py-16 flex flex-col items-center justify-center space-y-3">
-              <span className="w-8 h-8 border-3 border-sky-600 border-t-transparent rounded-full animate-spin" />
-              <p className="text-xs text-slate-500">Loading daily summary telemetry...</p>
+            <div className="py-4 space-y-4" aria-busy="true">
+              <div className="grid grid-cols-3 gap-3">
+                <Skeleton className="h-16 w-full rounded-xl" />
+                <Skeleton className="h-16 w-full rounded-xl" />
+                <Skeleton className="h-16 w-full rounded-xl" />
+              </div>
+              <Skeleton className="h-24 w-full rounded-xl" />
+              <Skeleton className="h-24 w-full rounded-xl" />
             </div>
           ) : error ? (
             <div className="border-l-2 border-rose-600 pl-3 py-2 text-rose-700 text-xs leading-relaxed">

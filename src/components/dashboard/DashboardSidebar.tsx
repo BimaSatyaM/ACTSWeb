@@ -117,14 +117,14 @@ export function DashboardSidebar() {
 
   return (
     <aside className="w-full md:w-56 flex-shrink-0 flex flex-col justify-between border-b md:border-b-0 md:border-r border-slate-900/10 bg-transparent px-3 py-2.5 md:px-4 md:py-5 md:sticky md:top-14 md:h-[calc(100vh-3.5rem)] md:overflow-y-auto">
-      <div className="space-y-0 md:space-y-3">
-        <div className="px-2 hidden md:flex items-center justify-between">
+      <div className="space-y-2 md:space-y-3">
+        <div className="px-2 flex items-center justify-between">
           <span className="text-[10px] font-mono font-bold text-slate-500 uppercase tracking-widest">
             Workspace
           </span>
         </div>
 
-        <nav className="flex flex-row md:flex-col gap-1 md:gap-0.5 overflow-x-auto md:overflow-visible pb-1 md:pb-0 custom-scrollbar">
+        <nav className="flex flex-col gap-0.5">
           {navItems.map((item) => {
             const isActive = item.href === '/dashboard'
               ? pathname === '/dashboard'
