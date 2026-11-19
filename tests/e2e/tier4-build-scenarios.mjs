@@ -200,6 +200,7 @@ export function registerTier4Tests(runner, scanner) {
       const lines = gitStatus.split('\n').filter(Boolean);
       const modifiedBackendFiles = [];
       for (const rawLine of lines) {
+        if (/^\s*D\s+/.test(rawLine)) continue;
         const filePart = rawLine.replace(/^[ ?MADRCU!]{1,2}\s+/, '').trim();
         if (!filePart.startsWith('acts-web/') && !filePart.startsWith('.agents/')) {
           modifiedBackendFiles.push(filePart);
