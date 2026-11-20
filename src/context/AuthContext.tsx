@@ -15,9 +15,19 @@ import {
   updateDoc, 
   onSnapshot,
   writeBatch,
-  serverTimestamp
+  serverTimestamp,
+  Timestamp
 } from 'firebase/firestore'
 import { auth, db, googleProvider } from '../lib/firebase'
+
+export function toMillis(ts: any): number | null {
+  if (!ts) return null
+  if (typeof ts.toMillis === 'function') return ts.toMillis()
+  if (typeof ts.seconds === 'number') return ts.seconds * 1000
+  if (ts instanceof Date) return ts.getTime()
+  if (typeof ts === 'number') return ts
+  return null
+}
 
 export interface UserProfile {
   email: string
@@ -25,6 +35,8 @@ export interface UserProfile {
   approved: boolean
   role: 'user' | 'admin'
   tokenUsed?: string | null
+  subscriptionPlan?: string | null
+  subscriptionExpiresAt?: any
   rulesAccepted?: boolean
   createdAt?: any
 }
@@ -75,7 +87,24 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         const unsubscribeProfile = onSnapshot(userDocRef, async (docSnap) => {
           if (docSnap.exists()) {
             const data = docSnap.data() as UserProfile
-            
+            const expMs = toMillis(data.subscriptionExpiresAt)
+            const isExpired = data.role !== 'admin' && data.approved && expMs !== null && Date.now() >= expMs
+
+            if (isExpired) {
+              setProfile({
+                ...data,
+                approved: false,
+                tokenUsed: null,
+                subscriptionPlan: null,
+                subscriptionExpiresAt: null
+              })
+              setLoading(false)
+              revokeExpiredAccess(currentUser.uid, data.tokenUsed).catch((err) =>
+                console.error('Failed to revoke expired subscription:', err)
+              )
+              return
+            }
+
             // Auto-promote to admin if email matches bootstrap
             if (isAdminEmail && (data.role !== 'admin' || !data.approved)) {
               await setDoc(userDocRef, {
@@ -113,6 +142,51 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     return () => unsubscribeAuth()
   }, [])
+
+  const revokeExpiredAccess = async (uid: string, tokenUsed?: string | null) => {
+    const userDocRef = doc(db, 'users', uid)
+    const revokedFields = {
+      approved: false,
+      tokenUsed: null,
+      subscriptionPlan: null,
+      subscriptionExpiresAt: null
+    }
+    if (tokenUsed) {
+      try {
+        const batch = writeBatch(db)
+        batch.delete(doc(db, 'invite_tokens', tokenUsed))
+        batch.update(userDocRef, revokedFields)
+        await batch.commit()
+        return
+      } catch {
+        // Fallback if Firestore rules restrict invite_tokens delete to admin only
+      }
+    }
+    await updateDoc(userDocRef, revokedFields)
+  }
+
+  // Enforce exact-time lockout while user is actively using the terminal
+  useEffect(() => {
+    if (!user || !profile || profile.role === 'admin' || !profile.approved) return
+    const expMs = toMillis(profile.subscriptionExpiresAt)
+    if (expMs === null) return
+
+    const remainingMs = expMs - Date.now()
+    if (remainingMs <= 0) {
+      revokeExpiredAccess(user.uid, profile.tokenUsed).catch(console.error)
+      return
+    }
+
+    // Cap timeout below 24h (32-bit signed int limit)
+    const delayMs = Math.min(remainingMs, 24 * 60 * 60 * 1000)
+    const timer = setTimeout(() => {
+      if (Date.now() >= expMs) {
+        revokeExpiredAccess(user.uid, profile.tokenUsed).catch(console.error)
+      }
+    }, delayMs)
+
+    return () => clearTimeout(timer)
+  }, [user, profile])
 
   const loginWithGoogle = async () => {
     setLoading(true)
@@ -161,21 +235,32 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       throw new Error('Access token has already been used.')
     }
 
+    const durationDays = typeof tokenData.durationDays === 'number' && tokenData.durationDays > 0
+      ? tokenData.durationDays
+      : 30
+    const planLabel = typeof tokenData.planLabel === 'string' && tokenData.planLabel
+      ? tokenData.planLabel
+      : `${durationDays} Days`
+    const expiresAt = Timestamp.fromMillis(Date.now() + durationDays * 24 * 60 * 60 * 1000)
+
     // Atomic update using a Batch
     const batch = writeBatch(db)
     
-    // 1. Claim the token
+    // 1. Claim the token and start subscription countdown
     batch.update(tokenDocRef, {
       used: true,
       usedBy: user.uid,
       usedByEmail: user.email || 'N/A',
-      usedAt: serverTimestamp()
+      usedAt: serverTimestamp(),
+      expiresAt
     })
 
-    // 2. Approve the user
+    // 2. Approve the user with subscription expiration
     batch.update(userDocRef, {
       approved: true,
-      tokenUsed: cleanToken
+      tokenUsed: cleanToken,
+      subscriptionPlan: planLabel,
+      subscriptionExpiresAt: expiresAt
     })
 
     await batch.commit()

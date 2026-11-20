@@ -1,9 +1,22 @@
 'use client'
 
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { useAuth } from '@/context/AuthContext'
+import { useAuth, toMillis } from '@/context/AuthContext'
+
+function formatCountdown(ms: number): string {
+  const totalSeconds = Math.max(0, Math.floor(ms / 1000))
+  const days = Math.floor(totalSeconds / 86400)
+  const hours = Math.floor((totalSeconds % 86400) / 3600)
+  const minutes = Math.floor((totalSeconds % 3600) / 60)
+  const seconds = totalSeconds % 60
+  const pad = (n: number) => String(n).padStart(2, '0')
+  if (days > 0) {
+    return `${days}d ${pad(hours)}:${pad(minutes)}:${pad(seconds)}`
+  }
+  return `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`
+}
 
 interface NavItem {
   name: string
@@ -18,6 +31,19 @@ export function DashboardSidebar() {
 
   const isApproved = profile?.approved === true
   const isAdmin = profile?.role === 'admin'
+  const expiresAtMs = toMillis(profile?.subscriptionExpiresAt)
+  const [nowMs, setNowMs] = useState<number>(() => Date.now())
+
+  useEffect(() => {
+    if (!isApproved || isAdmin || !expiresAtMs) return
+    setNowMs(Date.now())
+    const timer = setInterval(() => {
+      setNowMs(Date.now())
+    }, 1000)
+    return () => clearInterval(timer)
+  }, [isApproved, isAdmin, expiresAtMs])
+
+  const remainingMs = expiresAtMs ? Math.max(0, expiresAtMs - nowMs) : null
 
   const navItems: NavItem[] = [
     {
@@ -172,6 +198,21 @@ export function DashboardSidebar() {
             {isApproved ? (isAdmin ? 'ADMIN' : 'PRO TRADER') : 'PENDING TOKEN'}
           </span>
         </div>
+
+        {isApproved && (
+          <div className="flex items-center justify-between text-[10px] font-mono">
+            <span className="text-slate-500 uppercase tracking-wider">SUBS</span>
+            {isAdmin ? (
+              <span className="font-bold text-emerald-700 uppercase">UNLIMITED</span>
+            ) : remainingMs !== null ? (
+              <span className={`font-bold tabular-nums ${remainingMs < 24 * 60 * 60 * 1000 ? 'text-amber-700' : 'text-slate-900'}`}>
+                {formatCountdown(remainingMs)}
+              </span>
+            ) : (
+              <span className="font-bold text-slate-900 uppercase">ACTIVE</span>
+            )}
+          </div>
+        )}
 
         {!isApproved && (
           <a

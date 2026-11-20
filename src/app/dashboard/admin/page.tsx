@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { useAuth } from '@/context/AuthContext'
+import { useAuth, toMillis } from '@/context/AuthContext'
 import { DashboardWorkspaceSkeleton } from '@/components/ui/Skeleton'
 import { db } from '@/lib/firebase'
 import { 
@@ -12,12 +12,23 @@ import {
   onSnapshot, 
   doc, 
   setDoc,
+  deleteDoc,
+  updateDoc,
   serverTimestamp,
   writeBatch
 } from 'firebase/firestore'
 import { GlassCard } from '@/components/ui/GlassCard'
 import { Button } from '@/components/ui/Button'
 import { Badge } from '@/components/ui/Badge'
+
+const SUBSCRIPTION_PLANS = [
+  { id: '1D', label: '1 Day', days: 1 },
+  { id: '30D', label: '30 Days', days: 30 },
+  { id: '60D', label: '2 Months', days: 60 },
+  { id: '365D', label: '1 Year', days: 365 },
+] as const
+
+type PlanId = (typeof SUBSCRIPTION_PLANS)[number]['id']
 
 interface InviteToken {
   id: string
@@ -26,6 +37,9 @@ interface InviteToken {
   usedByEmail?: string | null
   usedAt?: any
   createdAt?: any
+  durationDays?: number
+  planLabel?: string
+  expiresAt?: any
 }
 
 export default function AdminPanel() {
@@ -34,6 +48,7 @@ export default function AdminPanel() {
   const [tokens, setTokens] = useState<InviteToken[]>([])
   const [loadingTokens, setLoadingTokens] = useState(true)
   const [generating, setGenerating] = useState(false)
+  const [selectedPlan, setSelectedPlan] = useState<PlanId>('30D')
   const [searchQuery, setSearchQuery] = useState('')
   const [statusFilter, setStatusFilter] = useState<'ALL' | 'UNUSED' | 'USED'>('ALL')
   const [errorMsg, setErrorMsg] = useState<string | null>(null)
@@ -53,15 +68,46 @@ export default function AdminPanel() {
 
     const q = query(collection(db, 'invite_tokens'), orderBy('createdAt', 'desc'))
     const unsubscribe = onSnapshot(q, (snapshot) => {
+      const nowMs = Date.now()
       const tokenList: InviteToken[] = []
-      snapshot.forEach((doc) => {
-        tokenList.push({
-          id: doc.id,
-          ...doc.data()
-        } as InviteToken)
+      const expiredTokens: InviteToken[] = []
+
+      snapshot.forEach((d) => {
+        const tokenObj = {
+          id: d.id,
+          ...d.data()
+        } as InviteToken
+        const expMs = toMillis(tokenObj.expiresAt)
+        if (tokenObj.used && expMs !== null && nowMs >= expMs) {
+          expiredTokens.push(tokenObj)
+        } else {
+          tokenList.push(tokenObj)
+        }
       })
+
       setTokens(tokenList)
       setLoadingTokens(false)
+
+      // Auto-delete expired subscription tokens and revoke terminal access
+      if (expiredTokens.length > 0) {
+        Promise.all(
+          expiredTokens.map(async (exp) => {
+            try {
+              await deleteDoc(doc(db, 'invite_tokens', exp.id))
+              if (exp.usedBy) {
+                await updateDoc(doc(db, 'users', exp.usedBy), {
+                  approved: false,
+                  tokenUsed: null,
+                  subscriptionPlan: null,
+                  subscriptionExpiresAt: null
+                }).catch(() => {})
+              }
+            } catch (cleanupErr) {
+              console.error(`Failed to auto-cleanup expired token ${exp.id}:`, cleanupErr)
+            }
+          })
+        )
+      }
     }, (err) => {
       console.error('Error fetching tokens:', err)
       setErrorMsg('Permissions check failed: Unable to fetch tokens.')
@@ -89,6 +135,7 @@ export default function AdminPanel() {
     setSuccessMsg(null)
     setGenerating(true)
     try {
+      const plan = SUBSCRIPTION_PLANS.find(p => p.id === selectedPlan) || SUBSCRIPTION_PLANS[1]
       const newToken = generateRandomToken()
       const tokenDocRef = doc(db, 'invite_tokens', newToken)
       await setDoc(tokenDocRef, {
@@ -96,9 +143,12 @@ export default function AdminPanel() {
         usedBy: null,
         usedByEmail: null,
         usedAt: null,
+        durationDays: plan.days,
+        planLabel: plan.label,
+        expiresAt: null,
         createdAt: serverTimestamp()
       })
-      setSuccessMsg(`Token generated successfully: ${newToken}`)
+      setSuccessMsg(`Token generated (${plan.label}): ${newToken}`)
     } catch (err: any) {
       setErrorMsg(err.message || 'Failed to generate token')
     } finally {
@@ -121,7 +171,9 @@ export default function AdminPanel() {
       if (tokenInfo?.used && tokenInfo.usedBy) {
         batch.update(doc(db, 'users', tokenInfo.usedBy), {
           approved: false,
-          tokenUsed: null
+          tokenUsed: null,
+          subscriptionPlan: null,
+          subscriptionExpiresAt: null
         })
       }
 
@@ -168,6 +220,24 @@ export default function AdminPanel() {
 
             {errorMsg && <p className="text-xs text-rose-700 border-l-2 border-rose-600 pl-3 py-1">{errorMsg}</p>}
             {successMsg && <p className="text-xs font-mono text-emerald-700 border-l-2 border-emerald-600 pl-3 py-1">{successMsg}</p>}
+
+            <div className="space-y-1.5">
+              <label htmlFor="subscription-plan-select" className="text-[11px] font-mono uppercase font-bold text-slate-600 block">
+                Subscription Duration
+              </label>
+              <select
+                id="subscription-plan-select"
+                value={selectedPlan}
+                onChange={(e) => setSelectedPlan(e.target.value as PlanId)}
+                className="w-full px-3 py-2 rounded-lg bg-[#fdfaf3] border border-slate-900/15 text-slate-900 text-xs font-mono font-semibold focus:outline-none focus:border-[#0284c7] cursor-pointer"
+              >
+                {SUBSCRIPTION_PLANS.map((plan) => (
+                  <option key={plan.id} value={plan.id}>
+                    {plan.label} ({plan.days}d)
+                  </option>
+                ))}
+              </select>
+            </div>
 
             <Button
               variant="primary"
@@ -225,20 +295,31 @@ export default function AdminPanel() {
                   <thead>
                     <tr className="border-b border-slate-900/10 text-[10px] font-mono text-slate-500 uppercase tracking-wider font-bold">
                       <th className="pb-3">Activation Key</th>
+                      <th className="pb-3">Plan</th>
                       <th className="pb-3">Status</th>
+                      <th className="pb-3">Expires</th>
                       <th className="pb-3">Used By</th>
                       <th className="pb-3 text-right">Action</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-slate-900/10">
-                    {filteredTokens.map((t) => (
+                    {filteredTokens.map((t) => {
+                      const expMs = toMillis(t.expiresAt)
+                      const expDisplay = t.used && expMs
+                        ? new Date(expMs).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+                        : 'On activation'
+                      return (
                       <tr key={t.id} className="hover:bg-[#f3ead2]/50 transition-colors duration-150">
                         <td className="py-3 font-mono tabular-nums font-bold text-slate-900 selection:bg-sky-200">{t.id}</td>
+                        <td className="py-3 font-mono text-slate-700 whitespace-nowrap">
+                          {t.planLabel || (t.durationDays ? `${t.durationDays} Days` : 'Legacy')}
+                        </td>
                         <td className="py-3">
                           <Badge variant={t.used ? 'NOT_HIT' : 'SIGNAL'}>
-                            {t.used ? 'USED' : 'UNUSED'}
+                            {t.used ? 'ACTIVE' : 'UNUSED'}
                           </Badge>
                         </td>
+                        <td className="py-3 font-mono text-slate-600 whitespace-nowrap">{expDisplay}</td>
                         <td className="py-3 text-slate-600 font-mono truncate max-w-[150px]" title={t.usedByEmail || ''}>
                           {t.usedByEmail || '-'}
                         </td>
@@ -253,7 +334,8 @@ export default function AdminPanel() {
                           </button>
                         </td>
                       </tr>
-                    ))}
+                      )
+                    })}
                   </tbody>
                 </table>
               </div>

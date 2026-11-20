@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { useAuth } from '@/context/AuthContext'
+import { useAuth, toMillis } from '@/context/AuthContext'
 import { GlassCard } from '@/components/ui/GlassCard'
 import { Button } from '@/components/ui/Button'
 import { Badge } from '@/components/ui/Badge'
@@ -105,11 +105,21 @@ export default function AccountPage() {
             </div>
 
             {profile?.tokenUsed && (
-              <div className="pt-2 text-left border-t border-slate-900/10">
+              <div className="pt-2 text-left border-t border-slate-900/10 space-y-1.5">
                 <span className="text-[10px] font-mono uppercase font-bold text-slate-500 block">Claimed Key</span>
-                <span className="text-xs font-mono font-bold text-[#0369a1] select-all block mt-1 truncate">
+                <span className="text-xs font-mono font-bold text-[#0369a1] select-all block truncate">
                   {profile.tokenUsed}
                 </span>
+                {(profile.subscriptionPlan || profile.subscriptionExpiresAt) && (
+                  <div className="text-[11px] font-mono text-slate-600 pt-0.5">
+                    {profile.subscriptionPlan && <span>Plan: <strong className="text-slate-900">{profile.subscriptionPlan}</strong></span>}
+                    {toMillis(profile.subscriptionExpiresAt) && (
+                      <span className="block text-[10px] text-slate-500 mt-0.5">
+                        Expires {new Date(toMillis(profile.subscriptionExpiresAt)!).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                      </span>
+                    )}
+                  </div>
+                )}
               </div>
             )}
 
