@@ -209,7 +209,9 @@ export function DashboardSidebar() {
                 {formatCountdown(remainingMs)}
               </span>
             ) : (
-              <span className="font-bold text-slate-900 uppercase">ACTIVE</span>
+              <span className="font-bold text-emerald-700 uppercase">
+                {profile?.subscriptionPlan === 'Lifetime' ? 'LIFETIME' : 'ACTIVE'}
+              </span>
             )}
           </div>
         )}

@@ -235,13 +235,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       throw new Error('Access token has already been used.')
     }
 
-    const durationDays = typeof tokenData.durationDays === 'number' && tokenData.durationDays > 0
-      ? tokenData.durationDays
-      : 30
-    const planLabel = typeof tokenData.planLabel === 'string' && tokenData.planLabel
-      ? tokenData.planLabel
-      : `${durationDays} Days`
-    const expiresAt = Timestamp.fromMillis(Date.now() + durationDays * 24 * 60 * 60 * 1000)
+    const isLifetime = tokenData.durationDays === null || tokenData.planLabel === 'Lifetime'
+    const durationDays = isLifetime
+      ? null
+      : (typeof tokenData.durationDays === 'number' && tokenData.durationDays > 0 ? tokenData.durationDays : 30)
+    const planLabel = isLifetime
+      ? 'Lifetime'
+      : (typeof tokenData.planLabel === 'string' && tokenData.planLabel ? tokenData.planLabel : `${durationDays} Days`)
+    const expiresAt = durationDays !== null
+      ? Timestamp.fromMillis(Date.now() + durationDays * 24 * 60 * 60 * 1000)
+      : null
 
     // Atomic update using a Batch
     const batch = writeBatch(db)

@@ -113,11 +113,13 @@ export default function AccountPage() {
                 {(profile.subscriptionPlan || profile.subscriptionExpiresAt) && (
                   <div className="text-[11px] font-mono text-slate-600 pt-0.5">
                     {profile.subscriptionPlan && <span>Plan: <strong className="text-slate-900">{profile.subscriptionPlan}</strong></span>}
-                    {toMillis(profile.subscriptionExpiresAt) && (
+                    {toMillis(profile.subscriptionExpiresAt) ? (
                       <span className="block text-[10px] text-slate-500 mt-0.5">
                         Expires {new Date(toMillis(profile.subscriptionExpiresAt)!).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
                       </span>
-                    )}
+                    ) : profile.subscriptionPlan === 'Lifetime' ? (
+                      <span className="block text-[10px] text-emerald-700 mt-0.5">No expiration</span>
+                    ) : null}
                   </div>
                 )}
               </div>

@@ -26,6 +26,7 @@ const SUBSCRIPTION_PLANS = [
   { id: '30D', label: '30 Days', days: 30 },
   { id: '60D', label: '2 Months', days: 60 },
   { id: '365D', label: '1 Year', days: 365 },
+  { id: 'LIFETIME', label: 'Lifetime', days: null },
 ] as const
 
 type PlanId = (typeof SUBSCRIPTION_PLANS)[number]['id']
@@ -37,7 +38,7 @@ interface InviteToken {
   usedByEmail?: string | null
   usedAt?: any
   createdAt?: any
-  durationDays?: number
+  durationDays?: number | null
   planLabel?: string
   expiresAt?: any
 }
@@ -233,7 +234,7 @@ export default function AdminPanel() {
               >
                 {SUBSCRIPTION_PLANS.map((plan) => (
                   <option key={plan.id} value={plan.id}>
-                    {plan.label} ({plan.days}d)
+                    {plan.days !== null ? `${plan.label} (${plan.days}d)` : `${plan.label} (No Expiry)`}
                   </option>
                 ))}
               </select>
@@ -305,14 +306,17 @@ export default function AdminPanel() {
                   <tbody className="divide-y divide-slate-900/10">
                     {filteredTokens.map((t) => {
                       const expMs = toMillis(t.expiresAt)
-                      const expDisplay = t.used && expMs
-                        ? new Date(expMs).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
-                        : 'On activation'
+                      const isLifetime = t.durationDays === null || t.planLabel === 'Lifetime'
+                      const expDisplay = isLifetime
+                        ? 'Never'
+                        : t.used && expMs
+                          ? new Date(expMs).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+                          : 'On activation'
                       return (
                       <tr key={t.id} className="hover:bg-[#f3ead2]/50 transition-colors duration-150">
                         <td className="py-3 font-mono tabular-nums font-bold text-slate-900 selection:bg-sky-200">{t.id}</td>
                         <td className="py-3 font-mono text-slate-700 whitespace-nowrap">
-                          {t.planLabel || (t.durationDays ? `${t.durationDays} Days` : 'Legacy')}
+                          {t.planLabel || (t.durationDays ? `${t.durationDays} Days` : 'Lifetime')}
                         </td>
                         <td className="py-3">
                           <Badge variant={t.used ? 'NOT_HIT' : 'SIGNAL'}>

@@ -5,6 +5,7 @@ import useSWR from 'swr'
 import { Badge } from '@/components/ui/Badge'
 import { AssetIcon } from '@/components/ui/AssetIcon'
 import { TradingViewChart } from '@/components/dashboard/TradingViewChart'
+import { ActsConfluenceChart, ChartSignalBracket } from '@/components/dashboard/ActsConfluenceChart'
 import { MultiTierProgressTracker } from '@/components/dashboard/MultiTierProgressTracker'
 import { LivePriceCard } from '@/components/dashboard/LivePriceCard'
 import { OtherCryptoPricesCard } from '@/components/dashboard/OtherCryptoPricesCard'
@@ -70,6 +71,7 @@ interface SignalEvent {
 
 export default function SignalsPage() {
   const [selectedSignalIndex, setSelectedSignalIndex] = useState<number>(0)
+  const [chartMode, setChartMode] = useState<'acts' | 'tv'>('acts')
 
   const signalsUrl = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/functions/v1/get-signals?limit=5`
   const { data: signalsData, error: signalsError, mutate: mutateSignals } = useSWR(signalsUrl, fetcher, { refreshInterval: 30000, revalidateOnFocus: false })
@@ -80,6 +82,21 @@ export default function SignalsPage() {
   // Ensure selectedSignalIndex is within bounds if signalsList changes
   const activeIndex = selectedSignalIndex < signalsList.length ? selectedSignalIndex : 0
   const activeSignal = signalsList[activeIndex]
+
+  const chartSignals: ChartSignalBracket[] = signalsList.map((sig) => {
+    const dir = (sig.payload.confluence_result?.direction || sig.payload.setup_context?.direction || 'BUY').toUpperCase()
+    return {
+      event_id: sig.event_id,
+      published_at: sig.published_at,
+      direction: dir === 'SELL' ? 'SELL' : 'BUY',
+      tier: sig.tier,
+      score: sig.payload.confluence_score,
+      entryPrice: sig.payload.setup_context?.entry_price,
+      stopLoss: sig.payload.setup_context?.stop_loss,
+      tp1Price: sig.payload.setup_context?.tp1?.target_price,
+    }
+  })
+  const activeChartSignal = chartSignals[activeIndex] || null
 
   const formatTime = (tsStr: string) => {
     try {
@@ -122,11 +139,51 @@ export default function SignalsPage() {
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
         <div className="lg:col-span-8 space-y-2">
-          <div className="flex items-center justify-between text-[11px] font-mono text-slate-500">
+          <div className="flex flex-wrap items-center justify-between gap-2 text-[11px] font-mono text-slate-500">
             <span className="font-bold text-slate-800 uppercase tracking-wider">Market Chart (Perpetual)</span>
-            <span>BINANCE:BTCUSDT.P · 15M CANDLES</span>
+            <div className="flex items-center gap-4">
+              <div className="flex items-center gap-3" role="tablist" aria-label="Chart engine">
+                <button
+                  type="button"
+                  role="tab"
+                  aria-selected={chartMode === 'acts'}
+                  onClick={() => setChartMode('acts')}
+                  className={`pb-0.5 border-b-2 transition-colors cursor-pointer ${
+                    chartMode === 'acts'
+                      ? 'border-[#0369a1] text-slate-900 font-bold'
+                      : 'border-transparent text-slate-500 hover:text-slate-900'
+                  }`}
+                >
+                  ACTS Indicators
+                </button>
+                <button
+                  type="button"
+                  role="tab"
+                  aria-selected={chartMode === 'tv'}
+                  onClick={() => setChartMode('tv')}
+                  className={`pb-0.5 border-b-2 transition-colors cursor-pointer ${
+                    chartMode === 'tv'
+                      ? 'border-[#0369a1] text-slate-900 font-bold'
+                      : 'border-transparent text-slate-500 hover:text-slate-900'
+                  }`}
+                >
+                  TradingView
+                </button>
+              </div>
+              <span className="hidden sm:inline text-slate-400">·</span>
+              <span className="hidden sm:inline">BINANCE:BTCUSDT.P</span>
+            </div>
           </div>
-          <TradingViewChart symbol="BINANCE:BTCUSDT.P" interval="15" />
+          {chartMode === 'acts' ? (
+            <ActsConfluenceChart
+              symbol="BTCUSDT"
+              defaultInterval="15m"
+              activeSignal={activeChartSignal}
+              recentSignals={chartSignals}
+            />
+          ) : (
+            <TradingViewChart symbol="BINANCE:BTCUSDT.P" interval="15" />
+          )}
         </div>
 
         <div className="lg:col-span-4 space-y-4">

@@ -197,6 +197,55 @@ export function calculateATR(data: CandleData[], period = 14): IndicatorPoint[] 
   return result
 }
 
+export interface StochasticPoint {
+  time: number | string
+  k: number
+  d: number
+}
+
+// 6. Stochastic Oscillator (5, 3, 3) — Slow Stochastic matching ACTS confluence engine
+export function calculateStochastic(
+  data: CandleData[],
+  kPeriod = 5,
+  kSmooth = 3,
+  dPeriod = 3
+): StochasticPoint[] {
+  if (!data || data.length < kPeriod + kSmooth + dPeriod) return []
+
+  const rawK: { time: number | string; val: number }[] = []
+  for (let i = kPeriod - 1; i < data.length; i++) {
+    let highest = -Infinity
+    let lowest = Infinity
+    for (let j = i - kPeriod + 1; j <= i; j++) {
+      if (data[j].high > highest) highest = data[j].high
+      if (data[j].low < lowest) lowest = data[j].low
+    }
+    const range = highest - lowest
+    const val = range === 0 ? 50 : ((data[i].close - lowest) / range) * 100
+    rawK.push({ time: data[i].time, val })
+  }
+
+  const smoothK: { time: number | string; val: number }[] = []
+  for (let i = kSmooth - 1; i < rawK.length; i++) {
+    let sum = 0
+    for (let j = i - kSmooth + 1; j <= i; j++) sum += rawK[j].val
+    smoothK.push({ time: rawK[i].time, val: sum / kSmooth })
+  }
+
+  const result: StochasticPoint[] = []
+  for (let i = dPeriod - 1; i < smoothK.length; i++) {
+    let sum = 0
+    for (let j = i - dPeriod + 1; j <= i; j++) sum += smoothK[j].val
+    result.push({
+      time: smoothK[i].time,
+      k: Number(smoothK[i].val.toFixed(2)),
+      d: Number((sum / dPeriod).toFixed(2)),
+    })
+  }
+
+  return result
+}
+
 // Aliases for compatibility
 export const computeEMA = calculateEMA
 export const computeRSI = calculateRSI
