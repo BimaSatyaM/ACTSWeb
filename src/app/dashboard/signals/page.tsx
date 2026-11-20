@@ -72,7 +72,7 @@ export default function SignalsPage() {
   const [selectedSignalIndex, setSelectedSignalIndex] = useState<number>(0)
 
   const signalsUrl = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/functions/v1/get-signals?limit=5`
-  const { data: signalsData, error: signalsError, mutate: mutateSignals } = useSWR(signalsUrl, fetcher, { refreshInterval: 5000 })
+  const { data: signalsData, error: signalsError, mutate: mutateSignals } = useSWR(signalsUrl, fetcher, { refreshInterval: 30000, revalidateOnFocus: false })
 
   const isLoadingSignals = !signalsData && !signalsError
   const signalsList: SignalEvent[] = signalsData?.signals || []
@@ -116,7 +116,7 @@ export default function SignalsPage() {
         <div className="text-xs font-mono tabular-nums text-slate-600 flex items-center gap-2.5">
           <span>15M EVALUATION LOOP</span>
           <span className="text-slate-500">·</span>
-          <span>POLL 5S</span>
+          <span>POLL 30S</span>
         </div>
       </div>
 
